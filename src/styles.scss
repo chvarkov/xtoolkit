@@ -1,1 +1,95 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+	--primary-bg: #17212b;
+	--primary-darken-bg: #16202AFF;
+	--high-bg: #242f3d;
+	--low-bg: #1a2633;
+	--text-color: #e1e3d9;
+	--text-accent-color: #fff;
+	--text-primary-color: #5288c1;
+
+	--croll-color: #36415b;
+	--croll-hover-color: #3a4564;
+
+	--border-low-color: #23394b;
+	--border-color: #31536e;
+	--border-accent-color: #4875a2;
+
+	--submit-button-bg: #5288c1;
+	--cancel-button-bg: #2f3d4f;
+
+	--static-red: #b04b4b;
+	--static-yellow: #b09a4b;
+	--static-green: #4aa444;
+	//--static-green: #59c152;
+
+	--header-height: 68px;
+	--tab-height: 30px;
+	--footer-height: 24px;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 1px var(--high-bg);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--croll-color);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--croll-hover-color);
+}
+
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+	src: local('Material Icons'),
+	local('MaterialIcons-Regular'),
+	url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+	url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+	url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;  /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	background: var(--primary-bg);
+	color: var(--text-color)
+}
+
+* {
+	font-size: 1em;
+}

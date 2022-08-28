@@ -1,0 +1,23 @@
+.toolbar-container {
+	width: 100%;
+	height: 38px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	//background: var(--high-bg);
+	border-bottom: solid 1px var(--border-low-color);
+	color: var(--text-color);
+
+	.left-side, .right-side {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.right-side {
+		justify-content: right;
+	}
+
+	.left-side {
+		justify-content: left;
+	}
+}

@@ -1,0 +1,5 @@
+.transaction-list-container {
+	overflow-y: auto;
+	height: calc(100vh - var(--header-height) - var(--footer-height));
+	max-height: calc(100vh - var(--header-height) - var(--footer-height));
+}

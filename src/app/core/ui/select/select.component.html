@@ -1,0 +1,8 @@
+<div #selector class="select" [ngClass]="size" (click)="switchShowOptions()">
+	{{currentSelectedElement?.name || placeHolder}}
+</div>
+
+<div class="options-container" *ngIf="isVisibleOptions" [ngStyle]="{width: selector.clientWidth  + 'px'}">
+	<div *ngIf="nullable" class="option" [ngClass]="size" (click)="selectElement(undefined)">{{nullPlaceHolder}}</div>
+	<div class="option" [ngClass]="size" *ngFor="let elem of elements" (click)="selectElement(elem)">{{elem.name}}</div>
+</div>
