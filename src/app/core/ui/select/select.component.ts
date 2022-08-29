@@ -15,9 +15,7 @@ export type SelectSize = 'small' | 'medium' | 'big';
 export class SelectComponent<T> implements OnInit {
 	@ViewChild('selector', {static: true}) eRef?: ElementRef;
 
-	isVisibleOptions = false;
-
-	@Input() currentSelectedElement?: SelectElement<T>;
+	@Input() defaultElement?: SelectElement<T>;
 
 	@Input() nullable = false;
 
@@ -31,12 +29,14 @@ export class SelectComponent<T> implements OnInit {
 
 	@Output() selectedElement: EventEmitter<SelectElement<T>> = new EventEmitter<SelectElement<T>>();
 
-	constructor() {
+	isVisibleOptions = false;
 
-	}
+	currentSelectedElement?: SelectElement<T>;
 
 	ngOnInit(): void {
-		// this.selectedElement$.subscribe(v => console.log('next', v))
+		if (this.defaultElement) {
+			this.currentSelectedElement = this.defaultElement;
+		}
 	}
 
 	switchShowOptions(): void {
@@ -44,7 +44,6 @@ export class SelectComponent<T> implements OnInit {
 	}
 
 	selectElement(element?: SelectElement<T>): void {
-		console.log('click elem')
 		if (element || this.nullable) {
 			this.selectedElement.emit(element);
 			this.currentSelectedElement = element;
@@ -54,12 +53,13 @@ export class SelectComponent<T> implements OnInit {
 	}
 
 	@HostListener('document:click', ['$event'])
-	checkClick(event: any): void {
-		console.log('ref', this.eRef?.nativeElement)
-		if(this.eRef?.nativeElement.contains(event.target)) {
-			console.log("clicked inside");
-		} else {
+	checkClick(event: Event): void {
+		if (!this.eRef?.nativeElement.contains(event.target)) {
 			this.isVisibleOptions = false;
 		}
+	}
+
+	getCssClass(className: string): string {
+		return `${className}-${this.size}`;
 	}
 }
