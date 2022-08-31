@@ -8,6 +8,7 @@ import { ScViewerModule } from './sc-viewer/sc-viewer.module';
 import { ProjectModule } from './project/project.module';
 import { NetworkModule } from './network/network.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,8 @@ import { TransactionModule } from './transaction/transaction.module';
 		LayoutModule,
 		BrowserModule,
 		AppRoutingModule,
-		ProjectModule
+		ProjectModule,
+		CoreModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

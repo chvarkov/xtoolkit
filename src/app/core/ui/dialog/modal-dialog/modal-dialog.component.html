@@ -1,0 +1,14 @@
+<section (click)="dialogRef.close()">
+	<div class="dialog-container" (click)="$event.stopPropagation()" [ngSwitch]="dialogRef.options">
+		<div class="header">
+			<div>{{title}}</div>
+			<span class="material-icons close" (click)="dialogRef.close()">✕</span>
+		</div>
+		<div class="content">
+			<ng-content select="[content]"></ng-content>
+		</div>
+		<div class="actions" *ngIf="showActions">
+			<ng-content select="[actions]"></ng-content>
+		</div>
+	</div>
+</section>
