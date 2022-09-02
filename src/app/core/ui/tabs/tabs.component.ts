@@ -9,9 +9,7 @@ import { TabComponent } from './tab/tab.component';
 export class TabsComponent implements OnInit, AfterContentInit {
 	@ContentChildren(TabComponent) tabs?: QueryList<TabComponent>;
 
-	ngAfterContentInit() {
-		console.log(this.tabs);
-
+	ngAfterContentInit(): void {
 		if (!this.tabs) {
 			return;
 		}
