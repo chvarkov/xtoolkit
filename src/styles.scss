@@ -24,6 +24,7 @@
 
 	--header-height: 68px;
 	--tab-height: 30px;
+	--toolbar-height: 38px;
 	--footer-height: 24px;
 }
 
@@ -92,4 +93,18 @@ body {
 
 * {
 	font-size: 1em;
+	box-sizing: border-box;
+}
+
+input, textarea {
+	background: var(--low-bg);
+	color: var(--text-color);
+}
+
+button {
+	background: none;
+	border: solid 1px transparent;
+	color: var(--text-color);
+	cursor: pointer;
+	border-radius: 4px;
 }

@@ -1,35 +1,45 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+	AfterContentInit,
+	Component,
+	ContentChildren,
+	ElementRef,
+	EventEmitter,
+	HostListener,
+	Input, OnDestroy,
+	OnInit,
+	Output, QueryList,
+	ViewChild
+} from '@angular/core';
+import { OptionComponent } from './option/option.component';
+import { Subscription } from 'rxjs';
 
 export interface SelectElement<T = any> {
 	value: T;
 	name: string;
 }
 
-export type SelectSize = 'small' | 'medium' | 'big';
+export type SelectSize = 'supersmall' | 'small' | 'medium' | 'big';
 
 @Component({
 	selector: 'app-select',
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss']
 })
-export class SelectComponent<T> implements OnInit {
+export class SelectComponent<T> implements OnInit, AfterContentInit, OnDestroy {
 	@ViewChild('selector', {static: true}) eRef?: ElementRef;
+	@ContentChildren(OptionComponent) options?: QueryList<OptionComponent>;
 
 	@Input() defaultElement?: SelectElement<T>;
-
-	@Input() nullable = false;
 
 	@Input() size: SelectSize = 'big';
 
 	@Input() placeHolder = 'Chose option';
 
-	@Input() nullPlaceHolder = 'Nothing';
-
-	@Input() elements: Array<SelectElement<T>> = [];
-
 	@Output() selectedElement: EventEmitter<SelectElement<T>> = new EventEmitter<SelectElement<T>>();
 
 	isVisibleOptions = false;
+
+	sub = new Subscription();
 
 	currentSelectedElement?: SelectElement<T>;
 
@@ -37,6 +47,28 @@ export class SelectComponent<T> implements OnInit {
 		if (this.defaultElement) {
 			this.currentSelectedElement = this.defaultElement;
 		}
+
+		if (!this.options) {
+			return;
+		}
+
+		this.options.forEach(option => {
+			option.size = this.size;
+		});
+	}
+
+	ngAfterContentInit(): void {
+		if (!this.options) {
+			return;
+		}
+
+		this.options.forEach(option => {
+			this.sub.add(option.selected.subscribe((e) => this.selectElement(e)));
+		});
+	}
+
+	ngOnDestroy(): void {
+		this.sub.unsubscribe();
 	}
 
 	switchShowOptions(): void {
@@ -44,7 +76,7 @@ export class SelectComponent<T> implements OnInit {
 	}
 
 	selectElement(element?: SelectElement<T>): void {
-		if (element || this.nullable) {
+		if (element) {
 			this.selectedElement.emit(element);
 			this.currentSelectedElement = element;
 		}

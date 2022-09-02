@@ -1,0 +1,12 @@
+<div class="sc-tokens-container">
+	<div *ngFor="let position of positions" class="position">
+		<div class="token-info">
+			<img class="token-img" src="https://raw.githubusercontent.com/ElrondNetwork/assets/master/tokens/WEGLD-bd4d79/logo.svg" />
+			<div class="token-id">{{position.tokenId}}</div>
+		</div>
+
+		<div class="amount">
+			{{position.amount}}
+		</div>
+	</div>
+</div>

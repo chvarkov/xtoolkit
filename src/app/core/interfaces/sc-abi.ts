@@ -12,7 +12,7 @@ export interface IScAbi {
 }
 
 export interface IScType {
-	type: 'strict',
+	type: 'struct',
 	fields: IScTypeField[];
 }
 
@@ -35,7 +35,7 @@ export interface IScInput {
 
 export interface IScOutput {
 	type: WasmType;
-	multi_result?: string;
+	multi_result?: boolean;
 }
 
 export interface IScConstructor {

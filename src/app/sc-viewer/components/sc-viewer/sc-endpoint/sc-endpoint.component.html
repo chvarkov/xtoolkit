@@ -1,0 +1,22 @@
+<div class="endpoint-container">
+	<div class="header"
+		 [ngStyle]="{cursor: isShowing ? 'default' : 'pointer'}"
+		 (click)="isShowing = true">
+		<div class="title">{{endpoint.name}} <span class="args">{{getArgsPreview()}}</span></div>
+		<div class="controls">
+			<button *ngIf="isShowing" (click)="hide()">hide</button>
+			<button *ngIf="!isShowing" (click)="show()">show</button>
+		</div>
+	</div>
+	<ng-container *ngIf="isShowing">
+		<form [formGroup]="form" class="inputs">
+			<app-sc-input *ngFor="let input of endpoint.inputs"
+						  [input]="input"
+						  [formControlName]="input.name"></app-sc-input>
+		</form>
+		<div class="actions">
+			<button class="button">Reset</button>
+			<button class="button call">Call</button>
+		</div>
+	</ng-container>
+</div>

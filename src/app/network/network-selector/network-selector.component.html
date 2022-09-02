@@ -1,8 +1,8 @@
 <div class="network-selector-container">
 	<app-select placeHolder="Select elrond network"
 				size="medium"
-				[elements]="networks.map(mapElement)"
 				[defaultElement]="mapElement(default)">
+		<app-option *ngFor="let network of networks" [value]="network">{{network.name}}</app-option>
 	</app-select>
 
 </div>

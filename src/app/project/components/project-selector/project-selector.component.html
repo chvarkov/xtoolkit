@@ -1,3 +1,5 @@
 <div class="project-selector-container">
-	<app-select class="select" [elements]="mockedData" placeHolder="Choose project"></app-select>
+	<app-select class="select" placeHolder="Choose project">
+		<app-option *ngFor="let item of mockedData" [value]="item.value">{{item.name}}</app-option>
+	</app-select>
 </div>

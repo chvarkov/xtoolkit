@@ -6,16 +6,5 @@
 	 [ngClass]="getCssClass('options')"
 	 *ngIf="isVisibleOptions"
 	 [ngStyle]="{width: selector.clientWidth  + 'px'}">
-	<div *ngIf="nullable"
-		 class="option"
-		 [ngClass]="getCssClass('element')"
-		 (click)="selectElement(undefined)">
-		{{nullPlaceHolder}}
-	</div>
-	<div class="option"
-		 [ngClass]="getCssClass('element')"
-		 *ngFor="let elem of elements"
-		 (click)="selectElement(elem)">
-		{{elem.name}}
-	</div>
+	<ng-content></ng-content>
 </div>

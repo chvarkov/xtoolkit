@@ -1,16 +1,19 @@
 <!--<app-project-selector></app-project-selector>-->
 
-<!--<app-toolbar>-->
-<!--	<div left-side>LEFT</div>-->
-<!--	<div right-side>RIGHT</div>-->
-<!--</app-toolbar>-->
-
 <app-tabs>
 	<app-tab title="Smart contracts" [active]="true">
+		<app-toolbar>
+			<app-toolbar-icon-button right-side hint="Import new ABI">add</app-toolbar-icon-button>
+			<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
+		</app-toolbar>
 		<app-sc-list></app-sc-list>
 	</app-tab>
 
 	<app-tab title="Wallets">
+		<app-toolbar>
+			<app-toolbar-icon-button right-side hint="Add new wallet">add</app-toolbar-icon-button>
+			<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
+		</app-toolbar>
 		<app-wallet-list></app-wallet-list>
 	</app-tab>
 </app-tabs>

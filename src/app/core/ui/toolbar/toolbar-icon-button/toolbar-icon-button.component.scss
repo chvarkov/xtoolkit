@@ -4,8 +4,12 @@
 
 	width: 32px;
 	height: 32px;
-	border: none;
-	padding: 6px;
-	color: var(--static-green);
+	padding: 4px;
 	margin: 2px;
+	//border: solid 1px var(--border-low-color);
+
+	:hover {
+		color: var(--text-accent-color);
+		border: solid 1px var(--border-accent-color);
+	}
 }

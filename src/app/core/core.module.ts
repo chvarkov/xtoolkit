@@ -8,6 +8,7 @@ import { ToolbarIconButtonComponent } from './ui/toolbar/toolbar-icon-button/too
 import { ModalDialogComponent } from './ui/dialog/modal-dialog/modal-dialog.component';
 import { ModalDialogFactory } from './ui/dialog/modal-dialog.factory';
 import { ConfirmDialogComponent } from './ui/confirm-dialog/confirm-dialog.component';
+import { OptionComponent } from './ui/select/option/option.component';
 
 @NgModule({
 	declarations: [
@@ -17,16 +18,18 @@ import { ConfirmDialogComponent } from './ui/confirm-dialog/confirm-dialog.compo
 		TabComponent,
 		ToolbarIconButtonComponent,
 		ModalDialogComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  OptionComponent
 	],
-	exports: [
-		ToolbarComponent,
-		SelectComponent,
-		TabsComponent,
-		TabComponent,
-		ToolbarIconButtonComponent,
-		ModalDialogComponent,
-	],
+    exports: [
+        ToolbarComponent,
+        SelectComponent,
+        TabsComponent,
+        TabComponent,
+        ToolbarIconButtonComponent,
+        ModalDialogComponent,
+        OptionComponent,
+    ],
 	providers: [
 		ModalDialogFactory,
 	],

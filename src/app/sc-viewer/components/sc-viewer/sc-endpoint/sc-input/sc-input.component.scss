@@ -1,0 +1,15 @@
+.input-container {
+	display: flex;
+	flex-direction: row;
+	padding: 6px 0;
+
+	.name {
+		display: flex;
+		width: 200px;
+	}
+
+	.input {
+		display: flex;
+		flex: 1;
+	}
+}

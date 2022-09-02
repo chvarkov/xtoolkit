@@ -1,3 +1,31 @@
 <div class="sc-viewer-container">
-
+	<app-sc-viewer-header [address]="address"></app-sc-viewer-header>
+	<app-tabs>
+		<app-tab title="Endpoints">
+			<app-toolbar>
+				<app-toolbar-icon-button right-side hint="Import RAW call">add</app-toolbar-icon-button>
+				<app-toolbar-icon-button right-side hint="Expand all">expand_more</app-toolbar-icon-button>
+				<app-toolbar-icon-button right-side hint="Hide all">expand_less</app-toolbar-icon-button>
+			</app-toolbar>
+			<app-sc-endpoint *ngFor="let endpoint of abi.endpoints" [endpoint]="endpoint"></app-sc-endpoint>
+		</app-tab>
+		<app-tab title="Tokens">
+			<app-toolbar>
+				<app-toolbar-icon-button right-side hint="Reload">refresh</app-toolbar-icon-button>
+			</app-toolbar>
+			<app-sc-tokens [positions]="positions"></app-sc-tokens>
+		</app-tab>
+		<app-tab title="NFTs">
+			<app-toolbar>
+				<app-toolbar-icon-button right-side hint="Reload">refresh</app-toolbar-icon-button>
+			</app-toolbar>
+			<app-sc-nfts></app-sc-nfts>
+		</app-tab>
+		<app-tab title="Code">
+			<app-toolbar>
+				<app-toolbar-icon-button right-side hint="Download WASM file">download</app-toolbar-icon-button>
+			</app-toolbar>
+			<app-sc-code [code]="code"></app-sc-code>
+		</app-tab>
+	</app-tabs>
 </div>

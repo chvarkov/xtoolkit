@@ -1,0 +1,10 @@
+<div class="bytes-control-container">
+	<textarea class="textarea"
+		      [disabled]="disabled">{{value}}</textarea>
+	<div class="encoding-method">
+		<app-select size="small">
+			<app-option *ngFor="let method of encodingMethods" [value]="method">{{method}}</app-option>
+		</app-select>
+	</div>
+</div>
+

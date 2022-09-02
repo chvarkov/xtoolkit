@@ -6,6 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./toolbar-icon-button.component.scss']
 })
 export class ToolbarIconButtonComponent implements OnInit {
+	@Input() hint = '';
+
 	constructor() {
 
 	}

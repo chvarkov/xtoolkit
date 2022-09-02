@@ -13,15 +13,16 @@ import { AssetPositionsListComponent } from './components/asset-positions-list/a
 	declarations: [
 		ProjectComponent,
 		ProjectSelectorComponent,
-  ScListComponent,
-  ScElementComponent,
-  WalletListComponent,
-  WalletElementComponent,
-  AssetPositionsListComponent
+		ScListComponent,
+		ScElementComponent,
+		WalletListComponent,
+		WalletElementComponent,
+		AssetPositionsListComponent
 	],
 	exports: [
 		ProjectComponent,
-		ProjectSelectorComponent
+		ProjectSelectorComponent,
+		AssetPositionsListComponent
 	],
 	imports: [
 		CommonModule,

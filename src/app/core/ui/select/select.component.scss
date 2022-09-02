@@ -40,19 +40,4 @@
 	z-index: 1;
 	border-radius: 4px;
 	border: solid 1px var(--border-color);
-
-	.option {
-		color: var(--text-color);
-		background: var(--high-bg);
-		border: none;
-		width: 100%;
-		box-sizing: border-box;
-		border-bottom: solid 1px var(--border-low-color);
-		cursor: pointer;
-
-		&:hover {
-			background: var(--primary-darken-bg);
-			color: var(--text-accent-color);
-		}
-	}
 }
