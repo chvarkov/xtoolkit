@@ -2,10 +2,16 @@ import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
 import { DATA_PROVIDER, DataProvider } from '../../core/data-provider/data-provider';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/create-project-dialog/create-project-dialog.component';
+import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider.service';
+import { NetworkSelector } from '../../network/store/network.selector';
+import { Store } from '@ngrx/store';
+import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
+import { NetworkAction } from '../../network/store/network.action';
+import { ProjectSelector } from './project.selector';
 
 @Injectable()
 export class ProjectEffect {
@@ -42,8 +48,33 @@ export class ProjectEffect {
 			)),
 		)));
 
+	loadPositions$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadPositions),
+		withLatestFrom(this.store.select(NetworkSelector.selectedNetwork)),
+		switchMap(([{ address }, network]) => forkJoin([
+			this.elrondDataProvider.getTokenPositions(network, address),
+			from(this.elrondDataProvider.getProxy(network).getAccount(new Address(address))),
+		]).pipe(
+			map(([tokens , account]) => ProjectAction.loadPositionsSuccess({
+				address,
+				native: account.balance.toString(),
+				tokens
+			})),
+			catchError(err => of(ProjectAction.loadPositionsError({err})))
+		))),
+	);
+
+	reloadPositionsOnChangeNetwork$ = createEffect(() => this.actions$.pipe(
+		ofType(NetworkAction.selectNetworkSuccess),
+		tap(() => console.log('RELOAD')),
+		withLatestFrom(ProjectSelector.getAddressesWithLoadedBalances),
+		switchMap((addresses) => of(...addresses.map(address => ProjectAction.loadPositions({address}))))
+	));
+
 	constructor(private readonly actions$: Actions,
+				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,
+				private readonly elrondDataProvider: ElrondDataProvider,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {
 	}
 }

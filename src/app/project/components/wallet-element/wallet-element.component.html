@@ -2,8 +2,6 @@
 	<div class="name">Name</div>
 	<div class="address">erd1Address</div>
 
-	<app-asset-positions-list [positions]="positions"></app-asset-positions-list>
-<!--	<div class="assets">-->
-<!--		<div>(icon) SYMBOL: 0.000</div>-->
-<!--	</div>-->
+	<app-asset-positions-list [positions]="(positions$ | async) || []"
+							  [nativeAmount]="(native$ | async) || '0'"></app-asset-positions-list>
 </div>

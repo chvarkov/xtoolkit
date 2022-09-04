@@ -7,5 +7,8 @@
 	<div>Endpoints: 0</div>
 	<div>Types: 0</div>
 
-	<app-asset-positions-list [positions]="positions"></app-asset-positions-list>
+
+	<app-asset-positions-list [positions]="(positions$ | async) || []"
+							  [nativeAmount]="(native$ | async) || '0'"></app-asset-positions-list>
+
 </div>

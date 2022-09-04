@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { IAssetPosition } from '../../interfaces/asset-position';
+import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
+import { Observable, of } from 'rxjs';
+import { ProjectSelector } from '../../store/project.selector';
 
 @Component({
 	selector: 'app-wallet-element',
@@ -7,20 +10,18 @@ import { IAssetPosition } from '../../interfaces/asset-position';
 	styleUrls: ['./wallet-element.component.scss']
 })
 export class WalletElementComponent implements OnInit {
+	@Input() address: string = '';
 
-	positions: IAssetPosition[] = [
-		{ tokenId: 'WEGLD-354FA6', amount: '12.54'},
-		{ tokenId: 'WEGLD-354FA6', amount: '0.3'},
-		{ tokenId: 'WEGLD-354FA6', amount: '1436.64564'},
-		{ tokenId: 'WEGLD-354FA6', amount: '0.000345346'},
-		{ tokenId: 'WEGLD-354FA6', amount: '124536356.0435'},
-		{ tokenId: 'WEGLD-354FA6', amount: '42.4'},
-	];
+	positions$: Observable<ITokenPosition[]> = of([]);
 
-	constructor() {
+	native$: Observable<string> = of('0');
+
+	constructor(private readonly store: Store) {
 	}
 
 	ngOnInit(): void {
+		this.positions$ = this.store.select(ProjectSelector.getTokenBalances(this.address));
+		this.native$ = this.store.select(ProjectSelector.getNativeBalance(this.address));
 	}
 
 }

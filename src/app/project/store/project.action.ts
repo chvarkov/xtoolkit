@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Project, ProjectsInfo } from '../../core/data-provider/data-provider';
 import { IScAbi } from '../../core/interfaces/sc-abi';
+import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -18,5 +19,10 @@ export class ProjectAction {
 	static readonly addAbi = createAction(`[${ProjectAction.name}] add abi [...]`, props<{projectId: string, name?: string, abi: IScAbi}>());
 	static readonly addAbiSuccess = createAction(`[${ProjectAction.name}] add abi [OK]`, props<{project: Project}>());
 	static readonly addAbiError = createAction(`[${ProjectAction.name}] add abi [ERR]`, props<{err: Error}>());
+
+	static readonly loadPositions = createAction(`[${ProjectAction.name}] load positions [...]`, props<{address: string}>());
+	static readonly loadPositionsSuccess = createAction(`[${ProjectAction.name}] load positions [OK]`, props<{address: string, native: string, tokens: ITokenPosition[]}>());
+	static readonly loadPositionsError = createAction(`[${ProjectAction.name}] load positions [ERR]`, props<{err: Error}>());
+
 }
 

@@ -3,11 +3,16 @@ import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
 
 	constructor(private readonly http: HttpClient) {
+	}
+
+	getProxy(network: INetworkEnvironment): ProxyNetworkProvider {
+		return new ProxyNetworkProvider(network.gatewayUrl);
 	}
 
 	getTokenPositions(netwoek: INetworkEnvironment,

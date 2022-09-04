@@ -23,4 +23,22 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.selected?.smartContracts || [],
 	);
+
+	static getNativeBalance = (address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.positionsMap[address]?.native || '0',
+	);
+
+	static getTokenBalances = (address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.positionsMap[address]?.tokens || [],
+	);
+
+	static getAddressesWithLoadedBalances = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => {
+			console.log('state', state);
+			return Object.keys(state?.positionsMap || {});
+		},
+	);
 }

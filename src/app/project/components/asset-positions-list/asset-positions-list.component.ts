@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IAssetPosition } from '../../interfaces/asset-position';
+import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 
 @Component({
 	selector: 'app-asset-positions-list',
@@ -7,7 +7,9 @@ import { IAssetPosition } from '../../interfaces/asset-position';
 	styleUrls: ['./asset-positions-list.component.scss']
 })
 export class AssetPositionsListComponent implements OnInit {
-	@Input() positions: IAssetPosition[] = [];
+	@Input() nativeAmount = '0';
+
+	@Input() positions: ITokenPosition[] = [];
 
 	@Input() canUsdFaucet = true;
 

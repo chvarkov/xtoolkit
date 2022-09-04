@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { IAssetPosition } from '../../interfaces/asset-position';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
+import { Store } from '@ngrx/store';
+import { ProjectSelector } from '../../store/project.selector';
 
 @Component({
 	selector: 'app-sc-element',
@@ -7,16 +10,17 @@ import { IAssetPosition } from '../../interfaces/asset-position';
 	styleUrls: ['./sc-element.component.scss']
 })
 export class ScElementComponent implements OnInit {
+	@Input() address: string = '';
 
-	positions: IAssetPosition[] = [
-		{ tokenId: 'WEGLD-354FA6', amount: '12.54'},
-		{ tokenId: 'MEX-843DA3', amount: '0.3'},
-	];
+	positions$: Observable<ITokenPosition[]> = of([]);
 
-	constructor() {
+	native$: Observable<string> = of('0');
+
+	constructor(private readonly store: Store) {
 	}
 
 	ngOnInit(): void {
+		this.positions$ = this.store.select(ProjectSelector.getTokenBalances(this.address));
+		this.native$ = this.store.select(ProjectSelector.getNativeBalance(this.address));
 	}
-
 }

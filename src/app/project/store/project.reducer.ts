@@ -1,12 +1,20 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ProjectAction } from './project.action';
 import { ProjectsInfo } from '../../core/data-provider/data-provider';
+import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
+
+export interface IPositionsState {
+	native: string;
+	tokens: ITokenPosition[];
+}
 
 export interface IProjectState extends ProjectsInfo {
+	positionsMap: {[address: string]: IPositionsState};
 }
 
 const initialState: IProjectState = {
 	projects: [],
+	positionsMap: {},
 };
 
 export const reducer = createReducer(
@@ -20,6 +28,7 @@ export const reducer = createReducer(
 	on(ProjectAction.selectProjectSuccess, (state, { project }) => ({
 		...state,
 		selected: project,
+		positionsMap: {},
 	})),
 	on(ProjectAction.createProjectSuccess, (state, { project }) => ({
 		...state,
@@ -30,6 +39,13 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 		selected: state.selected?.id === project.id ? project : state.selected,
+	})),
+	on(ProjectAction.loadPositionsSuccess, (state, { address, native, tokens }) => ({
+		...state,
+		positionsMap: {
+			...state.positionsMap,
+			[address]: {native, tokens},
+		},
 	})),
 );
 

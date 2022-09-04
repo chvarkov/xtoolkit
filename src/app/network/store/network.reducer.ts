@@ -12,7 +12,6 @@ const initialState: INetworkState = {
 };
 
 export const reducer = createReducer(
-// export const networkReducer = createReducer(
 	initialState,
 	on(NetworkAction.loadNetworksSuccess, (state, { data }) => {
 		return {
