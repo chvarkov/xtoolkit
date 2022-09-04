@@ -10,6 +10,7 @@ import { NetworkSelector } from './network/store/network.selector';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from './core/interfaces/network-environment';
 import { DEFAULT_NETWORKS } from './core/constants';
+import { TransactionAction } from './transaction/store/transaction.action';
 
 @Component({
 	selector: 'app-root',

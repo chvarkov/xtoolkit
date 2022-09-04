@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ITransactionPreview } from '../../interfaces/transaction-preview';
+import { IElrondTransaction } from '../../interfaces/elrond-transaction';
 
 @Component({
 	selector: 'app-transaction',
@@ -7,7 +7,7 @@ import { ITransactionPreview } from '../../interfaces/transaction-preview';
 	styleUrls: ['./transaction.component.scss']
 })
 export class TransactionComponent implements OnInit {
-	@Input() preview?: ITransactionPreview;
+	@Input() tx?: IElrondTransaction;
 
 	constructor() {
 	}

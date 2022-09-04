@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { networkReducer } from './store/network.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { NetworkEffect } from './store/network.effect';
+import { NETWORK_FEATURE } from './constants';
 
 @NgModule({
 	declarations: [
@@ -14,7 +15,7 @@ import { NetworkEffect } from './store/network.effect';
 	imports: [
 		CommonModule,
 		CoreModule,
-		StoreModule.forFeature(NetworkModule.storeName, networkReducer),
+		StoreModule.forFeature(NETWORK_FEATURE, networkReducer),
 		EffectsModule.forFeature([NetworkEffect]),
 	],
 	exports: [

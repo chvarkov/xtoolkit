@@ -1,11 +1,11 @@
 import { createSelector } from '@ngrx/store';
 import { INetworkState } from './network.reducer';
-import { NetworkModule } from '../network.module';
 import { INetworkEnvironment } from '../../core/interfaces/network-environment';
+import { NETWORK_FEATURE } from '../constants';
 
 export class NetworkSelector {
 	static networks = createSelector(
-		(app: Record<string, any>) => app[NetworkModule.storeName],
+		(app: Record<string, any>) => app[NETWORK_FEATURE],
 		(state: INetworkState) => state.list,
 	)
 
@@ -15,7 +15,7 @@ export class NetworkSelector {
 	)
 
 	static selectedNetwork = createSelector(
-		(app: Record<string, any>) => app[NetworkModule.storeName],
+		(app: Record<string, any>) => app[NETWORK_FEATURE],
 		(state: INetworkState) => state.selected,
 	)
 }

@@ -23,10 +23,10 @@ import { ScNftsComponent } from './components/sc-viewer/sc-nfts/sc-nfts.componen
 		BytesInputComponent,
 		BytesControlComponent,
 		NumberInputComponent,
-  ScViewerHeaderComponent,
-  ScCodeComponent,
-  ScTokensComponent,
-  ScNftsComponent
+		ScViewerHeaderComponent,
+		ScCodeComponent,
+		ScTokensComponent,
+		ScNftsComponent
 	],
 	imports: [
 		CommonModule,
