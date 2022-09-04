@@ -39,7 +39,6 @@ export class NetworkSelectorComponent implements OnInit {
 	}
 
 	onSelect(network: INetworkEnvironment): void {
-		console.log('select', network);
 		this.store.dispatch(NetworkAction.selectNetwork({network}));
 	}
 }

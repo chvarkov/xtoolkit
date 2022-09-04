@@ -16,7 +16,8 @@ export const reducer = createReducer(
 	on(NetworkAction.loadNetworksSuccess, (state, { data }) => {
 		return {
 			...state,
-			...data,
+			list: data.list,
+			selected: data.selected,
 		}
 	}),
 	on(NetworkAction.selectNetworkSuccess, (state, { network }) => ({

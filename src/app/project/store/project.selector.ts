@@ -36,9 +36,6 @@ export class ProjectSelector {
 
 	static getAddressesWithLoadedBalances = createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => {
-			console.log('state', state);
-			return Object.keys(state?.positionsMap || {});
-		},
+		(state: IProjectState) => Object.keys(state?.positionsMap || {}),
 	);
 }

@@ -66,9 +66,8 @@ export class ProjectEffect {
 
 	reloadPositionsOnChangeNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.selectNetworkSuccess),
-		tap(() => console.log('RELOAD')),
-		withLatestFrom(ProjectSelector.getAddressesWithLoadedBalances),
-		switchMap((addresses) => of(...addresses.map(address => ProjectAction.loadPositions({address}))))
+		withLatestFrom(this.store.select(ProjectSelector.getAddressesWithLoadedBalances)),
+		switchMap(([network, addresses]) => of(...addresses.map(address => ProjectAction.loadPositions({address}))))
 	));
 
 	constructor(private readonly actions$: Actions,

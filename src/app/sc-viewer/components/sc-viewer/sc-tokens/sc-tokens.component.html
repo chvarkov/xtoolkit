@@ -11,7 +11,7 @@
 	</div>
 	<div *ngFor="let position of (positions$ | async) || []" class="position">
 		<div class="token-info">
-			<img class="token-img" src="https://raw.githubusercontent.com/ElrondNetwork/assets/master/tokens/WEGLD-bd4d79/logo.svg" />
+			<img class="token-img" [src]="position.assets?.svgUrl" />
 			<div class="token-id">{{position.identifier}}</div>
 		</div>
 
