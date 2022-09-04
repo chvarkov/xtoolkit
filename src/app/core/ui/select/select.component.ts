@@ -55,17 +55,23 @@ export class SelectComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 			return;
 		}
 
-		this.sub.add(this.options.changes.subscribe((change: OptionComponent[]) => {
-			console.log('select', change);
+		if (this.options.length) {
+			this.setupOptions(this.options.toArray());
+		}
 
-			this.optionsEventsSub.unsubscribe();
-			this.optionsEventsSub = new Subscription();
-			change.forEach(option => {
-				this.optionsEventsSub.add(option.selected.subscribe((e) => {
-					this.selectElement(e);
-				}));
-			});
+		this.sub.add(this.options.changes.subscribe((change: OptionComponent[]) => {
+			this.setupOptions(change);
 		}));
+	}
+
+	setupOptions(list: OptionComponent[]): void {
+		this.optionsEventsSub.unsubscribe();
+		this.optionsEventsSub = new Subscription();
+		list.forEach(option => {
+			this.optionsEventsSub.add(option.selected.subscribe((e) => {
+				this.selectElement(e);
+			}));
+		});
 	}
 
 	ngOnDestroy(): void {
@@ -83,9 +89,6 @@ export class SelectComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 			this.currentSelectedElement = element;
 			this.defaultElement = element;
 		}
-
-		console.log('defaultElement', this.defaultElement)
-		console.log('currentSelectedElement', this.currentSelectedElement)
 
 		this.isVisibleOptions = false;
 	}

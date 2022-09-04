@@ -1,6 +1,12 @@
 <div class="project-selector-container">
-	<app-select class="select" [defaultElement]="mapElement(selected || undefined)" placeHolder="Choose project">
-		<app-option *ngFor="let project of projects" [value]="project.id">{{project.name}}</app-option>
+	<app-select class="select"
+				[defaultElement]="mapElement(selected || undefined)"
+				(selectedElement)="onSelect($event)"
+				placeHolder="Choose project">
+		<app-option *ngFor="let project of projects"
+					[value]="project.id">
+			{{project.name}}
+		</app-option>
 	</app-select>
 	<button class="add-button material-icons"
 			title="Create new project"

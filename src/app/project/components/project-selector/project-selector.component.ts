@@ -34,4 +34,8 @@ export class ProjectSelectorComponent implements OnInit {
 			value: item,
 		};
 	}
+
+	onSelect(item: SelectElement): void {
+		this.store.dispatch(ProjectAction.selectProject({projectId: item.value}));
+	}
 }
