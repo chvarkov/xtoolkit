@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from './ui/confirm-dialog/confirm-dialog.compo
 import { OptionComponent } from './ui/select/option/option.component';
 import { DATA_PROVIDER } from './data-provider/data-provider';
 import { LocalstorageDataProvider } from './data-provider/localstorage/localstorage.data-provider';
+import { ElrondModule } from './elrond/elrond.module';
 
 @NgModule({
 	declarations: [
@@ -23,7 +24,12 @@ import { LocalstorageDataProvider } from './data-provider/localstorage/localstor
 		ConfirmDialogComponent,
 		OptionComponent,
 	],
+	imports: [
+		CommonModule,
+		ElrondModule,
+	],
     exports: [
+    	ElrondModule,
         ToolbarComponent,
         SelectComponent,
         TabsComponent,
@@ -40,8 +46,5 @@ import { LocalstorageDataProvider } from './data-provider/localstorage/localstor
 		},
 		LocalstorageDataProvider,
 	],
-	imports: [
-		CommonModule
-	]
 })
 export class CoreModule { }

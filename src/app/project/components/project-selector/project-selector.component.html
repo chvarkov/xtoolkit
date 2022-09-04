@@ -1,5 +1,10 @@
 <div class="project-selector-container">
-	<app-select class="select" placeHolder="Choose project">
-		<app-option *ngFor="let item of mockedData" [value]="item.value">{{item.name}}</app-option>
+	<app-select class="select" [defaultElement]="mapElement(selected || undefined)" placeHolder="Choose project">
+		<app-option *ngFor="let project of projects" [value]="project.id">{{project.name}}</app-option>
 	</app-select>
+	<button class="add-button material-icons"
+			title="Create new project"
+			(click)="createProject()">
+		add
+	</button>
 </div>

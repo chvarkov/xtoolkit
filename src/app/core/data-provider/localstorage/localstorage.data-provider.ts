@@ -1,15 +1,18 @@
-import { DataProvider } from '../data-provider';
+import { DataProvider, Project, ProjectScAbi, ProjectsInfo } from '../data-provider';
 import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
 import { NetworkInfo } from '../data-provider';
 import { INetworkEnvironment } from '../../interfaces/network-environment';
 import { map } from 'rxjs/operators';
+import * as uuid from 'uuid';
+import { IScAbi } from '../../interfaces/sc-abi';
 
 @Injectable({providedIn: 'root'})
 export class LocalstorageDataProvider implements DataProvider {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly networksKey = `${this.globalPrefix}.networks`;
+	private readonly projectsKey = `${this.globalPrefix}.projects`;
 
 	getNetworks(): Observable<NetworkInfo> {
 		const networks: NetworkInfo | null = this.get(this.networksKey);
@@ -34,6 +37,91 @@ export class LocalstorageDataProvider implements DataProvider {
 				map((info => {
 					info.selected = network;
 					this.set(this.networksKey, info);
+				})),
+			);
+	}
+
+	getProjects(): Observable<ProjectsInfo> {
+		const projects: ProjectsInfo | null = this.get(this.projectsKey);
+
+		if (!projects) {
+			const defaultProjectInfo: ProjectsInfo = {
+				projects: [],
+			};
+
+			this.set(this.projectsKey, defaultProjectInfo);
+
+			return of(defaultProjectInfo);
+		}
+
+		return of(projects);
+	}
+
+	createProject(name: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const project: Project = {
+						id: uuid.v4(),
+						name,
+						smartContracts: [],
+					};
+
+					if (!info.selected) {
+						info.selected = project;
+					}
+
+					info.projects.push(project);
+
+					this.set(this.projectsKey, info);
+
+					return project;
+				})),
+			);
+	}
+
+	addAbi(projectId: string, abi: IScAbi, name: string = abi.name): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const sc: ProjectScAbi = {
+						name,
+						abi,
+					};
+
+					const project = info.projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.smartContracts.push(sc);
+
+					if (info.selected?.id === project.id) {
+						info.selected = project;
+					}
+
+					this.set(this.projectsKey, info);
+
+					return project;
+				})),
+			);
+	}
+
+	selectProject(projectId: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const selectedProject = info.projects.find(i => i.id === projectId);
+
+					if (!selectedProject) {
+						throw new Error('Project not found');
+					}
+
+					info.selected = selectedProject;
+					this.set(this.projectsKey, info);
+
+					return selectedProject;
 				})),
 			);
 	}

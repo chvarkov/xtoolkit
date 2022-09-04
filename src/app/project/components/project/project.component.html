@@ -1,4 +1,4 @@
-<!--<app-project-selector></app-project-selector>-->
+<app-project-selector [projects]="(projects$ | async) || []" [selected]="selectedProject$ | async"></app-project-selector>
 
 <app-tabs>
 	<app-tab title="Smart contracts" [active]="true">

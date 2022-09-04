@@ -1,5 +1,7 @@
 <section (click)="dialogRef.close()">
-	<div class="dialog-container" (click)="$event.stopPropagation()" [ngSwitch]="dialogRef.options">
+	<div class="dialog-container"
+		 (click)="$event.stopPropagation()"
+		 [ngStyle]="dialogRef.options">
 		<div class="header">
 			<div>{{title}}</div>
 			<span class="material-icons close" (click)="dialogRef.close()">✕</span>

@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SelectElement } from '../../../core/ui/select/select.component';
+import { Store } from '@ngrx/store';
+import { ProjectAction } from '../../store/project.action';
+import { Project } from '../../../core/data-provider/data-provider';
+import { INetworkEnvironment } from '../../../core/interfaces/network-environment';
 
 @Component({
 	selector: 'app-project-selector',
@@ -7,21 +11,27 @@ import { SelectElement } from '../../../core/ui/select/select.component';
 	styleUrls: ['./project-selector.component.scss']
 })
 export class ProjectSelectorComponent implements OnInit {
-	mockedData: SelectElement<string>[] = [
-		{
-			name: 'Maiar DEX',
-			value: '1',
-		},
-		{
-			name: 'Airdrop',
-			value: '2',
-		},
-	];
+	@Input() projects: Project[] = [];
+	@Input() selected?: Project | null;
 
-	constructor() {
+	constructor(private readonly store: Store) {
 	}
 
 	ngOnInit(): void {
 	}
 
+	createProject(): void {
+		this.store.dispatch(ProjectAction.createProject());
+	}
+
+	mapElement(item: Project | undefined): SelectElement<Project> | undefined {
+		if (!item) {
+			return undefined;
+		}
+
+		return {
+			name: item.name,
+			value: item,
+		};
+	}
 }

@@ -8,6 +8,13 @@ import { ScElementComponent } from './components/sc-element/sc-element.component
 import { WalletListComponent } from './components/wallet-list/wallet-list.component';
 import { WalletElementComponent } from './components/wallet-element/wallet-element.component';
 import { AssetPositionsListComponent } from './components/asset-positions-list/asset-positions-list.component';
+import { StoreModule } from '@ngrx/store';
+import { PROJECT_FEATURE } from './constants';
+import { projectReducer } from './store/project.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProjectEffect } from './store/project.effect';
+import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [
@@ -17,16 +24,22 @@ import { AssetPositionsListComponent } from './components/asset-positions-list/a
 		ScElementComponent,
 		WalletListComponent,
 		WalletElementComponent,
-		AssetPositionsListComponent
-	],
-	exports: [
-		ProjectComponent,
-		ProjectSelectorComponent,
-		AssetPositionsListComponent
+		AssetPositionsListComponent,
+		CreateProjectDialogComponent
 	],
 	imports: [
 		CommonModule,
-		CoreModule
-	]
+		CoreModule,
+		StoreModule.forFeature(PROJECT_FEATURE, projectReducer),
+		EffectsModule.forFeature([ProjectEffect]),
+		FormsModule,
+	],
+	exports: [
+		StoreModule,
+		EffectsModule,
+		ProjectComponent,
+		ProjectSelectorComponent,
+		AssetPositionsListComponent,
+	],
 })
 export class ProjectModule { }
