@@ -9,6 +9,10 @@ import { ProjectModule } from './project/project.module';
 import { NetworkModule } from './network/network.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { CoreModule } from './core/core.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
 	declarations: [
@@ -22,7 +26,14 @@ import { CoreModule } from './core/core.module';
 		BrowserModule,
 		AppRoutingModule,
 		ProjectModule,
-		CoreModule
+		CoreModule,
+		StoreModule.forRoot({}),
+		EffectsModule.forRoot(),
+		StoreDevtoolsModule.instrument({
+			maxAge: 25,
+			logOnly: environment.production,
+			autoPause: true,
+		}),
 	],
 	providers: [],
 	bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 <div #selector class="select" [ngClass]="getCssClass('element')" (click)="switchShowOptions()">
-	{{currentSelectedElement?.name || placeHolder}}
+	{{defaultElement?.name || currentSelectedElement?.name || placeHolder}}
 </div>
 
 <div class="options-container"

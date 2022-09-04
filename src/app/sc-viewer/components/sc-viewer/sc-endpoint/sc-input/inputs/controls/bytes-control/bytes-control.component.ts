@@ -18,8 +18,10 @@ export type ByteEncodingType = 'decimal' | 'raw' | 'hex' | 'text';
 export class BytesControlComponent implements ControlValueAccessor {
 	@Input() cols = 100;
 	@Input() rows = 2;
-	@Input() encodingMethods: ByteEncodingType[] = ['decimal', 'raw', 'raw', 'text'];
+	@Input() encodingMethods: ByteEncodingType[] = ['decimal', 'raw', 'hex', 'text'];
 	@Input() disabled = false;
+
+	method: ByteEncodingType = 'decimal';
 
 	private onChange: Function = () => null;
 	private onTouch: Function = () => null;
@@ -33,6 +35,10 @@ export class BytesControlComponent implements ControlValueAccessor {
 
 	setDisabledState(isDisabled: boolean): void {
 		this.disabled = isDisabled;
+	}
+
+	onChangeEncodingMethod(v: string): void {
+		this.method = v as ByteEncodingType;
 	}
 
 	set value(val: string) {

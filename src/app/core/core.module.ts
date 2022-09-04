@@ -9,6 +9,8 @@ import { ModalDialogComponent } from './ui/dialog/modal-dialog/modal-dialog.comp
 import { ModalDialogFactory } from './ui/dialog/modal-dialog.factory';
 import { ConfirmDialogComponent } from './ui/confirm-dialog/confirm-dialog.component';
 import { OptionComponent } from './ui/select/option/option.component';
+import { DATA_PROVIDER } from './data-provider/data-provider';
+import { LocalstorageDataProvider } from './data-provider/localstorage/localstorage.data-provider';
 
 @NgModule({
 	declarations: [
@@ -18,8 +20,8 @@ import { OptionComponent } from './ui/select/option/option.component';
 		TabComponent,
 		ToolbarIconButtonComponent,
 		ModalDialogComponent,
-  ConfirmDialogComponent,
-  OptionComponent
+		ConfirmDialogComponent,
+		OptionComponent,
 	],
     exports: [
         ToolbarComponent,
@@ -32,6 +34,11 @@ import { OptionComponent } from './ui/select/option/option.component';
     ],
 	providers: [
 		ModalDialogFactory,
+		{
+			provide: DATA_PROVIDER,
+			useExisting: LocalstorageDataProvider,
+		},
+		LocalstorageDataProvider,
 	],
 	imports: [
 		CommonModule

@@ -1,5 +1,5 @@
 import {
-	AfterContentInit,
+	AfterViewInit,
 	Component,
 	ContentChildren,
 	ElementRef,
@@ -25,7 +25,7 @@ export type SelectSize = 'supersmall' | 'small' | 'medium' | 'big';
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss']
 })
-export class SelectComponent<T> implements OnInit, AfterContentInit, OnDestroy {
+export class SelectComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild('selector', {static: true}) eRef?: ElementRef;
 	@ContentChildren(OptionComponent) options?: QueryList<OptionComponent>;
 
@@ -40,6 +40,7 @@ export class SelectComponent<T> implements OnInit, AfterContentInit, OnDestroy {
 	isVisibleOptions = false;
 
 	sub = new Subscription();
+	optionsEventsSub = new Subscription();
 
 	currentSelectedElement?: SelectElement<T>;
 
@@ -47,28 +48,29 @@ export class SelectComponent<T> implements OnInit, AfterContentInit, OnDestroy {
 		if (this.defaultElement) {
 			this.currentSelectedElement = this.defaultElement;
 		}
-
-		if (!this.options) {
-			return;
-		}
-
-		this.options.forEach(option => {
-			option.size = this.size;
-		});
 	}
 
-	ngAfterContentInit(): void {
+	ngAfterViewInit() {
 		if (!this.options) {
 			return;
 		}
 
-		this.options.forEach(option => {
-			this.sub.add(option.selected.subscribe((e) => this.selectElement(e)));
-		});
+		this.sub.add(this.options.changes.subscribe((change: OptionComponent[]) => {
+			console.log('select', change);
+
+			this.optionsEventsSub.unsubscribe();
+			this.optionsEventsSub = new Subscription();
+			change.forEach(option => {
+				this.optionsEventsSub.add(option.selected.subscribe((e) => {
+					this.selectElement(e);
+				}));
+			});
+		}));
 	}
 
 	ngOnDestroy(): void {
 		this.sub.unsubscribe();
+		this.optionsEventsSub.unsubscribe();
 	}
 
 	switchShowOptions(): void {
@@ -79,7 +81,11 @@ export class SelectComponent<T> implements OnInit, AfterContentInit, OnDestroy {
 		if (element) {
 			this.selectedElement.emit(element);
 			this.currentSelectedElement = element;
+			this.defaultElement = element;
 		}
+
+		console.log('defaultElement', this.defaultElement)
+		console.log('currentSelectedElement', this.currentSelectedElement)
 
 		this.isVisibleOptions = false;
 	}
