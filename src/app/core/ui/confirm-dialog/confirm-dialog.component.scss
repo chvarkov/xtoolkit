@@ -1,0 +1,30 @@
+.content {
+	padding: 10px 0;
+}
+
+.actions {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	padding-top: 4px;
+
+	button {
+		display: flex;
+		padding: 6px;
+		color: var(--text-color);
+		border-radius: 4px;
+		margin: 4px;
+	}
+
+	.confirm-button {
+		background: var(--static-green);
+		border: solid 1px var(--static-green);
+	}
+
+	.cancel-button {
+		background: none;
+		border: solid 1px var(--border-color);
+	}
+}
+
+

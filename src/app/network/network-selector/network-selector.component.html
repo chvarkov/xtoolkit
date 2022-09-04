@@ -1,0 +1,11 @@
+<div class="network-selector-container">
+	<app-select placeHolder="Select elrond network"
+				size="medium"
+				[defaultElement]="mapElement((selectedNetwork$ | async) || undefined) || mapElement(defaultSelectedNetwork)"
+				(selectedElement)="onSelect($event.value)">
+		<app-option *ngFor="let network of (networks$ | async) || defaultNetworks"
+					[value]="network">
+			{{network.name}}
+		</app-option>
+	</app-select>
+</div>

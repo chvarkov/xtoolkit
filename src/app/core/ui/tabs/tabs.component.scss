@@ -1,0 +1,37 @@
+.tabs-container {
+	display: flex;
+	flex-direction: column;
+	background: var(--primary-bg);
+
+	.nav {
+		display: flex;
+		width: 100%;
+		height: var(--tab-height);
+		padding-inline-start: 0;
+		margin-block-start: 0;
+		margin-block-end: 0;
+
+		li {
+			display: flex;
+			flex: 1
+		}
+	}
+
+	.tab {
+		padding: 5px;
+		text-align: center;
+		width: 50px;
+		cursor: pointer;
+
+
+
+		&:hover {
+			border-radius: 2px;
+			opacity: 90%;
+		}
+	}
+
+	.active {
+		background-color: var(--low-bg);
+	}
+}

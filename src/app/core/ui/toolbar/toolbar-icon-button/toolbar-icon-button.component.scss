@@ -1,0 +1,15 @@
+.icon-button {
+	display: flex;
+	flex-direction: row;
+
+	width: 32px;
+	height: 32px;
+	padding: 4px;
+	margin: 2px;
+	//border: solid 1px var(--border-low-color);
+
+	:hover {
+		color: var(--text-accent-color);
+		border: solid 1px var(--border-accent-color);
+	}
+}

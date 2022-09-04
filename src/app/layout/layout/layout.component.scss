@@ -1,0 +1,14 @@
+.layout-container {
+	display: grid;
+	grid-template-columns: 420px 1fr 420px;
+	grid-template-rows: var(--header-height) 1fr var(--footer-height);
+	height: 100vh;
+}
+
+.header-element {
+	border-bottom: solid 1px var(--border-low-color);
+}
+
+.footer-element {
+	border-top: solid 1px var(--border-low-color);
+}

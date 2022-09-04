@@ -1,0 +1,22 @@
+<div class="asset-positions-list-container">
+	<div class="position">
+		<div class="token-info">
+			<img class="token-img" src="https://raw.githubusercontent.com/ElrondNetwork/assets/master/tokens/WEGLD-bd4d79/logo.svg" />
+			<div class="token-id">EGLD</div>
+		</div>
+
+		<div class="amount">
+			{{nativeAmount}}
+		</div>
+	</div>
+	<div *ngFor="let position of positions" class="position">
+		<div class="token-info">
+			<img class="token-img" [src]="position.assets?.svgUrl" />
+			<div class="token-id">{{position.identifier}}</div>
+		</div>
+
+		<div class="amount">
+			{{position.balance}}
+		</div>
+	</div>
+</div>

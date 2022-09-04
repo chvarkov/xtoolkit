@@ -1,0 +1,12 @@
+.header-container {
+	display: flex;
+	flex: 1;
+	width: 100%;
+	padding: 24px 8px;
+	box-sizing: border-box;
+
+	.address-input {
+		display: flex;
+		flex: 1;
+	}
+}

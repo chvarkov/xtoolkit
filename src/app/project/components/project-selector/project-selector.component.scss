@@ -1,0 +1,25 @@
+.project-selector-container {
+	display: flex;
+	flex-direction: row;
+	padding: 8px;
+	box-sizing: border-box;
+	height: var(--project-selector-height);
+
+	.select {
+		display: flex;
+		flex: 1;
+	}
+
+	.add-button {
+		display: flex;
+		width: 50px;
+		font-size: 2em;
+		padding: 10px;
+		box-sizing: border-box;
+		cursor: pointer;
+
+		:hover {
+			color: var(--text-accent-color);
+		}
+	}
+}
