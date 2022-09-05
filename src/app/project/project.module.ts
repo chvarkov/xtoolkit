@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffect } from './store/project.effect';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { GenerateWalletDialogComponent } from './components/generate-wallet-dialog/generate-wallet-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
 		WalletListComponent,
 		WalletElementComponent,
 		AssetPositionsListComponent,
-		CreateProjectDialogComponent
+		CreateProjectDialogComponent,
+  GenerateWalletDialogComponent
 	],
 	imports: [
 		CommonModule,

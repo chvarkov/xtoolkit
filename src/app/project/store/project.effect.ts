@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
 import { DATA_PROVIDER, DataProvider } from '../../core/data-provider/data-provider';
-import { catchError, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/create-project-dialog/create-project-dialog.component';
@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
 import { NetworkAction } from '../../network/store/network.action';
 import { ProjectSelector } from './project.selector';
+import { GenerateWalletDialogComponent } from '../components/generate-wallet-dialog/generate-wallet-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -68,6 +69,30 @@ export class ProjectEffect {
 		ofType(NetworkAction.selectNetworkSuccess),
 		withLatestFrom(this.store.select(ProjectSelector.getAddressesWithLoadedBalances)),
 		switchMap(([network, addresses]) => of(...addresses.map(address => ProjectAction.loadPositions({address}))))
+	));
+
+	addWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addWallet),
+		switchMap(({projectId, wallet}) => this.dataProvider.addWallet(projectId, wallet).pipe(
+			map((project) => ProjectAction.addWalletSuccess({project, address: wallet.address})),
+			catchError(err => of(ProjectAction.addWalletError({err})),
+			)),
+		)));
+
+	addWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addWalletSuccess),
+		switchMap(({address}) => of(ProjectAction.loadPositions({address})))
+	));
+
+	generateWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.generateWallet),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([_, project]) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
+			.afterSubmit$()
+			.pipe(
+				map((wallet) => ProjectAction.addWallet({projectId: project?.id || '', wallet}))
+			),
+		),
 	));
 
 	constructor(private readonly actions$: Actions,

@@ -4,6 +4,12 @@ import { IScAbi } from '../interfaces/sc-abi';
 
 export const DATA_PROVIDER = 'CORE:DATA_PROVIDER';
 
+export interface GeneratedWallet {
+	name: string;
+	address: string;
+	mnemonic: string[];
+}
+
 export interface NetworkInfo {
 	list: INetworkEnvironment[];
 	selected: INetworkEnvironment;
@@ -18,6 +24,7 @@ export interface Project {
 	id: string;
 	name: string;
 	smartContracts: ProjectScAbi[];
+	wallets: GeneratedWallet[];
 }
 
 export interface ProjectsInfo {
@@ -37,4 +44,6 @@ export interface DataProvider {
 	addAbi(projectId: string, abi: IScAbi, name?: string): Observable<Project>;
 
 	selectProject(projectId: string): Observable<Project>;
+
+	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 }

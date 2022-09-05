@@ -10,6 +10,7 @@ import { ProjectSelector } from '../../store/project.selector';
 	styleUrls: ['./wallet-element.component.scss']
 })
 export class WalletElementComponent implements OnInit {
+	@Input() name: string = '';
 	@Input() address: string = '';
 
 	positions$: Observable<ITokenPosition[]> = of([]);

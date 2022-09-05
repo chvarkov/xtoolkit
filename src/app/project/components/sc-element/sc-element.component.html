@@ -1,11 +1,10 @@
-<div class="sc-element-container">
+<div class="sc-element-container" *ngIf="data">
 	<div class="primary-info">
-		<div>Name</div>
-		<div>erd1Address</div>
+		<div>{{data.name}}</div>
+		<div>{{address || 'without address'}}</div>
 	</div>
-	<div>Getters: 0</div>
-	<div>Endpoints: 0</div>
-	<div>Types: 0</div>
+	<div>Endpoints: {{data.abi.endpoints.length}}</div>
+	<div>Types: {{data.abi.types.length}}</div>
 
 
 	<app-asset-positions-list [positions]="(positions$ | async) || []"

@@ -1,6 +1,6 @@
 <div class="wallet-element-container">
-	<div class="name">Name</div>
-	<div class="address">erd1Address</div>
+	<div class="name">{{name}}</div>
+	<div class="address">{{address | shortString:20}}</div>
 
 	<app-asset-positions-list [positions]="(positions$ | async) || []"
 							  [nativeAmount]="(native$ | async) || '0'"></app-asset-positions-list>

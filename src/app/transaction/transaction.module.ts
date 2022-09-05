@@ -10,29 +10,29 @@ import { TransactionEffect } from './store/transaction.effect';
 import { StoreModule } from '@ngrx/store';
 import { transactionReducer } from './store/transaction.reducer';
 import { TRANSACTION_FEATURE } from './constants';
-import { ShortStringPipe } from './pipes/short-string.pipe';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
-	declarations: [
-		TransactionListComponent,
-		TransactionComponent,
-		TransactionStatusBadgeComponent,
-		ShortStringPipe
-	],
-	providers: [
-		TransactionProvider,
-	],
 	imports: [
 		CommonModule,
+		CoreModule,
 		HttpClientModule,
 		EffectsModule.forFeature([TransactionEffect]),
 		StoreModule.forFeature(TRANSACTION_FEATURE, transactionReducer),
 	],
-	exports: [
+	declarations: [
 		TransactionListComponent,
-		EffectsModule,
-		StoreModule,
+		TransactionComponent,
+		TransactionStatusBadgeComponent,
 	],
+	providers: [
+		TransactionProvider,
+	],
+    exports: [
+        TransactionListComponent,
+        EffectsModule,
+        StoreModule,
+    ],
 })
 export class TransactionModule {
 }
