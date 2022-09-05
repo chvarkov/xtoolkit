@@ -1,0 +1,30 @@
+<app-modal-dialog title="Create project" [dialogRef]="dialogRef">
+	<div content class="content">
+		<button class="upload-button" (click)="fileUploader.click()">
+			{{fileName || 'Select ABI'}}
+		</button>
+
+		<input #fileUploader
+			   hidden
+			   type="file"
+			   accept="application/json"
+			   (change)="onFileSelected($event)">
+
+		<ng-container *ngIf="fileName">
+			<input class="sc-name"
+				   [(ngModel)]="smartContractName"
+				   placeholder="Smart contract name">
+
+			<div class="parsed-result">
+				<div class="row">Types: {{types}}</div>
+				<div class="row">Endpoints: {{endpoints}}</div>
+			</div>
+		</ng-container>
+	</div>
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button" [disabled]="!fileName || !smartContractName" (click)="submit()">Upload</button>
+		</div>
+	</div>
+</app-modal-dialog>

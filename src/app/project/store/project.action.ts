@@ -30,5 +30,6 @@ export class ProjectAction {
 
 	static readonly generateWallet = createAction(`[${ProjectAction.name}] generate wallet`);
 
+	static readonly uploadAbi = createAction(`[${ProjectAction.name}] upload abi `);
 }
 

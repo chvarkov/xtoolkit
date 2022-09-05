@@ -30,4 +30,8 @@ export class ProjectComponent implements OnInit {
 	generateWallet(): void {
 		this.store.dispatch(ProjectAction.generateWallet());
 	}
+
+	uploadAbi(): void {
+		this.store.dispatch(ProjectAction.uploadAbi());
+	}
 }
