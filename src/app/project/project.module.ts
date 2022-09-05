@@ -16,6 +16,7 @@ import { ProjectEffect } from './store/project.effect';
 import { CreateProjectDialogComponent } from './components/create-project-dialog/create-project-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { GenerateWalletDialogComponent } from './components/generate-wallet-dialog/generate-wallet-dialog.component';
+import { UploadAbiDialogComponent } from './components/upload-abi-dialog/upload-abi-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,8 @@ import { GenerateWalletDialogComponent } from './components/generate-wallet-dial
 		WalletElementComponent,
 		AssetPositionsListComponent,
 		CreateProjectDialogComponent,
-  GenerateWalletDialogComponent
+  GenerateWalletDialogComponent,
+  UploadAbiDialogComponent
 	],
 	imports: [
 		CommonModule,

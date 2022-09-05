@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
-import { DATA_PROVIDER, DataProvider } from '../../core/data-provider/data-provider';
+import { DATA_PROVIDER, DataProvider, ProjectScAbi } from '../../core/data-provider/data-provider';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
@@ -13,6 +13,7 @@ import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
 import { NetworkAction } from '../../network/store/network.action';
 import { ProjectSelector } from './project.selector';
 import { GenerateWalletDialogComponent } from '../components/generate-wallet-dialog/generate-wallet-dialog.component';
+import { UploadAbiDialogComponent } from '../components/upload-abi-dialog/upload-abi-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -93,6 +94,43 @@ export class ProjectEffect {
 				map((wallet) => ProjectAction.addWallet({projectId: project?.id || '', wallet}))
 			),
 		),
+	));
+
+	uploadAbi$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.uploadAbi),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([_, project]) => this.modalDialogFactory.show(UploadAbiDialogComponent).afterSubmit$().pipe(
+			map((data: ProjectScAbi) => ProjectAction.addAbi({
+				projectId: project?.id || '',
+				name: data.name || data.abi.name,
+				abi: data.abi,
+			})),
+		)),
+	));
+
+	setScAddress$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.setScAddress),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([{ scId, address }, project]) => this.dataProvider.setScAddress(
+			project?.id || '',
+			scId,
+			address,
+		).pipe(
+			map((project) => ProjectAction.setScAddressSuccess({
+				address,
+				project,
+			})),
+			catchError(err => of(ProjectAction.setScAddressError({err}))),
+		))),
+	);
+
+	selectSc$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.selectSc),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([{ scId }, project]) => this.dataProvider.selectSc(project?.id || '', scId).pipe(
+			map((project) => ProjectAction.selectScSuccess({project})),
+		)),
+		catchError(err => of(ProjectAction.selectScError({err}))),
 	));
 
 	constructor(private readonly actions$: Actions,

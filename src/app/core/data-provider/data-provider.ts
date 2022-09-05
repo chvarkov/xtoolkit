@@ -17,6 +17,8 @@ export interface NetworkInfo {
 
 export interface ProjectScAbi {
 	name?: string;
+	address?: string;
+	id: string;
 	abi: IScAbi;
 }
 
@@ -25,6 +27,7 @@ export interface Project {
 	name: string;
 	smartContracts: ProjectScAbi[];
 	wallets: GeneratedWallet[];
+	selectedScId?: string;
 }
 
 export interface ProjectsInfo {
@@ -43,7 +46,11 @@ export interface DataProvider {
 
 	addAbi(projectId: string, abi: IScAbi, name?: string): Observable<Project>;
 
+	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
+
 	selectProject(projectId: string): Observable<Project>;
+
+	selectSc(projectId: string, scId: string): Observable<Project>;
 
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 }

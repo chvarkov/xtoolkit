@@ -43,4 +43,16 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => Object.keys(state?.positionsMap || {}),
 	);
+
+	static selectedSc = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => {
+			const id = state.selected?.selectedScId;
+			if (!id) {
+				return undefined;
+			}
+
+			return state.selected?.smartContracts.find(sc => sc.id === id);
+		},
+	);
 }

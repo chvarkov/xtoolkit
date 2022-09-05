@@ -1,13 +1,12 @@
-<div class="sc-element-container" *ngIf="data">
+<div class="sc-element-container" *ngIf="sc" (click)="select()">
 	<div class="primary-info">
-		<div>{{data.name}}</div>
+		<div>{{sc.name}}</div>
 		<div>{{address || 'without address'}}</div>
 	</div>
-	<div>Endpoints: {{data.abi.endpoints.length}}</div>
-	<div>Types: {{data.abi.types.length}}</div>
+	<div>Endpoints: {{sc.abi.endpoints.length}}</div>
+	<div>Types: {{sc.abi.types.length}}</div>
 
 
 	<app-asset-positions-list [positions]="(positions$ | async) || []"
 							  [nativeAmount]="(native$ | async) || '0'"></app-asset-positions-list>
-
 </div>

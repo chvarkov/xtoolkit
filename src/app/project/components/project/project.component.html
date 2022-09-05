@@ -3,10 +3,15 @@
 <app-tabs>
 	<app-tab title="Smart contracts" [active]="true">
 		<app-toolbar>
-			<app-toolbar-icon-button right-side hint="Import new ABI">add</app-toolbar-icon-button>
+			<app-toolbar-icon-button
+				right-side
+				hint="Import new ABI"
+				(click)="uploadAbi()">
+				add
+			</app-toolbar-icon-button>
 			<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
 		</app-toolbar>
-		<app-sc-list></app-sc-list>
+		<app-sc-list [list]="(smartContracts$ | async) || []"></app-sc-list>
 	</app-tab>
 
 	<app-tab title="Wallets">

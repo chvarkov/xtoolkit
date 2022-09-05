@@ -1,5 +1,5 @@
-<div class="sc-viewer-container">
-	<app-sc-viewer-header [address]="address"></app-sc-viewer-header>
+<div class="sc-viewer-container" *ngIf="selectedSc">
+	<app-sc-viewer-header></app-sc-viewer-header>
 	<app-tabs>
 		<app-tab title="Endpoints">
 			<app-toolbar>
@@ -7,7 +7,7 @@
 				<app-toolbar-icon-button right-side hint="Expand all">expand_more</app-toolbar-icon-button>
 				<app-toolbar-icon-button right-side hint="Hide all">expand_less</app-toolbar-icon-button>
 			</app-toolbar>
-			<app-sc-endpoint *ngFor="let endpoint of abi.endpoints" [endpoint]="endpoint"></app-sc-endpoint>
+			<app-sc-endpoint *ngFor="let endpoint of selectedSc.abi.endpoints" [endpoint]="endpoint"></app-sc-endpoint>
 		</app-tab>
 		<app-tab title="Tokens">
 			<app-toolbar>

@@ -1,3 +1,11 @@
 .sc-element-container {
 	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+	border-bottom: solid 1px var(--border-low-color);
+	cursor: pointer;
+
+	&:hover {
+		background: var(--primary-bg);
+	}
 }
