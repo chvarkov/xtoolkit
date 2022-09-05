@@ -4,6 +4,9 @@ import { DialogRef } from '../../../core/ui/dialog/dialog-ref';
 import { IScAbi } from '../../../core/interfaces/sc-abi';
 import { ProjectScAbi } from '../../../core/data-provider/data-provider';
 
+export interface IUploadedSc extends Omit<ProjectScAbi, 'id'> {
+}
+
 @Component({
 	selector: 'app-upload-abi-dialog',
 	templateUrl: './upload-abi-dialog.component.html',
@@ -26,7 +29,7 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 		endpoints: [],
 	};
 
-	dialogRef!: DialogRef<void, ProjectScAbi>;
+	dialogRef!: DialogRef<void, IUploadedSc>;
 
 	constructor() {
 		super();

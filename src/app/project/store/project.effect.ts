@@ -100,18 +100,29 @@ export class ProjectEffect {
 		ofType(ProjectAction.uploadAbi),
 		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
 		switchMap(([_, project]) => this.modalDialogFactory.show(UploadAbiDialogComponent).afterSubmit$().pipe(
-			map((data: ProjectScAbi) => {
-				console.log('data', data);
-				console.log('project', project);
-				return ProjectAction.addAbi({
-					projectId: project?.id || '',
-					name: data.name || data.abi.name,
-					abi: data.abi,
-				});
-			}),
+			map((data: ProjectScAbi) => ProjectAction.addAbi({
+				projectId: project?.id || '',
+				name: data.name || data.abi.name,
+				abi: data.abi,
+			})),
 		)),
 	));
 
+	setScAddress$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.setScAddress),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([{ scId, address }, project]) => this.dataProvider.setScAddress(
+			project?.id || '',
+			scId,
+			address,
+		).pipe(
+			map((project) => ProjectAction.setScAddressSuccess({
+				address,
+				project,
+			})),
+			catchError(err => of(ProjectAction.setScAddressError({err}))),
+		))),
+	);
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

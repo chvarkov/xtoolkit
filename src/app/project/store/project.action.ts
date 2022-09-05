@@ -31,5 +31,9 @@ export class ProjectAction {
 	static readonly generateWallet = createAction(`[${ProjectAction.name}] generate wallet`);
 
 	static readonly uploadAbi = createAction(`[${ProjectAction.name}] upload abi `);
+
+	static readonly setScAddress = createAction(`[${ProjectAction.name}] set sc address [...]`, props<{scId: string, address: string}>());
+	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{project: Project, address: string}>());
+	static readonly setScAddressError = createAction(`[${ProjectAction.name}] set sc address [ERR]`, props<{err: Error}>());
 }
 

@@ -86,6 +86,7 @@ export class LocalstorageDataProvider implements DataProvider {
 			.pipe(
 				map((info => {
 					const sc: ProjectScAbi = {
+						id: uuid.v4(),
 						name,
 						abi,
 					};
@@ -97,6 +98,39 @@ export class LocalstorageDataProvider implements DataProvider {
 					}
 
 					project.smartContracts.push(sc);
+
+					if (!project.selectedScId) {
+						project.selectedScId = sc.id;
+					}
+
+					if (info.selected?.id === project.id) {
+						info.selected = project;
+					}
+
+					this.set(this.projectsKey, info);
+
+					return project;
+				})),
+			);
+	}
+
+	setScAddress(projectId: string, scId: string, address: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const project = info.projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					const sc = project.smartContracts.find(sc => sc.id === scId);
+
+					if (!sc) {
+						throw new Error('Smart contract not found');
+					}
+
+					sc.address = address;
 
 					if (info.selected?.id === project.id) {
 						info.selected = project;
