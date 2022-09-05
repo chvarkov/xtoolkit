@@ -27,4 +27,7 @@ export class ProjectComponent implements OnInit {
 		this.store.dispatch(ProjectAction.loadProjects());
 	}
 
+	generateWallet(): void {
+		this.store.dispatch(ProjectAction.generateWallet());
+	}
 }

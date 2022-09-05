@@ -1,4 +1,4 @@
-import { DataProvider, Project, ProjectScAbi, ProjectsInfo } from '../data-provider';
+import { DataProvider, GeneratedWallet, Project, ProjectScAbi, ProjectsInfo } from '../data-provider';
 import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
@@ -65,6 +65,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						id: uuid.v4(),
 						name,
 						smartContracts: [],
+						wallets: [],
 					};
 
 					if (!info.selected) {
@@ -100,6 +101,25 @@ export class LocalstorageDataProvider implements DataProvider {
 					if (info.selected?.id === project.id) {
 						info.selected = project;
 					}
+
+					this.set(this.projectsKey, info);
+
+					return project;
+				})),
+			);
+	}
+
+	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const project = info.projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.wallets.push(wallet);
 
 					this.set(this.projectsKey, info);
 

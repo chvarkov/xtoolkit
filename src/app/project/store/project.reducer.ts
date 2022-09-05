@@ -47,6 +47,11 @@ export const reducer = createReducer(
 			[address]: {native, tokens},
 		},
 	})),
+	on(ProjectAction.addWalletSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+		selected: state.selected?.id === project.id ? project : state.selected,
+	})),
 );
 
 

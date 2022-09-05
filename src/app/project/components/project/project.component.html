@@ -11,7 +11,13 @@
 
 	<app-tab title="Wallets">
 		<app-toolbar>
-			<app-toolbar-icon-button right-side hint="Add new wallet">add</app-toolbar-icon-button>
+			<app-toolbar-icon-button
+				right-side
+				hint="Generate new wallet"
+				(click)="generateWallet()">
+				add
+			</app-toolbar-icon-button>
+			<app-toolbar-icon-button right-side hint="Add wallet">person_add</app-toolbar-icon-button>
 			<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
 		</app-toolbar>
 		<app-wallet-list></app-wallet-list>

@@ -1,0 +1,15 @@
+<app-modal-dialog title="Create project" [dialogRef]="dialogRef">
+	<div content class="content">
+		<input class="project-name" [(ngModel)]="walletName" placeholder="Wallet name">
+	</div>
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!walletName"
+					(click)="generate()">
+				Generate
+			</button>
+		</div>
+	</div>
+</app-modal-dialog>

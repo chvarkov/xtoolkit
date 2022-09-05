@@ -12,6 +12,7 @@ import { OptionComponent } from './ui/select/option/option.component';
 import { DATA_PROVIDER } from './data-provider/data-provider';
 import { LocalstorageDataProvider } from './data-provider/localstorage/localstorage.data-provider';
 import { ElrondModule } from './elrond/elrond.module';
+import { ShortStringPipe } from './pipes/short-string.pipe';
 
 @NgModule({
 	declarations: [
@@ -23,21 +24,12 @@ import { ElrondModule } from './elrond/elrond.module';
 		ModalDialogComponent,
 		ConfirmDialogComponent,
 		OptionComponent,
+		ShortStringPipe,
 	],
 	imports: [
 		CommonModule,
 		ElrondModule,
 	],
-    exports: [
-    	ElrondModule,
-        ToolbarComponent,
-        SelectComponent,
-        TabsComponent,
-        TabComponent,
-        ToolbarIconButtonComponent,
-        ModalDialogComponent,
-        OptionComponent,
-    ],
 	providers: [
 		ModalDialogFactory,
 		{
@@ -45,6 +37,17 @@ import { ElrondModule } from './elrond/elrond.module';
 			useExisting: LocalstorageDataProvider,
 		},
 		LocalstorageDataProvider,
+	],
+	exports: [
+		ElrondModule,
+		ToolbarComponent,
+		SelectComponent,
+		TabsComponent,
+		TabComponent,
+		ToolbarIconButtonComponent,
+		ModalDialogComponent,
+		OptionComponent,
+		ShortStringPipe,
 	],
 })
 export class CoreModule { }

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Project, ProjectsInfo } from '../../core/data-provider/data-provider';
+import { GeneratedWallet, Project, ProjectsInfo } from '../../core/data-provider/data-provider';
 import { IScAbi } from '../../core/interfaces/sc-abi';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 
@@ -23,6 +23,12 @@ export class ProjectAction {
 	static readonly loadPositions = createAction(`[${ProjectAction.name}] load positions [...]`, props<{address: string}>());
 	static readonly loadPositionsSuccess = createAction(`[${ProjectAction.name}] load positions [OK]`, props<{address: string, native: string, tokens: ITokenPosition[]}>());
 	static readonly loadPositionsError = createAction(`[${ProjectAction.name}] load positions [ERR]`, props<{err: Error}>());
+
+	static readonly addWallet = createAction(`[${ProjectAction.name}] add wallet [...]`, props<{projectId: string, wallet: GeneratedWallet}>());
+	static readonly addWalletSuccess = createAction(`[${ProjectAction.name}] add wallet [OK]`, props<{project: Project, address: string}>());
+	static readonly addWalletError = createAction(`[${ProjectAction.name}] add wallet [ERR]`, props<{err: Error}>());
+
+	static readonly generateWallet = createAction(`[${ProjectAction.name}] generate wallet`);
 
 }
 
