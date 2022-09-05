@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IScAbi } from '../../../core/interfaces/sc-abi';
 import { INetworkEnvironment } from '../../../core/interfaces/network-environment';
+import { ProjectScAbi } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-sc-viewer',
@@ -12,15 +12,7 @@ export class ScViewerComponent implements OnInit {
 
 	@Input() selectedEnvironment?: INetworkEnvironment;
 
-	@Input() abi: IScAbi = {
-		name: '',
-		constructor: {
-			inputs: [],
-			outputs: [],
-		},
-		endpoints: [],
-		types: {},
-	};
+	@Input() selectedSc?: ProjectScAbi | null;
 
 	@Input() code: string = '';
 

@@ -50,5 +50,7 @@ export interface DataProvider {
 
 	selectProject(projectId: string): Observable<Project>;
 
+	selectSc(projectId: string, scId: string): Observable<Project>;
+
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 }

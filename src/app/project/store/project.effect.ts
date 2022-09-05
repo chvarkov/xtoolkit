@@ -124,6 +124,15 @@ export class ProjectEffect {
 		))),
 	);
 
+	selectSc$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.selectSc),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([{ scId }, project]) => this.dataProvider.selectSc(project?.id || '', scId).pipe(
+			map((project) => ProjectAction.selectScSuccess({project})),
+		)),
+		catchError(err => of(ProjectAction.selectScError({err}))),
+	));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,

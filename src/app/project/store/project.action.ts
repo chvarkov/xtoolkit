@@ -35,5 +35,9 @@ export class ProjectAction {
 	static readonly setScAddress = createAction(`[${ProjectAction.name}] set sc address [...]`, props<{scId: string, address: string}>());
 	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{project: Project, address: string}>());
 	static readonly setScAddressError = createAction(`[${ProjectAction.name}] set sc address [ERR]`, props<{err: Error}>());
+
+	static readonly selectSc = createAction(`[${ProjectAction.name}] select sc [...]`, props<{scId: string}>());
+	static readonly selectScSuccess = createAction(`[${ProjectAction.name}] select sc [OK]`, props<{project: Project}>());
+	static readonly selectScError = createAction(`[${ProjectAction.name}] select sc [ERR]`, props<{err: Error}>());
 }
 

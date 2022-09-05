@@ -143,6 +143,35 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
+	selectSc(projectId: string, scId: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const project = info.projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					const sc = project.smartContracts.find(sc => sc.id === scId);
+
+					if (!sc) {
+						throw new Error('Smart contract not found');
+					}
+
+					project.selectedScId = scId;
+
+					if (info.selected?.id === project.id) {
+						info.selected = project;
+					}
+
+					this.set(this.projectsKey, info);
+
+					return project;
+				})),
+			);
+	}
+
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project> {
 		return this.getProjects()
 			.pipe(
