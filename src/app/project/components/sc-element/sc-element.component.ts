@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
+import { ProjectScAbi } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-sc-element',
@@ -11,6 +12,7 @@ import { ProjectSelector } from '../../store/project.selector';
 })
 export class ScElementComponent implements OnInit {
 	@Input() address: string = '';
+	@Input() data?: ProjectScAbi;
 
 	positions$: Observable<ITokenPosition[]> = of([]);
 
