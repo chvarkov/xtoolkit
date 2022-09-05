@@ -13,6 +13,8 @@ import { DATA_PROVIDER } from './data-provider/data-provider';
 import { LocalstorageDataProvider } from './data-provider/localstorage/localstorage.data-provider';
 import { ElrondModule } from './elrond/elrond.module';
 import { ShortStringPipe } from './pipes/short-string.pipe';
+import { DropdownMenuComponent } from './ui/dropdown-menu/dropdown-menu.component';
+import { DropdownMenuItemComponent } from './ui/dropdown-menu/dropdown-menu-item/dropdown-menu-item.component';
 
 @NgModule({
 	declarations: [
@@ -25,6 +27,8 @@ import { ShortStringPipe } from './pipes/short-string.pipe';
 		ConfirmDialogComponent,
 		OptionComponent,
 		ShortStringPipe,
+  DropdownMenuComponent,
+  DropdownMenuItemComponent,
 	],
 	imports: [
 		CommonModule,
@@ -48,6 +52,8 @@ import { ShortStringPipe } from './pipes/short-string.pipe';
 		ModalDialogComponent,
 		OptionComponent,
 		ShortStringPipe,
+		DropdownMenuComponent,
+		DropdownMenuItemComponent,
 	],
 })
 export class CoreModule { }

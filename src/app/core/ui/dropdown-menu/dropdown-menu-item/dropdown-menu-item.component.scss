@@ -1,0 +1,25 @@
+.item-container {
+	display: flex;
+	width: 200px;
+	flex-direction: row;
+	color: var(--text-color);
+	background: var(--low-bg);
+	cursor: pointer;
+
+	&:hover {
+		background: var(--primary-darken-bg);
+		color: var(--text-accent-color);
+	}
+
+	.icon {
+		display: flex;
+		width: 40px;
+		padding: 10px;
+	}
+
+	.text {
+		display: flex;
+		flex: 1;
+		padding: 10px;
+	}
+}

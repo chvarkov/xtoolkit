@@ -1,0 +1,6 @@
+<div #dropdown class="material-icons menu-button" (click)="isOpen = !isOpen">
+	more_vert
+	<div class="menu-container" [ngClass]="menuPosition" *ngIf="isOpen">
+		<ng-content></ng-content>
+	</div>
+</div>
