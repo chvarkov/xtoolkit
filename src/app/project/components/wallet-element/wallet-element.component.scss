@@ -10,5 +10,10 @@
 
 	.name {
 		color: var(--text-accent-color);
+		width: 100%;
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+		justify-content: space-between;
 	}
 }

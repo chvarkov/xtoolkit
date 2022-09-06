@@ -1,5 +1,11 @@
 <div class="wallet-element-container">
-	<div class="name">{{name}}</div>
+	<div class="name">
+		{{name}}
+		<app-dropdown-menu menuPosition="left">
+			<app-dropdown-menu-item icon="edit" text="Rename"></app-dropdown-menu-item>
+			<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+		</app-dropdown-menu>
+	</div>
 	<div class="address">{{address | shortString:20}}</div>
 
 	<app-asset-positions-list [positions]="(positions$ | async) || []"
