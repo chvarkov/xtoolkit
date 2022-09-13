@@ -27,6 +27,7 @@ export interface Project {
 	name: string;
 	smartContracts: ProjectScAbi[];
 	wallets: GeneratedWallet[];
+	tokens: string[];
 	selectedScId?: string;
 }
 
@@ -53,4 +54,6 @@ export interface DataProvider {
 	selectSc(projectId: string, scId: string): Observable<Project>;
 
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
+
+	addToken(projectId: string, tokenAddress: string): Observable<Project>;
 }

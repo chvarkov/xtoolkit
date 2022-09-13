@@ -38,4 +38,8 @@ export class ProjectViewerComponent implements OnInit {
 	loadProjects(): void {
 		this.store.dispatch(ProjectAction.loadProjects());
 	}
+
+	addToken(): void {
+		this.store.dispatch(ProjectAction.addToken());
+	}
 }

@@ -19,6 +19,7 @@ import { GenerateWalletDialogComponent } from './components/generate-wallet-dial
 import { UploadAbiDialogComponent } from './components/upload-abi-dialog/upload-abi-dialog.component';
 import { ProjectViewerComponent } from './components/project-viewer/project-viewer.component';
 import { ProjectElementComponent } from './components/project-element/project-element.component';
+import { AddTokenDialogComponent } from './components/add-token-dialog/add-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -32,8 +33,9 @@ import { ProjectElementComponent } from './components/project-element/project-el
 		CreateProjectDialogComponent,
 		GenerateWalletDialogComponent,
 		UploadAbiDialogComponent,
-  ProjectViewerComponent,
-  ProjectElementComponent,
+		ProjectViewerComponent,
+		ProjectElementComponent,
+		AddTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

@@ -14,6 +14,7 @@ import { NetworkAction } from '../../network/store/network.action';
 import { ProjectSelector } from './project.selector';
 import { GenerateWalletDialogComponent } from '../components/generate-wallet-dialog/generate-wallet-dialog.component';
 import { UploadAbiDialogComponent } from '../components/upload-abi-dialog/upload-abi-dialog.component';
+import { AddTokenDialogComponent } from '../components/add-token-dialog/add-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -131,6 +132,20 @@ export class ProjectEffect {
 			map((project) => ProjectAction.selectScSuccess({project})),
 		)),
 		catchError(err => of(ProjectAction.selectScError({err}))),
+	));
+
+	addToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addToken),
+		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
+		switchMap(([_, project]) => this.modalDialogFactory.show(AddTokenDialogComponent)
+			.afterSubmit$()
+			.pipe(
+				switchMap((tokenAddress: string) => this.dataProvider.addToken(project?.id || '', tokenAddress).pipe(
+					map((updatedProject) => ProjectAction.addTokenSuccess({project: updatedProject}))
+				)),
+			),
+		),
+		catchError(err => of(ProjectAction.addTokenError({err}))),
 	));
 
 	constructor(private readonly actions$: Actions,

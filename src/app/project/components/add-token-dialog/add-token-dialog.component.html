@@ -1,0 +1,15 @@
+<app-modal-dialog title="Add token" [dialogRef]="dialogRef">
+	<div content class="content">
+		<input class="token-address" [(ngModel)]="tokenId" placeholder="Token address">
+	</div>
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!tokenId"
+					(click)="submit()">
+				Add
+			</button>
+		</div>
+	</div>
+</app-modal-dialog>

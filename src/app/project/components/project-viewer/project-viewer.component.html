@@ -29,14 +29,13 @@
 			</app-project-element>
 			<app-project-element [expandable]="true" type="group" icon="folder" name="Tokens">
 				<ng-container actions>
-					<button class="material-icons action-button">add</button>
+					<button class="material-icons action-button" (click)="addToken()">add</button>
 				</ng-container>
 				<ng-container innerElements>
-					<app-project-element icon="token" type="token" name="MEX-43FA6B">
-
-					</app-project-element>
-					<app-project-element icon="token" type="token" name="WEGLD-12FF8A">
-
+					<app-project-element *ngFor="let tokenAddress of project.tokens"
+										 icon="token"
+										 type="token"
+										 [name]="tokenAddress">
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
@@ -59,15 +58,10 @@
 					<button class="material-icons action-button">add</button>
 				</ng-container>
 				<ng-container innerElements>
-					<app-project-element icon="account_balance_wallet" type="wallet" name="Owner">
-
-					</app-project-element>
-					<app-project-element icon="account_balance_wallet" type="wallet" name="User Alex">
-
-					</app-project-element>
-
-					<app-project-element icon="account_balance_wallet" type="wallet" name="User Bob">
-
+					<app-project-element *ngFor="let wallet of project.wallets"
+										 icon="account_balance_wallet"
+										 type="wallet"
+										 [name]="wallet.name">
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
