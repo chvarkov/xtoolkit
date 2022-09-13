@@ -7,7 +7,7 @@
 	</app-toolbar-icon-button>
 </app-toolbar>
 
-<div class="project-viewer">
+<div class="project-explorer">
 	<app-project-element *ngFor="let project of (projects$ | async) || []"
 						 icon="folder_copy"
 						 [bold]="true"

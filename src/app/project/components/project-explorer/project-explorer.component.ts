@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project, ProjectScAbi } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
-import { ProjectAction } from '../../store/project.action';
 import { ProjectSelector } from '../../store/project.selector';
+import { ProjectAction } from '../../store/project.action';
 
 @Component({
-	selector: 'app-project',
-	templateUrl: './project.component.html',
-	styleUrls: ['./project.component.scss'],
+	selector: 'app-project-explorer',
+	templateUrl: './project-explorer.component.html',
+	styleUrls: ['./project-explorer.component.scss']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectExplorerComponent implements OnInit {
 	projects$: Observable<Project[]>;
 
 	selectedProject$: Observable<Project | undefined>;
@@ -24,14 +24,22 @@ export class ProjectComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.loadProjects();
+	}
+
+	createProject(): void {
+		this.store.dispatch(ProjectAction.createProject());
+	}
+
+	uploadScAbi(): void {
+		this.store.dispatch(ProjectAction.uploadAbi());
+	}
+
+	loadProjects(): void {
 		this.store.dispatch(ProjectAction.loadProjects());
 	}
 
-	generateWallet(): void {
-		this.store.dispatch(ProjectAction.generateWallet());
-	}
-
-	uploadAbi(): void {
-		this.store.dispatch(ProjectAction.uploadAbi());
+	addToken(): void {
+		this.store.dispatch(ProjectAction.addToken());
 	}
 }
