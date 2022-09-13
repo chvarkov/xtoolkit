@@ -1,0 +1,45 @@
+:host {
+	width: 100%;
+}
+
+.project-element {
+	font-size: 1em;
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+
+	&:hover {
+		background: var(--high-bg);
+	}
+
+	.icon {
+		padding: 2px;
+	}
+
+	.expand {
+		cursor: pointer;
+		padding-right: 4px;
+	}
+
+	.name {
+		margin-left: 4px;
+		flex: 1;
+		padding: 6px 0;
+	}
+
+	.bold {
+		font-weight: bold;
+	}
+
+	.actions {
+		display: flex;
+		justify-content: right;
+		flex-direction: row;
+	}
+}
+
+.content {
+	padding-left: 28px;
+}
