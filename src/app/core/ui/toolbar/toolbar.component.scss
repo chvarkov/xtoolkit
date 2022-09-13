@@ -19,5 +19,10 @@
 
 	.left-side {
 		justify-content: left;
+
+		.toolbar-title {
+			padding: 6px;
+			font-size: 1.2em;
+		}
 	}
 }

@@ -17,6 +17,8 @@ import { CreateProjectDialogComponent } from './components/create-project-dialog
 import { FormsModule } from '@angular/forms';
 import { GenerateWalletDialogComponent } from './components/generate-wallet-dialog/generate-wallet-dialog.component';
 import { UploadAbiDialogComponent } from './components/upload-abi-dialog/upload-abi-dialog.component';
+import { ProjectViewerComponent } from './components/project-viewer/project-viewer.component';
+import { ProjectElementComponent } from './components/project-element/project-element.component';
 
 @NgModule({
 	declarations: [
@@ -28,8 +30,10 @@ import { UploadAbiDialogComponent } from './components/upload-abi-dialog/upload-
 		WalletElementComponent,
 		AssetPositionsListComponent,
 		CreateProjectDialogComponent,
-  GenerateWalletDialogComponent,
-  UploadAbiDialogComponent
+		GenerateWalletDialogComponent,
+		UploadAbiDialogComponent,
+  ProjectViewerComponent,
+  ProjectElementComponent,
 	],
 	imports: [
 		CommonModule,
@@ -44,6 +48,7 @@ import { UploadAbiDialogComponent } from './components/upload-abi-dialog/upload-
 		ProjectComponent,
 		ProjectSelectorComponent,
 		AssetPositionsListComponent,
+		ProjectViewerComponent,
 	],
 })
 export class ProjectModule { }
