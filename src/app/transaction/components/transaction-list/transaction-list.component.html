@@ -1,3 +1,8 @@
+<app-toolbar title="Transactions">
+	<app-toolbar-icon-button right-side hint="Reload">
+		refresh
+	</app-toolbar-icon-button>
+</app-toolbar>
 <div class="transaction-list-container">
 	<app-transaction *ngFor="let tx of transactions$ | async" [tx]="tx"></app-transaction>
 </div>
