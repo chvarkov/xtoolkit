@@ -10,7 +10,7 @@
 				cdkDrag
 				class="tab"
 				[ngClass]="{'active': tab.active === true }"
-				(click)="selectTab(tab)">
+				(click)="selectTab(tab, i)">
 				<span class="icon material-icons" [ngStyle]="{color: tab.type | componentColor}">
 					{{tab.type | componentIcon}}
 				</span>

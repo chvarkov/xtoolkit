@@ -2,16 +2,15 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { ProjectAction } from './project.action';
 import { ProjectsInfo } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
-import { OpenedProjectTab } from '../../core/data-provider/personal-settings.manager';
+import { TabsData } from '../../core/data-provider/personal-settings.manager';
 
 export interface IPositionsState {
 	native: string;
 	tokens: ITokenPosition[];
 }
 
-export interface IProjectState extends ProjectsInfo {
+export interface IProjectState extends ProjectsInfo, TabsData {
 	positionsMap: {[address: string]: IPositionsState};
-	tabs: OpenedProjectTab[];
 }
 
 const initialState: IProjectState = {
@@ -74,12 +73,12 @@ export const reducer = createReducer(
 		ProjectAction.openProjectTabSuccess,
 		ProjectAction.closeProjectTabSuccess,
 		ProjectAction.moveProjectTabSuccess,
-		(state, { tabs }) => ({
+		ProjectAction.selectTabSuccess,
+		(state, { tabsData }) => ({
 			...state,
-			tabs,
+			...tabsData,
 		})),
 );
-
 
 export function projectReducer(state: IProjectState | undefined, action: Action): IProjectState {
 	return reducer(state, action);

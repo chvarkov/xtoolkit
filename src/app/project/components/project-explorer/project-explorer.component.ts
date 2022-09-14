@@ -44,6 +44,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.addToken());
 	}
 
+	generateWallet(): void {
+		this.store.dispatch(ProjectAction.generateWallet());
+	}
+
 	openProjectComponent(title: string, componentType: ProjectComponentType, componentId: string): void {
 		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
 	}

@@ -152,7 +152,7 @@ export class ProjectEffect {
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectTabs),
 		switchMap(() => this.personalSettingsManager.getOpenedTabs().pipe(
-			map((tabs) => ProjectAction.loadProjectTabsSuccess({tabs})),
+			map((tabsData) => ProjectAction.loadProjectTabsSuccess({tabsData})),
 			catchError(err => of(ProjectAction.loadProjectTabsError({err})))),
 		),
 	));
@@ -160,7 +160,7 @@ export class ProjectEffect {
 	openProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.openProjectTab),
 		switchMap(({title, componentType, componentId}) => this.personalSettingsManager.openTab(title, componentType, componentId).pipe(
-			map((tabs) => ProjectAction.openProjectTabSuccess({tabs})),
+			map((tabsData) => ProjectAction.openProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.openProjectTabError({err})))),
 		),
 	));
@@ -168,7 +168,7 @@ export class ProjectEffect {
 	closeProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.closeProjectTab),
 		switchMap(({index}) => this.personalSettingsManager.closeTab(index).pipe(
-			map((tabs) => ProjectAction.closeProjectTabSuccess({tabs})),
+			map((tabsData) => ProjectAction.closeProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.closeProjectTabError({err})))),
 		),
 	));
@@ -176,8 +176,16 @@ export class ProjectEffect {
 	moveProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.moveProjectTab),
 		switchMap(({prevIndex, currentIndex}) => this.personalSettingsManager.moveTab(prevIndex, currentIndex).pipe(
-			map((tabs) => ProjectAction.moveProjectTabSuccess({tabs})),
+			map((tabsData) => ProjectAction.moveProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.moveProjectTabError({err})))),
+		),
+	));
+
+	selectTab$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.selectTab),
+		switchMap(({index}) => this.personalSettingsManager.selectTab(index).pipe(
+			map((tabsData) => ProjectAction.selectTabSuccess({tabsData})),
+			catchError(err => of(ProjectAction.selectTabError({err})))),
 		),
 	));
 

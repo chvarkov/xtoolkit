@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OpenedProjectTab, PersonalSettingsManager } from '../personal-settings.manager';
+import { OpenedProjectTab, PersonalSettingsManager, TabsData } from '../personal-settings.manager';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
@@ -9,75 +9,120 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 export class LocalstoragePersonalSettingManager implements PersonalSettingsManager {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly openedTabsKey = `${this.globalPrefix}.opened_tabs`;
+	private readonly currentTabIndexKey = `${this.globalPrefix}.current_tab_index`;
 
-	getOpenedTabs(): Observable<OpenedProjectTab[]> {
-		return of(this.get(this.openedTabsKey) || []);
+	getOpenedTabs(): Observable<TabsData> {
+		return of({
+			tabs: this.getOpenedTabList(),
+			selectedIndex: this.getCurrentTabIndex(),
+		});
 	}
 
 	openTab(title: string,
 			componentType: ProjectComponentType,
-			componentId: string): Observable<OpenedProjectTab[]> {
+			componentId: string): Observable<TabsData> {
 		return this.getOpenedTabs().pipe(
-			map(list => {
-				list = list || [];
+			map(({ tabs, selectedIndex }) => {
+				tabs = tabs || [];
 
-				const openedElem = list.find(i => i.componentType === componentType && i.componentId === componentId);
+				const openedElem = tabs.find(i => i.componentType === componentType && i.componentId === componentId);
 
 				if (openedElem) {
-					return list;
+					return { tabs, selectedIndex };
 				}
 
 				const updatedList: OpenedProjectTab[] = [
 					{index: 0, title, componentType, componentId},
-					...list.map((item, index) => ({...item, index: index + 1}))
+					...tabs.map((item, index) => ({...item, index: index + 1}))
 				]
 
 				this.set(this.openedTabsKey, updatedList);
+				this.set(this.currentTabIndexKey, 0);
 
-				return updatedList;
+				return { tabs: updatedList, selectedIndex: 0 };
 			}),
 		);
 	}
 
-	closeTab(index: number): Observable<OpenedProjectTab[]> {
+	closeTab(index: number): Observable<TabsData> {
 		return this.getOpenedTabs().pipe(
-			map(list => {
-				if (!list?.length) {
-					return [];
+			map(({ tabs }) => {
+				if (!tabs?.length) {
+					return { tabs: [] };
 				}
 
-				for (let i = index; i < list.length - 1; i++) {
-					list[i] = list[i + 1];
-					list[i].index = i;
+				for (let i = index; i < tabs.length - 1; i++) {
+					tabs[i] = tabs[i + 1];
+					tabs[i].index = i;
 				}
 
-				list.pop();
+				tabs.pop();
 
-				this.set(this.openedTabsKey, list);
+				this.set(this.openedTabsKey, tabs);
+				this.set(this.currentTabIndexKey, 0);
 
-				return list;
+				return { tabs, selectedIndex: 0 };
 			}),
 		);
 	}
 
-	moveTab(prevIndex: number, currentIndex: number): Observable<OpenedProjectTab[]> {
+	moveTab(prevIndex: number, currentIndex: number): Observable<TabsData> {
 		return this.getOpenedTabs().pipe(
-			map(list => {
-				if (!list?.length) {
-					return [];
+			map(({ tabs, selectedIndex }) => {
+				if (!tabs?.length) {
+					return {tabs: []};
 				}
 
-				moveItemInArray(list, prevIndex, currentIndex);
+				moveItemInArray(tabs, prevIndex, currentIndex);
 
-				list.forEach((item, index) => {
+				tabs.forEach((item, index) => {
 					item.index = index;
 				});
 
-				this.set(this.openedTabsKey, list);
+				// console.log(`prevIndex: ${prevIndex} / currentIndex: ${currentIndex} / selectedIndex(${typeof selectedIndex}): ${selectedIndex}`);
 
-				return list;
+				if (prevIndex === (selectedIndex || 0)) {
+					selectedIndex = currentIndex;
+					// console.log(`currentIndex: ${selectedIndex}`);
+
+					this.set(this.currentTabIndexKey, selectedIndex || 0);
+				}
+
+				this.set(this.openedTabsKey, tabs);
+
+				return { tabs, selectedIndex };
 			}),
 		);
+	}
+
+	selectTab(index: number): Observable<TabsData> {
+		return this.getOpenedTabs().pipe(
+			map(({ tabs, selectedIndex }) => {
+				if (!tabs?.length) {
+					return { tabs: [] };
+				}
+
+				if (index === selectedIndex) {
+					return {tabs, selectedIndex};
+				}
+
+				if (!tabs[index]) {
+					throw new Error('Selected invalid tab');
+				}
+
+				this.set(this.currentTabIndexKey, index);
+
+				return { tabs, selectedIndex: index };
+			}),
+		);
+	}
+
+	private getOpenedTabList(): OpenedProjectTab[] {
+		return this.get(this.openedTabsKey) || [];
+	}
+
+	private getCurrentTabIndex(): number | undefined {
+		return this.get(this.currentTabIndexKey) || undefined;
 	}
 
 	private set<T>(key: string, value: T): void {

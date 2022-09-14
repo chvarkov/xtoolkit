@@ -3,7 +3,7 @@ import { GeneratedWallet, Project, ProjectsInfo } from '../../core/data-provider
 import { IScAbi } from '../../core/interfaces/sc-abi';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
-import { OpenedProjectTab } from '../../core/data-provider/personal-settings.manager';
+import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -47,23 +47,26 @@ export class ProjectAction {
 	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
 
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
-	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabs: OpenedProjectTab[]}>());
+	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
 	static readonly loadProjectTabsError = createAction(`[${ProjectAction.name}] load project tabs [ERR]`, props<{err: Error}>());
 
 	static readonly openProjectTab = createAction(
 		`[${ProjectAction.name}] open project tab [...]`,
 		props<{title: string, componentType: ProjectComponentType, componentId: string}>(),
 	);
-	static readonly openProjectTabSuccess = createAction(`[${ProjectAction.name}] open project tab [OK]`, props<{tabs: OpenedProjectTab[]}>());
+	static readonly openProjectTabSuccess = createAction(`[${ProjectAction.name}] open project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly openProjectTabError = createAction(`[${ProjectAction.name}] open project tab [ERR]`, props<{err: Error}>());
 
 	static readonly closeProjectTab = createAction(`[${ProjectAction.name}] close project tab [...]`, props<{index: number}>());
-	static readonly closeProjectTabSuccess = createAction(`[${ProjectAction.name}] close project tab [OK]`, props<{tabs: OpenedProjectTab[]}>());
+	static readonly closeProjectTabSuccess = createAction(`[${ProjectAction.name}] close project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly closeProjectTabError = createAction(`[${ProjectAction.name}] close project tab [ERR]`, props<{err: Error}>());
 
 	static readonly moveProjectTab = createAction(`[${ProjectAction.name}] move project tab [...]`, props<{prevIndex: number, currentIndex: number}>());
-	static readonly moveProjectTabSuccess = createAction(`[${ProjectAction.name}] move close tab [OK]`, props<{tabs: OpenedProjectTab[]}>());
+	static readonly moveProjectTabSuccess = createAction(`[${ProjectAction.name}] move project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly moveProjectTabError = createAction(`[${ProjectAction.name}] move project tab [ERR]`, props<{err: Error}>());
 
+	static readonly selectTab = createAction(`[${ProjectAction.name}] select tab [...]`, props<{index: number}>());
+	static readonly selectTabSuccess = createAction(`[${ProjectAction.name}] select tab [OK]`, props<{tabsData: TabsData}>());
+	static readonly selectTabError = createAction(`[${ProjectAction.name}] select tab [ERR]`, props<{err: Error}>());
 }
 

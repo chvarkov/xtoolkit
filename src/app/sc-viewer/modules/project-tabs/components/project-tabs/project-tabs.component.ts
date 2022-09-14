@@ -28,6 +28,7 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 
 	@Output() close = new EventEmitter<number>();
 	@Output() move = new EventEmitter<{prevIndex: number, currentIndex: number}>();
+	@Output() selectedTab = new EventEmitter<number>();
 
 	ngAfterViewInit() {
 		if (this.tabItems) {
@@ -68,11 +69,11 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 		const activeTabs = this.tabs.filter(tab => tab.active) || [];
 
 		if (activeTabs.length === 0) {
-			this.selectTab(this.tabs?.first);
+			this.selectTab(this.tabs?.first, 0);
 		}
 	}
 
-	selectTab(tab: ProjectTabComponent) {
+	selectTab(tab: ProjectTabComponent, index: number) {
 		if (!tab) {
 			return;
 		}
@@ -81,8 +82,7 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 			return;
 		}
 
-		this.tabs.toArray().forEach(tab => (tab.active = false));
-		tab.active = true;
+		this.selectedTab.next(index)
 	}
 
 	ngOnInit(): void {

@@ -10,14 +10,21 @@ export interface OpenedProjectTab {
 	componentId: string;
 }
 
+export interface TabsData {
+	tabs: OpenedProjectTab[];
+	selectedIndex?: number;
+}
+
 export interface PersonalSettingsManager {
-	getOpenedTabs(): Observable<OpenedProjectTab[]>;
+	getOpenedTabs(): Observable<TabsData>;
 
 	openTab(title: string,
 			componentType: ProjectComponentType,
-			componentId: string): Observable<OpenedProjectTab[]>;
+			componentId: string): Observable<TabsData>;
 
-	closeTab(index: number): Observable<OpenedProjectTab[]>;
+	closeTab(index: number): Observable<TabsData>;
 
-	moveTab(prevIndex: number, currentIndex: number): Observable<OpenedProjectTab[]>;
+	moveTab(prevIndex: number, currentIndex: number): Observable<TabsData>;
+
+	selectTab(index: number): Observable<TabsData>;
 }
