@@ -55,7 +55,7 @@
 
 			<app-project-element [expandable]="true" icon="folder" type="group" name="Wallets">
 				<ng-container actions>
-					<button class="material-icons action-button">add</button>
+					<button class="material-icons action-button" (click)="generateWallet()">add</button>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let wallet of project.wallets"
