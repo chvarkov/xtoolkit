@@ -4,13 +4,11 @@ import { ProjectTabsComponent } from './components/project-tabs/project-tabs.com
 import { ProjectTabComponent } from './components/project-tab/project-tab.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CoreModule } from '../../../core/core.module';
-import { ProjectHeaderTabComponent } from './components/project-header-tab/project-header-tab.component';
 
 @NgModule({
 	declarations: [
 		ProjectTabsComponent,
 		ProjectTabComponent,
-  ProjectHeaderTabComponent
 	],
 	exports: [
 		ProjectTabsComponent,
