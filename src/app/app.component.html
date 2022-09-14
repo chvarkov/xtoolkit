@@ -5,8 +5,10 @@
 	<app-project-tabs
 		scViewer
 		(move)="moveTab($event.prevIndex, $event.currentIndex)"
-		(close)="closeTab($event)">
-		<app-project-tab *ngFor="let tab of openedTabs$ | async"
+		(close)="closeTab($event)"
+		(selectedTab)="selectTab($event)">
+		<app-project-tab *ngFor="let tab of openedTabs$ | async; let i = index"
+						 [active]="i === (currentTabIndex$ | async)"
 						 [title]="tab.title"
 						 [type]="tab.componentType">
 			<app-sc-viewer [selectedSc]="selectedSc$ | async" [code]="mockedCode" address="erd1932eft30w753xyvme8d49qejgkjc09n5e49w4mwdjtm0neld797su0dlxp"></app-sc-viewer>
