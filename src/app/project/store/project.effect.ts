@@ -5,16 +5,16 @@ import { DATA_PROVIDER, DataProvider, ProjectScAbi } from '../../core/data-provi
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
-import { CreateProjectDialogComponent } from '../components/create-project-dialog/create-project-dialog.component';
+import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
 import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider.service';
 import { NetworkSelector } from '../../network/store/network.selector';
 import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
 import { NetworkAction } from '../../network/store/network.action';
 import { ProjectSelector } from './project.selector';
-import { GenerateWalletDialogComponent } from '../components/generate-wallet-dialog/generate-wallet-dialog.component';
-import { UploadAbiDialogComponent } from '../components/upload-abi-dialog/upload-abi-dialog.component';
-import { AddTokenDialogComponent } from '../components/add-token-dialog/add-token-dialog.component';
+import { GenerateWalletDialogComponent } from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
+import { UploadAbiDialogComponent } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
+import { AddTokenDialogComponent } from '../components/dialogs/add-token-dialog/add-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {

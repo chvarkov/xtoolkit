@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../core/ui/dialog/dialog-ref';
+import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
+import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
 
 @Component({
 	selector: 'app-add-token-dialog',

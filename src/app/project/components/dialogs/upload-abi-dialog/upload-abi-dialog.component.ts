@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../core/ui/dialog/dialog-ref';
-import { IScAbi } from '../../../core/interfaces/sc-abi';
-import { ProjectScAbi } from '../../../core/data-provider/data-provider';
+import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
+import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
+import { IScAbi } from '../../../../core/interfaces/sc-abi';
+import { ProjectScAbi } from '../../../../core/data-provider/data-provider';
 
 export interface IUploadedSc extends Omit<ProjectScAbi, 'id'> {
 }
