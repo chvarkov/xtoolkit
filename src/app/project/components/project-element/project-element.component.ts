@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
-export type ProjectElementType = 'project' | 'group' | 'sc' | 'token' | 'nft' | 'wallet';
+import { ProjectComponentType } from '../../../core/types';
 
 @Component({
 	selector: 'app-project-element',
@@ -10,15 +9,13 @@ export type ProjectElementType = 'project' | 'group' | 'sc' | 'token' | 'nft' | 
 export class ProjectElementComponent implements OnInit {
 	@Input() name = '';
 
-	@Input() icon = '';
-
 	@Input() bold = false;
 
 	@Input() expandable = false;
 
 	@Input() isGroup = true;
 
-	@Input() type: ProjectElementType = 'group';
+	@Input() type: ProjectComponentType = 'group';
 
 	isExpanded = true;
 
@@ -37,22 +34,5 @@ export class ProjectElementComponent implements OnInit {
 		}
 
 		this.click.emit();
-	}
-
-	getColor(): string {
-		switch (this.type) {
-			case 'project':
-				return '#FFF';
-			case 'sc':
-				return '#7effbd';
-			case 'token':
-				return '#fddf79';
-			case 'wallet':
-				return '#0FF0FF';
-			case 'nft':
-				return '#e37ef3';
-			case 'group':
-				return '#EDEDED';
-		}
 	}
 }

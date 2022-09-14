@@ -1,0 +1,70 @@
+<app-toolbar title="Projects">
+	<app-toolbar-icon-button right-side hint="Add" (click)="createProject()">
+		add
+	</app-toolbar-icon-button>
+	<app-toolbar-icon-button right-side hint="Refresh" (click)="loadProjects()">
+		refresh
+	</app-toolbar-icon-button>
+</app-toolbar>
+
+<div class="project-explorer">
+	<app-project-element *ngFor="let project of (projects$ | async) || []"
+						 icon="folder_copy"
+						 [bold]="true"
+						 [expandable]="true"
+						 [name]="project.name">
+		<div innerElements>
+			<app-project-element [expandable]="true" icon="folder" name="Smart contracts">
+				<ng-container actions>
+					<button class="material-icons action-button" (click)="uploadScAbi()">add</button>
+				</ng-container>
+				<ng-container innerElements>
+					<app-project-element
+						*ngFor="let sc of project.smartContracts"
+						icon="code"
+						type="sc"
+						[name]="sc.name || sc.abi.name">
+					</app-project-element>
+				</ng-container>
+			</app-project-element>
+			<app-project-element [expandable]="true" type="group" icon="folder" name="Tokens">
+				<ng-container actions>
+					<button class="material-icons action-button" (click)="addToken()">add</button>
+				</ng-container>
+				<ng-container innerElements>
+					<app-project-element *ngFor="let tokenAddress of project.tokens"
+										 icon="token"
+										 type="token"
+										 [name]="tokenAddress">
+					</app-project-element>
+				</ng-container>
+			</app-project-element>
+			<app-project-element [expandable]="true" type="group" icon="folder" name="NFTs">
+				<ng-container actions>
+					<button class="material-icons action-button">add</button>
+				</ng-container>
+				<ng-container innerElements>
+					<app-project-element icon="photo_library" type="nft" name="DOGS-43FA6B">
+
+					</app-project-element>
+					<app-project-element icon="photo_library" type="nft" name="CATS-12FF8A">
+
+					</app-project-element>
+				</ng-container>
+			</app-project-element>
+
+			<app-project-element [expandable]="true" icon="folder" type="group" name="Wallets">
+				<ng-container actions>
+					<button class="material-icons action-button">add</button>
+				</ng-container>
+				<ng-container innerElements>
+					<app-project-element *ngFor="let wallet of project.wallets"
+										 icon="account_balance_wallet"
+										 type="wallet"
+										 [name]="wallet.name">
+					</app-project-element>
+				</ng-container>
+			</app-project-element>
+		</div>
+	</app-project-element>
+</div>

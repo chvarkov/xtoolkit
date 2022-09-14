@@ -62,6 +62,11 @@ export const reducer = createReducer(
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 		selected: state.selected?.id === project.id ? project : state.selected,
 	})),
+	on(ProjectAction.addTokenSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+		selected: state.selected?.id === project.id ? project : state.selected,
+	})),
 );
 
 

@@ -4,13 +4,13 @@
 		{{isExpanded ? 'expand_more' : 'chevron_right'}}
 	</div>
 	<div class="material-icons icon"
-		 [ngStyle]="{color: getColor()}"
+		 [ngStyle]="{color: type | componentColor}"
 		 (click)="onClick()">
-		{{icon}}
+		{{type | componentIcon}}
 	</div>
 	<div class="name"
 		 [ngClass]="{bold: bold}"
-		 [ngStyle]="{color: getColor()}"
+		 [ngStyle]="{color: type | componentColor}"
 		 (click)="onClick()">
 		{{name}}
 	</div>

@@ -1,0 +1,35 @@
+<div #container class="project-tabs-container">
+	<div class="nav"
+		 cdkDropList
+		 cdkDropListLockAxis="x"
+		 [cdkDropListAutoScrollDisabled]="false"
+		 cdkDropListOrientation="horizontal"
+		 (cdkDropListDropped)="drop($event)">
+		<ng-container *ngFor="let tab of tabs; let i = index">
+			<div #tabItems
+				cdkDrag
+				class="tab"
+				[ngClass]="{'active': tab.active === true }"
+				(click)="selectTab(tab)">
+				<span class="icon material-icons" [ngStyle]="{color: tab.type | componentColor}">
+					{{tab.type | componentIcon}}
+				</span>
+				<span class="title" [ngStyle]="{color: tab.type | componentColor}">{{ tab.title }}</span>
+				<button class="close-button material-icons">close</button>
+			</div>
+		</ng-container>
+	</div>
+	<ng-container *ngIf="(invisibleTabsSubject | async) as invisibleTabs">
+		<ul class="invisible-list" *ngIf="invisibleTabs.length">
+			<div class="material-icons">expand_more</div>
+			<li *ngFor="let invisibleTab of invisibleTabs">
+				<span class="icon material-icons" [ngStyle]="{color: invisibleTab.type | componentColor}">
+					{{invisibleTab.type | componentIcon}}
+				</span>
+				<div class="title" [ngStyle]="{color: invisibleTab.type | componentColor}">{{invisibleTab.title}}</div>
+			</li>
+		</ul>
+	</ng-container>
+
+	<ng-content></ng-content>
+</div>

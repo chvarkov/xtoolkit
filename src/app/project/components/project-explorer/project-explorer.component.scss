@@ -1,0 +1,19 @@
+.project-explorer {
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+
+	.action-button {
+		border: none;
+		background: none;
+		color: var(--text-color);
+		cursor: pointer;
+		margin-top: 2px;
+		padding: 4px;
+
+		&:hover {
+			color: var(--text-accent-color);
+		}
+	}
+}

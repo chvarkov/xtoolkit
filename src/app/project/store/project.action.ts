@@ -39,5 +39,9 @@ export class ProjectAction {
 	static readonly selectSc = createAction(`[${ProjectAction.name}] select sc [...]`, props<{scId: string}>());
 	static readonly selectScSuccess = createAction(`[${ProjectAction.name}] select sc [OK]`, props<{project: Project}>());
 	static readonly selectScError = createAction(`[${ProjectAction.name}] select sc [ERR]`, props<{err: Error}>());
+
+	static readonly addToken = createAction(`[${ProjectAction.name}] add token [...]`);
+	static readonly addTokenSuccess = createAction(`[${ProjectAction.name}] add token [OK]`, props<{project: Project}>());
+	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
 }
 

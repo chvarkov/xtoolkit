@@ -15,6 +15,8 @@ import { ElrondModule } from './elrond/elrond.module';
 import { ShortStringPipe } from './pipes/short-string.pipe';
 import { DropdownMenuComponent } from './ui/dropdown-menu/dropdown-menu.component';
 import { DropdownMenuItemComponent } from './ui/dropdown-menu/dropdown-menu-item/dropdown-menu-item.component';
+import { ComponentColorPipe } from './pipes/component-color.pipe';
+import { ComponentIconPipe } from './pipes/component-icon.pipe';
 
 @NgModule({
 	declarations: [
@@ -29,6 +31,8 @@ import { DropdownMenuItemComponent } from './ui/dropdown-menu/dropdown-menu-item
 		ShortStringPipe,
   DropdownMenuComponent,
   DropdownMenuItemComponent,
+  ComponentColorPipe,
+  ComponentIconPipe,
 	],
 	imports: [
 		CommonModule,
@@ -54,6 +58,8 @@ import { DropdownMenuItemComponent } from './ui/dropdown-menu/dropdown-menu-item
 		ShortStringPipe,
 		DropdownMenuComponent,
 		DropdownMenuItemComponent,
+		ComponentIconPipe,
+		ComponentColorPipe,
 	],
 })
 export class CoreModule { }

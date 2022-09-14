@@ -66,6 +66,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						name,
 						smartContracts: [],
 						wallets: [],
+						tokens: [],
 					};
 
 					if (!info.selected) {
@@ -164,6 +165,31 @@ export class LocalstorageDataProvider implements DataProvider {
 					if (info.selected?.id === project.id) {
 						info.selected = project;
 					}
+
+					this.set(this.projectsKey, info);
+
+					return project;
+				})),
+			);
+	}
+
+	addToken(projectId: string, tokenAddress: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((info => {
+					const project = info.projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					const duplicate = project.tokens.find(id => id === tokenAddress);
+
+					if (duplicate) {
+						throw new Error('Token already exists in this project');
+					}
+
+					project.tokens.push(tokenAddress);
 
 					this.set(this.projectsKey, info);
 

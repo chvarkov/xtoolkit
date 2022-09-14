@@ -1,0 +1,121 @@
+.project-tabs-container {
+	display: flex;
+	flex-direction: column;
+	background: var(--primary-bg);
+	width: calc(100vw - 420px - 420px);
+	overflow-x: hidden;
+	position: relative;
+
+	.invisible-list {
+		right: 0;
+		padding: 6px;
+		color: white;
+		position: absolute;
+		width: 30px;
+		cursor: pointer;
+		height: var(--toolbar-height);
+		background: var(--primary-bg);
+		box-shadow: 0px -40px 26px 30px var(--primary-bg);
+		padding-inline-start: 0;
+		margin-block-start: 0;
+		margin-block-end: 0;
+		display:inherit;
+
+		&:hover {
+			display: inline-block;
+
+			> li {
+				display: flex;
+			}
+		}
+
+		li {
+			display: none;
+			float: none;
+			width: 300px;
+			margin-left: -260px;
+			padding: 6px;
+			background: var(--primary-bg);
+			flex-direction: row;
+
+			&:hover {
+				background: var(--primary-darken-bg);
+				color: var(--text-accent-color);
+				cursor: pointer;
+			}
+
+			.title {
+				display: flex;
+				align-items: center;
+			}
+
+			.icon {
+				display: flex;
+				align-items: center;
+				margin-right: 4px;
+			}
+		}
+
+
+	}
+
+	.nav {
+		display: flex;
+		width: 100%;
+		height: var(--toolbar-height);
+		padding-inline-start: 0;
+		margin-block-start: 0;
+		margin-block-end: 0;
+		border-bottom: solid 1px var(--border-low-color);
+
+		.tab {
+			display: flex;
+			justify-content: center;
+			flex-direction: row;
+			padding: 4px 8px 4px 4px;
+			color: var(--primary-bg);
+
+			.title {
+				display: flex;
+				align-items: center;
+			}
+
+			.icon {
+				display: flex;
+				align-items: center;
+				margin-right: 4px;
+			}
+
+			.close-button {
+				margin-left: 6px;
+				padding: 2px 6px;
+				border: none;
+				font-size: .8em;
+				width: 28px;
+				height: 28px;
+				color: var(--static-gray);
+				border-radius: 18px;
+				background: none;
+
+				&:hover {
+					background: var(--primary-bg);
+				}
+			}
+		}
+	}
+
+	.tab {
+		padding: 5px;
+		text-align: center;
+		cursor: pointer;
+
+		&:hover {
+			border-radius: 2px;
+			opacity: 90%;
+		}
+	}
+
+	.active {
+		background-color: var(--low-bg);
+	}
+}
