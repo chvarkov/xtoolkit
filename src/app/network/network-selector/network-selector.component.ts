@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DEFAULT_NETWORKS } from '../../core/constants';
-import { INetworkEnvironment } from '../../core/interfaces/network-environment';
+import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import { SelectElement } from '../../core/ui/select/select.component';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

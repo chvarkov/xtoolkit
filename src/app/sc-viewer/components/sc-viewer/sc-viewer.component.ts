@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INetworkEnvironment } from '../../../core/interfaces/network-environment';
+import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
 import { ProjectScAbi } from '../../../core/data-provider/data-provider';
 
 @Component({

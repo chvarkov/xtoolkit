@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IScInput } from '../../../../../core/interfaces/sc-abi';
+import { IScInput } from '../../../../../core/elrond/interfaces/sc-abi';
 
 @Component({
 	selector: 'app-sc-input',

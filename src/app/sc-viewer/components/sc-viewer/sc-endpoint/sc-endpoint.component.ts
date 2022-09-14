@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
-import { IScEndpoint } from '../../../../core/interfaces/sc-abi';
+import { IScEndpoint } from '../../../../core/elrond/interfaces/sc-abi';
 
 @Component({
 	selector: 'app-sc-endpoint',

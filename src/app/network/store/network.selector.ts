@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { INetworkState } from './network.reducer';
-import { INetworkEnvironment } from '../../core/interfaces/network-environment';
+import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import { NETWORK_FEATURE } from '../constants';
 
 export class NetworkSelector {

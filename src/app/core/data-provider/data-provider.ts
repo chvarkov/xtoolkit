@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { INetworkEnvironment } from '../interfaces/network-environment';
-import { IScAbi } from '../interfaces/sc-abi';
+import { INetworkEnvironment } from '../elrond/interfaces/network-environment';
+import { IScAbi } from '../elrond/interfaces/sc-abi';
 
 export const DATA_PROVIDER = 'CORE:DATA_PROVIDER';
 

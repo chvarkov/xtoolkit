@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { INetworkEnvironment } from '../interfaces/network-environment';
+import { INetworkEnvironment } from './interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';

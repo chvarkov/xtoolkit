@@ -6,7 +6,7 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
-import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider.service';
+import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
 import { NetworkSelector } from '../../network/store/network.selector';
 import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';

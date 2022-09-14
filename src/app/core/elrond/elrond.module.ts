@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ElrondDataProvider } from './elrond.data-provider.service';
+import { ElrondDataProvider } from './elrond.data-provider';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { GeneratedWallet, Project, ProjectsInfo } from '../../core/data-provider/data-provider';
-import { IScAbi } from '../../core/interfaces/sc-abi';
+import { IScAbi } from '../../core/elrond/interfaces/sc-abi';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
 import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';

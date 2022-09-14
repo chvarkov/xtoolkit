@@ -3,10 +3,10 @@ import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
 import { NetworkInfo } from '../data-provider';
-import { INetworkEnvironment } from '../../interfaces/network-environment';
+import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
 import { map } from 'rxjs/operators';
 import * as uuid from 'uuid';
-import { IScAbi } from '../../interfaces/sc-abi';
+import { IScAbi } from '../../elrond/interfaces/sc-abi';
 
 @Injectable({providedIn: 'root'})
 export class LocalstorageDataProvider implements DataProvider {
