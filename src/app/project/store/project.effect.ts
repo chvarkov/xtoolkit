@@ -15,6 +15,7 @@ import { ProjectSelector } from './project.selector';
 import { GenerateWalletDialogComponent } from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { UploadAbiDialogComponent } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import { AddTokenDialogComponent } from '../components/dialogs/add-token-dialog/add-token-dialog.component';
+import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/data-provider/personal-settings.manager';
 
 @Injectable()
 export class ProjectEffect {
@@ -148,10 +149,43 @@ export class ProjectEffect {
 		catchError(err => of(ProjectAction.addTokenError({err}))),
 	));
 
+	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadProjectTabs),
+		switchMap(() => this.personalSettingsManager.getOpenedTabs().pipe(
+			map((tabs) => ProjectAction.loadProjectTabsSuccess({tabs})),
+			catchError(err => of(ProjectAction.loadProjectTabsError({err})))),
+		),
+	));
+
+	openProjectTab$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.openProjectTab),
+		switchMap(({title, componentType, componentId}) => this.personalSettingsManager.openTab(title, componentType, componentId).pipe(
+			map((tabs) => ProjectAction.openProjectTabSuccess({tabs})),
+			catchError(err => of(ProjectAction.openProjectTabError({err})))),
+		),
+	));
+
+	closeProjectTab$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.closeProjectTab),
+		switchMap(({index}) => this.personalSettingsManager.closeTab(index).pipe(
+			map((tabs) => ProjectAction.closeProjectTabSuccess({tabs})),
+			catchError(err => of(ProjectAction.closeProjectTabError({err})))),
+		),
+	));
+
+	moveProjectTab$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.moveProjectTab),
+		switchMap(({prevIndex, currentIndex}) => this.personalSettingsManager.moveTab(prevIndex, currentIndex).pipe(
+			map((tabs) => ProjectAction.moveProjectTabSuccess({tabs})),
+			catchError(err => of(ProjectAction.moveProjectTabError({err})))),
+		),
+	));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,
 				private readonly elrondDataProvider: ElrondDataProvider,
-				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {
+				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
+				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
 	}
 }

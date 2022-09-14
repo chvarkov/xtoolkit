@@ -4,6 +4,7 @@ import { Project, ProjectScAbi } from '../../../core/data-provider/data-provider
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
+import { ProjectComponentType } from '../../../core/types';
 
 @Component({
 	selector: 'app-project-explorer',
@@ -41,5 +42,9 @@ export class ProjectExplorerComponent implements OnInit {
 
 	addToken(): void {
 		this.store.dispatch(ProjectAction.addToken());
+	}
+
+	openProjectComponent(title: string, componentType: ProjectComponentType, componentId: string): void {
+		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
 	}
 }

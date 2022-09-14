@@ -4,7 +4,7 @@
 		 cdkDropListLockAxis="x"
 		 [cdkDropListAutoScrollDisabled]="false"
 		 cdkDropListOrientation="horizontal"
-		 (cdkDropListDropped)="drop($event)">
+		 (cdkDropListDropped)="move.emit({prevIndex: $event.previousIndex, currentIndex: $event.currentIndex})">
 		<ng-container *ngFor="let tab of tabs; let i = index">
 			<div #tabItems
 				cdkDrag
@@ -15,7 +15,7 @@
 					{{tab.type | componentIcon}}
 				</span>
 				<span class="title" [ngStyle]="{color: tab.type | componentColor}">{{ tab.title }}</span>
-				<button class="close-button material-icons">close</button>
+				<button class="close-button material-icons" (click)="close.emit(i)">close</button>
 			</div>
 		</ng-container>
 	</div>

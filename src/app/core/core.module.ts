@@ -17,6 +17,8 @@ import { DropdownMenuComponent } from './ui/dropdown-menu/dropdown-menu.componen
 import { DropdownMenuItemComponent } from './ui/dropdown-menu/dropdown-menu-item/dropdown-menu-item.component';
 import { ComponentColorPipe } from './pipes/component-color.pipe';
 import { ComponentIconPipe } from './pipes/component-icon.pipe';
+import { LocalstoragePersonalSettingManager } from './data-provider/localstorage/localstorage-personal-setting.manager';
+import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.manager';
 
 @NgModule({
 	declarations: [
@@ -29,10 +31,10 @@ import { ComponentIconPipe } from './pipes/component-icon.pipe';
 		ConfirmDialogComponent,
 		OptionComponent,
 		ShortStringPipe,
-  DropdownMenuComponent,
-  DropdownMenuItemComponent,
-  ComponentColorPipe,
-  ComponentIconPipe,
+		DropdownMenuComponent,
+		DropdownMenuItemComponent,
+		ComponentColorPipe,
+		ComponentIconPipe,
 	],
 	imports: [
 		CommonModule,
@@ -44,7 +46,12 @@ import { ComponentIconPipe } from './pipes/component-icon.pipe';
 			provide: DATA_PROVIDER,
 			useExisting: LocalstorageDataProvider,
 		},
+		{
+			provide: PERSONAL_SETTINGS_MANAGER,
+			useExisting: LocalstoragePersonalSettingManager,
+		},
 		LocalstorageDataProvider,
+		LocalstoragePersonalSettingManager,
 	],
 	exports: [
 		ElrondModule,
