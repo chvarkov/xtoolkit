@@ -2,18 +2,14 @@
 	<app-logo logo></app-logo>
 	<app-network-selector network></app-network-selector>
 	<app-project-explorer project></app-project-explorer>
-	<app-project-tabs scViewer>
-		<app-project-tab title="Root" type="sc">
-			<app-sc-viewer  [selectedSc]="selectedSc$ | async" [code]="mockedCode" address="erd1932eft30w753xyvme8d49qejgkjc09n5e49w4mwdjtm0neld797su0dlxp"></app-sc-viewer>
-		</app-project-tab>
-		<app-project-tab title="Factory"  type="sc">
-			<app-sc-viewer  [selectedSc]="selectedSc$ | async" [code]="mockedCode" address="erd1932eft30w753xyvme8d49qejgkjc09n5e49w4mwdjtm0neld797su0dlxp"></app-sc-viewer>
-		</app-project-tab>
-		<app-project-tab title="Router1"  type="sc">
-			<app-sc-viewer  [selectedSc]="selectedSc$ | async" [code]="mockedCode" address="erd1932eft30w753xyvme8d49qejgkjc09n5e49w4mwdjtm0neld797su0dlxp"></app-sc-viewer>
-		</app-project-tab>
-		<app-project-tab title="Router2"  type="sc">
-			<app-sc-viewer  [selectedSc]="selectedSc$ | async" [code]="mockedCode" address="erd1932eft30w753xyvme8d49qejgkjc09n5e49w4mwdjtm0neld797su0dlxp"></app-sc-viewer>
+	<app-project-tabs
+		scViewer
+		(move)="moveTab($event.prevIndex, $event.currentIndex)"
+		(close)="closeTab($event)">
+		<app-project-tab *ngFor="let tab of openedTabs$ | async"
+						 [title]="tab.title"
+						 [type]="tab.componentType">
+			<app-sc-viewer [selectedSc]="selectedSc$ | async" [code]="mockedCode" address="erd1932eft30w753xyvme8d49qejgkjc09n5e49w4mwdjtm0neld797su0dlxp"></app-sc-viewer>
 		</app-project-tab>
 	</app-project-tabs>
 	<app-transaction-list transactions></app-transaction-list>

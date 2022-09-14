@@ -19,8 +19,12 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			componentId: string): Observable<OpenedProjectTab[]> {
 		return this.getOpenedTabs().pipe(
 			map(list => {
-				if (!list?.length) {
-					return [];
+				list = list || [];
+
+				const openedElem = list.find(i => i.componentType === componentType && i.componentId === componentId);
+
+				if (openedElem) {
+					return list;
 				}
 
 				const updatedList: OpenedProjectTab[] = [
@@ -68,7 +72,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				list.forEach((item, index) => {
 					item.index = index;
 				});
-				
+
 				this.set(this.openedTabsKey, list);
 
 				return list;

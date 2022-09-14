@@ -14,14 +14,14 @@
 						 [expandable]="true"
 						 [name]="project.name">
 		<div innerElements>
-			<app-project-element [expandable]="true" icon="folder" name="Smart contracts">
+			<app-project-element [expandable]="true" name="Smart contracts">
 				<ng-container actions>
 					<button class="material-icons action-button" (click)="uploadScAbi()">add</button>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element
+						(click)="openProjectComponent(sc.name || sc.abi.name, 'sc', sc.id)"
 						*ngFor="let sc of project.smartContracts"
-						icon="code"
 						type="sc"
 						[name]="sc.name || sc.abi.name">
 					</app-project-element>

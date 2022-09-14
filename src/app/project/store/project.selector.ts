@@ -55,4 +55,9 @@ export class ProjectSelector {
 			return state.selected?.smartContracts.find(sc => sc.id === id);
 		},
 	);
+
+	static openedTabs = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.tabs || [],
+	);
 }

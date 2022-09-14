@@ -3,8 +3,8 @@ import {
 	AfterViewInit,
 	Component,
 	ContentChildren,
-	ElementRef, HostListener,
-	OnInit,
+	ElementRef, EventEmitter, HostListener,
+	OnInit, Output,
 	QueryList,
 	ViewChild,
 	ViewChildren,
@@ -26,9 +26,8 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 
 	invisibleTabsSubject: Subject<ProjectTabComponent[]> = new Subject<ProjectTabComponent[]>();
 
-	get invisibleTabs$(): Observable<ProjectTabComponent[]> {
-		return this.invisibleTabsSubject.asObservable();
-	}
+	@Output() close = new EventEmitter<number>();
+	@Output() move = new EventEmitter<{prevIndex: number, currentIndex: number}>();
 
 	ngAfterViewInit() {
 		if (this.tabItems) {
@@ -37,15 +36,14 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 			this.tabItems?.changes.pipe(
 				map((tabItems: any[]) => {
 					this.onChangeTabHeader(tabItems);
-				})
-			)
+				}),
+			);
 		}
 	}
 
 	onChangeTabHeader(tabItems: ElementRef[]): void {
 		const containerWidth = this.container?.nativeElement?.clientWidth || 0;
 
-		console.log(`width ${containerWidth} / count ${tabItems.length}`);
 		let currentOffset = 0;
 		const indexes = tabItems
 			.map((elemRef, i) => {
@@ -74,11 +72,11 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 		}
 	}
 
-	drop(event: CdkDragDrop<string[]>) {
-		console.log('event', event);
-	}
-
 	selectTab(tab: ProjectTabComponent) {
+		if (!tab) {
+			return;
+		}
+
 		if (!this.tabs) {
 			return;
 		}
