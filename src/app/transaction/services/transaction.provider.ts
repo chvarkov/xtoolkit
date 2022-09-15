@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { INetworkEnvironment } from '../../core/interfaces/network-environment';
+import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import { Observable } from 'rxjs';
 import { IElrondTransaction } from '../interfaces/elrond-transaction';
 

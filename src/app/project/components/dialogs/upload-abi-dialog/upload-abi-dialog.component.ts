@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
 import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
-import { IScAbi } from '../../../../core/interfaces/sc-abi';
 import { ProjectScAbi } from '../../../../core/data-provider/data-provider';
+import { AbiJson } from '../../../../core/elrond/builders/sc.builder';
 
 export interface IUploadedSc extends Omit<ProjectScAbi, 'id'> {
 }
@@ -19,13 +19,9 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 	types = 0;
 	endpoints = 0;
 
-	abi: IScAbi = {
+	abi: AbiJson = {
 		name: '',
-		constructor: {
-			inputs: [],
-			outputs: [],
-		},
-		types: {},
+		types: [],
 		endpoints: [],
 	};
 

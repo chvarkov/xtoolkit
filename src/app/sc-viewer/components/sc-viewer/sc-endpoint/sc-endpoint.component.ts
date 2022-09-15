@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
-import { IScEndpoint } from '../../../../core/interfaces/sc-abi';
+import { EndpointDefinition } from '@elrondnetwork/erdjs/out';
 
 @Component({
 	selector: 'app-sc-endpoint',
@@ -16,14 +16,9 @@ import { IScEndpoint } from '../../../../core/interfaces/sc-abi';
 	],
 })
 export class ScEndpointComponent implements OnInit {
-	test = '';
 	isShowing = false;
 
-	@Input() endpoint: IScEndpoint = {
-		name: '',
-		inputs: [],
-		outputs: [],
-	};
+	@Input() endpoint?: EndpointDefinition;
 
 	form!: FormGroup;
 
@@ -32,7 +27,7 @@ export class ScEndpointComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.form = this.fb.group(
-			this.endpoint.inputs
+			(this.endpoint?.input || [])
 				.map(i => ({[i.name]: new FormControl('')}))
 				.reduce((p, c) => ({...p, ...c}), {}),
 		);
@@ -47,7 +42,7 @@ export class ScEndpointComponent implements OnInit {
 	}
 
 	getArgsPreview(): string {
-		const args = this.endpoint.inputs.map(i => `${i.name}: ${i.type}`);
+		const args = (this.endpoint?.input || []).map(i => `${i.name}: ${i.type}`);
 
 		return `(${args.join(', ')})`;
 	}

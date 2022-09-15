@@ -1,4 +1,4 @@
-import { INetworkEnvironment } from './interfaces/network-environment';
+import { INetworkEnvironment } from './elrond/interfaces/network-environment';
 
 export const DEFAULT_NETWORKS: INetworkEnvironment[] = [
 	{

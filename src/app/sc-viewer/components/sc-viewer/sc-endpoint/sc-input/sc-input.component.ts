@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IScInput } from '../../../../../core/interfaces/sc-abi';
+import { EndpointParameterDefinition } from '@elrondnetwork/erdjs/out';
 
 @Component({
 	selector: 'app-sc-input',
@@ -15,7 +15,7 @@ import { IScInput } from '../../../../../core/interfaces/sc-abi';
 	],
 })
 export class ScInputComponent implements OnInit, ControlValueAccessor {
-	@Input() input?: IScInput;
+	@Input() input?: EndpointParameterDefinition;
 
 	private onChange: Function = () => null;
 	private onTouch: Function = () => null;

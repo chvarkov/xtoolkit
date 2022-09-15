@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { INetworkEnvironment } from '../interfaces/network-environment';
-import { IScAbi } from '../interfaces/sc-abi';
+import { INetworkEnvironment } from '../elrond/interfaces/network-environment';
+import { AbiJson } from '../elrond/builders/sc.builder';
 
 export const DATA_PROVIDER = 'CORE:DATA_PROVIDER';
 
@@ -19,7 +19,7 @@ export interface ProjectScAbi {
 	name?: string;
 	address?: string;
 	id: string;
-	abi: IScAbi;
+	abi: AbiJson;
 }
 
 export interface Project {
@@ -45,7 +45,7 @@ export interface DataProvider {
 
 	createProject(name: string): Observable<Project>;
 
-	addAbi(projectId: string, abi: IScAbi, name?: string): Observable<Project>;
+	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
 

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { NetworkInfo } from '../../core/data-provider/data-provider';
-import { INetworkEnvironment } from '../../core/interfaces/network-environment';
+import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 
 export class NetworkAction {
 	static readonly loadNetworks = createAction(`[${NetworkAction.name}] load networks [...]`);

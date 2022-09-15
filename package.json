@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@elrondnetwork/erdjs": "^11.0.0",
     "@elrondnetwork/erdjs-network-providers": "^1.1.0",
     "@elrondnetwork/erdjs-walletcore": "^2.1.0",
     "@elrondnetwork/transaction-decoder": "^1.0.0",

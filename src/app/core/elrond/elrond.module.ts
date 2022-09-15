@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ElrondDataProvider } from './elrond.data-provider.service';
+import { ElrondDataProvider } from './elrond.data-provider';
 import { HttpClientModule } from '@angular/common/http';
+import { ScPipe } from './pipes/sc.pipe';
 
 @NgModule({
 	imports: [
@@ -8,6 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 	],
 	providers: [
 		ElrondDataProvider,
+	],
+	declarations: [
+		ScPipe,
+	],
+	exports: [
+		ScPipe,
 	],
 })
 export class ElrondModule {
