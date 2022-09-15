@@ -16,7 +16,6 @@ import { EndpointDefinition } from '@elrondnetwork/erdjs/out';
 	],
 })
 export class ScEndpointComponent implements OnInit {
-	test = '';
 	isShowing = false;
 
 	@Input() endpoint?: EndpointDefinition;

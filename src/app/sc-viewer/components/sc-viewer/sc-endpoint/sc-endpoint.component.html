@@ -1,11 +1,14 @@
 <div class="endpoint-container" *ngIf="endpoint">
 	<div class="header"
-		 [ngStyle]="{cursor: isShowing ? 'default' : 'pointer'}"
-		 (click)="isShowing = true">
-		<div class="title">{{endpoint.name}} <span class="args">{{getArgsPreview()}}</span></div>
+		 [ngStyle]="{cursor: isShowing ? 'default' : 'pointer'}">
+		<div class="title" (click)="isShowing = true">
+			{{endpoint.name}}
+			<span class="args">{{getArgsPreview()}}</span></div>
 		<div class="controls">
-			<button *ngIf="isShowing" (click)="hide()">hide</button>
-			<button *ngIf="!isShowing" (click)="show()">show</button>
+			<span class="badge mutable" *ngIf="endpoint.modifiers.isReadonly()">Mutable</span>
+			<span class="badge readonly" *ngIf="!endpoint.modifiers.isReadonly()">Readonly</span>
+			<button class="material-icons" *ngIf="isShowing" (click)="hide()">expand_less</button>
+			<button class="material-icons" *ngIf="!isShowing" (click)="show()">expand_more</button>
 		</div>
 	</div>
 	<ng-container *ngIf="isShowing">

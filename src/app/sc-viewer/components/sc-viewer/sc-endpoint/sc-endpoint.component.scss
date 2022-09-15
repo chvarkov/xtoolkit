@@ -10,6 +10,19 @@
 		justify-content: space-between;
 		color: var(--text-color);
 
+		.badge {
+			border-radius: 4px;
+			padding: 4px 6px;
+		}
+
+		.mutable {
+			background: var(--static-purpure);
+		}
+
+		.readonly {
+			background: var(--static-green);
+		}
+
 		.title {
 			display: flex;
 			font-size: 1.2em;
