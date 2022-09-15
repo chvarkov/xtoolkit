@@ -7,7 +7,6 @@ import { ProjectScAbi } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
 import { OpenedProjectTab } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
-import { AbiRegistry, Address, SmartContract, SmartContractAbi } from '@elrondnetwork/erdjs/out';
 
 @Component({
 	selector: 'app-root',

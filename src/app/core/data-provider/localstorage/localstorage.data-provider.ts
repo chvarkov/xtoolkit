@@ -6,7 +6,7 @@ import { NetworkInfo } from '../data-provider';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
 import { map } from 'rxjs/operators';
 import * as uuid from 'uuid';
-import { IScAbi } from '../../elrond/interfaces/sc-abi';
+import { AbiJson } from '../../elrond/builders/sc.builder';
 
 @Injectable({providedIn: 'root'})
 export class LocalstorageDataProvider implements DataProvider {
@@ -82,7 +82,7 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	addAbi(projectId: string, abi: IScAbi, name: string = abi.name): Observable<Project> {
+	addAbi(projectId: string, abi: AbiJson, name: string = abi.name): Observable<Project> {
 		return this.getProjects()
 			.pipe(
 				map((info => {

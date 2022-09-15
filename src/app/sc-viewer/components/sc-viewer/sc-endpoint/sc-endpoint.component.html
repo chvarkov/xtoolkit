@@ -1,4 +1,4 @@
-<div class="endpoint-container">
+<div class="endpoint-container" *ngIf="endpoint">
 	<div class="header"
 		 [ngStyle]="{cursor: isShowing ? 'default' : 'pointer'}"
 		 (click)="isShowing = true">
@@ -10,7 +10,7 @@
 	</div>
 	<ng-container *ngIf="isShowing">
 		<form [formGroup]="form" class="inputs">
-			<app-sc-input *ngFor="let input of endpoint.inputs"
+			<app-sc-input *ngFor="let input of endpoint?.input || []"
 						  [input]="input"
 						  [formControlName]="input.name"></app-sc-input>
 		</form>

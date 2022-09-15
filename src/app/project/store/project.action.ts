@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { GeneratedWallet, Project, ProjectsInfo } from '../../core/data-provider/data-provider';
-import { IScAbi } from '../../core/elrond/interfaces/sc-abi';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
-import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';
+import { TabsData } from '../../core/data-provider/personal-settings.manager';
+import { AbiJson } from '../../core/elrond/builders/sc.builder';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -18,7 +18,7 @@ export class ProjectAction {
 	static readonly createProjectSuccess = createAction(`[${ProjectAction.name}] create project [OK]`, props<{project: Project}>());
 	static readonly createProjectError = createAction(`[${ProjectAction.name}] create project [ERR]`, props<{err: Error}>());
 
-	static readonly addAbi = createAction(`[${ProjectAction.name}] add abi [...]`, props<{projectId: string, name?: string, abi: IScAbi}>());
+	static readonly addAbi = createAction(`[${ProjectAction.name}] add abi [...]`, props<{projectId: string, name?: string, abi: AbiJson}>());
 	static readonly addAbiSuccess = createAction(`[${ProjectAction.name}] add abi [OK]`, props<{project: Project}>());
 	static readonly addAbiError = createAction(`[${ProjectAction.name}] add abi [ERR]`, props<{err: Error}>());
 
