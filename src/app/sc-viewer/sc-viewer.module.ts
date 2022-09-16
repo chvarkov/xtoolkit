@@ -13,6 +13,8 @@ import { NumberInputComponent } from './components/sc-viewer/sc-endpoint/sc-inpu
 import { ScCodeComponent } from './components/sc-viewer/sc-code/sc-code.component';
 import { ScTokensComponent } from './components/sc-viewer/sc-tokens/sc-tokens.component';
 import { ScNftsComponent } from './components/sc-viewer/sc-nfts/sc-nfts.component';
+import { ScEndpointTxSignComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint-tx-sign/sc-endpoint-tx-sign.component';
+import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint-query/sc-endpoint-query.component';
 
 @NgModule({
 	declarations: [
@@ -26,7 +28,9 @@ import { ScNftsComponent } from './components/sc-viewer/sc-nfts/sc-nfts.componen
 		ScViewerHeaderComponent,
 		ScCodeComponent,
 		ScTokensComponent,
-		ScNftsComponent
+		ScNftsComponent,
+  ScEndpointTxSignComponent,
+  ScEndpointQueryComponent
 	],
 	imports: [
 		CommonModule,

@@ -10,6 +10,7 @@
 				</app-toolbar>
 				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
 								 [endpoint]="endpoint"
+								 [wallets]="(wallets$ | async) || []"
 								 [sc]="smartContract">
 				</app-sc-endpoint>
 			</app-tab>

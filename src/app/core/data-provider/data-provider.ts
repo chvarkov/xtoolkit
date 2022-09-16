@@ -19,6 +19,7 @@ export interface ProjectScAbi {
 	name?: string;
 	address?: string;
 	id: string;
+	projectId: string;
 	abi: AbiJson;
 }
 

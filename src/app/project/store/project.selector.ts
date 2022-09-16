@@ -29,6 +29,11 @@ export class ProjectSelector {
 		(state: IProjectState) => state.selected?.wallets || [],
 	);
 
+	static walletsByProjectId = (projectId: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.wallets || [],
+	);
+
 	static getNativeBalance = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.positionsMap[address]?.native || '0',

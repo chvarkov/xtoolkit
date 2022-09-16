@@ -1,0 +1,16 @@
+<div class="tx-sign-container">
+	<div class="wallet">
+		<app-select placeHolder="Caller" size="medium" (selectedElement)="onSelectedWallet($event)">
+			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
+		</app-select>
+	</div>
+	<div class="fee">
+		<input #fee type="number" placeholder="fee" value="50000">
+	</div>
+	<div class="actions">
+		<button class="button call" [disabled]="!wallet"
+				(click)="submit(+fee.value)">
+			Call
+		</button>
+	</div>
+</div>

@@ -25,7 +25,7 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 		endpoints: [],
 	};
 
-	dialogRef!: DialogRef<void, IUploadedSc>;
+	dialogRef!: DialogRef<{ projectId: string }, IUploadedSc>;
 
 	constructor() {
 		super();
@@ -55,6 +55,7 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 		this.dialogRef.submit({
 			name: this.smartContractName,
 			abi: this.abi,
+			projectId: this.dialogRef.data.projectId,
 		});
 	}
 }

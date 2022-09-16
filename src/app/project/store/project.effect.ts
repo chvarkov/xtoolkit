@@ -101,7 +101,7 @@ export class ProjectEffect {
 	uploadAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.uploadAbi),
 		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
-		switchMap(([_, project]) => this.modalDialogFactory.show(UploadAbiDialogComponent).afterSubmit$().pipe(
+		switchMap(([_, project]) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId: project?.id || ''}).afterSubmit$().pipe(
 			map((data: ProjectScAbi) => ProjectAction.addAbi({
 				projectId: project?.id || '',
 				name: data.name || data.abi.name,
