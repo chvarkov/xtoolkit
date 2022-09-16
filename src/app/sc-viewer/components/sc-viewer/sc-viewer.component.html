@@ -8,7 +8,10 @@
 					<app-toolbar-icon-button right-side hint="Expand all">expand_more</app-toolbar-icon-button>
 					<app-toolbar-icon-button right-side hint="Hide all">expand_less</app-toolbar-icon-button>
 				</app-toolbar>
-				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()" [endpoint]="endpoint"></app-sc-endpoint>
+				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
+								 [endpoint]="endpoint"
+								 [sc]="smartContract">
+				</app-sc-endpoint>
 			</app-tab>
 			<app-tab title="Tokens">
 				<app-toolbar>
