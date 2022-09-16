@@ -60,7 +60,7 @@ export class ScTransactionRunner {
 			},
 			chainID: {
 				valueOf(): string {
-					return 'T';
+					return options.network.chainId;
 				}
 			},
 			args: new ScArgsBuilder(sc).build(options.functionName, options.payload),
