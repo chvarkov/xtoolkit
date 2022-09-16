@@ -18,7 +18,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		});
 	}
 
-	openTab(title: string,
+	openTab(projectId: string,
+			title: string,
 			componentType: ProjectComponentType,
 			componentId: string): Observable<TabsData> {
 		return this.getOpenedTabs().pipe(
@@ -32,7 +33,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				}
 
 				const updatedList: OpenedProjectTab[] = [
-					{index: 0, title, componentType, componentId},
+					{index: 0, title, componentType, componentId, projectId},
 					...tabs.map((item, index) => ({...item, index: index + 1}))
 				]
 

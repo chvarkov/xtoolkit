@@ -17,7 +17,7 @@ export class ScViewerComponent implements OnInit {
 
 	@Input() selectedEnvironment?: INetworkEnvironment;
 
-	@Input() selectedSc?: ProjectScAbi | null;
+	@Input() projectSc?: ProjectScAbi | null;
 
 	code$: Observable<string> = of('');
 
@@ -28,7 +28,7 @@ export class ScViewerComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.code$ = this.store.select(ProjectSelector.getScCode(this.address));
-		this.wallets$ = this.store.select(ProjectSelector.walletsByProjectId(this.selectedSc?.projectId || ''));
+		this.wallets$ = this.store.select(ProjectSelector.walletsByProjectId(this.projectSc?.projectId || ''));
 
 		this.store.dispatch(ProjectAction.loadScCode({address: this.address}));
 	}

@@ -16,15 +16,12 @@ import { ProjectAction } from './project/store/project.action';
 export class AppComponent implements OnInit {
 	title = 'elrond-sc';
 
-	selectedSc$: Observable<ProjectScAbi | undefined>;
-
 	openedTabs$: Observable<OpenedProjectTab[]>;
 
 	currentTabIndex$: Observable<number | undefined>;
 
 	constructor(private readonly store: Store) {
 		this.store.select(NetworkSelector.selectedNetwork).subscribe(data => console.log('selected network', data));
-		this.selectedSc$ = this.store.select(ProjectSelector.selectedSc);
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 	}
@@ -44,5 +41,9 @@ export class AppComponent implements OnInit {
 
 	selectTab(index: number): void {
 		this.store.dispatch(ProjectAction.selectTab({index}));
+	}
+
+	getScById$(projectId: string, scId: string): Observable<ProjectScAbi | undefined> {
+		return this.store.select(ProjectSelector.smartContractsById(projectId, scId));
 	}
 }

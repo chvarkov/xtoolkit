@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GeneratedWallet, Project, ProjectsInfo } from '../../core/data-provider/data-provider';
+import { GeneratedWallet, Project } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
 import { TabsData } from '../../core/data-provider/personal-settings.manager';
@@ -7,12 +7,8 @@ import { AbiJson } from '../../core/elrond/builders/sc.builder';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
-	static readonly loadProjectsSuccess = createAction(`[${ProjectAction.name}] load projects [OK]`, props<{data: ProjectsInfo}>());
+	static readonly loadProjectsSuccess = createAction(`[${ProjectAction.name}] load projects [OK]`, props<{data: Project[]}>());
 	static readonly loadProjectsError = createAction(`[${ProjectAction.name}] load projects [ERR]`, props<{err: Error}>());
-
-	static readonly selectProject = createAction(`[${ProjectAction.name}] select project [...]`, props<{projectId: string}>());
-	static readonly selectProjectSuccess = createAction(`[${ProjectAction.name}] select project [OK]`, props<{project: Project}>());
-	static readonly selectProjectError = createAction(`[${ProjectAction.name}] select project [ERR]`, props<{err: Error}>());
 
 	static readonly createProject = createAction(`[${ProjectAction.name}] create project [...]`);
 	static readonly createProjectSuccess = createAction(`[${ProjectAction.name}] create project [OK]`, props<{project: Project}>());
@@ -30,19 +26,15 @@ export class ProjectAction {
 	static readonly addWalletSuccess = createAction(`[${ProjectAction.name}] add wallet [OK]`, props<{project: Project, address: string}>());
 	static readonly addWalletError = createAction(`[${ProjectAction.name}] add wallet [ERR]`, props<{err: Error}>());
 
-	static readonly generateWallet = createAction(`[${ProjectAction.name}] generate wallet`);
+	static readonly generateWallet = createAction(`[${ProjectAction.name}] generate wallet`, props<{projectId: string}>());
 
-	static readonly uploadAbi = createAction(`[${ProjectAction.name}] upload abi `);
+	static readonly uploadAbi = createAction(`[${ProjectAction.name}] upload abi`, props<{projectId: string}>());
 
-	static readonly setScAddress = createAction(`[${ProjectAction.name}] set sc address [...]`, props<{scId: string, address: string}>());
+	static readonly setScAddress = createAction(`[${ProjectAction.name}] set sc address [...]`, props<{projectId: string, scId: string, address: string}>());
 	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{project: Project, address: string}>());
 	static readonly setScAddressError = createAction(`[${ProjectAction.name}] set sc address [ERR]`, props<{err: Error}>());
 
-	static readonly selectSc = createAction(`[${ProjectAction.name}] select sc [...]`, props<{scId: string}>());
-	static readonly selectScSuccess = createAction(`[${ProjectAction.name}] select sc [OK]`, props<{project: Project}>());
-	static readonly selectScError = createAction(`[${ProjectAction.name}] select sc [ERR]`, props<{err: Error}>());
-
-	static readonly addToken = createAction(`[${ProjectAction.name}] add token [...]`);
+	static readonly addToken = createAction(`[${ProjectAction.name}] add token [...]`, props<{projectId: string}>());
 	static readonly addTokenSuccess = createAction(`[${ProjectAction.name}] add token [OK]`, props<{project: Project}>());
 	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
 
@@ -52,7 +44,7 @@ export class ProjectAction {
 
 	static readonly openProjectTab = createAction(
 		`[${ProjectAction.name}] open project tab [...]`,
-		props<{title: string, componentType: ProjectComponentType, componentId: string}>(),
+		props<{projectId: string, title: string, componentType: ProjectComponentType, componentId: string}>(),
 	);
 	static readonly openProjectTabSuccess = createAction(`[${ProjectAction.name}] open project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly openProjectTabError = createAction(`[${ProjectAction.name}] open project tab [ERR]`, props<{err: Error}>());

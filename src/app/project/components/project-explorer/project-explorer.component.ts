@@ -14,14 +14,8 @@ import { ProjectComponentType } from '../../../core/types';
 export class ProjectExplorerComponent implements OnInit {
 	projects$: Observable<Project[]>;
 
-	selectedProject$: Observable<Project | undefined>;
-
-	smartContracts$: Observable<ProjectScAbi[]>;
-
 	constructor(private readonly store: Store) {
 		this.projects$ = this.store.select(ProjectSelector.projects);
-		this.selectedProject$ = this.store.select(ProjectSelector.selectedProject);
-		this.smartContracts$ = this.store.select(ProjectSelector.smartContractsOfSelectedProject);
 	}
 
 	ngOnInit(): void {
@@ -32,23 +26,26 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.createProject());
 	}
 
-	uploadScAbi(): void {
-		this.store.dispatch(ProjectAction.uploadAbi());
+	uploadScAbi(projectId: string): void {
+		this.store.dispatch(ProjectAction.uploadAbi({projectId}));
 	}
 
 	loadProjects(): void {
 		this.store.dispatch(ProjectAction.loadProjects());
 	}
 
-	addToken(): void {
-		this.store.dispatch(ProjectAction.addToken());
+	addToken(projectId: string): void {
+		this.store.dispatch(ProjectAction.addToken({projectId}));
 	}
 
-	generateWallet(): void {
-		this.store.dispatch(ProjectAction.generateWallet());
+	generateWallet(projectId: string): void {
+		this.store.dispatch(ProjectAction.generateWallet({projectId}));
 	}
 
-	openProjectComponent(title: string, componentType: ProjectComponentType, componentId: string): void {
-		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
+	openProjectComponent(projectId: string,
+						 title: string,
+						 componentType: ProjectComponentType,
+						 componentId: string): void {
+		this.store.dispatch(ProjectAction.openProjectTab({projectId, title, componentType, componentId}));
 	}
 }
