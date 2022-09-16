@@ -5,8 +5,8 @@
 			{{endpoint.name}}
 			<span class="args">{{getArgsPreview()}}</span></div>
 		<div class="controls">
-			<span class="badge mutable" *ngIf="endpoint.modifiers.isReadonly()">Mutable</span>
-			<span class="badge readonly" *ngIf="!endpoint.modifiers.isReadonly()">Readonly</span>
+			<span class="badge mutable" *ngIf="!endpoint.modifiers.isReadonly()">Mutable</span>
+			<span class="badge readonly" *ngIf="endpoint.modifiers.isReadonly()">Readonly</span>
 			<button class="material-icons" *ngIf="isShowing" (click)="hide()">expand_less</button>
 			<button class="material-icons" *ngIf="!isShowing" (click)="show()">expand_more</button>
 		</div>
@@ -17,9 +17,21 @@
 						  [input]="input"
 						  [formControlName]="input.name"></app-sc-input>
 		</form>
+
+		<div class="result" *ngIf="resultSubject | async as result">
+			{{result | json}}
+		</div>
+
 		<div class="actions">
 			<button class="button">Reset</button>
-			<button class="button call">Call</button>
+			<ng-container *ngIf="network$ | async as network">
+				<button class="button call" *ngIf="!endpoint.modifiers.isReadonly()">Call</button>
+				<button class="button call"
+						*ngIf="endpoint.modifiers.isReadonly()"
+						(click)="sendQuery(network)">
+					Query
+				</button>
+			</ng-container>
 		</div>
 	</ng-container>
 </div>

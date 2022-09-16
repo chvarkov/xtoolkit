@@ -7,7 +7,6 @@ import { SmartContract } from '@elrondnetwork/erdjs/out';
 })
 export class ScPipe implements PipeTransform {
 	transform(value: AbiJson, address: string): SmartContract {
-		console.log('transform json abi', value)
 		return ScBuilder.build(address, value);
 	}
 }

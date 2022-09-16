@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { INetworkEnvironment } from './interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
+import { AccountOnNetwork, ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
+import { Address } from '@elrondnetwork/erdjs/out';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -13,6 +14,10 @@ export class ElrondDataProvider {
 
 	getProxy(network: INetworkEnvironment): ProxyNetworkProvider {
 		return new ProxyNetworkProvider(network.gatewayUrl);
+	}
+
+	getAccountInfo(network: INetworkEnvironment, address: string): Observable<AccountOnNetwork> {
+		return from(this.getProxy(network).getAccount(new Address(address)));
 	}
 
 	getTokenPositions(netwoek: INetworkEnvironment,
