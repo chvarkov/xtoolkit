@@ -11,12 +11,14 @@ export interface IPositionsState {
 
 export interface IProjectState extends ProjectsInfo, TabsData {
 	positionsMap: {[address: string]: IPositionsState};
+	scCodeMap: {[address: string]: string},
 }
 
 const initialState: IProjectState = {
 	projects: [],
 	positionsMap: {},
 	tabs: [],
+	scCodeMap: {},
 };
 
 export const reducer = createReducer(
@@ -78,6 +80,13 @@ export const reducer = createReducer(
 			...state,
 			...tabsData,
 		})),
+	on(ProjectAction.loadScCodeSuccess, (state, { address, code }) => ({
+		...state,
+		scCodeMap: {
+			...state.scCodeMap,
+			[address]: code,
+		},
+	})),
 );
 
 export function projectReducer(state: IProjectState | undefined, action: Action): IProjectState {

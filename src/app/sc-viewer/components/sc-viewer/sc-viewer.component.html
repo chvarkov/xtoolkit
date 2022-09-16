@@ -29,7 +29,7 @@
 				<app-toolbar>
 					<app-toolbar-icon-button right-side hint="Download WASM file">download</app-toolbar-icon-button>
 				</app-toolbar>
-				<app-sc-code [code]="code"></app-sc-code>
+				<app-sc-code [code]="(code$ | async) || ''"></app-sc-code>
 			</app-tab>
 		</app-tabs>
 	</ng-container>

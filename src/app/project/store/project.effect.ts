@@ -189,6 +189,15 @@ export class ProjectEffect {
 		),
 	));
 
+	loadScCode$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadScCode),
+		withLatestFrom(this.store.select(NetworkSelector.selectedNetwork)),
+		switchMap(([{address}, network]) => this.elrondDataProvider.getAccountInfo(network, address).pipe(
+			map(({ code }) => ProjectAction.loadScCodeSuccess({address, code})),
+			catchError(err => of(ProjectAction.loadScCodeError({err})))),
+		),
+	));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,
