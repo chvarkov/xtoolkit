@@ -14,19 +14,20 @@ export class ProjectSelector {
 		(state: Project[]) => (state || []).find(i => i.id === id),
 	);
 
-	static selectedProject = createSelector(
+	static projectById = (projectId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.selected,
+		(state: IProjectState) => state.projects.find(p => p.id === projectId),
 	);
 
-	static smartContractsOfSelectedProject = createSelector(
+	static smartContractsByProjectId = (projectId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.selected?.smartContracts || [],
+		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.smartContracts || [],
 	);
 
-	static walletsOfSelectedProject = createSelector(
+	static smartContractsById = (projectId: string, scId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.selected?.wallets || [],
+		(state: IProjectState) => (state.projects.find(p => p.id === projectId)?.smartContracts || [])
+			.find(sc => sc.id === scId),
 	);
 
 	static walletsByProjectId = (projectId: string) => createSelector(
@@ -47,18 +48,6 @@ export class ProjectSelector {
 	static getAddressesWithLoadedBalances = createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => Object.keys(state?.positionsMap || {}),
-	);
-
-	static selectedSc = createSelector(
-		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => {
-			const id = state.selected?.selectedScId;
-			if (!id) {
-				return undefined;
-			}
-
-			return state.selected?.smartContracts.find(sc => sc.id === id);
-		},
 	);
 
 	static openedTabs = createSelector(

@@ -1,15 +1,16 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ProjectAction } from './project.action';
-import { ProjectsInfo } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { TabsData } from '../../core/data-provider/personal-settings.manager';
+import { Project } from '../../core/data-provider/data-provider';
 
 export interface IPositionsState {
 	native: string;
 	tokens: ITokenPosition[];
 }
 
-export interface IProjectState extends ProjectsInfo, TabsData {
+export interface IProjectState extends TabsData {
+	projects: Project[];
 	positionsMap: {[address: string]: IPositionsState};
 	scCodeMap: {[address: string]: string},
 }
@@ -29,20 +30,13 @@ export const reducer = createReducer(
 			...data,
 		}
 	}),
-	on(ProjectAction.selectProjectSuccess, (state, { project }) => ({
-		...state,
-		selected: project,
-		positionsMap: {},
-	})),
 	on(ProjectAction.createProjectSuccess, (state, { project }) => ({
 		...state,
 		projects: [...state.projects, project],
-		selected: state.selected ? state.selected : project,
 	})),
 	on(ProjectAction.addAbiSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
-		selected: state.selected?.id === project.id ? project : state.selected,
 	})),
 	on(ProjectAction.loadPositionsSuccess, (state, { address, native, tokens }) => ({
 		...state,
@@ -54,22 +48,14 @@ export const reducer = createReducer(
 	on(ProjectAction.addWalletSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
-		selected: state.selected?.id === project.id ? project : state.selected,
 	})),
 	on(ProjectAction.setScAddressSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
-		selected: state.selected?.id === project.id ? project : state.selected,
-	})),
-	on(ProjectAction.selectScSuccess, (state, { project }) => ({
-		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
-		selected: state.selected?.id === project.id ? project : state.selected,
 	})),
 	on(ProjectAction.addTokenSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
-		selected: state.selected?.id === project.id ? project : state.selected,
 	})),
 	on(ProjectAction.loadProjectTabsSuccess,
 		ProjectAction.openProjectTabSuccess,

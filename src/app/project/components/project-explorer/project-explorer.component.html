@@ -15,11 +15,11 @@
 		<div innerElements>
 			<app-project-element [expandable]="true" name="Smart contracts">
 				<ng-container actions>
-					<button class="material-icons action-button" (click)="uploadScAbi()">add</button>
+					<button class="material-icons action-button" (click)="uploadScAbi(project.id)">add</button>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element
-						(click)="openProjectComponent(sc.name || sc.abi.name, 'sc', sc.id)"
+						(click)="openProjectComponent(project.id, sc.name || sc.abi.name, 'sc', sc.id)"
 						*ngFor="let sc of project.smartContracts"
 						type="sc"
 						[name]="sc.name || sc.abi.name">
@@ -28,7 +28,7 @@
 			</app-project-element>
 			<app-project-element [expandable]="true" type="group" name="Tokens">
 				<ng-container actions>
-					<button class="material-icons action-button" (click)="addToken()">add</button>
+					<button class="material-icons action-button" (click)="addToken(project.id)">add</button>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let tokenAddress of project.tokens"
@@ -49,7 +49,7 @@
 
 			<app-project-element [expandable]="true" type="group" name="Wallets">
 				<ng-container actions>
-					<button class="material-icons action-button" (click)="generateWallet()">add</button>
+					<button class="material-icons action-button" (click)="generateWallet(project.id)">add</button>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let wallet of project.wallets"

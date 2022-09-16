@@ -8,6 +8,7 @@ export interface OpenedProjectTab {
 	title: string;
 	componentType: ProjectComponentType;
 	componentId: string;
+	projectId: string;
 }
 
 export interface TabsData {
@@ -18,7 +19,8 @@ export interface TabsData {
 export interface PersonalSettingsManager {
 	getOpenedTabs(): Observable<TabsData>;
 
-	openTab(title: string,
+	openTab(projectId: string,
+			title: string,
 			componentType: ProjectComponentType,
 			componentId: string): Observable<TabsData>;
 

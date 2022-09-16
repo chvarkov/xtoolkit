@@ -1,5 +1,5 @@
-<div class="sc-viewer-container" *ngIf="selectedSc">
-	<ng-container *ngIf="(selectedSc.abi | sc:address) as smartContract">
+<div class="sc-viewer-container" *ngIf="projectSc">
+	<ng-container *ngIf="(projectSc.abi | sc:address) as smartContract">
 		<app-sc-viewer-header></app-sc-viewer-header>
 		<app-tabs>
 			<app-tab title="Endpoints">

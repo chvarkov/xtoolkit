@@ -26,7 +26,11 @@ export class ScViewerHeaderComponent implements OnInit, OnDestroy {
 
 		this.sub.add(this.addressControl.valueChanges.pipe(
 			debounceTime(200),
-		).subscribe((address) => this.store.dispatch(ProjectAction.setScAddress({scId: this.sc?.id, address}))));
+		).subscribe((address) => this.store.dispatch(ProjectAction.setScAddress({
+			projectId: this.sc.projectId,
+			scId: this.sc?.id,
+			address,
+		}))));
 	}
 
 	ngOnDestroy(): void {

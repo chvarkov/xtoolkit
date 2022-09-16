@@ -32,27 +32,18 @@ export interface Project {
 	selectedScId?: string;
 }
 
-export interface ProjectsInfo {
-	projects: Project[];
-	selected?: Project;
-}
-
 export interface DataProvider {
 	getNetworks(): Observable<NetworkInfo>;
 
 	selectNetwork(network: INetworkEnvironment): Observable<void>
 
-	getProjects(): Observable<ProjectsInfo>;
+	getProjects(): Observable<Project[]>;
 
 	createProject(name: string): Observable<Project>;
 
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
-
-	selectProject(projectId: string): Observable<Project>;
-
-	selectSc(projectId: string, scId: string): Observable<Project>;
 
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 

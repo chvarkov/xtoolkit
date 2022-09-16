@@ -27,14 +27,6 @@ export class ProjectEffect {
 		)),
 	)));
 
-	selectProject$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.selectProject),
-		switchMap(({projectId}) => this.dataProvider.selectProject(projectId).pipe(
-			map((project) => ProjectAction.selectProjectSuccess({project})),
-			catchError(err => of(ProjectAction.selectProjectError({err})),
-			)),
-		)));
-
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),
 		switchMap(() => this.modalDialogFactory.show(CreateProjectDialogComponent).afterSubmit$()),
@@ -89,21 +81,19 @@ export class ProjectEffect {
 
 	generateWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.generateWallet),
-		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
-		switchMap(([_, project]) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
+		switchMap(({projectId}) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
 			.afterSubmit$()
 			.pipe(
-				map((wallet) => ProjectAction.addWallet({projectId: project?.id || '', wallet}))
+				map((wallet) => ProjectAction.addWallet({projectId, wallet}))
 			),
 		),
 	));
 
 	uploadAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.uploadAbi),
-		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
-		switchMap(([_, project]) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId: project?.id || ''}).afterSubmit$().pipe(
+		switchMap(({projectId}) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId}).afterSubmit$().pipe(
 			map((data: ProjectScAbi) => ProjectAction.addAbi({
-				projectId: project?.id || '',
+				projectId,
 				name: data.name || data.abi.name,
 				abi: data.abi,
 			})),
@@ -112,9 +102,8 @@ export class ProjectEffect {
 
 	setScAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.setScAddress),
-		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
-		switchMap(([{ scId, address }, project]) => this.dataProvider.setScAddress(
-			project?.id || '',
+		switchMap(({ projectId, scId, address }) => this.dataProvider.setScAddress(
+			projectId,
 			scId,
 			address,
 		).pipe(
@@ -126,22 +115,12 @@ export class ProjectEffect {
 		))),
 	);
 
-	selectSc$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.selectSc),
-		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
-		switchMap(([{ scId }, project]) => this.dataProvider.selectSc(project?.id || '', scId).pipe(
-			map((project) => ProjectAction.selectScSuccess({project})),
-		)),
-		catchError(err => of(ProjectAction.selectScError({err}))),
-	));
-
 	addToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addToken),
-		withLatestFrom(this.store.select(ProjectSelector.selectedProject)),
-		switchMap(([_, project]) => this.modalDialogFactory.show(AddTokenDialogComponent)
+		switchMap(({projectId}) => this.modalDialogFactory.show(AddTokenDialogComponent)
 			.afterSubmit$()
 			.pipe(
-				switchMap((tokenAddress: string) => this.dataProvider.addToken(project?.id || '', tokenAddress).pipe(
+				switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(
 					map((updatedProject) => ProjectAction.addTokenSuccess({project: updatedProject}))
 				)),
 			),
@@ -159,7 +138,7 @@ export class ProjectEffect {
 
 	openProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.openProjectTab),
-		switchMap(({title, componentType, componentId}) => this.personalSettingsManager.openTab(title, componentType, componentId).pipe(
+		switchMap(({projectId, title, componentType, componentId}) => this.personalSettingsManager.openTab(projectId, title, componentType, componentId).pipe(
 			map((tabsData) => ProjectAction.openProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.openProjectTabError({err})))),
 		),
