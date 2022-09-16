@@ -90,6 +90,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						id: uuid.v4(),
 						name,
 						abi,
+						projectId,
 					};
 
 					const project = info.projects.find(i => i.id === projectId);

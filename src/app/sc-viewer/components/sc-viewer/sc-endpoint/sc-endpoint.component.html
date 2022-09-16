@@ -22,16 +22,13 @@
 			{{result | json}}
 		</div>
 
-		<div class="actions">
-			<button class="button">Reset</button>
-			<ng-container *ngIf="network$ | async as network">
-				<button class="button call" *ngIf="!endpoint.modifiers.isReadonly()">Call</button>
-				<button class="button call"
-						*ngIf="endpoint.modifiers.isReadonly()"
-						(click)="sendQuery(network)">
-					Query
-				</button>
-			</ng-container>
-		</div>
+		<ng-container *ngIf="network$ | async as network">
+			<app-sc-endpoint-tx-sign *ngIf="!endpoint.modifiers.isReadonly()"
+									 [wallets]="wallets"
+									 (onSubmit)="submitTransaction(network, $event.wallet, $event.fee)"></app-sc-endpoint-tx-sign>
+			<app-sc-endpoint-query *ngIf="endpoint.modifiers.isReadonly()"
+								   [wallets]="wallets"
+								   (onSubmit)="sendQuery(network)"></app-sc-endpoint-query>
+		</ng-container>
 	</ng-container>
 </div>

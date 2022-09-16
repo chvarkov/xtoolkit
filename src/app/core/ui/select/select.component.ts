@@ -11,7 +11,8 @@ import {
 	ViewChild
 } from '@angular/core';
 import { OptionComponent } from './option/option.component';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface SelectElement<T = any> {
 	value: T;
@@ -25,7 +26,7 @@ export type SelectSize = 'supersmall' | 'small' | 'medium' | 'big';
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss']
 })
-export class SelectComponent<T> implements OnInit, AfterViewInit, OnDestroy {
+export class SelectComponent<T = any> implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild('selector', {static: true}) eRef?: ElementRef;
 	@ContentChildren(OptionComponent) options?: QueryList<OptionComponent>;
 
@@ -36,6 +37,10 @@ export class SelectComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 	@Input() placeHolder = 'Chose option';
 
 	@Output() selectedElement: EventEmitter<SelectElement<T>> = new EventEmitter<SelectElement<T>>();
+
+	get selectedValue$(): Observable<T> {
+		return this.selectedElement.asObservable().pipe(map(v => v.value));
+	}
 
 	isVisibleOptions = false;
 
