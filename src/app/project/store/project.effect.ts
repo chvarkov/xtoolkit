@@ -30,7 +30,7 @@ export class ProjectEffect {
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),
 		switchMap(() => this.modalDialogFactory.show(CreateProjectDialogComponent).afterSubmit$()),
-		switchMap((name: string) => this.dataProvider.createProject(name).pipe(
+		switchMap(({ name, chainId }) => this.dataProvider.createProject(name, chainId).pipe(
 			map((project) => ProjectAction.createProjectSuccess({project})),
 			catchError(err => of(ProjectAction.createProjectError({err})),
 			)),

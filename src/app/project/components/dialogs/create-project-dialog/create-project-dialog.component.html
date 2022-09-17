@@ -1,11 +1,23 @@
 <app-modal-dialog title="Create project" [dialogRef]="dialogRef">
 	<div content class="content">
 		<input class="project-name" [(ngModel)]="projectName" placeholder="Project name">
+
+		<app-select class="network-select"
+					placeHolder="Network"
+					size="medium"
+					(selectedElement)="onSelectNetwork($event)">
+			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
+				{{network.name}}
+			</app-option>
+		</app-select>
 	</div>
+
 	<div actions>
 		<div class="actions">
 			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button" [disabled]="!projectName" (click)="dialogRef.submit(projectName)">Create</button>
+			<button class="create-button"
+					[disabled]="!projectName || !chainId"
+					(click)="create()">Create</button>
 		</div>
 	</div>
 </app-modal-dialog>

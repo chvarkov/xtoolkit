@@ -29,7 +29,7 @@ export const reducer = createReducer(
 	on(ProjectAction.loadProjectsSuccess, (state, { data }) => {
 		return {
 			...state,
-			...data,
+			projects: data,
 		}
 	}),
 	on(ProjectAction.createProjectSuccess, (state, { project }) => ({

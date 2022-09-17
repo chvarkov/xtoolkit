@@ -24,6 +24,7 @@ export interface ProjectScAbi {
 
 export interface Project {
 	id: string;
+	chainId: string;
 	name: string;
 	smartContracts: ProjectScAbi[];
 	wallets: GeneratedWallet[];
@@ -38,7 +39,7 @@ export interface DataProvider {
 
 	getProjects(): Observable<Project[]>;
 
-	createProject(name: string): Observable<Project>;
+	createProject(name: string, chainId: string): Observable<Project>;
 
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 

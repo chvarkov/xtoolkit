@@ -7,10 +7,12 @@ import { networkReducer } from './store/network.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { NetworkEffect } from './store/network.effect';
 import { NETWORK_FEATURE } from './constants';
+import { NetworkPipe } from './pipes/network.pipe';
 
 @NgModule({
 	declarations: [
-		NetworkSelectorComponent
+		NetworkSelectorComponent,
+  NetworkPipe
 	],
 	imports: [
 		CommonModule,
@@ -18,11 +20,12 @@ import { NETWORK_FEATURE } from './constants';
 		StoreModule.forFeature(NETWORK_FEATURE, networkReducer),
 		EffectsModule.forFeature([NetworkEffect]),
 	],
-	exports: [
-		NetworkSelectorComponent,
-		StoreModule,
-		EffectsModule,
-	],
+    exports: [
+        NetworkSelectorComponent,
+        StoreModule,
+        EffectsModule,
+        NetworkPipe,
+    ],
 })
 export class NetworkModule {
 	static storeName = 'networks';

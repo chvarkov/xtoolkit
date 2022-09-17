@@ -54,13 +54,14 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(projects);
 	}
 
-	createProject(name: string): Observable<Project> {
+	createProject(name: string, chainId: string): Observable<Project> {
 		return this.getProjects()
 			.pipe(
 				map((projects => {
 					const project: Project = {
 						id: uuid.v4(),
 						name,
+						chainId,
 						smartContracts: [],
 						wallets: [],
 						tokens: [],

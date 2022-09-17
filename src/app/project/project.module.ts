@@ -13,6 +13,7 @@ import { UploadAbiDialogComponent } from './components/dialogs/upload-abi-dialog
 import { ProjectExplorerComponent } from './components/project-explorer/project-explorer.component';
 import { ProjectElementComponent } from './components/project-element/project-element.component';
 import { AddTokenDialogComponent } from './components/dialogs/add-token-dialog/add-token-dialog.component';
+import { NetworkModule } from '../network/network.module';
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { AddTokenDialogComponent } from './components/dialogs/add-token-dialog/a
 		StoreModule.forFeature(PROJECT_FEATURE, projectReducer),
 		EffectsModule.forFeature([ProjectEffect]),
 		FormsModule,
+		NetworkModule,
 	],
 	exports: [
 		StoreModule,
