@@ -12,8 +12,7 @@
 						 [title]="tab.title"
 						 [type]="tab.componentType">
 			<app-sc-viewer *ngIf="tab.componentType === 'sc'"
-						   [projectSc]="getScById$(tab.projectId, tab.componentId) | async"
-						   address="erd1qqqqqqqqqqqqqpgqfjtkwahvhyg0eau07y84p0gdu6cjtxfz6gaq2htdxc">
+						   [projectSc]="getScById$(tab.projectId, tab.componentId) | async">
 			</app-sc-viewer>
 		</app-project-tab>
 	</app-project-tabs>
