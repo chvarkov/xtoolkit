@@ -14,6 +14,11 @@ export class NetworkSelector {
 		(state: INetworkEnvironment[]) => (state || []).find(i => i.name === name),
 	)
 
+	static networkByChainId = (chainId: string) => createSelector(
+		(state: Record<string, any>) => NetworkSelector.networks(state),
+		(state: INetworkEnvironment[]) => (state || []).find(i => i.chainId === chainId),
+	)
+
 	static selectedNetwork = createSelector(
 		(app: Record<string, any>) => app[NETWORK_FEATURE],
 		(state: INetworkState) => state.selected,
