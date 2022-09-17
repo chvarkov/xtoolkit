@@ -1,6 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { EndpointParameterDefinition } from '@elrondnetwork/erdjs/out';
+import { BooleanType, BytesType, EndpointParameterDefinition } from '@elrondnetwork/erdjs/out';
+import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
 
 @Component({
 	selector: 'app-sc-input',
@@ -16,6 +17,7 @@ import { EndpointParameterDefinition } from '@elrondnetwork/erdjs/out';
 })
 export class ScInputComponent implements OnInit, ControlValueAccessor {
 	@Input() input?: EndpointParameterDefinition;
+
 
 	private onChange: Function = () => null;
 	private onTouch: Function = () => null;
@@ -53,5 +55,17 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 
 	registerOnTouched(fn: any) {
 		this.onTouch = fn
+	}
+
+	isBoolType(): boolean {
+		return this.input?.type instanceof BooleanType;
+	}
+
+	isNumericalType(): boolean {
+		return this.input?.type instanceof NumericalType;
+	}
+
+	isBytesType(): boolean {
+		return this.input?.type instanceof BytesType;
 	}
 }

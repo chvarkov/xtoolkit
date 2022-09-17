@@ -1,19 +1,10 @@
 <div class="input-container" *ngIf="input">
 	<div class="name">{{input.name}}</div>
 
-	<div class="input" [ngSwitch]="input.type">
-		<app-bool-input *ngSwitchCase="'bool'" (onChange)="writeValue($event)"></app-bool-input>
-		<app-bytes-input *ngSwitchCase="'bytes'"></app-bytes-input>
-		<app-number-input *ngSwitchCase="'u8'"></app-number-input>
-		<app-number-input *ngSwitchCase="'i8'"></app-number-input>
-		<app-number-input *ngSwitchCase="'i16'"></app-number-input>
-		<app-number-input *ngSwitchCase="'u16'"></app-number-input>
-		<app-number-input *ngSwitchCase="'i32'"></app-number-input>
-		<app-number-input *ngSwitchCase="'u32'"></app-number-input>
-		<app-number-input *ngSwitchCase="'i64'"></app-number-input>
-		<app-number-input *ngSwitchCase="'u64'"></app-number-input>
-		<app-number-input *ngSwitchCase="'BigInt'"></app-number-input>
-		<app-number-input *ngSwitchCase="'BigUint'"></app-number-input>
+	<div class="input" [ngSwitch]="true">
+		<app-bool-input *ngSwitchCase="isBoolType()" (onChange)="writeValue($event)"></app-bool-input>
+		<app-bytes-input *ngSwitchCase="isBytesType()"></app-bytes-input>
+		<app-number-input *ngSwitchCase="isNumericalType()" [type]="input?.type"></app-number-input>
 		<input *ngSwitchDefault class="input">
 	</div>
 
