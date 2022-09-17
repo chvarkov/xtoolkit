@@ -1,3 +1,6 @@
 <form class="header-container">
-	<input class="address-input" placeholder="Address" [formControl]="addressControl">
+	<input class="address-input"
+		   placeholder="Address"
+		   [value]="address"
+		   (change)="onChangeAddress($event)">
 </form>

@@ -64,4 +64,9 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.scCodeMap[address] || '',
 	);
+
+	static addressesMapByScId = (scId: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => scId && state.scAddressesMap[scId] || {},
+	);
 }

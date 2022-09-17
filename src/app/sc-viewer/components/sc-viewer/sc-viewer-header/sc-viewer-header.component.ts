@@ -1,10 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../../project/store/project.action';
 import { ProjectScAbi } from '../../../../core/data-provider/data-provider';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-sc-viewer-header',
@@ -13,8 +12,9 @@ import { Subscription } from 'rxjs';
 })
 export class ScViewerHeaderComponent implements OnInit, OnDestroy {
 	@Input() sc!: ProjectScAbi;
+	@Input() address: string = '';
 
-	addressControl = new FormControl();
+	addressChangesSubject = new Subject<string>();
 
 	sub = new Subscription();
 
@@ -22,15 +22,24 @@ export class ScViewerHeaderComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.addressControl.setValue(this.sc?.address || '');
+		this.sub.add(this.addressChangesSubject.pipe(
+			debounceTime(100),
+		).subscribe((address) => {
+			if (!this.sc) {
+				return;
+			}
 
-		this.sub.add(this.addressControl.valueChanges.pipe(
-			debounceTime(200),
-		).subscribe((address) => this.store.dispatch(ProjectAction.setScAddress({
-			projectId: this.sc.projectId,
-			scId: this.sc?.id,
-			address,
-		}))));
+			this.store.dispatch(ProjectAction.setScAddress({
+				scId: this.sc.id,
+				address,
+			}));
+		}));
+	}
+
+	onChangeAddress(event: Event): void {
+		const value = (<HTMLInputElement>(event.target)).value;
+
+		this.addressChangesSubject.next(value);
 	}
 
 	ngOnDestroy(): void {

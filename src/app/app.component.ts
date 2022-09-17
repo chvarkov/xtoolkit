@@ -28,7 +28,10 @@ export class AppComponent implements OnInit {
 
 	async ngOnInit(): Promise<void> {
 		this.store.dispatch(NetworkAction.loadNetworks());
-		setTimeout(() => this.store.dispatch(ProjectAction.loadProjectTabs()));
+		setTimeout(() => {
+			this.store.dispatch(ProjectAction.loadProjectTabs());
+			this.store.dispatch(ProjectAction.loadScAddresses());
+		});
 	}
 
 	moveTab(prevIndex: number, currentIndex: number): void {
