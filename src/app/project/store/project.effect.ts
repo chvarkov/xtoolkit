@@ -102,14 +102,15 @@ export class ProjectEffect {
 
 	setScAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.setScAddress),
-		switchMap(({ projectId, scId, address }) => this.dataProvider.setScAddress(
-			projectId,
+		withLatestFrom(this.store.select(NetworkSelector.selectedNetwork)),
+		switchMap(([{scId, address }, network]) => this.dataProvider.setScAddress(
 			scId,
+			network.chainId || '',
 			address,
 		).pipe(
-			map((project) => ProjectAction.setScAddressSuccess({
-				address,
-				project,
+			map((subMap) => ProjectAction.setScAddressSuccess({
+				scId,
+				subMap,
 			})),
 			catchError(err => of(ProjectAction.setScAddressError({err}))),
 		))),
@@ -174,6 +175,14 @@ export class ProjectEffect {
 		switchMap(([{address}, network]) => this.elrondDataProvider.getAccountInfo(network, address).pipe(
 			map(({ code }) => ProjectAction.loadScCodeSuccess({address, code})),
 			catchError(err => of(ProjectAction.loadScCodeError({err})))),
+		),
+	));
+
+	loadScAddresses$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadScAddresses),
+		switchMap(() => this.dataProvider.getAllScAddresses().pipe(
+			map((map ) => ProjectAction.loadScAddressesSuccess({map})),
+			catchError(err => of(ProjectAction.loadScAddressesError({err})))),
 		),
 	));
 

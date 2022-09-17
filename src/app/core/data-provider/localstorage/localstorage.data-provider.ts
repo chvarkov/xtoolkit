@@ -13,6 +13,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly networksKey = `${this.globalPrefix}.networks`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
+	private readonly addressesKey = `${this.globalPrefix}.addresses`;
 
 	getNetworks(): Observable<NetworkInfo> {
 		const networks: NetworkInfo | null = this.get(this.networksKey);
@@ -104,27 +105,31 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	setScAddress(projectId: string, scId: string, address: string): Observable<Project> {
-		return this.getProjects()
+	getAllScAddresses(): Observable<{[scId: string]: {[chainId: string]: string}}> {
+		const scAddressesMap: { [p: string]: { [p: string]: string } } | undefined = this.get(this.addressesKey);
+
+		if (!scAddressesMap) {
+			this.set(this.addressesKey, {});
+
+			return of({});
+		}
+
+		return of(scAddressesMap);
+	}
+
+	setScAddress(scId: string, chainId: string, address: string): Observable<{[chainId: string]: string}> {
+		return this.getAllScAddresses()
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
+				map((map => {
+					if (!map[scId]) {
+						map[scId] = {};
 					}
 
-					const sc = project.smartContracts.find(sc => sc.id === scId);
+					map[scId][chainId] = address;
 
-					if (!sc) {
-						throw new Error('Smart contract not found');
-					}
+					this.set(this.addressesKey, map);
 
-					sc.address = address;
-
-					this.set(this.projectsKey, projects);
-
-					return project;
+					return map[scId];
 				})),
 			);
 	}

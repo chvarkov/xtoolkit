@@ -13,6 +13,7 @@ export interface IProjectState extends TabsData {
 	projects: Project[];
 	positionsMap: {[address: string]: IPositionsState};
 	scCodeMap: {[address: string]: string},
+	scAddressesMap: {[scId: string]: {[chainId: string]: string}};
 }
 
 const initialState: IProjectState = {
@@ -20,6 +21,7 @@ const initialState: IProjectState = {
 	positionsMap: {},
 	tabs: [],
 	scCodeMap: {},
+	scAddressesMap: {},
 };
 
 export const reducer = createReducer(
@@ -49,10 +51,6 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
-	on(ProjectAction.setScAddressSuccess, (state, { project }) => ({
-		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
-	})),
 	on(ProjectAction.addTokenSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
@@ -71,6 +69,23 @@ export const reducer = createReducer(
 		scCodeMap: {
 			...state.scCodeMap,
 			[address]: code,
+		},
+	})),
+	on(ProjectAction.loadScAddressesSuccess, (state, { map }) => ({
+		...state,
+		scAddressesMap: {
+			...state.scAddressesMap,
+			...map,
+		},
+	})),
+	on(ProjectAction.setScAddressSuccess, (state, { scId, subMap }) => ({
+		...state,
+		scAddressesMap: {
+			...state.scAddressesMap,
+			[scId]: {
+				...state.scAddressesMap[scId],
+				...subMap,
+			},
 		},
 	})),
 );
