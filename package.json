@@ -26,6 +26,7 @@
     "@ngrx/effects": "^12.5.1",
     "@ngrx/store": "^12.5.1",
     "@ngrx/store-devtools": "^12.5.1",
+    "bignumber.js": "^9.1.0",
     "brfs": "^2.0.2",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
