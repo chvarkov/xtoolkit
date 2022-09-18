@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { TransactionAction } from './transaction.action';
-import { IElrondTransaction } from '../interfaces/elrond-transaction';
+import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 
 export interface ITransactionState {
 	transactionMap: {[address: string]: IElrondTransaction[]};

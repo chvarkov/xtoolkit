@@ -1,0 +1,29 @@
+<div class="token-container" *ngIf="(token$ | async) as token">
+	<div class="header">
+		<img class="logo" [src]="token.assets?.svgUrl">
+		<div class="content">
+			<div class="title">{{token.ticker}} - {{token.name}}</div>
+<!--			<div class="description">{{token.owner}}</div>-->
+		</div>
+	</div>
+	<app-tabs>
+		<app-tab title="Info">
+			<div>holders {{token.accounts}}</div>
+			<div>burnt {{token.burnt}}</div>
+			<div>decimals {{token.decimals}}</div>
+			<div>minted {{token.minted}}</div>
+			<div>supply {{token.supply}}</div>
+			<div>initialMinted {{token.initialMinted}}</div>
+			<div>canBurn {{token.canBurn}}</div>
+			<div>canChangeOwner {{token.canChangeOwner}}</div>
+			<div>canFreeze {{token.canFreeze}}</div>
+			<div>canMint {{token.canMint}}</div>
+			<div>canPause {{token.canPause}}</div>
+			<div>canUpgrade {{token.canUpgrade}}</div>
+			<div>canWipe {{token.canWipe}}</div>
+			<div>owner {{token.owner}}</div>
+		</app-tab>
+		<app-tab title="Roles"></app-tab>
+		<app-tab title="Transactions"></app-tab>
+	</app-tabs>
+</div>

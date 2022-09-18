@@ -1,0 +1,17 @@
+.status-badge {
+	padding: 2px 10px;
+	border-radius: 12px;
+	color: var(--text-accent-color);
+}
+
+.pending {
+	background: var(--static-yellow);
+}
+
+.fail {
+	background: var(--static-red);
+}
+
+.success {
+	background: var(--static-green);
+}

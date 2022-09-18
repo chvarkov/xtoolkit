@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IElrondTransaction } from '../interfaces/elrond-transaction';
+import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 
 export class TransactionAction {
 	static readonly loadTransactions = createAction(`[${TransactionAction.name}] load transactions [...]`, props<{address: string}>());

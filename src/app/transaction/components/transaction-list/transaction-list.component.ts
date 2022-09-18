@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IElrondTransaction } from '../../interfaces/elrond-transaction';
+import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { TransactionSelector } from '../../store/transaction.selector';
 import { TransactionAction } from '../../store/transaction.action';
 

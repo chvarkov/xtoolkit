@@ -11,10 +11,14 @@ import { BytesInputComponent } from './components/sc-viewer/sc-endpoint/sc-input
 import { BytesControlComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/controls/bytes-control/bytes-control.component';
 import { NumberInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/number-input/number-input.component';
 import { ScCodeComponent } from './components/sc-viewer/sc-code/sc-code.component';
-import { ScTokensComponent } from './components/sc-viewer/sc-tokens/sc-tokens.component';
+import { ScTokensComponent } from './components/common/sc-tokens/sc-tokens.component';
 import { ScNftsComponent } from './components/sc-viewer/sc-nfts/sc-nfts.component';
 import { ScEndpointTxSignComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint-tx-sign/sc-endpoint-tx-sign.component';
 import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint-query/sc-endpoint-query.component';
+import { TokenViewerComponent } from './components/token-viewer/token-viewer.component';
+import { WalletViewerComponent } from './components/wallet-viewer/wallet-viewer.component';
+import { AccountTransactionComponent } from './components/common/acccunt-transaction/account-transaction.component';
+import { AcccountTransactionStatusBadgeComponent } from './components/common/acccunt-transaction/account-transaction-status-badge/account-transaction-status-badge.component';
 
 @NgModule({
 	declarations: [
@@ -30,7 +34,11 @@ import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-
 		ScTokensComponent,
 		ScNftsComponent,
   ScEndpointTxSignComponent,
-  ScEndpointQueryComponent
+  ScEndpointQueryComponent,
+  TokenViewerComponent,
+  WalletViewerComponent,
+		AccountTransactionComponent,
+		AcccountTransactionStatusBadgeComponent,
 	],
 	imports: [
 		CommonModule,
@@ -40,6 +48,8 @@ import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-
 	],
 	exports: [
 		ScViewerComponent,
+		TokenViewerComponent,
+		WalletViewerComponent,
 	]
 })
 export class ScViewerModule { }

@@ -1,0 +1,23 @@
+<div class="wallet" *ngIf="(account$ | async) as account">
+	<div class="header">
+		<div class="info">
+			<div>{{address}} <span *ngIf="account.userName">({{account.userName}})</span></div>
+			<div>Nonce: {{account.nonce}}</div>
+		</div>
+		<div class="actions">
+			<button>explore</button>
+			<button>export keys</button>
+			<button>delete</button>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="header">Assets</div>
+		<div class="header">Transactions</div>
+
+		<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
+		<div>
+			<app-account-transaction *ngFor="let tx of (transactions$ | async)" [tx]="tx"></app-account-transaction>
+		</div>
+	</div>
+</div>

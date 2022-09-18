@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IElrondTransaction } from '../../interfaces/elrond-transaction';
+import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 
 @Component({
 	selector: 'app-transaction',
