@@ -1,16 +1,20 @@
 import { FormControl } from '@angular/forms';
 import { Address } from '@elrondnetwork/erdjs/out';
 
-function addressValidator(control: FormControl): Record<'invalidAddress', boolean> | null {
+export function addressValidator(control: FormControl): Record<'invalidAddress', boolean> | null {
 	const value = control.value;
 
-	try {
-		new Address(value);
+	return isValidAddress(value)
+		? null
+		: {invalidAddress: true};
+}
 
-		return null;
+export function isValidAddress(address: string): boolean {
+	try {
+		new Address(address);
+
+		return true;
 	} catch (e) {
-		return {
-			invalidAddress: true,
-		};
+		return false;
 	}
 }
