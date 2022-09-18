@@ -19,6 +19,7 @@ export interface ProjectScAbi {
 	name?: string;
 	id: string;
 	projectId: string;
+	address: string;
 	abi: AbiJson;
 }
 
@@ -43,9 +44,7 @@ export interface DataProvider {
 
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 
-	getAllScAddresses(): Observable<{[scId: string]: {[chainId: string]: string}}>;
-
-	setScAddress(scId: string, chainId: string, address: string): Observable<{ [chainId: string]: string }>;
+	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
 
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 

@@ -22,7 +22,6 @@ export interface ILoadedProjectDataState {
 export interface IProjectState extends TabsData {
 	projects: Project[];
 	scCodeMap: {[address: string]: string},
-	scAddressesMap: {[scId: string]: {[chainId: string]: string}};
 	loadedDataMap: {[projectId: string]: ILoadedProjectDataState}
 }
 
@@ -31,7 +30,6 @@ const initialState: IProjectState = {
 	loadedDataMap: {},
 	tabs: [],
 	scCodeMap: {},
-	scAddressesMap: {},
 };
 
 export const reducer = createReducer(
@@ -74,22 +72,9 @@ export const reducer = createReducer(
 			[address]: code,
 		},
 	})),
-	on(ProjectAction.loadScAddressesSuccess, (state, { map }) => ({
+	on(ProjectAction.setScAddressSuccess, (state, { project }) => ({
 		...state,
-		scAddressesMap: {
-			...state.scAddressesMap,
-			...map,
-		},
-	})),
-	on(ProjectAction.setScAddressSuccess, (state, { scId, subMap }) => ({
-		...state,
-		scAddressesMap: {
-			...state.scAddressesMap,
-			[scId]: {
-				...state.scAddressesMap[scId],
-				...subMap,
-			},
-		},
+		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
 	on(ProjectAction.loadAccountAndPositionsSuccess, (state, { projectId, native, account, tokens }) => ({
 		...state,

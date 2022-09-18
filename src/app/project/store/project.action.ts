@@ -13,10 +13,6 @@ export class ProjectAction {
 	static readonly loadProjectsSuccess = createAction(`[${ProjectAction.name}] load projects [OK]`, props<{data: Project[]}>());
 	static readonly loadProjectsError = createAction(`[${ProjectAction.name}] load projects [ERR]`, props<{err: Error}>());
 
-	static readonly loadScAddresses = createAction(`[${ProjectAction.name}] load sc addresses [...]`);
-	static readonly loadScAddressesSuccess = createAction(`[${ProjectAction.name}] sc addresses [OK]`, props<{map: {[scId: string]: {[chainId: string]: string}}}>());
-	static readonly loadScAddressesError = createAction(`[${ProjectAction.name}] sc addresses [ERR]`, props<{err: Error}>());
-
 	static readonly createProject = createAction(`[${ProjectAction.name}] create project [...]`);
 	static readonly createProjectSuccess = createAction(`[${ProjectAction.name}] create project [OK]`, props<{project: Project}>());
 	static readonly createProjectError = createAction(`[${ProjectAction.name}] create project [ERR]`, props<{err: Error}>());
@@ -37,8 +33,8 @@ export class ProjectAction {
 
 	static readonly uploadAbi = createAction(`[${ProjectAction.name}] upload abi`, props<{projectId: string}>());
 
-	static readonly setScAddress = createAction(`[${ProjectAction.name}] set sc address [...]`, props<{scId: string, address: string}>());
-	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{scId: string, subMap: {[chainId: string]: string}}>());
+	static readonly setScAddress = createAction(`[${ProjectAction.name}] set sc address [...]`, props<{projectId: string, scId: string, address: string}>());
+	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{project: Project}>());
 	static readonly setScAddressError = createAction(`[${ProjectAction.name}] set sc address [ERR]`, props<{err: Error}>());
 
 	static readonly addToken = createAction(`[${ProjectAction.name}] add token [...]`, props<{projectId: string}>());

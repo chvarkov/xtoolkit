@@ -56,6 +56,7 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 			name: this.smartContractName,
 			abi: this.abi,
 			projectId: this.dialogRef.data.projectId,
+			address: '',
 		});
 	}
 }

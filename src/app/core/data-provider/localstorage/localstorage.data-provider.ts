@@ -85,6 +85,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						name,
 						abi,
 						projectId,
+						address: '',
 					};
 
 					const project = projects.find(i => i.id === projectId);
@@ -106,31 +107,27 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	getAllScAddresses(): Observable<{[scId: string]: {[chainId: string]: string}}> {
-		const scAddressesMap: { [p: string]: { [p: string]: string } } | undefined = this.get(this.addressesKey);
-
-		if (!scAddressesMap) {
-			this.set(this.addressesKey, {});
-
-			return of({});
-		}
-
-		return of(scAddressesMap);
-	}
-
-	setScAddress(scId: string, chainId: string, address: string): Observable<{[chainId: string]: string}> {
-		return this.getAllScAddresses()
+	setScAddress(projectId: string, scId: string, address: string): Observable<Project> {
+		return this.getProjects()
 			.pipe(
-				map((map => {
-					if (!map[scId]) {
-						map[scId] = {};
+				map((projects => {
+					const project = projects.find(p => p.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
 					}
 
-					map[scId][chainId] = address;
+					const sc = project.smartContracts.find(sc => sc.id === scId);
 
-					this.set(this.addressesKey, map);
+					if (!sc) {
+						throw new Error('Sc not found');
+					}
 
-					return map[scId];
+					sc.address = address;
+
+					this.set(this.projectsKey, projects);
+
+					return project;
 				})),
 			);
 	}
