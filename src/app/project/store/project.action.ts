@@ -7,6 +7,7 @@ import { AbiJson } from '../../core/elrond/builders/sc.builder';
 import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
+import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -72,5 +73,8 @@ export class ProjectAction {
 	static readonly loadTokenSuccess = createAction(`[${ProjectAction.name}] load token [OK]`, props<{projectId: string, identifier: string, data: ITokenInfo}>());
 	static readonly loadTokenError = createAction(`[${ProjectAction.name}] load token [ERR]`, props<{err: Error}>());
 
+	static readonly loadTokenHolders = createAction(`[${ProjectAction.name}] load token holders [...]`, props<{projectId: string, identifier: string}>());
+	static readonly loadTokenHoldersSuccess = createAction(`[${ProjectAction.name}] load token holders [OK]`, props<{projectId: string, identifier: string, data: ITokenHolder[]}>());
+	static readonly loadTokenHoldersError = createAction(`[${ProjectAction.name}] load token holders [ERR]`, props<{err: Error}>());
 }
 

@@ -24,6 +24,12 @@
 			<div>owner {{token.owner}}</div>
 		</app-tab>
 		<app-tab title="Roles"></app-tab>
+		<app-tab title="Holders">
+			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
+				<span>{{holder.address}}</span>
+				<span>{{holder.balance}}</span>
+			</div>
+		</app-tab>
 		<app-tab title="Transactions"></app-tab>
 	</app-tabs>
 </div>

@@ -79,4 +79,9 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.loadedDataMap[projectId]?.tokensMap?.[identifier],
 	);
+
+	static tokenHolders = (projectId: string, identifier: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.tokenHoldersMap?.[identifier],
+	);
 }
