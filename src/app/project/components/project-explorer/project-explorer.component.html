@@ -11,7 +11,7 @@
 	<app-project-element *ngFor="let project of (projects$ | async) || []"
 						 [bold]="true"
 						 [expandable]="true"
-						 [name]="project.name + ' [' + (project.chainId | network | async) + ']'">
+						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
 		<div innerElements>
 			<app-project-element [expandable]="true" name="Smart contracts">
 				<ng-container actions>
