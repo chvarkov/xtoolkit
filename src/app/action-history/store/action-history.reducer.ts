@@ -1,25 +1,22 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ActionHistoryAction } from './action-history.action';
-import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
+import { ActionHistoryElement } from '../../core/data-provider/data-provider';
 
 export interface ITransactionState {
-	transactionMap: {[address: string]: IElrondTransaction[]};
+	list: ActionHistoryElement[];
 }
 
 const initialState: ITransactionState = {
-	transactionMap: {},
+	list: [],
 };
 
 export const reducer = createReducer(
 	initialState,
-	on(ActionHistoryAction.loadTransactionsSuccess, (state, { address, list }) => ({
+	on(ActionHistoryAction.logActionSuccess, ActionHistoryAction.loadActionHistorySuccess, (state, { list }) => ({
 		...state,
-		transactionMap: {
-			[address]: [...state.transactionMap[address] || [], ...list],
-		},
+		list,
 	})),
 );
-
 
 export function actionHistoryReducer(state: ITransactionState | undefined, action: Action): ITransactionState {
 	return reducer(state, action);

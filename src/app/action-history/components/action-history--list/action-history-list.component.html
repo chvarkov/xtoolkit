@@ -4,5 +4,5 @@
 	</app-toolbar-icon-button>
 </app-toolbar>
 <div class="transaction-list-container">
-	<app-action *ngFor="let tx of transactions$ | async" [tx]="tx"></app-action>
+	<app-action *ngFor="let item of actionHistory$ | async" [data]="item"></app-action>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TransactionStatus } from '../../enums/transaction-status';
+import { ActionStatus } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-action-status-badge',
@@ -7,7 +7,7 @@ import { TransactionStatus } from '../../enums/transaction-status';
 	styleUrls: ['./action-status-badge.component.scss']
 })
 export class ActionStatusBadgeComponent implements OnInit {
-	@Input() status?: TransactionStatus;
+	@Input() status?: ActionStatus;
 
 	constructor() {
 	}

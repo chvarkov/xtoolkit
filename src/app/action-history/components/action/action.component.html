@@ -1,8 +1,7 @@
-<div *ngIf="tx" class="transaction-container">
+<div *ngIf="data" class="action-container">
 	<div class="primary-info">
-		{{tx.txHash | shortString:16}}
-		<app-action-status-badge [status]="tx.status"></app-action-status-badge>
+		{{data.title}}
+		<app-action-status-badge [status]="data.status"></app-action-status-badge>
 	</div>
-	<div class="tech-details">{{tx.sender | shortString:12}} {{tx.action?.name || ''}}</div>
-	<div class="finance-details">{{tx.value}} {{tx.fee}}</div>
+	<div class="tech-details">{{data.timestamp | date}}</div>
 </div>

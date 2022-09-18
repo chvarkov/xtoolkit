@@ -1,4 +1,4 @@
-import { DataProvider, GeneratedWallet, Project, ProjectScAbi } from '../data-provider';
+import { ActionHistoryElement, DataProvider, GeneratedWallet, Project, ProjectScAbi } from '../data-provider';
 import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
@@ -12,6 +12,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly networksKey = `${this.globalPrefix}.networks`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
+	private readonly actionHistoryKey = `${this.globalPrefix}.action-history`;
 
 	getNetworks(): Observable<INetworkEnvironment[]> {
 		const networks: INetworkEnvironment[] | null = this.get(this.networksKey);
@@ -155,6 +156,31 @@ export class LocalstorageDataProvider implements DataProvider {
 					return project;
 				})),
 			);
+	}
+
+	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]> {
+		return this.getActionHistory()
+			.pipe(
+				map(list => {
+					list.push(action);
+
+					this.set(this.actionHistoryKey, list);
+
+					return list;
+				}),
+			);
+	}
+
+	getActionHistory(): Observable<ActionHistoryElement[]> {
+		const projects: ActionHistoryElement[] | undefined = this.get(this.actionHistoryKey);
+
+		if (!projects) {
+			this.set(this.actionHistoryKey, []);
+
+			return of([]);
+		}
+
+		return of(projects);
 	}
 
 	private set<T>(key: string, value: T): void {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ActionHistorySelector } from '../../store/action-history.selector';
 import { ActionHistoryAction } from '../../store/action-history.action';
+import { ActionHistoryElement } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-action-list',
@@ -11,16 +11,13 @@ import { ActionHistoryAction } from '../../store/action-history.action';
 	styleUrls: ['./action-history-list.component.scss']
 })
 export class ActionHistoryListComponent implements OnInit {
-	address = 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l';
-
-	transactions$: Observable<IElrondTransaction[]>;
+	actionHistory$: Observable<ActionHistoryElement[]>;
 
 	constructor(private readonly store: Store) {
-		this.transactions$ = this.store.select(ActionHistorySelector.transactionsByAddress(this.address));
+		this.actionHistory$ = this.store.select(ActionHistorySelector.list);
 	}
 
 	ngOnInit(): void {
-		this.store.dispatch(ActionHistoryAction.loadTransactions({address: this.address}));
-
+		this.store.dispatch(ActionHistoryAction.loadActionHistory());
 	}
 }

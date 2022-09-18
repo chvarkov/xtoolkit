@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
+import { ActionHistoryElement } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-action',
@@ -7,7 +7,7 @@ import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-trans
 	styleUrls: ['./action.component.scss']
 })
 export class ActionComponent implements OnInit {
-	@Input() tx?: IElrondTransaction;
+	@Input() data?: ActionHistoryElement;
 
 	constructor() {
 	}

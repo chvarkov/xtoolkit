@@ -1,4 +1,4 @@
-import { TransactionStatus } from '../../../action-history/enums/transaction-status';
+import { TransactionStatus } from '../enums/transaction-status';
 
 export interface IElrondReceiverAssets {
 	name: string;
