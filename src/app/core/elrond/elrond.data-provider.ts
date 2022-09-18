@@ -11,6 +11,7 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import { ITokenInfo } from './interfaces/token-info';
 import { ITokenHolder } from './interfaces/token-holder';
 import { IPaginationOptions } from './interfaces/pagination-options';
+import { ITokenTransfer } from './interfaces/token-transfer';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -43,6 +44,14 @@ export class ElrondDataProvider {
 					identifier: string,
 					options: IPaginationOptions): Observable<ITokenHolder[]> {
 		return this.http.get<ITokenHolder[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/accounts`, {
+			params: this.createParams(options),
+		});
+	}
+
+	getTokenTransfers(network: INetworkEnvironment,
+					  identifier: string,
+					  options: IPaginationOptions): Observable<ITokenTransfer[]> {
+		return this.http.get<ITokenTransfer[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/transfers`, {
 			params: this.createParams(options),
 		});
 	}
