@@ -64,10 +64,6 @@ export class ProjectAction {
 	static readonly selectTabSuccess = createAction(`[${ProjectAction.name}] select tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly selectTabError = createAction(`[${ProjectAction.name}] select tab [ERR]`, props<{err: Error}>());
 
-	static readonly loadScCode = createAction(`[${ProjectAction.name}] load sc code [...]`, props<{address: string}>());
-	static readonly loadScCodeSuccess = createAction(`[${ProjectAction.name}] load sc code [OK]`, props<{address: string, code: string}>());
-	static readonly loadScCodeError = createAction(`[${ProjectAction.name}] load sc code [ERR]`, props<{err: Error}>());
-
 	static readonly loadAccountTransactions = createAction(`[${ProjectAction.name}] load account transactions [...]`, props<{projectId: string, address: string}>());
 	static readonly loadAccountTransactionsSuccess = createAction(`[${ProjectAction.name}] load account transactions [OK]`, props<{projectId: string, address: string, list: IElrondTransaction[]}>());
 	static readonly loadAccountTransactionsError = createAction(`[${ProjectAction.name}] load account transactions [ERR]`, props<{err: Error}>());

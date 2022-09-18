@@ -50,9 +50,9 @@ export class ProjectSelector {
 		(state: IProjectState) => state.selectedIndex,
 	);
 
-	static getScCode = (address: string) => createSelector(
+	static smartContractCode = (projectId: string, address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.scCodeMap[address] || '',
+		(state: IProjectState) => state.loadedDataMap[projectId]?.accountsMap?.[address]?.code,
 	);
 
 	static account = (projectId: string, address: string) => createSelector(

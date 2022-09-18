@@ -147,15 +147,6 @@ export class ProjectEffect {
 		),
 	));
 
-	loadScCode$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.loadScCode),
-		withLatestFrom(this.store.select(NetworkSelector.selectedNetwork)),
-		switchMap(([{address}, network]) => this.elrondDataProvider.getAccountInfo(network, address).pipe(
-			map(({ code }) => ProjectAction.loadScCodeSuccess({address, code})),
-			catchError(err => of(ProjectAction.loadScCodeError({err})))),
-		),
-	));
-
 	loadAccount$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadAccountAndPositions),
 		switchMap(({projectId, address}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
