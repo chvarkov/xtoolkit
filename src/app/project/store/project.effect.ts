@@ -227,6 +227,24 @@ export class ProjectEffect {
 		))),
 	);
 
+	loadTokenRoles$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTokenHolders),
+		switchMap(({projectId, identifier}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
+			take(1),
+			filter(v => !!v),
+			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
+				map((network) => [projectId, identifier, network] as [string, string, INetworkEnvironment])
+			)),
+		)),
+		switchMap(([projectId, identifier, network]) => from(this.elrondDataProvider.getTokenRoles(network, identifier)).pipe(
+			map((data) => ProjectAction.loadTokenRolesSuccess({
+				projectId,
+				identifier,
+				data,
+			})),
+			catchError(err => of(ProjectAction.loadTokenRolesError({err})))
+		))),
+	);
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

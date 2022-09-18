@@ -23,7 +23,14 @@
 			<div>canWipe {{token.canWipe}}</div>
 			<div>owner {{token.owner}}</div>
 		</app-tab>
-		<app-tab title="Roles"></app-tab>
+		<app-tab title="Roles">
+			<div class="token-roles-element" *ngFor="let role of (tokenRoles$ | async) || []">
+				<span>{{role.address}}</span>
+				<div class="roles">
+					<span class="role-label" *ngFor="let permission of role.roles">{{permission}}</span>
+				</div>
+			</div>
+		</app-tab>
 		<app-tab title="Holders">
 			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
 				<span>{{holder.address}}</span>

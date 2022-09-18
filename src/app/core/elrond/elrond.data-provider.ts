@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { INetworkEnvironment } from './interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -13,6 +13,7 @@ import { ITokenHolder } from './interfaces/token-holder';
 import { IPaginationOptions } from './interfaces/pagination-options';
 import { ITokenTransfer } from './interfaces/token-transfer';
 import { ITokenRole } from './interfaces/token-role';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -59,7 +60,9 @@ export class ElrondDataProvider {
 
 	getTokenRoles(network: INetworkEnvironment,
 				  identifier: string): Observable<ITokenRole[]> {
-		return this.http.get<ITokenRole[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/roles`);
+		return this.http.get<ITokenRole[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/roles`).pipe(
+			catchError((err) => of([])),
+		);
 	}
 
 	private createParams(value?: Record<string, any>): HttpParams {
