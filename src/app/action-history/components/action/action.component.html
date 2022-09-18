@@ -1,7 +1,7 @@
 <div *ngIf="tx" class="transaction-container">
 	<div class="primary-info">
 		{{tx.txHash | shortString:16}}
-		<app-transaction-status-badge [status]="tx.status"></app-transaction-status-badge>
+		<app-action-status-badge [status]="tx.status"></app-action-status-badge>
 	</div>
 	<div class="tech-details">{{tx.sender | shortString:12}} {{tx.action?.name || ''}}</div>
 	<div class="finance-details">{{tx.value}} {{tx.fee}}</div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TransactionStatus } from '../../../../../transaction/enums/transaction-status';
+import { TransactionStatus } from '../../../../../action-history/enums/transaction-status';
 
 @Component({
 	selector: 'app-account-transaction-status-badge',

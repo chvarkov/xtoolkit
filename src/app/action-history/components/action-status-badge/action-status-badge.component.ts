@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TransactionStatus } from '../../enums/transaction-status';
 
 @Component({
-	selector: 'app-transaction-status-badge',
-	templateUrl: './transaction-status-badge.component.html',
-	styleUrls: ['./transaction-status-badge.component.scss']
+	selector: 'app-action-status-badge',
+	templateUrl: './action-status-badge.component.html',
+	styleUrls: ['./action-status-badge.component.scss']
 })
-export class TransactionStatusBadgeComponent implements OnInit {
+export class ActionStatusBadgeComponent implements OnInit {
 	@Input() status?: TransactionStatus;
 
 	constructor() {

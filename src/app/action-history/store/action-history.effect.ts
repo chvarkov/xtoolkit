@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TransactionAction } from './transaction.action';
+import { ActionHistoryAction } from './action-history.action';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../network/store/network.selector';
 
 @Injectable()
-export class TransactionEffect {
+export class ActionHistoryEffect {
 	// TODO: Refactor it
 	// loadTransactions$ = createEffect(() => this.actions$.pipe(
 	// 	ofType(TransactionAction.loadTransactions),
