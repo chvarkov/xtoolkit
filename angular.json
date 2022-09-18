@@ -23,7 +23,8 @@
 						"allowedCommonJsDependencies": [
 							"@elrondnetwork/erdjs-network-providers",
 							"@elrondnetwork/erdjs-walletcore",
-							"@elrondnetwork/transaction-decoder"
+							"@elrondnetwork/transaction-decoder",
+							"@elrondnetwork/erdjs"
 						],
 						"outputPath": "dist/elrond-sc",
 						"index": "src/index.html",
