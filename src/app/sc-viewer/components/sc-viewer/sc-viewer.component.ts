@@ -33,15 +33,15 @@ export class ScViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		const projectId = this.projectSc?.id || '';
+		const projectId = this.projectSc?.projectId || '';
 		const address = this.projectSc?.address || '';
 
-		this.account$ = this.store.select(ProjectSelector.account(this.projectSc?.id || '', address));
+		this.account$ = this.store.select(ProjectSelector.account(projectId, address));
 		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(projectId, address));
 		this.tokens$ = this.store.select(ProjectSelector.accountTokens(projectId, address));
 		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(projectId, address));
 
-		this.wallets$ = this.store.select(ProjectSelector.walletsByProjectId(this.projectSc?.projectId || ''));
+		this.wallets$ = this.store.select(ProjectSelector.walletsByProjectId(projectId));
 
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId, address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId, address}));
