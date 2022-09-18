@@ -30,7 +30,6 @@ export interface Project {
 	smartContracts: ProjectScAbi[];
 	wallets: GeneratedWallet[];
 	tokens: string[];
-	selectedScId?: string;
 }
 
 export interface DataProvider {

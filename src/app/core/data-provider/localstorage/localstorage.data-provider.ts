@@ -13,7 +13,6 @@ export class LocalstorageDataProvider implements DataProvider {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly networksKey = `${this.globalPrefix}.networks`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
-	private readonly addressesKey = `${this.globalPrefix}.addresses`;
 
 	getNetworks(): Observable<NetworkInfo> {
 		const networks: NetworkInfo | null = this.get(this.networksKey);
@@ -95,10 +94,6 @@ export class LocalstorageDataProvider implements DataProvider {
 					}
 
 					project.smartContracts.push(sc);
-
-					if (!project.selectedScId) {
-						project.selectedScId = sc.id;
-					}
 
 					this.set(this.projectsKey, projects);
 
