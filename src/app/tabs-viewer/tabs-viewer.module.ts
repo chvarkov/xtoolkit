@@ -52,4 +52,4 @@ import { AcccountTransactionStatusBadgeComponent } from './components/common/acc
 		WalletViewerComponent,
 	]
 })
-export class ScViewerModule { }
+export class TabsViewerModule { }
