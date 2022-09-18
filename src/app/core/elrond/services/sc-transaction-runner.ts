@@ -10,6 +10,7 @@ import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Mnemonic, UserSigner } from '@elrondnetwork/erdjs-walletcore/out';
 import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import { UserSecretKey } from '@elrondnetwork/erdjs-walletcore/out/userKeys';
+import { ElrondProxyProvider } from './elrond-proxy-provider';
 
 export interface IMnemonicAware {
 	mnemonic: string[];
@@ -33,11 +34,8 @@ export interface IScTxOptions {
 
 @Injectable({providedIn: 'root'})
 export class ScTransactionRunner {
-	constructor(private readonly elrondDataProvider: ElrondDataProvider) {
-	}
-
-	getProxy(network: INetworkEnvironment): ProxyNetworkProvider {
-		return new ProxyNetworkProvider(network.gatewayUrl);
+	constructor(private readonly proxy: ElrondProxyProvider,
+				private readonly elrondDataProvider: ElrondDataProvider) {
 	}
 
 	async run(sc: SmartContract, options: IScTxOptions): Promise<string> {
@@ -74,7 +72,7 @@ export class ScTransactionRunner {
 
 		await signer.sign(tx);
 
-		return this.getProxy(options.network).sendTransaction(tx);
+		return this.proxy.getProxy(options.network).sendTransaction(tx);
 	}
 
 	getSigner(creds: WalletCredentialsAware): UserSigner {

@@ -4,6 +4,7 @@ import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
 import { Query, SmartContract } from '@elrondnetwork/erdjs/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
 import { ContractQueryResponse, ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
+import { ElrondProxyProvider } from './elrond-proxy-provider';
 
 export interface IScQueryOptions {
 	functionName: string,
@@ -13,8 +14,7 @@ export interface IScQueryOptions {
 
 @Injectable({providedIn: 'root'})
 export class ScQueryRunner {
-	getProxy(network: INetworkEnvironment): ProxyNetworkProvider {
-		return new ProxyNetworkProvider(network.gatewayUrl);
+	constructor(private readonly proxy: ElrondProxyProvider) {
 	}
 
 	createQuery(sc: SmartContract, options: IScQueryOptions): Query {
@@ -32,6 +32,6 @@ export class ScQueryRunner {
 	}
 
 	runQuery(network: INetworkEnvironment, query: Query): Promise<ContractQueryResponse> {
-		return this.getProxy(network).queryContract(query);
+		return this.proxy.getProxy(network).queryContract(query);
 	}
 }
