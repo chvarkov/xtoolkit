@@ -40,11 +40,6 @@ export class ProjectSelector {
 		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.native || '0',
 	);
 
-	static getTokenBalances = (projectId: string, address: string) => createSelector(
-		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.tokens || [],
-	);
-
 	static openedTabs = createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.tabs || [],
