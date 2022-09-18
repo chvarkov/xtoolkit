@@ -6,6 +6,7 @@ import { TabsData } from '../../core/data-provider/personal-settings.manager';
 import { AbiJson } from '../../core/elrond/builders/sc.builder';
 import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
+import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -74,5 +75,10 @@ export class ProjectAction {
 	static readonly loadAccountTransactions = createAction(`[${ProjectAction.name}] load account transactions [...]`, props<{projectId: string, address: string}>());
 	static readonly loadAccountTransactionsSuccess = createAction(`[${ProjectAction.name}] load account transactions [OK]`, props<{projectId: string, address: string, list: IElrondTransaction[]}>());
 	static readonly loadAccountTransactionsError = createAction(`[${ProjectAction.name}] load account transactions [ERR]`, props<{err: Error}>());
+
+	static readonly loadToken = createAction(`[${ProjectAction.name}] load token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly loadTokenSuccess = createAction(`[${ProjectAction.name}] load token [OK]`, props<{projectId: string, identifier: string, data: ITokenInfo}>());
+	static readonly loadTokenError = createAction(`[${ProjectAction.name}] load token [ERR]`, props<{err: Error}>());
+
 }
 

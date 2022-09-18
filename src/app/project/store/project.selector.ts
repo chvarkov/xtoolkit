@@ -84,4 +84,9 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.tokens || [],
 	);
+
+	static token = (projectId: string, identifier: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.tokensMap?.[identifier],
+	);
 }

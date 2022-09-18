@@ -19,6 +19,7 @@ import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/d
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
+import { DefinitionOfFungibleTokenOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 
 @Injectable()
 export class ProjectEffect {
@@ -206,6 +207,25 @@ export class ProjectEffect {
 				list,
 			})),
 			catchError(err => of(ProjectAction.loadAccountTransactionsError({err})))
+		))),
+	);
+
+	loadToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadToken),
+		switchMap(({projectId, identifier}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
+			take(1),
+			filter(v => !!v),
+			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
+				map((network) => [projectId, identifier, network] as [string, string, INetworkEnvironment])
+			)),
+		)),
+		switchMap(([projectId, identifier, network]) => from(this.elrondDataProvider.getToken(network, identifier)).pipe(
+			map((data) => ProjectAction.loadTokenSuccess({
+				projectId,
+				identifier,
+				data,
+			})),
+			catchError(err => of(ProjectAction.loadTokenError({err})))
 		))),
 	);
 

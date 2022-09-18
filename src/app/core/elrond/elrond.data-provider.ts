@@ -3,8 +3,13 @@ import { from, Observable } from 'rxjs';
 import { INetworkEnvironment } from './interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AccountOnNetwork, ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
+import {
+	AccountOnNetwork,
+	DefinitionOfFungibleTokenOnNetwork,
+	ProxyNetworkProvider
+} from '@elrondnetwork/erdjs-network-providers/out';
 import { Address } from '@elrondnetwork/erdjs/out';
+import { ITokenInfo } from './interfaces/token-info';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -26,6 +31,11 @@ export class ElrondDataProvider {
 		return this.http.get<ITokenPosition[]>(`${netwoek.gatewayUrl}/accounts/${address}/tokens`, {
 			params: this.createParams(filter),
 		});
+	}
+
+	getToken(network: INetworkEnvironment,
+			 identifier: string): Observable<ITokenInfo> {
+		return this.http.get<ITokenInfo>(`${network.gatewayUrl}/tokens/${identifier.trim()}`);
 	}
 
 	private createParams(value?: Record<string, any>): HttpParams {

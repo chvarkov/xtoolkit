@@ -14,7 +14,9 @@
 			<app-sc-viewer *ngIf="tab.componentType === 'sc'"
 						   [projectSc]="getScById$(tab.projectId, tab.componentId) | async">
 			</app-sc-viewer>
-			<app-token-viewer *ngIf="tab.componentType === 'token'" [tokenId]="tab.componentId"></app-token-viewer>
+			<app-token-viewer *ngIf="tab.componentType === 'token'"
+							  [projectId]="tab.projectId"
+							  [identifier]="tab.componentId"></app-token-viewer>
 			<app-wallet-viewer *ngIf="tab.componentType === 'wallet'"
 							   [projectId]="tab.projectId"
 							   [address]="tab.componentId"></app-wallet-viewer>
