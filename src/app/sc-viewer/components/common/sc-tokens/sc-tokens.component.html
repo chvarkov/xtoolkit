@@ -6,10 +6,10 @@
 		</div>
 
 		<div class="amount">
-			{{(native$ | async) || '0'}}
+			{{native}}
 		</div>
 	</div>
-	<div *ngFor="let position of (positions$ | async) || []" class="position">
+	<div *ngFor="let position of positions" class="position">
 		<div class="token-info">
 			<img class="token-img" [src]="position.assets?.svgUrl" />
 			<div class="token-id">{{position.identifier}}</div>

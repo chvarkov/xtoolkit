@@ -35,19 +35,14 @@ export class ProjectSelector {
 		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.wallets || [],
 	);
 
-	static getNativeBalance = (address: string) => createSelector(
+	static getNativeBalance = (projectId: string, address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.positionsMap[address]?.native || '0',
+		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.native || '0',
 	);
 
-	static getTokenBalances = (address: string) => createSelector(
+	static getTokenBalances = (projectId: string, address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.positionsMap[address]?.tokens || [],
-	);
-
-	static getAddressesWithLoadedBalances = createSelector(
-		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => Object.keys(state?.positionsMap || {}),
+		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.tokens || [],
 	);
 
 	static openedTabs = createSelector(
@@ -68,5 +63,25 @@ export class ProjectSelector {
 	static addressesMapByScId = (scId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => scId && state.scAddressesMap[scId] || {},
+	);
+
+	static account = (projectId: string, address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.accountsMap?.[address],
+	);
+
+	static accountTransactions = (projectId: string, address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.transactionsMap?.[address] || [],
+	);
+
+	static accountNativeAmount = (projectId: string, address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.native || '0',
+	);
+
+	static accountTokens = (projectId: string, address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.tokens || [],
 	);
 }

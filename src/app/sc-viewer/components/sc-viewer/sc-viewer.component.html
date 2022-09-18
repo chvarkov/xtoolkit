@@ -18,7 +18,7 @@
 				<app-toolbar>
 					<app-toolbar-icon-button right-side hint="Reload">refresh</app-toolbar-icon-button>
 				</app-toolbar>
-				<app-sc-tokens [address]="(address$ | async) || ''"></app-sc-tokens>
+				<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
 			</app-tab>
 			<app-tab title="NFTs">
 				<app-toolbar>

@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TransactionAction } from './transaction.action';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { TransactionProvider } from '../services/transaction.provider';
+import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../network/store/network.selector';
 

@@ -1,0 +1,39 @@
+.wallet {
+	display: flex;
+	width: 100%;
+	flex: 1;
+	flex-direction: column;
+	overflow-y: auto;
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
+
+	.header {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		padding: 10px 16px;
+		border-bottom: solid 1 var(--border-low-color);
+
+		.info {
+			font-size: 1.1em;
+		}
+
+		.actions {
+			display: flex;
+			flex: 1;
+			flex-direction: row;
+			height: 40px;
+		}
+	}
+
+
+	.content {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 2fr 3fr;
+		grid-template-rows: 50px 1fr;
+
+		.header {
+			font-size: 1.2em;
+			padding: 16px;
+		}
+	}
+}
