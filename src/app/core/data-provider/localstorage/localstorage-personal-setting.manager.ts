@@ -29,7 +29,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				const openedElem = tabs.find(i => i.componentType === componentType && i.componentId === componentId);
 
 				if (openedElem) {
-					return { tabs, selectedIndex };
+					return { tabs, selectedIndex: openedElem.index };
 				}
 
 				const updatedList: OpenedProjectTab[] = [
