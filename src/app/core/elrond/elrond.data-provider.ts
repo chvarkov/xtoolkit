@@ -12,6 +12,7 @@ import { ITokenInfo } from './interfaces/token-info';
 import { ITokenHolder } from './interfaces/token-holder';
 import { IPaginationOptions } from './interfaces/pagination-options';
 import { ITokenTransfer } from './interfaces/token-transfer';
+import { ITokenRole } from './interfaces/token-role';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -54,6 +55,11 @@ export class ElrondDataProvider {
 		return this.http.get<ITokenTransfer[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/transfers`, {
 			params: this.createParams(options),
 		});
+	}
+
+	getTokenRoles(network: INetworkEnvironment,
+				  identifier: string): Observable<ITokenRole[]> {
+		return this.http.get<ITokenRole[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/roles`);
 	}
 
 	private createParams(value?: Record<string, any>): HttpParams {
