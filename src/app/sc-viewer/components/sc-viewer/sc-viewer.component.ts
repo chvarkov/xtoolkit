@@ -1,9 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
 import { ProjectScAbi } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../project/store/project.action';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { IGeneratedWallet } from '../../../project/components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
@@ -15,7 +15,7 @@ import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 	templateUrl: './sc-viewer.component.html',
 	styleUrls: ['./sc-viewer.component.scss'],
 })
-export class ScViewerComponent implements OnInit, OnDestroy {
+export class ScViewerComponent implements OnInit {
 	@Input() selectedEnvironment?: INetworkEnvironment;
 
 	@Input() projectSc?: ProjectScAbi | null;
@@ -28,8 +28,6 @@ export class ScViewerComponent implements OnInit, OnDestroy {
 	code$: Observable<string> = of('');
 
 	wallets$: Observable<IGeneratedWallet[]> = of([]);
-
-	private readonly sub = new Subscription();
 
 	constructor(private readonly store: Store) {
 	}
@@ -47,9 +45,5 @@ export class ScViewerComponent implements OnInit, OnDestroy {
 
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId, address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId, address}));
-	}
-
-	ngOnDestroy(): void {
-		this.sub.unsubscribe();
 	}
 }
