@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
 		this.store.dispatch(NetworkAction.loadNetworks());
 		setTimeout(() => {
 			this.store.dispatch(ProjectAction.loadProjectTabs());
-			this.store.dispatch(ProjectAction.loadScAddresses());
 		});
 	}
 
