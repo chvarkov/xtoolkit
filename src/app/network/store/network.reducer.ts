@@ -1,29 +1,23 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { NetworkAction } from './network.action';
-import { NetworkInfo } from '../../core/data-provider/data-provider';
-import { DEFAULT_NETWORKS } from '../../core/constants';
+import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 
-export interface INetworkState extends NetworkInfo {
+export interface INetworkState {
+	list: INetworkEnvironment[];
 }
 
 const initialState: INetworkState = {
 	list: [],
-	selected: DEFAULT_NETWORKS[0],
 };
 
 export const reducer = createReducer(
 	initialState,
-	on(NetworkAction.loadNetworksSuccess, (state, { data }) => {
+	on(NetworkAction.loadNetworksSuccess, (state, { list }) => {
 		return {
 			...state,
-			list: data.list,
-			selected: data.selected,
-		}
+			list,
+		};
 	}),
-	on(NetworkAction.selectNetworkSuccess, (state, { network }) => ({
-		...state,
-		selected: network,
-	})),
 );
 
 

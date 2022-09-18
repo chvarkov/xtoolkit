@@ -10,7 +10,7 @@ export class NetworkEffect {
 	loadNetworks$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.loadNetworks),
 		switchMap(() => this.dataProvider.getNetworks().pipe(
-			map((data) => NetworkAction.loadNetworksSuccess({data})),
+			map((list) => NetworkAction.loadNetworksSuccess({list})),
 			catchError(err => of(NetworkAction.loadNetworksError({err})),
 		)),
 	)));

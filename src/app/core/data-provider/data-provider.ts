@@ -10,11 +10,6 @@ export interface GeneratedWallet {
 	mnemonic: string[];
 }
 
-export interface NetworkInfo {
-	list: INetworkEnvironment[];
-	selected: INetworkEnvironment;
-}
-
 export interface ProjectScAbi {
 	name?: string;
 	id: string;
@@ -33,9 +28,7 @@ export interface Project {
 }
 
 export interface DataProvider {
-	getNetworks(): Observable<NetworkInfo>;
-
-	selectNetwork(network: INetworkEnvironment): Observable<void>
+	getNetworks(): Observable<INetworkEnvironment[]>;
 
 	getProjects(): Observable<Project[]>;
 

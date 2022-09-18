@@ -11,6 +11,7 @@
 						 [title]="tab.title"
 						 [type]="tab.componentType">
 			<app-sc-viewer *ngIf="tab.componentType === 'sc'"
+						   [chainId]="(getProjectChainId$(tab.projectId) | async) || ''"
 						   [projectSc]="getScById$(tab.projectId, tab.componentId) | async">
 			</app-sc-viewer>
 			<app-token-viewer *ngIf="tab.componentType === 'token'"

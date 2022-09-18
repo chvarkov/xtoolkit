@@ -9,14 +9,15 @@ import { NetworkSelector } from '../../network/store/network.selector';
 
 @Injectable()
 export class TransactionEffect {
-	loadTransactions$ = createEffect(() => this.actions$.pipe(
-		ofType(TransactionAction.loadTransactions),
-		withLatestFrom(this.store.select(NetworkSelector.selectedNetwork)),
-		switchMap(([{ address }, network]) => this.transactionProvider.getTransactions(network, address).pipe(
-			map((list) => TransactionAction.loadTransactionsSuccess({address, list})),
-			catchError(err => of(TransactionAction.loadTransactionsError({err})),
-		)),
-	)));
+	// TODO: Refactor it
+	// loadTransactions$ = createEffect(() => this.actions$.pipe(
+	// 	ofType(TransactionAction.loadTransactions),
+	// 	withLatestFrom(this.store.select(NetworkSelector.selectedNetwork)),
+	// 	switchMap(([{ address }, network]) => this.transactionProvider.getTransactions(network, address).pipe(
+	// 		map((list) => TransactionAction.loadTransactionsSuccess({address, list})),
+	// 		catchError(err => of(TransactionAction.loadTransactionsError({err})),
+	// 	)),
+	// )));
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
