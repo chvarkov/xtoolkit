@@ -1,5 +1,5 @@
 <div class="token-transfer-container" *ngIf="transfer">
-	<span>Hash: {{transfer.txHash}}</span>
+	<app-tx-hash label="Hash:" [txHash]="transfer.txHash" [chainId]="chainId"></app-tx-hash>
 	<span>{{transfer.status}}</span>
 	<app-address label="From:" [address]="transfer.sender" [chainId]="chainId"></app-address>
 	<span>{{transfer.value}} {{ticket}}</span>
