@@ -37,6 +37,11 @@
 				<span>{{holder.balance}}</span>
 			</div>
 		</app-tab>
-		<app-tab title="Transactions"></app-tab>
+		<app-tab title="Transactions">
+			<app-token-transfer *ngFor="let transfer of (tokenTransfers$ | async) || []"
+								[ticket]="token.ticker"
+								[transfer]="transfer">
+			</app-token-transfer>
+		</app-tab>
 	</app-tabs>
 </div>

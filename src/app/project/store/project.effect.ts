@@ -246,6 +246,25 @@ export class ProjectEffect {
 		))),
 	);
 
+	loadTokenTransfers$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTokenTransfers),
+		switchMap(({projectId, identifier}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
+			take(1),
+			filter(v => !!v),
+			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
+				map((network) => [projectId, identifier, network] as [string, string, INetworkEnvironment])
+			)),
+		)),
+		switchMap(([projectId, identifier, network]) => from(this.elrondDataProvider.getTokenTransfers(network, identifier, {})).pipe(
+			map((data) => ProjectAction.loadTokenTransfersSuccess({
+				projectId,
+				identifier,
+				data,
+			})),
+			catchError(err => of(ProjectAction.loadTokenTransfersError({err})))
+		))),
+	);
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,

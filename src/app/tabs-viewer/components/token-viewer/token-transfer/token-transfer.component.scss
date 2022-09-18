@@ -1,0 +1,7 @@
+.token-transfer-container {
+	display: grid;
+	grid-template-columns: auto 100px;
+	grid-template-rows: 22px 22px 22px;
+	border-bottom: solid 1px var(--border-low-color);
+	padding: 10px;
+}

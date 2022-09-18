@@ -1,0 +1,8 @@
+<div class="token-transfer-container" *ngIf="transfer">
+	<span>Hash: {{transfer.txHash}}</span>
+	<span>{{transfer.status}}</span>
+	<span>From: {{transfer.sender}}</span>
+	<span>{{transfer.value}} {{ticket}}</span>
+	<span>To: {{transfer.receiver}}</span>
+	<span>{{transfer.timestamp * 1000 | date}}</span>
+</div>
