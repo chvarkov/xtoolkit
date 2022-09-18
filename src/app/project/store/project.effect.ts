@@ -208,6 +208,26 @@ export class ProjectEffect {
 		))),
 	);
 
+	loadTokenHolders$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTokenHolders),
+		switchMap(({projectId, identifier}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
+			take(1),
+			filter(v => !!v),
+			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
+				map((network) => [projectId, identifier, network] as [string, string, INetworkEnvironment])
+			)),
+		)),
+		switchMap(([projectId, identifier, network]) => from(this.elrondDataProvider.getTokenHolders(network, identifier, {})).pipe(
+			map((data) => ProjectAction.loadTokenHoldersSuccess({
+				projectId,
+				identifier,
+				data,
+			})),
+			catchError(err => of(ProjectAction.loadTokenHoldersError({err})))
+		))),
+	);
+
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,

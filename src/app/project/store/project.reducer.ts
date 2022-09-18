@@ -6,6 +6,7 @@ import { Project } from '../../core/data-provider/data-provider';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
+import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 
 export interface IPositionsState {
 	native: string;
@@ -17,6 +18,7 @@ export interface ILoadedProjectDataState {
 	accountsMap: {[address: string]: AccountOnNetwork};
 	positionsMap: {[address: string]: IPositionsState};
 	tokensMap: {[identifier: string]: ITokenInfo};
+	tokenHoldersMap: {[identifier: string]: ITokenHolder[]};
 }
 
 export interface IProjectState extends TabsData {
@@ -106,6 +108,19 @@ export const reducer = createReducer(
 				...state.loadedDataMap[projectId],
 				tokensMap: {
 					...state.loadedDataMap[projectId]?.tokensMap,
+					[identifier]: data,
+				},
+			},
+		},
+	})),
+
+	on(ProjectAction.loadTokenHoldersSuccess, (state, { projectId, identifier, data }) => ({
+		...state,
+		loadedDataMap: {
+			[projectId]: {
+				...state.loadedDataMap[projectId],
+				tokenHoldersMap: {
+					...state.loadedDataMap[projectId]?.tokenHoldersMap,
 					[identifier]: data,
 				},
 			},
