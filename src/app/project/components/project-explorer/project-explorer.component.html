@@ -32,6 +32,7 @@
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let tokenAddress of project.tokens"
+										 (click)="openProjectComponent(project.id, tokenAddress, 'token', tokenAddress)"
 										 type="token"
 										 [name]="tokenAddress">
 					</app-project-element>
@@ -53,6 +54,7 @@
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let wallet of project.wallets"
+										 (click)="openProjectComponent(project.id, wallet.name, 'wallet', wallet.name)"
 										 type="wallet"
 										 [name]="wallet.name">
 					</app-project-element>

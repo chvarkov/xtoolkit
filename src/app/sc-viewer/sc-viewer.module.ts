@@ -15,6 +15,8 @@ import { ScTokensComponent } from './components/sc-viewer/sc-tokens/sc-tokens.co
 import { ScNftsComponent } from './components/sc-viewer/sc-nfts/sc-nfts.component';
 import { ScEndpointTxSignComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint-tx-sign/sc-endpoint-tx-sign.component';
 import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint-query/sc-endpoint-query.component';
+import { TokenViewerComponent } from './components/token-viewer/token-viewer.component';
+import { WalletViewerComponent } from './components/wallet-viewer/wallet-viewer.component';
 
 @NgModule({
 	declarations: [
@@ -30,7 +32,9 @@ import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-
 		ScTokensComponent,
 		ScNftsComponent,
   ScEndpointTxSignComponent,
-  ScEndpointQueryComponent
+  ScEndpointQueryComponent,
+  TokenViewerComponent,
+  WalletViewerComponent
 	],
 	imports: [
 		CommonModule,
@@ -40,6 +44,8 @@ import { ScEndpointQueryComponent } from './components/sc-viewer/sc-endpoint/sc-
 	],
 	exports: [
 		ScViewerComponent,
+		TokenViewerComponent,
+		WalletViewerComponent,
 	]
 })
 export class ScViewerModule { }
