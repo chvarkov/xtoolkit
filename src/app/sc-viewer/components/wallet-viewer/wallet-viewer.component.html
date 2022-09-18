@@ -1,5 +1,6 @@
 <div class="wallet" *ngIf="(account$ | async) as account">
 	<div class="header">
+		<div class="icon material-icons" [ngStyle]="{color: 'wallet' | componentColor}"> account_balance_wallet </div>
 		<div class="info">
 			<div>{{address}} <span *ngIf="account.userName">({{account.userName}})</span></div>
 			<div>Nonce: {{account.nonce}}</div>
@@ -11,13 +12,16 @@
 		</div>
 	</div>
 
-	<div class="content">
-		<div class="header">Assets</div>
-		<div class="header">Transactions</div>
-
-		<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
-		<div>
+	<app-tabs>
+		<app-tab title="Tokens">
+			<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
+		</app-tab>
+		<app-tab title="NFTs">
+			Coming soon
+		</app-tab>
+		<app-tab title="Transactions">
 			<app-account-transaction *ngFor="let tx of (transactions$ | async)" [tx]="tx"></app-account-transaction>
-		</div>
-	</div>
+
+		</app-tab>
+	</app-tabs>
 </div>
