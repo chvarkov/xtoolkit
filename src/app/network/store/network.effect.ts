@@ -15,14 +15,6 @@ export class NetworkEffect {
 		)),
 	)));
 
-	selectNetworks$ = createEffect(() => this.actions$.pipe(
-		ofType(NetworkAction.selectNetwork),
-		switchMap(({network}) => this.dataProvider.selectNetwork(network).pipe(
-			map(() => NetworkAction.selectNetworkSuccess({network})),
-			catchError(err => of(NetworkAction.selectNetworkError({err})),
-			)),
-		)));
-
 	constructor(private readonly actions$: Actions,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {
 	}
