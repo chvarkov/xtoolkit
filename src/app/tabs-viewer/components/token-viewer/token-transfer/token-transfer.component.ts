@@ -9,6 +9,8 @@ import { ITokenTransfer } from '../../../../core/elrond/interfaces/token-transfe
 export class TokenTransferComponent implements OnInit {
 	@Input() ticket = '';
 
+	@Input() chainId = '';
+
 	@Input() transfer?: ITokenTransfer
 
 	constructor() {

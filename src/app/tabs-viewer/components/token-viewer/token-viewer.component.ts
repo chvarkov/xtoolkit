@@ -8,6 +8,7 @@ import { ITokenInfo } from '../../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../../core/elrond/interfaces/token-transfer';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-token-viewer',
@@ -22,6 +23,7 @@ export class TokenViewerComponent implements OnInit {
 	tokenHolders$?: Observable<ITokenHolder[]>;
 	tokenRoles$?: Observable<ITokenRole[]>;
 	tokenTransfers$?: Observable<ITokenTransfer[]>;
+	chainId$?: Observable<string>;
 
 	constructor(private readonly store: Store) {
 	}
@@ -31,6 +33,9 @@ export class TokenViewerComponent implements OnInit {
 		this.tokenHolders$ = this.store.select(ProjectSelector.tokenHolders(this.projectId, this.identifier));
 		this.tokenRoles$ = this.store.select(ProjectSelector.tokenRoles(this.projectId, this.identifier));
 		this.tokenTransfers$ = this.store.select(ProjectSelector.tokenTransfers(this.projectId, this.identifier));
+		this.chainId$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+			map(project => project?.chainId || ''),
+		);
 
 		this.store.dispatch(ProjectAction.loadToken({projectId: this.projectId, identifier: this.identifier}));
 		this.store.dispatch(ProjectAction.loadTokenHolders({projectId: this.projectId, identifier: this.identifier}));

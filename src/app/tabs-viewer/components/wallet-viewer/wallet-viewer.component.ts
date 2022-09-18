@@ -6,6 +6,9 @@ import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
+import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
+import { map, switchMap } from 'rxjs/operators';
+import { NetworkSelector } from '../../../network/store/network.selector';
 
 @Component({
 	selector: 'app-wallet-viewer',
@@ -20,6 +23,7 @@ export class WalletViewerComponent implements OnInit {
 	transactions$?: Observable<IElrondTransaction[]>;
 	tokens$?: Observable<ITokenPosition[]>;
 	native$?: Observable<string>;
+	chainId$?: Observable<string>;
 
 	constructor(private readonly store: Store) {
 	}
@@ -29,6 +33,10 @@ export class WalletViewerComponent implements OnInit {
 		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.projectId, this.address));
 		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.projectId, this.address));
 		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.projectId, this.address));
+		this.chainId$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+			map((project) => project?.chainId || ''),
+		);
+
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId: this.projectId, address: this.address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId: this.projectId, address: this.address}));
 	}

@@ -9,6 +9,8 @@ import { IElrondTransaction } from '../../../../core/elrond/interfaces/elrond-tr
 export class AccountTransactionComponent implements OnInit {
 	@Input() tx?: IElrondTransaction;
 
+	@Input() chainId: string = '';
+
 	constructor() {
 	}
 

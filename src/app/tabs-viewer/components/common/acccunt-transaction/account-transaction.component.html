@@ -3,6 +3,8 @@
 		{{tx.txHash | shortString:16}}
 		<app-account-transaction-status-badge [status]="tx.status"></app-account-transaction-status-badge>
 	</div>
-	<div class="tech-details">{{tx.sender | shortString:12}} {{tx.action?.name || ''}}</div>
+	<div class="tech-details">
+		<app-address [address]="tx.sender" [chainId]="chainId"></app-address>
+	</div>
 	<div class="finance-details">{{tx.value}} {{tx.fee}}</div>
 </div>
