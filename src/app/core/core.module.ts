@@ -19,6 +19,8 @@ import { ComponentColorPipe } from './pipes/component-color.pipe';
 import { ComponentIconPipe } from './pipes/component-icon.pipe';
 import { LocalstoragePersonalSettingManager } from './data-provider/localstorage/localstorage-personal-setting.manager';
 import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.manager';
+import { AddressComponent } from './ui/address/address.component';
+import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 
 @NgModule({
 	declarations: [
@@ -35,6 +37,8 @@ import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.man
 		DropdownMenuItemComponent,
 		ComponentColorPipe,
 		ComponentIconPipe,
+  AddressComponent,
+  TxHashComponent,
 	],
 	imports: [
 		CommonModule,
@@ -67,6 +71,8 @@ import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.man
 		DropdownMenuItemComponent,
 		ComponentIconPipe,
 		ComponentColorPipe,
+		AddressComponent,
+		TxHashComponent,
 	],
 })
 export class CoreModule { }

@@ -5,9 +5,9 @@ import { NetworkSelector } from '../store/network.selector';
 import { map } from 'rxjs/operators';
 
 @Pipe({
-	name: 'network'
+	name: 'networkName'
 })
-export class NetworkPipe implements PipeTransform {
+export class NetworkNamePipe implements PipeTransform {
 	constructor(private readonly store: Store) {
 	}
 

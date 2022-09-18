@@ -19,6 +19,7 @@ import { TokenViewerComponent } from './components/token-viewer/token-viewer.com
 import { WalletViewerComponent } from './components/wallet-viewer/wallet-viewer.component';
 import { AccountTransactionComponent } from './components/common/acccunt-transaction/account-transaction.component';
 import { AcccountTransactionStatusBadgeComponent } from './components/common/acccunt-transaction/account-transaction-status-badge/account-transaction-status-badge.component';
+import { TokenTransferComponent } from './components/token-viewer/token-transfer/token-transfer.component';
 
 @NgModule({
 	declarations: [
@@ -39,6 +40,7 @@ import { AcccountTransactionStatusBadgeComponent } from './components/common/acc
   WalletViewerComponent,
 		AccountTransactionComponent,
 		AcccountTransactionStatusBadgeComponent,
+  TokenTransferComponent,
 	],
 	imports: [
 		CommonModule,

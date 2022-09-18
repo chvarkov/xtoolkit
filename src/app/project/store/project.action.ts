@@ -8,6 +8,8 @@ import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transact
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
+import { ITokenRole } from '../../core/elrond/interfaces/token-role';
+import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -76,5 +78,14 @@ export class ProjectAction {
 	static readonly loadTokenHolders = createAction(`[${ProjectAction.name}] load token holders [...]`, props<{projectId: string, identifier: string}>());
 	static readonly loadTokenHoldersSuccess = createAction(`[${ProjectAction.name}] load token holders [OK]`, props<{projectId: string, identifier: string, data: ITokenHolder[]}>());
 	static readonly loadTokenHoldersError = createAction(`[${ProjectAction.name}] load token holders [ERR]`, props<{err: Error}>());
+
+	static readonly loadTokenRoles = createAction(`[${ProjectAction.name}] load token roles [...]`, props<{projectId: string, identifier: string}>());
+	static readonly loadTokenRolesSuccess = createAction(`[${ProjectAction.name}] load token roles [OK]`, props<{projectId: string, identifier: string, data: ITokenRole[]}>());
+	static readonly loadTokenRolesError = createAction(`[${ProjectAction.name}] load token roles [ERR]`, props<{err: Error}>());
+
+	static readonly loadTokenTransfers = createAction(`[${ProjectAction.name}] load token transfers [...]`, props<{projectId: string, identifier: string}>());
+	static readonly loadTokenTransfersSuccess = createAction(`[${ProjectAction.name}] load token transfers [OK]`, props<{projectId: string, identifier: string, data: ITokenTransfer[]}>());
+	static readonly loadTokenTransfersError = createAction(`[${ProjectAction.name}] load token transfers [ERR]`, props<{err: Error}>());
+
 }
 

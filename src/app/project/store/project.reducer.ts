@@ -7,6 +7,8 @@ import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
+import { ITokenRole } from '../../core/elrond/interfaces/token-role';
+import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 
 export interface IPositionsState {
 	native: string;
@@ -19,6 +21,8 @@ export interface ILoadedProjectDataState {
 	positionsMap: {[address: string]: IPositionsState};
 	tokensMap: {[identifier: string]: ITokenInfo};
 	tokenHoldersMap: {[identifier: string]: ITokenHolder[]};
+	tokenRolesMap: {[identifier: string]: ITokenRole[]};
+	tokenTransfersMap: {[identifier: string]: ITokenTransfer[]};
 }
 
 export interface IProjectState extends TabsData {
@@ -121,6 +125,32 @@ export const reducer = createReducer(
 				...state.loadedDataMap[projectId],
 				tokenHoldersMap: {
 					...state.loadedDataMap[projectId]?.tokenHoldersMap,
+					[identifier]: data,
+				},
+			},
+		},
+	})),
+
+	on(ProjectAction.loadTokenRolesSuccess, (state, { projectId, identifier, data }) => ({
+		...state,
+		loadedDataMap: {
+			[projectId]: {
+				...state.loadedDataMap[projectId],
+				tokenRolesMap: {
+					...state.loadedDataMap[projectId]?.tokenRolesMap,
+					[identifier]: data,
+				},
+			},
+		},
+	})),
+
+	on(ProjectAction.loadTokenTransfersSuccess, (state, { projectId, identifier, data }) => ({
+		...state,
+		loadedDataMap: {
+			[projectId]: {
+				...state.loadedDataMap[projectId],
+				tokenTransfersMap: {
+					...state.loadedDataMap[projectId]?.tokenTransfersMap,
 					[identifier]: data,
 				},
 			},

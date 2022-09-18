@@ -3,7 +3,15 @@
 		 [ngStyle]="{cursor: isShowing ? 'default' : 'pointer'}">
 		<div class="title" (click)="isShowing = true">
 			{{endpoint.name}}
-			<span class="args">{{getArgsPreview()}}</span></div>
+			<span class="args">
+				(<ng-container *ngFor="let input of endpoint.input || []; let i = index">
+					<span class="arg-name">{{input.name}}</span>
+					<span>: </span>
+					<span class="arg-type">{{input.type}}</span>
+					<span *ngIf="(endpoint?.input?.length || 0) - 1 !== i">, </span>
+				</ng-container>)
+			</span>
+		</div>
 		<div class="controls">
 			<span class="badge mutable" *ngIf="!endpoint.modifiers.isReadonly()">Mutable</span>
 			<span class="badge readonly" *ngIf="endpoint.modifiers.isReadonly()">Readonly</span>

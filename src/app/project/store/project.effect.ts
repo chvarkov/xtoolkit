@@ -1,25 +1,21 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
-import { DATA_PROVIDER, DataProvider, Project, ProjectScAbi } from '../../core/data-provider/data-provider';
-import { catchError, filter, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { DATA_PROVIDER, DataProvider, ProjectScAbi } from '../../core/data-provider/data-provider';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
 import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
-import { NetworkSelector } from '../../network/store/network.selector';
 import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
-import { NetworkAction } from '../../network/store/network.action';
-import { ProjectSelector } from './project.selector';
 import { GenerateWalletDialogComponent } from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { UploadAbiDialogComponent } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import { AddTokenDialogComponent } from '../components/dialogs/add-token-dialog/add-token-dialog.component';
 import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/data-provider/personal-settings.manager';
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
-import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
-import { DefinitionOfFungibleTokenOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
+import { joinNetwork } from './operators/join-network';
 
 @Injectable()
 export class ProjectEffect {
@@ -149,39 +145,27 @@ export class ProjectEffect {
 
 	loadAccount$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadAccountAndPositions),
-		switchMap(({projectId, address}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
-			take(1),
-			filter(v => !!v),
-			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
-				map((network) => [projectId, address, network] as [string, string, INetworkEnvironment])
-			)),
-		)),
-			switchMap(([projectId, address, network]) => forkJoin([
-				this.elrondDataProvider.getTokenPositions(network, address),
-				from(this.elrondDataProvider.getProxy(network).getAccount(new Address(address))),
-			]).pipe(
-				map(([tokens , account]) => ProjectAction.loadAccountAndPositionsSuccess({
-					projectId,
-					native: account.balance.toString(),
-					tokens,
-					account,
-				})),
-				catchError(err => of(ProjectAction.loadAccountAndPositionsError({err})))
-			))),
+		joinNetwork(this.store),
+		switchMap(([{address}, project, network]) => forkJoin([
+			this.elrondDataProvider.getTokenPositions(network, address),
+			from(this.elrondDataProvider.getProxy(network).getAccount(new Address(address))),
+		]).pipe(
+			map(([tokens , account]) => ProjectAction.loadAccountAndPositionsSuccess({
+				projectId: project.id,
+				native: account.balance.toString(),
+				tokens,
+				account,
+			})),
+			catchError(err => of(ProjectAction.loadAccountAndPositionsError({err})))
+		))),
 	);
 
 	loadAccountTransactions$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadAccountTransactions),
-		switchMap(({projectId, address}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
-			take(1),
-			filter(v => !!v),
-			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
-				map((network) => [projectId, address, network] as [string, string, INetworkEnvironment])
-			)),
-		)),
-		switchMap(([projectId, address, network]) => this.txProvider.getTransactions(network, address).pipe(
+		joinNetwork(this.store),
+		switchMap(([{address}, project, network]) => this.txProvider.getTransactions(network, address).pipe(
 			map((list) => ProjectAction.loadAccountTransactionsSuccess({
-				projectId,
+				projectId: project.id,
 				address,
 				list,
 			})),
@@ -191,16 +175,10 @@ export class ProjectEffect {
 
 	loadToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadToken),
-		switchMap(({projectId, identifier}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
-			take(1),
-			filter(v => !!v),
-			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
-				map((network) => [projectId, identifier, network] as [string, string, INetworkEnvironment])
-			)),
-		)),
-		switchMap(([projectId, identifier, network]) => from(this.elrondDataProvider.getToken(network, identifier)).pipe(
+		joinNetwork(this.store),
+		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getToken(network, identifier)).pipe(
 			map((data) => ProjectAction.loadTokenSuccess({
-				projectId,
+				projectId: project.id,
 				identifier,
 				data,
 			})),
@@ -210,16 +188,10 @@ export class ProjectEffect {
 
 	loadTokenHolders$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenHolders),
-		switchMap(({projectId, identifier}) => this.store.select(ProjectSelector.projectById(projectId)).pipe(
-			take(1),
-			filter(v => !!v),
-			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(
-				map((network) => [projectId, identifier, network] as [string, string, INetworkEnvironment])
-			)),
-		)),
-		switchMap(([projectId, identifier, network]) => from(this.elrondDataProvider.getTokenHolders(network, identifier, {})).pipe(
+		joinNetwork(this.store),
+		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenHolders(network, identifier, {})).pipe(
 			map((data) => ProjectAction.loadTokenHoldersSuccess({
-				projectId,
+				projectId: project.id,
 				identifier,
 				data,
 			})),
@@ -227,6 +199,31 @@ export class ProjectEffect {
 		))),
 	);
 
+	loadTokenRoles$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTokenHolders),
+		joinNetwork(this.store),
+		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenRoles(network, identifier)).pipe(
+			map((data) => ProjectAction.loadTokenRolesSuccess({
+				projectId: project.id,
+				identifier,
+				data,
+			})),
+			catchError(err => of(ProjectAction.loadTokenRolesError({err})))
+		))),
+	);
+
+	loadTokenTransfers$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTokenTransfers),
+		joinNetwork(this.store),
+		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenTransfers(network, identifier, {})).pipe(
+			map((data) => ProjectAction.loadTokenTransfersSuccess({
+				projectId: project.id,
+				identifier,
+				data,
+			})),
+			catchError(err => of(ProjectAction.loadTokenTransfersError({err})))
+		))),
+	);
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

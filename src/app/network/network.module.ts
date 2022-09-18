@@ -6,11 +6,11 @@ import { networkReducer } from './store/network.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { NetworkEffect } from './store/network.effect';
 import { NETWORK_FEATURE } from './constants';
-import { NetworkPipe } from './pipes/network.pipe';
+import { NetworkNamePipe } from './pipes/network-name.pipe';
 
 @NgModule({
 	declarations: [
-		NetworkPipe,
+		NetworkNamePipe,
 	],
 	imports: [
 		CommonModule,
@@ -21,7 +21,7 @@ import { NetworkPipe } from './pipes/network.pipe';
 	exports: [
 		StoreModule,
 		EffectsModule,
-		NetworkPipe,
+		NetworkNamePipe,
 	],
 })
 export class NetworkModule {

@@ -35,4 +35,27 @@
 		padding: 10px;
 		border-bottom: solid 1px var(--border-low-color);
 	}
+
+	.token-roles-element {
+		display: flex;
+		width: 100%;
+		flex: 1;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+		border-bottom: solid 1px var(--border-low-color);
+
+		.roles {
+			display: flex;
+			flex-direction: row;
+
+			.role-label {
+				margin-right: 6px;
+				padding: 4px 10px;
+				background: var(--static-green);
+				border-radius: 18px;
+			}
+		}
+	}
 }

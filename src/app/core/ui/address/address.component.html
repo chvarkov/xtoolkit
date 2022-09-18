@@ -1,0 +1,12 @@
+<span class="address">
+	{{label}}
+	{{address}}
+	<span class="material-icons action" (click)="copy()">
+		content_copy
+	</span>
+	<span class="material-icons action"
+		  *ngIf="(network$ | async) as network"
+		  (click)="explore(network.explorerUrl)">
+		search
+	</span>
+</span>

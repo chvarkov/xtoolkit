@@ -28,8 +28,16 @@
 			font-size: 1.2em;
 
 			.args {
-				color: var(--border-color);
-				margin-left: 10px;
+				color: var(--static-gray);
+				margin-left: 2px;
+
+				.arg-name {
+					color: var(--arg-name-color);
+				}
+
+				.arg-type {
+					color: var(--arg-type-color);
+				}
 			}
 		}
 
