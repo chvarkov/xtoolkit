@@ -1,8 +1,7 @@
-import { DataProvider, GeneratedWallet, Project, ProjectScAbi } from '../data-provider';
+import { ActionHistoryElement, DataProvider, GeneratedWallet, Project, ProjectScAbi } from '../data-provider';
 import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
-import { NetworkInfo } from '../data-provider';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
 import { map } from 'rxjs/operators';
 import * as uuid from 'uuid';
@@ -13,32 +12,20 @@ export class LocalstorageDataProvider implements DataProvider {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly networksKey = `${this.globalPrefix}.networks`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
+	private readonly actionHistoryKey = `${this.globalPrefix}.action-history`;
 
-	getNetworks(): Observable<NetworkInfo> {
-		const networks: NetworkInfo | null = this.get(this.networksKey);
+	getNetworks(): Observable<INetworkEnvironment[]> {
+		const networks: INetworkEnvironment[] | null = this.get(this.networksKey);
 
 		if (!networks) {
-			const defaultNetworkInfo: NetworkInfo = {
-				list: DEFAULT_NETWORKS,
-				selected: DEFAULT_NETWORKS[0],
-			};
+			const defaultNetworks: INetworkEnvironment[] = DEFAULT_NETWORKS;
 
-			this.set(this.networksKey, defaultNetworkInfo);
+			this.set(this.networksKey, defaultNetworks);
 
-			return of(defaultNetworkInfo);
+			return of(defaultNetworks);
 		}
 
 		return of(networks);
-	}
-
-	selectNetwork(network: INetworkEnvironment): Observable<void> {
-		return this.getNetworks()
-			.pipe(
-				map((info => {
-					info.selected = network;
-					this.set(this.networksKey, info);
-				})),
-			);
 	}
 
 	getProjects(): Observable<Project[]> {
@@ -169,6 +156,31 @@ export class LocalstorageDataProvider implements DataProvider {
 					return project;
 				})),
 			);
+	}
+
+	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]> {
+		return this.getActionHistory()
+			.pipe(
+				map(list => {
+					list.push(action);
+
+					this.set(this.actionHistoryKey, list);
+
+					return list;
+				}),
+			);
+	}
+
+	getActionHistory(): Observable<ActionHistoryElement[]> {
+		const projects: ActionHistoryElement[] | undefined = this.get(this.actionHistoryKey);
+
+		if (!projects) {
+			this.set(this.actionHistoryKey, []);
+
+			return of([]);
+		}
+
+		return of(projects);
 	}
 
 	private set<T>(key: string, value: T): void {

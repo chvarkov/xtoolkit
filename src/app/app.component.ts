@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NetworkAction } from './network/store/network.action';
-import { NetworkSelector } from './network/store/network.selector';
 import { Observable } from 'rxjs';
 import { ProjectScAbi } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
 import { OpenedProjectTab } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-root',
@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
 	currentTabIndex$: Observable<number | undefined>;
 
 	constructor(private readonly store: Store) {
-		this.store.select(NetworkSelector.selectedNetwork).subscribe(data => console.log('selected network', data));
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 	}
@@ -47,5 +46,12 @@ export class AppComponent implements OnInit {
 
 	getScById$(projectId: string, scId: string): Observable<ProjectScAbi | undefined> {
 		return this.store.select(ProjectSelector.smartContractsById(projectId, scId));
+	}
+
+	getProjectChainId$(projectId: string): Observable<string> {
+		return this.store.select(ProjectSelector.projectById(projectId))
+			.pipe(
+				map(proj => proj?.chainId || '')
+			);
 	}
 }

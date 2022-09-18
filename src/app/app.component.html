@@ -1,6 +1,5 @@
 <app-layout>
 	<app-logo logo></app-logo>
-	<app-network-selector network></app-network-selector>
 	<app-project-explorer project></app-project-explorer>
 	<app-project-tabs
 		scViewer
@@ -12,6 +11,7 @@
 						 [title]="tab.title"
 						 [type]="tab.componentType">
 			<app-sc-viewer *ngIf="tab.componentType === 'sc'"
+						   [chainId]="(getProjectChainId$(tab.projectId) | async) || ''"
 						   [projectSc]="getScById$(tab.projectId, tab.componentId) | async">
 			</app-sc-viewer>
 			<app-token-viewer *ngIf="tab.componentType === 'token'"
@@ -22,5 +22,5 @@
 							   [address]="tab.componentId"></app-wallet-viewer>
 		</app-project-tab>
 	</app-project-tabs>
-	<app-transaction-list transactions></app-transaction-list>
+	<app-action-list actionHistory></app-action-list>
 </app-layout>

@@ -16,7 +16,7 @@ import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 	styleUrls: ['./sc-viewer.component.scss'],
 })
 export class ScViewerComponent implements OnInit {
-	@Input() selectedEnvironment?: INetworkEnvironment;
+	@Input() chainId: string = '';
 
 	@Input() projectSc?: ProjectScAbi | null;
 

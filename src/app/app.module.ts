@@ -7,7 +7,7 @@ import { LayoutModule } from './layout/layout.module';
 import { ScViewerModule } from './sc-viewer/sc-viewer.module';
 import { ProjectModule } from './project/project.module';
 import { NetworkModule } from './network/network.module';
-import { TransactionModule } from './transaction/transaction.module';
+import { ActionHistoryModule } from './action-history/action-history.module';
 import { CoreModule } from './core/core.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -20,7 +20,7 @@ import { ProjectTabsModule } from './sc-viewer/modules/project-tabs/project-tabs
 		AppComponent,
 	],
     imports: [
-        TransactionModule,
+        ActionHistoryModule,
         ScViewerModule,
         NetworkModule,
         LayoutModule,

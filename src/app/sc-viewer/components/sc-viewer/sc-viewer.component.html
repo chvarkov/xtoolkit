@@ -9,6 +9,7 @@
 					<app-toolbar-icon-button right-side hint="Hide all">expand_less</app-toolbar-icon-button>
 				</app-toolbar>
 				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
+								 [chainId]="chainId"
 								 [endpoint]="endpoint"
 								 [wallets]="(wallets$ | async) || []"
 								 [sc]="smartContract">

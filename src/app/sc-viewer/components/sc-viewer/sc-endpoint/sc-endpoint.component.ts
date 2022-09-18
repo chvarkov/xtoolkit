@@ -30,22 +30,26 @@ export class ScEndpointComponent implements OnInit {
 
 	@Input() endpoint?: EndpointDefinition;
 
+	@Input() chainId!: string;
+
 	@Input() wallets: IGeneratedWallet[] = [];
 
 	form!: FormGroup;
 
 	resultSubject = new Subject();
 
-	network$: Observable<INetworkEnvironment>;
+	network$?: Observable<INetworkEnvironment | undefined>;
 
 	constructor(private readonly fb: FormBuilder,
 				private readonly store: Store,
 				private readonly scQueryRunner: ScQueryRunner,
 				private readonly scTxRunner: ScTransactionRunner) {
-		this.network$ = this.store.select(NetworkSelector.selectedNetwork);
+
 	}
 
 	ngOnInit(): void {
+		this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
+
 		this.form = this.fb.group(
 			(this.endpoint?.input || [])
 				.map(i => ({[i.name]: new FormControl('')}))

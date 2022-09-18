@@ -10,18 +10,10 @@ export class NetworkEffect {
 	loadNetworks$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.loadNetworks),
 		switchMap(() => this.dataProvider.getNetworks().pipe(
-			map((data) => NetworkAction.loadNetworksSuccess({data})),
+			map((list) => NetworkAction.loadNetworksSuccess({list})),
 			catchError(err => of(NetworkAction.loadNetworksError({err})),
 		)),
 	)));
-
-	selectNetworks$ = createEffect(() => this.actions$.pipe(
-		ofType(NetworkAction.selectNetwork),
-		switchMap(({network}) => this.dataProvider.selectNetwork(network).pipe(
-			map(() => NetworkAction.selectNetworkSuccess({network})),
-			catchError(err => of(NetworkAction.selectNetworkError({err})),
-			)),
-		)));
 
 	constructor(private readonly actions$: Actions,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {

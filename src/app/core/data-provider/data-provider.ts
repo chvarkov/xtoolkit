@@ -10,11 +10,6 @@ export interface GeneratedWallet {
 	mnemonic: string[];
 }
 
-export interface NetworkInfo {
-	list: INetworkEnvironment[];
-	selected: INetworkEnvironment;
-}
-
 export interface ProjectScAbi {
 	name?: string;
 	id: string;
@@ -32,10 +27,23 @@ export interface Project {
 	tokens: string[];
 }
 
-export interface DataProvider {
-	getNetworks(): Observable<NetworkInfo>;
+export enum ActionStatus {
+	Pending = 'pending',
+	Success = 'success',
+	Fail = 'fail',
+}
 
-	selectNetwork(network: INetworkEnvironment): Observable<void>
+export interface ActionHistoryElement {
+	title: string;
+	caller?: string
+	txHash?: string
+	status: ActionStatus;
+	data: Record<string, any>;
+	timestamp: number;
+}
+
+export interface DataProvider {
+	getNetworks(): Observable<INetworkEnvironment[]>;
 
 	getProjects(): Observable<Project[]>;
 
@@ -48,4 +56,8 @@ export interface DataProvider {
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 
 	addToken(projectId: string, tokenAddress: string): Observable<Project>;
+
+	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]>;
+
+	getActionHistory(): Observable<ActionHistoryElement[]>;
 }

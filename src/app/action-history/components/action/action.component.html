@@ -1,0 +1,7 @@
+<div *ngIf="data" class="action-container">
+	<div class="primary-info">
+		{{data.title}}
+		<app-action-status-badge [status]="data.status"></app-action-status-badge>
+	</div>
+	<div class="tech-details">{{data.timestamp | date}}</div>
+</div>
