@@ -5,11 +5,12 @@ import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-positi
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
 	AccountOnNetwork,
-	DefinitionOfFungibleTokenOnNetwork,
 	ProxyNetworkProvider
 } from '@elrondnetwork/erdjs-network-providers/out';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { ITokenInfo } from './interfaces/token-info';
+import { ITokenHolder } from './interfaces/token-holder';
+import { IPaginationOptions } from './interfaces/pagination-options';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -36,6 +37,14 @@ export class ElrondDataProvider {
 	getToken(network: INetworkEnvironment,
 			 identifier: string): Observable<ITokenInfo> {
 		return this.http.get<ITokenInfo>(`${network.gatewayUrl}/tokens/${identifier.trim()}`);
+	}
+
+	getTokenHolders(network: INetworkEnvironment,
+					identifier: string,
+					options: IPaginationOptions): Observable<ITokenHolder[]> {
+		return this.http.get<ITokenHolder[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/accounts`, {
+			params: this.createParams(options),
+		});
 	}
 
 	private createParams(value?: Record<string, any>): HttpParams {
