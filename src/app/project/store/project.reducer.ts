@@ -126,12 +126,6 @@ export const reducer = createReducer(
 			},
 		},
 	})),
-
-	on(ProjectAction.loadTokenError, (state, { err }) => {
-			console.error(err);
-		return state;
-	}),
-
 );
 
 export function projectReducer(state: IProjectState | undefined, action: Action): IProjectState {
