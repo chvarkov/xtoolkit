@@ -1,0 +1,20 @@
+<div class="address-input">
+	<input #input class="input"
+		   placeholder="Address"
+		   [ngClass]="{invalid: isInvalidAddress(input.value)}"
+		   [value]="address"
+		   (change)="onChangeAddress($event)">
+	<div class="icons">
+		<ng-container *ngIf="!isInvalidAddress(input.value)">
+				<span class="material-icons action"
+					  (click)="clipboard.copy(address)">
+					content_copy
+				</span>
+			<span class="material-icons action" *ngIf="network$ | async as network"
+				  (click)="explore(network.explorerUrl)">
+					search
+				</span>
+		</ng-container>
+		<span class="material-icons invalid-icon" *ngIf="isInvalidAddress(input.value)">cancel</span>
+	</div>
+</div>
