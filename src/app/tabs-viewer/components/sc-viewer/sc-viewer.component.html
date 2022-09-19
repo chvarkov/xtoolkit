@@ -1,6 +1,8 @@
 <div class="sc-viewer-container" *ngIf="projectSc">
 	<ng-container *ngIf="(projectSc.abi | sc:projectSc?.address || '') as smartContract">
-		<app-sc-viewer-header [sc]="projectSc" [address]="projectSc?.address || ''"></app-sc-viewer-header>
+		<app-sc-viewer-header [sc]="projectSc" [address]="projectSc?.address || ''"
+							  [chainId]="chainId">
+		</app-sc-viewer-header>
 		<app-tabs>
 			<app-tab title="Endpoints">
 				<app-toolbar>

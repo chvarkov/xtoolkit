@@ -2,11 +2,49 @@
 	display: flex;
 	flex: 1;
 	width: 100%;
+	flex-direction: row;
 	padding: 24px 8px;
 	box-sizing: border-box;
+
+	.icon {
+		padding: 4px;
+		margin-right: 6px;
+		width: 32px;
+		height: 32px;
+	}
 
 	.address-input {
 		display: flex;
 		flex: 1;
+		position: relative;
+
+		.input {
+			display: flex;
+			flex: 1;
+		}
+
+		.icons {
+			right: 4px;
+			top: 4px;
+			position: absolute;
+			font-size: 0.9em;
+
+			.action {
+				cursor: pointer;
+
+				&:hover {
+					color: var(--text-accent-color);
+				}
+			}
+
+			.invalid-icon {
+				color: var(--static-red);
+			}
+		}
+	}
+
+	.invalid {
+		color: var(--static-red);
+		border-color: var(--static-red);
 	}
 }

@@ -1,6 +1,27 @@
 <form class="header-container">
-	<input class="address-input"
-		   placeholder="Address"
-		   [value]="address"
-		   (change)="onChangeAddress($event)">
+	<div class="material-icons icon" [ngStyle]="{color: 'sc' | componentColor}">code</div>
+
+	<div class="address-input">
+		<input class="input"
+			placeholder="Address"
+			[ngClass]="{invalid: isInvalidAddress(address)}"
+			[value]="address"
+			(change)="onChangeAddress($event)">
+		<div class="icons">
+			<ng-container *ngIf="!isInvalidAddress(address)">
+				<span class="material-icons action"
+					  (click)="clipboard.copy(address)">
+					content_copy
+				</span>
+				<span class="material-icons action" *ngIf="network$ | async as network"
+					  (click)="explore(network.explorerUrl)">
+					search
+				</span>
+			</ng-container>
+
+
+			<span class="material-icons invalid-icon" *ngIf="isInvalidAddress(address)">cancel</span>
+		</div>
+	</div>
+
 </form>
