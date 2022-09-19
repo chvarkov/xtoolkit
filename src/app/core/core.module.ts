@@ -21,6 +21,7 @@ import { LocalstoragePersonalSettingManager } from './data-provider/localstorage
 import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.manager';
 import { AddressComponent } from './ui/address/address.component';
 import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
+import { AddressInputComponent } from './ui/address-input/address-input.component';
 
 @NgModule({
 	declarations: [
@@ -39,6 +40,7 @@ import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 		ComponentIconPipe,
   AddressComponent,
   TxHashComponent,
+  AddressInputComponent,
 	],
 	imports: [
 		CommonModule,
@@ -57,22 +59,23 @@ import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 		LocalstorageDataProvider,
 		LocalstoragePersonalSettingManager,
 	],
-	exports: [
-		ElrondModule,
-		ToolbarComponent,
-		SelectComponent,
-		TabsComponent,
-		TabComponent,
-		ToolbarIconButtonComponent,
-		ModalDialogComponent,
-		OptionComponent,
-		ShortStringPipe,
-		DropdownMenuComponent,
-		DropdownMenuItemComponent,
-		ComponentIconPipe,
-		ComponentColorPipe,
-		AddressComponent,
-		TxHashComponent,
-	],
+    exports: [
+        ElrondModule,
+        ToolbarComponent,
+        SelectComponent,
+        TabsComponent,
+        TabComponent,
+        ToolbarIconButtonComponent,
+        ModalDialogComponent,
+        OptionComponent,
+        ShortStringPipe,
+        DropdownMenuComponent,
+        DropdownMenuItemComponent,
+        ComponentIconPipe,
+        ComponentColorPipe,
+        AddressComponent,
+        TxHashComponent,
+        AddressInputComponent,
+    ],
 })
 export class CoreModule { }

@@ -13,38 +13,8 @@
 		height: 32px;
 	}
 
-	.address-input {
+	.address {
 		display: flex;
 		flex: 1;
-		position: relative;
-
-		.input {
-			display: flex;
-			flex: 1;
-		}
-
-		.icons {
-			right: 4px;
-			top: 4px;
-			position: absolute;
-			font-size: 0.9em;
-
-			.action {
-				cursor: pointer;
-
-				&:hover {
-					color: var(--text-accent-color);
-				}
-			}
-
-			.invalid-icon {
-				color: var(--static-red);
-			}
-		}
-	}
-
-	.invalid {
-		color: var(--static-red);
-		border-color: var(--static-red);
 	}
 }
