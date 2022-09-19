@@ -8,8 +8,15 @@ export type AbiJson = {
 
 export class ScBuilder {
 	static build(address: string, abi: AbiJson): SmartContract {
+		let addressValue: Address | undefined;
+
+		try {
+			addressValue = new Address(address);
+		} catch (e) {
+		}
+
 		return new SmartContract({
-			address: new Address(address),
+			address: addressValue,
 			abi: new SmartContractAbi(AbiRegistry.create({ ...abi, endpoints: abi.endpoints.map(e => ({...e}))}))
 		});
 	}

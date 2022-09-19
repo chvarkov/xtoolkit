@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
 import { DATA_PROVIDER, DataProvider, ProjectScAbi } from '../../core/data-provider/data-provider';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
@@ -16,6 +16,7 @@ import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/d
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { joinNetwork } from './operators/join-network';
+import { isValidAddress } from '../../core/validators/address-validator';
 
 @Injectable()
 export class ProjectEffect {
@@ -145,6 +146,7 @@ export class ProjectEffect {
 
 	loadAccount$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadAccountAndPositions),
+		filter(({address}) => !!address && isValidAddress(address)),
 		joinNetwork(this.store),
 		switchMap(([{address}, project, network]) => forkJoin([
 			this.elrondDataProvider.getTokenPositions(network, address),
@@ -162,6 +164,7 @@ export class ProjectEffect {
 
 	loadAccountTransactions$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadAccountTransactions),
+		filter(({address}) => !!address && isValidAddress(address)),
 		joinNetwork(this.store),
 		switchMap(([{address}, project, network]) => this.txProvider.getTransactions(network, address).pipe(
 			map((list) => ProjectAction.loadAccountTransactionsSuccess({
