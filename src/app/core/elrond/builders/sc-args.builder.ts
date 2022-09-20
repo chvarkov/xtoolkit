@@ -5,6 +5,7 @@ import {
 	SmartContract,
 	TypedValue, U16Type, U16Value, U32Type, U32Value, U64Type, U64Value, U8Type, U8Value
 } from '@elrondnetwork/erdjs/out';
+import BigNumber from 'bignumber.js';
 
 export class ScArgsBuilder {
 	constructor(private readonly sc: SmartContract) {
@@ -43,7 +44,7 @@ export class ScArgsBuilder {
 			case BigIntType.ClassName:
 				return new BigIntValue(value);
 			case BigUIntType.ClassName:
-				return new BigUIntValue(value);
+				return new BigUIntValue(new BigNumber(value));
 			case BytesType.ClassName:
 				return new BytesValue(value);
 			case AddressType.ClassName:
