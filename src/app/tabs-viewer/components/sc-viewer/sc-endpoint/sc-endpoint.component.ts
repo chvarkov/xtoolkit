@@ -83,9 +83,10 @@ export class ScEndpointComponent implements OnInit {
 			functionName: this.endpoint.name,
 		});
 
-		const queryResult = await this.scQueryRunner.runQuery(network, query);
+		const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
 
-		this.resultSubject.next(queryResult.toJSON());
+		console.log('queryResult', queryResult);
+		// this.resultSubject.next(queryResult);
 	}
 
 	async submitTransaction(network: INetworkEnvironment, wallet: IGeneratedWallet, gasLimit: number): Promise<void> {

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
-import { Query, SmartContract } from '@elrondnetwork/erdjs/out';
+import { Query, ResultsParser, SmartContract, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
-import { ContractQueryResponse, ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import { ElrondProxyProvider } from './elrond-proxy-provider';
 
 export interface IScQueryOptions {
@@ -14,6 +13,8 @@ export interface IScQueryOptions {
 
 @Injectable({providedIn: 'root'})
 export class ScQueryRunner {
+	private readonly resultParser = new ResultsParser();
+
 	constructor(private readonly proxy: ElrondProxyProvider) {
 	}
 
@@ -31,7 +32,8 @@ export class ScQueryRunner {
 		});
 	}
 
-	runQuery(network: INetworkEnvironment, query: Query): Promise<ContractQueryResponse> {
-		return this.proxy.getProxy(network).queryContract(query);
+	runQuery(network: INetworkEnvironment, sc: SmartContract, query: Query): Promise<TypedOutcomeBundle> {
+		return this.proxy.getProxy(network).queryContract(query)
+			.then(res => this.resultParser.parseQueryResponse(res, sc.getEndpoint(query.func.name)));
 	}
 }
