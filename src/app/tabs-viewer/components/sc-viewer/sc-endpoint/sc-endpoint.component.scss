@@ -13,6 +13,11 @@
 		.badge {
 			border-radius: 4px;
 			padding: 4px 6px;
+			margin-left: 6px;
+		}
+
+		.payable {
+			background: var(--static-yellow);
 		}
 
 		.mutable {
