@@ -123,7 +123,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	private getCurrentTabIndex(): number | undefined {
-		return this.get(this.currentTabIndexKey) || undefined;
+		const index = +this.get<string>(this.currentTabIndexKey);
+		return !isNaN(index) ? index : undefined;
 	}
 
 	private set<T>(key: string, value: T): void {
