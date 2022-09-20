@@ -4,7 +4,9 @@
 	<div class="input" [ngSwitch]="true">
 		<app-bool-input *ngSwitchCase="isBoolType()" (onChange)="writeValue($event)"></app-bool-input>
 		<app-bytes-input *ngSwitchCase="isBytesType()"></app-bytes-input>
-		<app-number-input *ngSwitchCase="isNumericalType()" [type]="input?.type"></app-number-input>
+		<app-number-input *ngSwitchCase="isNumericalType()"
+						  [type]="input?.type"
+						  (changed)="writeValue($event)"></app-number-input>
 		<input *ngSwitchDefault class="input">
 	</div>
 

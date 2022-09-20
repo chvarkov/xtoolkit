@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
 	BigIntType,
 	BigUIntType,
@@ -23,6 +23,7 @@ export class NumberInputComponent implements OnInit {
 	readonly maxLength = 39;
 
 	@Input() type?: Type;
+	@Output() changed: EventEmitter<BigNumber> = new EventEmitter<BigNumber>();
 
 	constructor() {
 	}
@@ -88,5 +89,11 @@ export class NumberInputComponent implements OnInit {
 			default:
 				throw new Error('input type is not numerical');
 		}
+	}
+
+	onChange(e: Event): void {
+		const value = (<HTMLInputElement>e.target).value;
+
+		this.changed.emit(new BigNumber(value));
 	}
 }

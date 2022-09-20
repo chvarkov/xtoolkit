@@ -162,7 +162,10 @@ export class LocalstorageDataProvider implements DataProvider {
 		return this.getActionHistory()
 			.pipe(
 				map(list => {
-					list.push(action);
+					list = [
+						action,
+						...list,
+					];
 
 					this.set(this.actionHistoryKey, list);
 

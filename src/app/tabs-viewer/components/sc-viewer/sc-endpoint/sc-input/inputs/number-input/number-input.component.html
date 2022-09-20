@@ -3,5 +3,6 @@
 		   type="number"
 		   [value]="value.toFormat()"
 		   [min]="getMin().toString()"
-		   [max]="getMax().toString()">
+		   [max]="getMax().toString()"
+		   (change)="onChange($event)">
 </div>

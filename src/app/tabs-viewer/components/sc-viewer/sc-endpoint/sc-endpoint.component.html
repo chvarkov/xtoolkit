@@ -14,6 +14,7 @@
 			</span>
 		</div>
 		<div class="controls">
+			<span class="badge payable" *ngIf="endpoint.modifiers.isPayable()">Payable</span>
 			<span class="badge mutable" *ngIf="!endpoint.modifiers.isReadonly()">Mutable</span>
 			<span class="badge readonly" *ngIf="endpoint.modifiers.isReadonly()">Readonly</span>
 			<button class="material-icons" *ngIf="isShowing" (click)="hide($event)">expand_less</button>
