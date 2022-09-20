@@ -57,11 +57,13 @@ export class ScEndpointComponent implements OnInit {
 		);
 	}
 
-	show(): void {
+	show(event: Event): void {
+		event.stopPropagation();
 		this.isShowing = true;
 	}
 
-	hide(): void {
+	hide(event: Event): void {
+		event.stopPropagation();
 		this.isShowing = false;
 	}
 
