@@ -39,7 +39,9 @@ export enum ActionType {
 }
 
 export interface ActionHistoryElement {
+	id: string,
 	type: ActionType,
+	chainId: string,
 	title: string;
 	caller?: string
 	txHash?: string
@@ -66,4 +68,6 @@ export interface DataProvider {
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]>;
 
 	getActionHistory(): Observable<ActionHistoryElement[]>;
+
+	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
 }

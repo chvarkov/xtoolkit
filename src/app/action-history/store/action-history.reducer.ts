@@ -12,7 +12,10 @@ const initialState: ITransactionState = {
 
 export const reducer = createReducer(
 	initialState,
-	on(ActionHistoryAction.logActionSuccess, ActionHistoryAction.loadActionHistorySuccess, (state, { list }) => ({
+	on(ActionHistoryAction.logActionSuccess,
+		ActionHistoryAction.loadActionHistorySuccess,
+		ActionHistoryAction.updateActionStatusSuccess,
+		(state, { list }) => ({
 		...state,
 		list,
 	})),
