@@ -8,7 +8,6 @@ import { ScArgsBuilder } from '../builders/sc-args.builder';
 import { ElrondDataProvider } from '../elrond.data-provider';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Mnemonic, UserSigner } from '@elrondnetwork/erdjs-walletcore/out';
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import { UserSecretKey } from '@elrondnetwork/erdjs-walletcore/out/userKeys';
 import { ElrondProxyProvider } from './elrond-proxy-provider';
 

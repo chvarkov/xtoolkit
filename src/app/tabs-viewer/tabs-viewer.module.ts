@@ -20,6 +20,9 @@ import { WalletViewerComponent } from './components/wallet-viewer/wallet-viewer.
 import { AccountTransactionComponent } from './components/common/acccunt-transaction/account-transaction.component';
 import { AcccountTransactionStatusBadgeComponent } from './components/common/acccunt-transaction/account-transaction-status-badge/account-transaction-status-badge.component';
 import { TokenTransferComponent } from './components/token-viewer/token-transfer/token-transfer.component';
+import { ScQueryResultComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result.component';
+import { ScQueryResultElementComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result-element/sc-query-result-element.component';
+import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-result/sc-tx-result.component';
 
 @NgModule({
 	declarations: [
@@ -34,13 +37,16 @@ import { TokenTransferComponent } from './components/token-viewer/token-transfer
 		ScCodeComponent,
 		ScTokensComponent,
 		ScNftsComponent,
-  ScEndpointTxSignComponent,
-  ScEndpointQueryComponent,
-  TokenViewerComponent,
-  WalletViewerComponent,
+		ScEndpointTxSignComponent,
+		ScEndpointQueryComponent,
+		TokenViewerComponent,
+		WalletViewerComponent,
 		AccountTransactionComponent,
 		AcccountTransactionStatusBadgeComponent,
-  TokenTransferComponent,
+		TokenTransferComponent,
+		ScQueryResultComponent,
+		ScQueryResultElementComponent,
+		ScTxResultComponent,
 	],
 	imports: [
 		CommonModule,

@@ -1,0 +1,17 @@
+<div class="container" *ngIf="result">
+	<div class="header" [ngClass]="result.returnCode.isSuccess() ? 'success' : 'failed'">
+		Query result:
+		<ng-container *ngIf="result.returnCode.isSuccess()">
+			<span class="status-text">{{result.returnCode.toString()}}</span>
+		</ng-container>
+
+		<ng-container *ngIf="!result.returnCode.isSuccess()">
+			<span class="status-text">{{result.returnCode.toString()}} - {{result.returnMessage}}</span>
+		</ng-container>
+	</div>
+	<div class="list">
+		<app-sc-query-result-element *ngFor="let value of result.values; let i = index"
+									 [index]="i" [typedValue]="value">
+		</app-sc-query-result-element>
+	</div>
+</div>
