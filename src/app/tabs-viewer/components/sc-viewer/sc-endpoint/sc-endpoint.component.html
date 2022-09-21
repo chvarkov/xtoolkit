@@ -25,6 +25,7 @@
 		<form [formGroup]="form" class="inputs">
 			<app-sc-input *ngFor="let input of endpoint?.input || []"
 						  [input]="input"
+						  [chainId]="chainId"
 						  [formControlName]="input.name"></app-sc-input>
 		</form>
 

@@ -11,5 +11,9 @@
 	.input {
 		display: flex;
 		flex: 1;
+
+		.address {
+			width: 100%;
+		}
 	}
 }

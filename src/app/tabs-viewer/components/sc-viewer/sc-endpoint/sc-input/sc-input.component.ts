@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BooleanType, BytesType, EndpointParameterDefinition, EnumType } from '@elrondnetwork/erdjs/out';
+import { AddressType, BooleanType, BytesType, EndpointParameterDefinition, EnumType } from '@elrondnetwork/erdjs/out';
 import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
 
 @Component({
@@ -16,6 +16,8 @@ import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesyste
 	],
 })
 export class ScInputComponent implements OnInit, ControlValueAccessor {
+	@Input() chainId: string = '';
+
 	@Input() input?: EndpointParameterDefinition;
 
 
@@ -71,5 +73,9 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 
 	isEnum(): boolean {
 		return this.input?.type instanceof EnumType;
+	}
+
+	isAddress(): boolean {
+		return this.input?.type instanceof AddressType;
 	}
 }

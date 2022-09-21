@@ -10,6 +10,10 @@
 		<app-enum-input *ngSwitchCase="isEnum()"
 						[type]="input?.type"
 						(changed)="writeValue($event)"></app-enum-input>
+		<app-address-input *ngSwitchCase="isAddress()"
+						   class="address"
+						   [chainId]="chainId"
+						   (change)="writeValue($event)"></app-address-input>
 		<input *ngSwitchDefault class="input">
 	</div>
 
