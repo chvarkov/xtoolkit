@@ -1,0 +1,8 @@
+<app-select size="small" placeHolder="Select enum value">
+	<app-option *ngFor="let option of getEnum()"
+				[value]="option.discriminant"
+				size="small"
+				(selected)="onSelected($event)">
+		{{option.name}} [{{option.discriminant}}]
+	</app-option>
+</app-select>
