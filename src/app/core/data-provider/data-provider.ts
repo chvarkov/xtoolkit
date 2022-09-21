@@ -39,6 +39,7 @@ export enum ActionType {
 }
 
 export interface ActionHistoryElement {
+	id: string,
 	type: ActionType,
 	title: string;
 	caller?: string

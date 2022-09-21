@@ -12,6 +12,7 @@ import { ScTransactionRunner } from '../../../../core/elrond/services/sc-transac
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { ActionHistoryAction } from '../../../../action-history/store/action-history.action';
 import { ActionStatus, ActionType } from '../../../../core/data-provider/data-provider';
+import * as uuid from 'uuid';
 
 @Component({
 	selector: 'app-sc-endpoint',
@@ -92,6 +93,7 @@ export class ScEndpointComponent implements OnInit {
 
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
+					id: uuid.v4(),
 					type: ActionType.Query,
 					title: query.func.name,
 					timestamp: Date.now(),
@@ -111,6 +113,7 @@ export class ScEndpointComponent implements OnInit {
 		} catch (e) {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
+					id: uuid.v4(),
 					type: ActionType.Query,
 					title: query.func.name,
 					timestamp: Date.now(),
@@ -149,6 +152,7 @@ export class ScEndpointComponent implements OnInit {
 			this.txResultSubject.next(txHash);
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
+					id: uuid.v4(),
 					type: ActionType.Transaction,
 					title: this.endpoint.name,
 					timestamp: Date.now(),
@@ -163,6 +167,7 @@ export class ScEndpointComponent implements OnInit {
 		} catch (e) {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
+					id: uuid.v4(),
 					type: ActionType.Transaction,
 					title: this.endpoint.name,
 					timestamp: Date.now(),
