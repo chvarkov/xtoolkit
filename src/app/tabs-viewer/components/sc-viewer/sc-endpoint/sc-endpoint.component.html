@@ -29,14 +29,6 @@
 						  [formControlName]="input.name"></app-sc-input>
 		</form>
 
-		<div class="result" *ngIf="queryResultSubject | async as result">
-			<app-sc-query-result [result]="result"></app-sc-query-result>
-		</div>
-
-		<div class="result" *ngIf="txResultSubject | async as txHash">
-			<app-sc-tx-result [chainId]="chainId" [txHash]="txHash"></app-sc-tx-result>
-		</div>
-
 		<ng-container *ngIf="network$ | async as network">
 			<app-sc-endpoint-tx-sign *ngIf="!endpoint.modifiers.isReadonly()"
 									 [wallets]="wallets"
@@ -44,6 +36,14 @@
 			<app-sc-endpoint-query *ngIf="endpoint.modifiers.isReadonly()"
 								   [wallets]="wallets"
 								   (onSubmit)="sendQuery(network)"></app-sc-endpoint-query>
+
+		<div class="result" *ngIf="queryResultSubject | async as result">
+			<app-sc-query-result [result]="result"></app-sc-query-result>
+		</div>
+
+		<div class="result" *ngIf="txResultSubject | async as txHash">
+			<app-sc-tx-result [chainId]="chainId" [txHash]="txHash"></app-sc-tx-result>
+		</div>
 		</ng-container>
 	</ng-container>
 </div>
