@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-bytes-input',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./bytes-input.component.scss']
 })
 export class BytesInputComponent implements OnInit {
+	@Output() changed: EventEmitter<Buffer> = new EventEmitter<Buffer>();
+
 	constructor() {
 	}
 

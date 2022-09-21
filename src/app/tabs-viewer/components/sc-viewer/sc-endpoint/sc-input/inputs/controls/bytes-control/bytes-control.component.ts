@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export type ByteEncodingType = 'decimal' | 'raw' | 'hex' | 'text';
@@ -18,10 +18,12 @@ export type ByteEncodingType = 'decimal' | 'raw' | 'hex' | 'text';
 export class BytesControlComponent implements ControlValueAccessor {
 	@Input() cols = 100;
 	@Input() rows = 2;
-	@Input() encodingMethods: ByteEncodingType[] = ['decimal', 'raw', 'hex', 'text'];
+	@Input() encodingMethods: ByteEncodingType[] = ['hex', 'text'];
 	@Input() disabled = false;
 
-	method: ByteEncodingType = 'decimal';
+	@Output() changed: EventEmitter<Buffer> = new EventEmitter<Buffer>();
+
+	method: ByteEncodingType = 'hex';
 
 	private onChange: Function = () => null;
 	private onTouch: Function = () => null;
@@ -61,5 +63,20 @@ export class BytesControlComponent implements ControlValueAccessor {
 
 	registerOnTouched(fn: any) {
 		this.onTouch = fn
+	}
+
+	onChangedValue(e: Event): void {
+		const data = (<HTMLTextAreaElement>e.target).value;
+
+		switch (this.method) {
+			case 'hex':
+				this.changed.emit(Buffer.from(data, 'hex'));
+				break;
+			case 'text':
+				this.changed.emit(Buffer.from(data, 'utf-8'));
+				break;
+			default:
+				throw new Error(`Unsupported encoding method ${this.method}`);
+		}
 	}
 }

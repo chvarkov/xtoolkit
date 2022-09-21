@@ -1,9 +1,14 @@
 <div class="bytes-control-container">
 	<textarea class="textarea"
+			  (change)="onChangedValue($event)"
 		      [disabled]="disabled">{{value}}</textarea>
 	<div class="encoding-method">
-		<app-select size="small" (selectedElement)="onChangeEncodingMethod($event.value)" [defaultElement]="{name: 'hex', value: 'hex'}">
-			<app-option *ngFor="let method of encodingMethods" [value]="method">{{method}}</app-option>
+		<app-select size="small"
+					(selectedElement)="onChangeEncodingMethod($event.value)"
+					[defaultElement]="{name: 'hex', value: 'hex'}">
+			<app-option *ngFor="let method of encodingMethods" [value]="method">
+				{{method}}
+			</app-option>
 		</app-select>
 	</div>
 </div>
