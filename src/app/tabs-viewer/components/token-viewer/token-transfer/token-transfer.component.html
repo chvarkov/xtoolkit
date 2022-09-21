@@ -4,5 +4,5 @@
 	<app-address label="From:" [address]="transfer.sender" [chainId]="chainId"></app-address>
 	<span>{{transfer.value}} {{ticket}}</span>
 	<app-address label="To:" [address]="transfer.receiver" [chainId]="chainId"></app-address>
-	<span>{{transfer.timestamp * 1000 | date}}</span>
+	<span>{{transfer.timestamp * 1000 | date:'medium'}}</span>
 </div>
