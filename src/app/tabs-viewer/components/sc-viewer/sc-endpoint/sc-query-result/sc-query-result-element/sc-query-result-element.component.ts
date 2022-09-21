@@ -16,4 +16,15 @@ export class ScQueryResultElementComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	transformValue(value: any): string {
+		if (value == null) {
+			return 'null';
+		}
+
+		if (typeof value === 'object' || Array.isArray(value)) {
+			return JSON.stringify(value, null, 4);
+		}
+
+		return value.toString();
+	}
 }

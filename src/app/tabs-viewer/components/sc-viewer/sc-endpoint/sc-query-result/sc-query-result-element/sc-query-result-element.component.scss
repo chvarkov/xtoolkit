@@ -15,5 +15,9 @@
 	.data {
 		display: flex;
 		flex: 1;
+
+		.content {
+			margin-top: 4px;
+		}
 	}
 }

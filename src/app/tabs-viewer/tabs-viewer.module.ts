@@ -24,6 +24,7 @@ import { ScQueryResultComponent } from './components/sc-viewer/sc-endpoint/sc-qu
 import { ScQueryResultElementComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result-element/sc-query-result-element.component';
 import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-result/sc-tx-result.component';
 import { EnumInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/enum-input/enum-input.component';
+import { TokenIdentifierInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/token-identifier-input/token-identifier-input.component';
 
 @NgModule({
 	declarations: [
@@ -49,6 +50,7 @@ import { EnumInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/
 		ScQueryResultElementComponent,
 		ScTxResultComponent,
   EnumInputComponent,
+  TokenIdentifierInputComponent,
 	],
 	imports: [
 		CommonModule,

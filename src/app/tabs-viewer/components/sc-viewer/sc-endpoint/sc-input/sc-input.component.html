@@ -16,6 +16,8 @@
 						   class="address"
 						   [chainId]="chainId"
 						   (changed)="writeValue($event)"></app-address-input>
+		<app-token-identifier-input *ngSwitchCase="isTokenIdentifier()"
+									(changed)="writeValue($event)"></app-token-identifier-input>
 		<input *ngSwitchDefault class="input">
 	</div>
 
