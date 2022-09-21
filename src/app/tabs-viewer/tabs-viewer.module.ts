@@ -22,6 +22,7 @@ import { AcccountTransactionStatusBadgeComponent } from './components/common/acc
 import { TokenTransferComponent } from './components/token-viewer/token-transfer/token-transfer.component';
 import { ScQueryResultComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result.component';
 import { ScQueryResultElementComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result-element/sc-query-result-element.component';
+import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-result/sc-tx-result.component';
 
 @NgModule({
 	declarations: [
@@ -36,15 +37,16 @@ import { ScQueryResultElementComponent } from './components/sc-viewer/sc-endpoin
 		ScCodeComponent,
 		ScTokensComponent,
 		ScNftsComponent,
-  ScEndpointTxSignComponent,
-  ScEndpointQueryComponent,
-  TokenViewerComponent,
-  WalletViewerComponent,
+		ScEndpointTxSignComponent,
+		ScEndpointQueryComponent,
+		TokenViewerComponent,
+		WalletViewerComponent,
 		AccountTransactionComponent,
 		AcccountTransactionStatusBadgeComponent,
-  TokenTransferComponent,
-  ScQueryResultComponent,
-  ScQueryResultElementComponent,
+		TokenTransferComponent,
+		ScQueryResultComponent,
+		ScQueryResultElementComponent,
+		ScTxResultComponent,
 	],
 	imports: [
 		CommonModule,

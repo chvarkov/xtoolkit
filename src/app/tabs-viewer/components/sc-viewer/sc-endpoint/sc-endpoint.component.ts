@@ -36,7 +36,9 @@ export class ScEndpointComponent implements OnInit {
 
 	form!: FormGroup;
 
-	resultSubject = new Subject<TypedOutcomeBundle>();
+	queryResultSubject = new Subject<TypedOutcomeBundle>();
+
+	txResultSubject = new Subject<string>();
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
@@ -85,8 +87,7 @@ export class ScEndpointComponent implements OnInit {
 
 		const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
 
-		console.log('queryResult', queryResult);
-		this.resultSubject.next(queryResult);
+		this.queryResultSubject.next(queryResult);
 	}
 
 	async submitTransaction(network: INetworkEnvironment, wallet: IGeneratedWallet, gasLimit: number): Promise<void> {
@@ -104,6 +105,6 @@ export class ScEndpointComponent implements OnInit {
 			walletCredentials: {mnemonic: wallet.mnemonic},
 		});
 
-		// this.resultSubject.next({txHash});
+		this.txResultSubject.next(txHash);
 	}
 }
