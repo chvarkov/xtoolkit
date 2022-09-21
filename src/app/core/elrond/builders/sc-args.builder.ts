@@ -2,7 +2,7 @@ import {
 	AddressType,
 	AddressValue, BigIntType, BigIntValue, BigUIntType, BigUIntValue, BytesType, BytesValue,
 	EndpointParameterDefinition, I16Type, I16Value, I32Type, I32Value, I64Type, I64Value, I8Type, I8Value,
-	SmartContract,
+	SmartContract, TokenIdentifierType, TokenIdentifierValue,
 	TypedValue, U16Type, U16Value, U32Type, U32Value, U64Type, U64Value, U8Type, U8Value
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
@@ -49,6 +49,8 @@ export class ScArgsBuilder {
 				return new BytesValue(value);
 			case AddressType.ClassName:
 				return new AddressValue(value);
+			case TokenIdentifierType.ClassName:
+				return new TokenIdentifierValue(value);
 			// TODO: Describe all types
 			default:
 				console.warn(`Cannot resolve typed value for ${input.type.getClassName()} type`);
