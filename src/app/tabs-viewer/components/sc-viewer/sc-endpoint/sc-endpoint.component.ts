@@ -2,7 +2,7 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
 import { EndpointDefinition, SmartContract, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,8 @@ import { NetworkSelector } from '../../../../network/store/network.selector';
 import { IGeneratedWallet } from '../../../../project/components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { ScTransactionRunner } from '../../../../core/elrond/services/sc-transaction-runner';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
+import { ActionHistoryAction } from '../../../../action-history/store/action-history.action';
+import { ActionStatus, ActionType } from '../../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-sc-endpoint',
@@ -85,9 +87,41 @@ export class ScEndpointComponent implements OnInit {
 			functionName: this.endpoint.name,
 		});
 
-		const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
+		try {
+			const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
 
-		this.queryResultSubject.next(queryResult);
+			this.store.dispatch(ActionHistoryAction.logAction({
+				data: {
+					type: ActionType.Query,
+					title: query.func.name,
+					timestamp: Date.now(),
+					status: ActionStatus.Success,
+					data: {
+						query: this.form.value,
+						result: {
+							returnMessage: queryResult.returnMessage,
+							returnCode: queryResult.returnCode.toString(),
+							data: queryResult.values.map(value => value.valueOf()?.toString()),
+						},
+					},
+				},
+			}));
+
+			this.queryResultSubject.next(queryResult);
+		} catch (e) {
+			this.store.dispatch(ActionHistoryAction.logAction({
+				data: {
+					type: ActionType.Query,
+					title: query.func.name,
+					timestamp: Date.now(),
+					status: ActionStatus.Fail,
+					data: {
+						query: query.args.map(arg => arg.valueOf())
+					},
+				},
+			}))
+			throw e;
+		}
 	}
 
 	async submitTransaction(network: INetworkEnvironment, wallet: IGeneratedWallet, gasLimit: number): Promise<void> {
@@ -95,16 +129,50 @@ export class ScEndpointComponent implements OnInit {
 			return;
 		}
 
-		const txHash = await this.scTxRunner.run(this.sc, {
-			payload: this.form.value,
-			functionName: this.endpoint.name,
-			network,
-			value: 0,
-			gasLimit,
-			caller: Mnemonic.fromString(wallet.mnemonic.join(' ')).deriveKey(0).generatePublicKey().toAddress().bech32(),
-			walletCredentials: {mnemonic: wallet.mnemonic},
-		});
+		const caller = Mnemonic.fromString(wallet.mnemonic.join(' '))
+			.deriveKey(0)
+			.generatePublicKey()
+			.toAddress()
+			.bech32();
 
-		this.txResultSubject.next(txHash);
+		try {
+			const txHash = await this.scTxRunner.run(this.sc, {
+				payload: this.form.value,
+				functionName: this.endpoint.name,
+				network,
+				value: 0,
+				gasLimit,
+				caller,
+				walletCredentials: { mnemonic: wallet.mnemonic },
+			});
+
+			this.txResultSubject.next(txHash);
+			this.store.dispatch(ActionHistoryAction.logAction({
+				data: {
+					type: ActionType.Transaction,
+					title: this.endpoint.name,
+					timestamp: Date.now(),
+					status: ActionStatus.Success,
+					txHash,
+					caller: caller,
+					data: {
+						payload: this.form.value,
+					},
+				},
+			}));
+		} catch (e) {
+			this.store.dispatch(ActionHistoryAction.logAction({
+				data: {
+					type: ActionType.Transaction,
+					title: this.endpoint.name,
+					timestamp: Date.now(),
+					status: ActionStatus.Fail,
+					data: {
+						payload: this.form.value,
+					},
+				},
+			}));
+			throw e;
+		}
 	}
 }

@@ -20,7 +20,9 @@ export class ScBuilder {
 			abi: new SmartContractAbi(AbiRegistry.create({
 				...abi,
 				endpoints: abi.endpoints.map(e => ({...e})),
-				types: Object.keys(abi.types).map(key => ({[key]: {...abi.types[key as any]}})).reduce((f, s) => ({...f, ...s})) as any,
+				types: Object.keys(abi.types)
+					.map(key => ({[key]: {...abi.types[key as any]}}))
+					.reduce((f, s) => ({...f, ...s}), {}) as any,
 			}))
 		};
 
