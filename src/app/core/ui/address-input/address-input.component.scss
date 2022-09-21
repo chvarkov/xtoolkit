@@ -12,10 +12,10 @@
 		right: 4px;
 		top: 4px;
 		position: absolute;
-		font-size: 0.9em;
 
 		.action {
 			cursor: pointer;
+			font-size: 1.18em;
 
 			&:hover {
 				color: var(--text-accent-color);
