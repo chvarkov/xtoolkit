@@ -1,8 +1,8 @@
 <div class="bytes-input-container">
 	<div class="row">
-		<app-bytes-control></app-bytes-control>
+		<app-bytes-control (changed)="changed.emit($event)"></app-bytes-control>
 	</div>
-	<div class="row">
-		<app-bytes-control></app-bytes-control>
-	</div>
+<!--	<div class="row">-->
+<!--		<app-bytes-control #output [disabled]="true"></app-bytes-control>-->
+<!--	</div>-->
 </div>
