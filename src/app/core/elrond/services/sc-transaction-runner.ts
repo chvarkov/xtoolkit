@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
 	ContractFunction,
 	ITransactionValue,
-	SmartContract,
+	SmartContract, Transaction,
 } from '@elrondnetwork/erdjs/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
 import { ElrondDataProvider } from '../elrond.data-provider';
@@ -21,13 +21,16 @@ export interface ISecretKeyAware {
 
 export type WalletCredentialsAware = IMnemonicAware | ISecretKeyAware;
 
-export interface IScTxOptions {
+export interface IScCallOptions {
 	network: INetworkEnvironment;
 	payload: any;
 	functionName: string;
 	value?: ITransactionValue;
-	gasLimit: number;
 	caller: string;
+}
+
+export interface IScTxOptions extends IScCallOptions {
+	gasLimit: number;
 	walletCredentials: WalletCredentialsAware;
 }
 
@@ -37,7 +40,7 @@ export class ScTransactionRunner {
 				private readonly elrondDataProvider: ElrondDataProvider) {
 	}
 
-	async run(sc: SmartContract, options: IScTxOptions): Promise<string> {
+	createTx(sc: SmartContract, options: IScCallOptions): Transaction {
 		const scFn = sc.getEndpoint(options.functionName);
 
 		if (!scFn) {
@@ -48,11 +51,11 @@ export class ScTransactionRunner {
 			throw new Error(`Sc function "${options.functionName}" is readonly`);
 		}
 
-		const tx = sc.call({
+		return sc.call({
 			func: new ContractFunction(scFn.name),
 			gasLimit: {
 				valueOf(): number {
-					return options.gasLimit;
+					return 0;
 				},
 			},
 			chainID: {
@@ -62,8 +65,30 @@ export class ScTransactionRunner {
 			},
 			args: new ScArgsBuilder(sc).build(options.functionName, options.payload),
 		});
+	}
+
+	async estimate(sc: SmartContract, options: IScCallOptions): Promise<number> {
+		const tx = this.createTx(sc, options);
+
+		const callerAccount = await this.elrondDataProvider.getAccountInfo(options.network, options.caller).toPromise()
+
+		return this.elrondDataProvider.estimateTransactionConst(options.network, {
+			version: 1,
+			chainID: tx.getChainID().valueOf(),
+			sender: options.caller,
+			value: tx.getValue().toString(),
+			receiver: sc.getAddress().bech32(),
+			data: tx.getData().encoded(),
+			nonce: callerAccount.nonce,
+		}).toPromise();
+	}
+
+	async run(sc: SmartContract, options: IScTxOptions): Promise<string> {
+		const tx = this.createTx(sc, options);
 
 		const callerAccount = await this.elrondDataProvider.getAccountInfo(options.network, options.caller).toPromise();
+
+		tx.setGasLimit(options.gasLimit);
 
 		tx.setNonce(callerAccount.nonce);
 

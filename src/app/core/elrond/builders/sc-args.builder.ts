@@ -55,27 +55,27 @@ export class ScArgsBuilder {
 
 		switch (input.type.getClassName()) {
 			case I8Type.ClassName:
-				return new I8Value(value);
+				return new I8Value(value || 0);
 			case U8Type.ClassName:
-				return new U8Value(value);
+				return new U8Value(value || 0);
 			case I16Type.ClassName:
-				return new I16Value(value);
+				return new I16Value(value || 0);
 			case U16Type.ClassName:
-				return new U16Value(value);
+				return new U16Value(value || 0);
 			case I32Type.ClassName:
-				return new I32Value(value);
+				return new I32Value(value || 0);
 			case U32Type.ClassName:
-				return new U32Value(value);
+				return new U32Value(value || 0);
 			case I64Type.ClassName:
-				return new I64Value(value);
+				return new I64Value(value || 0);
 			case U64Type.ClassName:
-				return new U64Value(value);
+				return new U64Value(value || 0);
 			case BigIntType.ClassName:
-				return new BigIntValue(value);
+				return new BigIntValue(new BigNumber(value || 0));
 			case BigUIntType.ClassName:
-				return new BigUIntValue(new BigNumber(value));
+				return new BigUIntValue(new BigNumber(value || 0));
 			case BytesType.ClassName:
-				return new BytesValue(value);
+				return new BytesValue(value || Buffer.from([]));
 			case AddressType.ClassName:
 				return new AddressValue(new Address(value));
 			case TokenIdentifierType.ClassName:

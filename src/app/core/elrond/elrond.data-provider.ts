@@ -13,7 +13,8 @@ import { ITokenHolder } from './interfaces/token-holder';
 import { IPaginationOptions } from './interfaces/pagination-options';
 import { ITokenTransfer } from './interfaces/token-transfer';
 import { ITokenRole } from './interfaces/token-role';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { IEstimateTxData } from './interfaces/estimate-tx-data';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -29,12 +30,19 @@ export class ElrondDataProvider {
 		return from(this.getProxy(network).getAccount(new Address(address)));
 	}
 
-	getTokenPositions(netwoek: INetworkEnvironment,
+	getTokenPositions(network: INetworkEnvironment,
 					  address: string,
 					  filter?: ITokenPositionsFilter): Observable<ITokenPosition[]> {
-		return this.http.get<ITokenPosition[]>(`${netwoek.gatewayUrl}/accounts/${address}/tokens`, {
+		return this.http.get<ITokenPosition[]>(`${network.gatewayUrl}/accounts/${address}/tokens`, {
 			params: this.createParams(filter),
 		});
+	}
+
+	estimateTransactionConst(network: INetworkEnvironment,
+							 data: IEstimateTxData): Observable<number> {
+		return this.http.post<any>(`${network.gatewayUrl}/transaction/cost`, data).pipe(
+			map((res: {code: string, data: {txGasUnits: number}}) => res.data.txGasUnits)
+		);
 	}
 
 	getToken(network: INetworkEnvironment,

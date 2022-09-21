@@ -7,11 +7,10 @@ import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner'
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../../network/store/network.selector';
-import { IGeneratedWallet } from '../../../../project/components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { ScTransactionRunner } from '../../../../core/elrond/services/sc-transaction-runner';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { ActionHistoryAction } from '../../../../action-history/store/action-history.action';
-import { ActionStatus, ActionType } from '../../../../core/data-provider/data-provider';
+import { ActionStatus, ActionType, GeneratedWallet } from '../../../../core/data-provider/data-provider';
 import * as uuid from 'uuid';
 
 @Component({
@@ -35,7 +34,7 @@ export class ScEndpointComponent implements OnInit {
 
 	@Input() chainId!: string;
 
-	@Input() wallets: IGeneratedWallet[] = [];
+	@Input() wallets: GeneratedWallet[] = [];
 
 	form!: FormGroup;
 
@@ -44,6 +43,8 @@ export class ScEndpointComponent implements OnInit {
 	txResultSubject = new Subject<string>();
 
 	network$?: Observable<INetworkEnvironment | undefined>;
+
+	payload$?: Observable<any>;
 
 	constructor(private readonly fb: FormBuilder,
 				private readonly store: Store,
@@ -60,6 +61,8 @@ export class ScEndpointComponent implements OnInit {
 				.map(i => ({[i.name]: new FormControl('')}))
 				.reduce((p, c) => ({...p, ...c}), {}),
 		);
+
+		this.payload$ = this.form.valueChanges;
 	}
 
 	show(event: Event): void {
@@ -129,7 +132,7 @@ export class ScEndpointComponent implements OnInit {
 		}
 	}
 
-	async submitTransaction(network: INetworkEnvironment, wallet: IGeneratedWallet, gasLimit: number): Promise<void> {
+	async submitTransaction(network: INetworkEnvironment, wallet: GeneratedWallet, gasLimit: number): Promise<void> {
 		if (!this.endpoint) {
 			return;
 		}

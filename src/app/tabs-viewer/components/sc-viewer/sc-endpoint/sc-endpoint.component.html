@@ -32,6 +32,10 @@
 		<ng-container *ngIf="network$ | async as network">
 			<app-sc-endpoint-tx-sign *ngIf="!endpoint.modifiers.isReadonly()"
 									 [wallets]="wallets"
+									 [sc]="sc"
+									 [endpoint]="endpoint"
+									 [network]="network"
+									 [payload]="payload$ | async"
 									 (onSubmit)="submitTransaction(network, $event.wallet, $event.fee)"></app-sc-endpoint-tx-sign>
 			<app-sc-endpoint-query *ngIf="endpoint.modifiers.isReadonly()"
 								   [wallets]="wallets"
