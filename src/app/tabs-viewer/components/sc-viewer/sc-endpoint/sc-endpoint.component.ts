@@ -94,6 +94,7 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					chainId: this.chainId,
 					type: ActionType.Query,
 					title: query.func.name,
 					timestamp: Date.now(),
@@ -114,6 +115,7 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					chainId: this.chainId,
 					type: ActionType.Query,
 					title: query.func.name,
 					timestamp: Date.now(),
@@ -153,10 +155,11 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					chainId: this.chainId,
 					type: ActionType.Transaction,
 					title: this.endpoint.name,
 					timestamp: Date.now(),
-					status: ActionStatus.Success,
+					status: ActionStatus.Pending,
 					txHash,
 					caller: caller,
 					data: {
@@ -168,6 +171,7 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					chainId: this.chainId,
 					type: ActionType.Transaction,
 					title: this.endpoint.name,
 					timestamp: Date.now(),

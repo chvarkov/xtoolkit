@@ -41,6 +41,7 @@ export enum ActionType {
 export interface ActionHistoryElement {
 	id: string,
 	type: ActionType,
+	chainId: string,
 	title: string;
 	caller?: string
 	txHash?: string
