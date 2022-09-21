@@ -1,4 +1,5 @@
 import {
+	Address,
 	AddressType,
 	AddressValue, BigIntType, BigIntValue, BigUIntType, BigUIntValue, BytesType, BytesValue,
 	EndpointParameterDefinition, I16Type, I16Value, I32Type, I32Value, I64Type, I64Value, I8Type, I8Value,
@@ -24,6 +25,8 @@ export class ScArgsBuilder {
 	}
 
 	transformToTypedValue(input: EndpointParameterDefinition, value?: any): TypedValue | null {
+		console.log(`transform_value[${input.type.getClassName()}]`, value)
+
 		switch (input.type.getClassName()) {
 			case I8Type.ClassName:
 				return new I8Value(value);
@@ -48,7 +51,7 @@ export class ScArgsBuilder {
 			case BytesType.ClassName:
 				return new BytesValue(value);
 			case AddressType.ClassName:
-				return new AddressValue(value);
+				return new AddressValue(new Address(value));
 			case TokenIdentifierType.ClassName:
 				return new TokenIdentifierValue(value);
 			// TODO: Describe all types

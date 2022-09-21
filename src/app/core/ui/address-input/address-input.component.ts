@@ -15,7 +15,7 @@ export class AddressInputComponent implements OnInit {
 	@Input() chainId: string = ''
 	@Input() address: string = '';
 
-	@Output() change: EventEmitter<string> = new EventEmitter<string>();
+	@Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
@@ -42,7 +42,7 @@ export class AddressInputComponent implements OnInit {
 
 		if (this.prevValue !== value) {
 			this.prevValue = value;
-			this.change.next(value);
+			this.changed.next(value);
 		}
 	}
 }
