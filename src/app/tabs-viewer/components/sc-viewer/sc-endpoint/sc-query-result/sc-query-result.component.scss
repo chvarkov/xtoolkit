@@ -1,0 +1,35 @@
+.container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	width: 100%;
+	background: var(--low-bg);
+
+	.header {
+		display: flex;
+		padding: 8px 8px 8px 16px;
+		width: 100%;
+		border-bottom: solid 1px var(--border-low-color);
+
+		.status-text {
+			margin-left: 10px;
+		}
+	}
+
+	.success {
+		background: var(--static-green);
+	}
+
+	.failed {
+		background: var(--static-red);
+	}
+
+	.list {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		width: 100%;
+		overflow-y: auto;
+		max-height: 400px;
+	}
+}

@@ -29,7 +29,7 @@
 		</form>
 
 		<div class="result" *ngIf="resultSubject | async as result">
-			{{result | json}}
+			<app-sc-query-result [result]="result"></app-sc-query-result>
 		</div>
 
 		<ng-container *ngIf="network$ | async as network">

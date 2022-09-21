@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
-import { EndpointDefinition, SmartContract } from '@elrondnetwork/erdjs/out';
+import { EndpointDefinition, SmartContract, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
 import { Observable, of, Subject } from 'rxjs';
 import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
@@ -36,7 +36,7 @@ export class ScEndpointComponent implements OnInit {
 
 	form!: FormGroup;
 
-	resultSubject = new Subject();
+	resultSubject = new Subject<TypedOutcomeBundle>();
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
@@ -86,7 +86,7 @@ export class ScEndpointComponent implements OnInit {
 		const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
 
 		console.log('queryResult', queryResult);
-		// this.resultSubject.next(queryResult);
+		this.resultSubject.next(queryResult);
 	}
 
 	async submitTransaction(network: INetworkEnvironment, wallet: IGeneratedWallet, gasLimit: number): Promise<void> {
@@ -104,6 +104,6 @@ export class ScEndpointComponent implements OnInit {
 			walletCredentials: {mnemonic: wallet.mnemonic},
 		});
 
-		this.resultSubject.next({txHash});
+		// this.resultSubject.next({txHash});
 	}
 }
