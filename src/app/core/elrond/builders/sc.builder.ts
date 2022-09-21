@@ -3,7 +3,7 @@ import { AbiRegistry, Address, SmartContract, SmartContractAbi } from '@elrondne
 export type AbiJson = {
 	name: string;
 	endpoints: any[];
-	types: any[];
+	types: any;
 };
 
 export class ScBuilder {
@@ -15,9 +15,15 @@ export class ScBuilder {
 		} catch (e) {
 		}
 
-		return new SmartContract({
+		const restructured = {
 			address: addressValue,
-			abi: new SmartContractAbi(AbiRegistry.create({ ...abi, endpoints: abi.endpoints.map(e => ({...e}))}))
-		});
+			abi: new SmartContractAbi(AbiRegistry.create({
+				...abi,
+				endpoints: abi.endpoints.map(e => ({...e})),
+				types: Object.keys(abi.types).map(key => ({[key]: {...abi.types[key as any]}})).reduce((f, s) => ({...f, ...s})) as any,
+			}))
+		};
+
+		return new SmartContract(restructured);
 	}
 }
