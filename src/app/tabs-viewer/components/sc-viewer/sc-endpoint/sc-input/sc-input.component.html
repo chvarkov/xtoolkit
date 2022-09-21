@@ -7,6 +7,9 @@
 		<app-number-input *ngSwitchCase="isNumericalType()"
 						  [type]="input?.type"
 						  (changed)="writeValue($event)"></app-number-input>
+		<app-enum-input *ngSwitchCase="isEnum()"
+						[type]="input?.type"
+						(changed)="writeValue($event)"></app-enum-input>
 		<input *ngSwitchDefault class="input">
 	</div>
 

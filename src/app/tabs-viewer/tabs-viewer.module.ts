@@ -23,6 +23,7 @@ import { TokenTransferComponent } from './components/token-viewer/token-transfer
 import { ScQueryResultComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result.component';
 import { ScQueryResultElementComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result-element/sc-query-result-element.component';
 import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-result/sc-tx-result.component';
+import { EnumInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/enum-input/enum-input.component';
 
 @NgModule({
 	declarations: [
@@ -47,6 +48,7 @@ import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-re
 		ScQueryResultComponent,
 		ScQueryResultElementComponent,
 		ScTxResultComponent,
+  EnumInputComponent,
 	],
 	imports: [
 		CommonModule,

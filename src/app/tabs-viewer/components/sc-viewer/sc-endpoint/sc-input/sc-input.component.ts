@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BooleanType, BytesType, EndpointParameterDefinition } from '@elrondnetwork/erdjs/out';
+import { BooleanType, BytesType, EndpointParameterDefinition, EnumType } from '@elrondnetwork/erdjs/out';
 import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
 
 @Component({
@@ -67,5 +67,9 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 
 	isBytesType(): boolean {
 		return this.input?.type instanceof BytesType;
+	}
+
+	isEnum(): boolean {
+		return this.input?.type instanceof EnumType;
 	}
 }
