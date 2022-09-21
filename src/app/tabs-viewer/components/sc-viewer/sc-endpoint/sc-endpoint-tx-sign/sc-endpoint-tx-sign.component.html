@@ -5,11 +5,11 @@
 		</app-select>
 	</div>
 	<div class="fee">
-		<input #fee type="number" placeholder="fee" value="50000">
+		<input type="number" [value]="fee" placeholder="fee">
 	</div>
 	<div class="actions">
 		<button class="button call" [disabled]="!wallet"
-				(click)="submit(+fee.value)">
+				(click)="submit(fee)">
 			Call
 		</button>
 	</div>

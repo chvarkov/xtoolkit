@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGeneratedWallet } from '../../../../../project/components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { SelectElement } from '../../../../../core/ui/select/select.component';
+import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-sc-endpoint-query',
@@ -8,11 +8,11 @@ import { SelectElement } from '../../../../../core/ui/select/select.component';
 	styleUrls: ['./sc-endpoint-query.component.scss']
 })
 export class ScEndpointQueryComponent implements OnInit {
-	@Input() wallets: IGeneratedWallet[] = [];
+	@Input() wallets: GeneratedWallet[] = [];
 
-	@Output() onSubmit = new EventEmitter<{wallet?: IGeneratedWallet}>();
+	@Output() onSubmit = new EventEmitter<{wallet?: GeneratedWallet}>();
 
-	wallet?: IGeneratedWallet;
+	wallet?: GeneratedWallet;
 
 	constructor() {
 	}
@@ -20,7 +20,7 @@ export class ScEndpointQueryComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	onSelectedWallet(event: SelectElement<IGeneratedWallet | null>): void {
+	onSelectedWallet(event: SelectElement<GeneratedWallet | null>): void {
 		this.wallet = event.value || undefined;
 	}
 

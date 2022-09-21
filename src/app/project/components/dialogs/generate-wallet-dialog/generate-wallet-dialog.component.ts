@@ -3,12 +3,6 @@ import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
 import { GeneratedWallet } from '../../../../core/data-provider/data-provider';
-import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
-
-export interface IGeneratedWallet {
-	name: string;
-	mnemonic: string[];
-}
 
 @Component({
 	selector: 'app-generate-wallet-dialog',

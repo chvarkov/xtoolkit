@@ -1,11 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
-import { ProjectScAbi } from '../../../core/data-provider/data-provider';
+import { GeneratedWallet, ProjectScAbi } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../project/store/project.action';
 import { Observable, of } from 'rxjs';
 import { ProjectSelector } from '../../../project/store/project.selector';
-import { IGeneratedWallet } from '../../../project/components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
@@ -27,7 +25,7 @@ export class ScViewerComponent implements OnInit {
 
 	code$: Observable<string> = of('');
 
-	wallets$: Observable<IGeneratedWallet[]> = of([]);
+	wallets$: Observable<GeneratedWallet[]> = of([]);
 
 	constructor(private readonly store: Store) {
 	}

@@ -5,4 +5,5 @@ export interface IEstimateTxData {
 	data?: string;
 	chainID: string;
 	version: number;
+	nonce: number;
 }

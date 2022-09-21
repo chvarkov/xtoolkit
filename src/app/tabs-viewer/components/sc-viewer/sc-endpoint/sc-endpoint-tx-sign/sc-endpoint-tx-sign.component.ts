@@ -1,27 +1,72 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGeneratedWallet } from '../../../../../project/components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { SelectElement } from '../../../../../core/ui/select/select.component';
+import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
+import { EndpointDefinition, SmartContract } from '@elrondnetwork/erdjs/out';
+import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
+import { ScTransactionRunner } from '../../../../../core/elrond/services/sc-transaction-runner';
 
 @Component({
 	selector: 'app-sc-endpoint-tx-sign',
 	templateUrl: './sc-endpoint-tx-sign.component.html',
 	styleUrls: ['./sc-endpoint-tx-sign.component.scss']
 })
-export class ScEndpointTxSignComponent implements OnInit {
-	@Input() wallets: IGeneratedWallet[] = [];
+export class ScEndpointTxSignComponent implements OnInit, OnChanges {
+	@Input() wallets: GeneratedWallet[] = [];
 
-	@Output() onSubmit = new EventEmitter<{wallet: IGeneratedWallet, fee: number}>();
+	@Input() network?: INetworkEnvironment;
 
-	wallet?: IGeneratedWallet;
+	@Input() sender: string = '';
 
-	constructor() {
+	@Input() sc!: SmartContract;
+
+	@Input() endpoint!: EndpointDefinition;
+
+	@Input() payload: any;
+
+	@Output() onSubmit = new EventEmitter<{wallet: GeneratedWallet, fee: number}>();
+
+	wallet?: GeneratedWallet;
+
+	fee = 50_000;
+
+	constructor(private readonly scTxRunner: ScTransactionRunner) {
 	}
 
 	ngOnInit(): void {
 	}
 
-	onSelectedWallet(event: SelectElement<IGeneratedWallet>): void {
+	async ngOnChanges(changes: SimpleChanges): Promise<void> {
+		await this.estimate();
+	}
+
+	async estimate(): Promise<void> {
+		console.log('walelt', this.wallet)
+		if (!this.network || !this.payload || !this.wallet) {
+			return;
+		}
+		console.log('estimate tx call')
+
+		const fee = await this.scTxRunner.estimate(this.sc, {
+			network: this.network,
+			caller: this.wallet.address,
+			payload: this.payload,
+			value: {
+				toString(): string {
+					return '0';
+				},
+			},
+			functionName: this.endpoint.name,
+		});
+
+		console.log('FEE = ' + fee);
+
+		this.fee = fee;
+	}
+
+	async onSelectedWallet(event: SelectElement<GeneratedWallet>): Promise<void> {
 		this.wallet = event.value;
+
+		await this.estimate();
 	}
 
 	submit(fee: number): void {
