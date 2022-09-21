@@ -129,6 +129,12 @@ export class ScEndpointComponent implements OnInit {
 			return;
 		}
 
+		const caller = Mnemonic.fromString(wallet.mnemonic.join(' '))
+			.deriveKey(0)
+			.generatePublicKey()
+			.toAddress()
+			.bech32();
+
 		try {
 			const txHash = await this.scTxRunner.run(this.sc, {
 				payload: this.form.value,
@@ -136,7 +142,7 @@ export class ScEndpointComponent implements OnInit {
 				network,
 				value: 0,
 				gasLimit,
-				caller: Mnemonic.fromString(wallet.mnemonic.join(' ')).deriveKey(0).generatePublicKey().toAddress().bech32(),
+				caller,
 				walletCredentials: { mnemonic: wallet.mnemonic },
 			});
 
@@ -148,6 +154,7 @@ export class ScEndpointComponent implements OnInit {
 					timestamp: Date.now(),
 					status: ActionStatus.Success,
 					txHash,
+					caller: caller,
 					data: {
 						payload: this.form.value,
 					},
