@@ -33,7 +33,13 @@ export enum ActionStatus {
 	Fail = 'fail',
 }
 
+export enum ActionType {
+	Transaction = 'tx',
+	Query = 'query',
+}
+
 export interface ActionHistoryElement {
+	type: ActionType,
 	title: string;
 	caller?: string
 	txHash?: string
