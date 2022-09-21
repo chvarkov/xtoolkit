@@ -68,4 +68,6 @@ export interface DataProvider {
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]>;
 
 	getActionHistory(): Observable<ActionHistoryElement[]>;
+
+	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
 }

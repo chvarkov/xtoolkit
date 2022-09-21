@@ -1,4 +1,11 @@
-import { ActionHistoryElement, DataProvider, GeneratedWallet, Project, ProjectScAbi } from '../data-provider';
+import {
+	ActionHistoryElement,
+	ActionStatus,
+	DataProvider,
+	GeneratedWallet,
+	Project,
+	ProjectScAbi
+} from '../data-provider';
 import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
@@ -184,6 +191,25 @@ export class LocalstorageDataProvider implements DataProvider {
 		}
 
 		return of(projects);
+	}
+
+	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {
+		return this.getActionHistory()
+			.pipe(
+				map(list => {
+					const item = list.find(i => i.id === id);
+
+					if (!item) {
+						throw new Error(`Action history element (${id}) not found`);
+					}
+
+					item.status = status;
+
+					this.set(this.actionHistoryKey, list);
+
+					return list;
+				}),
+			);
 	}
 
 	private set<T>(key: string, value: T): void {

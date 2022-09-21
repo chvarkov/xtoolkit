@@ -24,6 +24,14 @@ export class ActionHistoryEffect {
 			)),
 		)));
 
+	updateActionStatus$ = createEffect(() => this.actions$.pipe(
+		ofType(ActionHistoryAction.updateActionStatus),
+		switchMap(({id, status}) => this.dataProvider.updateActionStatus(id, status).pipe(
+			map((list) => ActionHistoryAction.updateActionStatusSuccess({list})),
+			catchError(err => of(ActionHistoryAction.updateActionStatusError({err})),
+			)),
+		)));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {

@@ -152,6 +152,7 @@ export class ScEndpointComponent implements OnInit {
 			});
 
 			this.txResultSubject.next(txHash);
+
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
