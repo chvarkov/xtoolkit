@@ -40,11 +40,9 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 	}
 
 	async estimate(): Promise<void> {
-		console.log('walelt', this.wallet)
-		if (!this.network || !this.payload || !this.wallet) {
+		if (!this.network || !this.wallet || (!this.payload && this.endpoint.input.length)) {
 			return;
 		}
-		console.log('estimate tx call')
 
 		const fee = await this.scTxRunner.estimate(this.sc, {
 			network: this.network,
@@ -75,5 +73,13 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 		}
 
 		this.onSubmit.emit({wallet: this.wallet, fee});
+	}
+
+	onChangeFee(e: Event): void {
+		const value = +(<HTMLInputElement>e.target).value;
+
+		if (value) {
+			this.fee = value;
+		}
 	}
 }

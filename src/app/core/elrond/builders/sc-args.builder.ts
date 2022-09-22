@@ -10,7 +10,7 @@ import {
 	BytesValue,
 	EndpointParameterDefinition,
 	EnumType,
-	EnumValue,
+	EnumValue, Field,
 	I16Type,
 	I16Value,
 	I32Type,
@@ -19,7 +19,7 @@ import {
 	I64Value,
 	I8Type,
 	I8Value,
-	SmartContract,
+	SmartContract, Struct, StructType,
 	TokenIdentifierType,
 	TokenIdentifierValue,
 	TypedValue,
@@ -82,6 +82,8 @@ export class ScArgsBuilder {
 				return new TokenIdentifierValue(value);
 			case EnumType.ClassName:
 				return EnumValue.fromDiscriminant(input.type as EnumType, value);
+			case StructType.ClassName:
+				return new Struct(input.type as StructType, Object.keys(value || {}).map(name => new Field((value || {})[name], name)))
 			// TODO: Describe all types
 			default:
 				console.warn(`Cannot resolve typed value for ${input.type.getClassName()} type`);

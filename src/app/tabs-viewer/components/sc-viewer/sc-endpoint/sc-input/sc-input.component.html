@@ -18,6 +18,12 @@
 						   (changed)="writeValue($event)"></app-address-input>
 		<app-token-identifier-input *ngSwitchCase="isTokenIdentifier()"
 									(changed)="writeValue($event)"></app-token-identifier-input>
+		<app-struct-input *ngSwitchCase="isStruct()"
+						  class="struct"
+						  [chainId]="chainId"
+						  [name]="input.type.getName()"
+						  [type]="input.type"
+						  (changed)="writeValue($event)"></app-struct-input>
 		<input *ngSwitchDefault class="input">
 	</div>
 
