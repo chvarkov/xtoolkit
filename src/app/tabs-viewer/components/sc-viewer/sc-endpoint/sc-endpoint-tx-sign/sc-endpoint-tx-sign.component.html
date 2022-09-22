@@ -5,7 +5,7 @@
 		</app-select>
 	</div>
 	<div class="fee">
-		<input type="number" [value]="fee" placeholder="fee">
+		<input type="number" [value]="fee" placeholder="fee" (change)="onChangeFee($event)">
 	</div>
 	<div class="actions">
 		<button class="button call" [disabled]="!wallet"
