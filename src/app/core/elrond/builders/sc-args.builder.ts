@@ -83,7 +83,23 @@ export class ScArgsBuilder {
 			case EnumType.ClassName:
 				return EnumValue.fromDiscriminant(input.type as EnumType, value);
 			case StructType.ClassName:
-				return new Struct(input.type as StructType, Object.keys(value || {}).map(name => new Field((value || {})[name], name)))
+				const structType = input.type as StructType;
+				return new Struct(structType, Object.keys(value || {}).map(name => {
+					const fieldValue = (value || {})[name];
+					const fieldDef = structType.getFieldDefinition(name);
+
+					if (!fieldDef) {
+						throw new Error(`Field definition not found (${name})`);
+					}
+
+					const builtValue = this.transformToTypedValue(fieldDef, fieldValue);
+
+					if (!builtValue) {
+						throw new Error(`Cannot build value (${name}=${fieldValue.toString()})`);
+					}
+
+					return new Field(builtValue, name);
+				}))
 			// TODO: Describe all types
 			default:
 				console.warn(`Cannot resolve typed value for ${input.type.getClassName()} type`);

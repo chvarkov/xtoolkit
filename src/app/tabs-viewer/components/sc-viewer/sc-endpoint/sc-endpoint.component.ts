@@ -103,7 +103,7 @@ export class ScEndpointComponent implements OnInit {
 					timestamp: Date.now(),
 					status: ActionStatus.Success,
 					data: {
-						query: this.form.value,
+						query:  this.transformActionData(this.form.value),
 						result: {
 							returnMessage: queryResult.returnMessage,
 							returnCode: queryResult.returnCode.toString(),
@@ -124,7 +124,7 @@ export class ScEndpointComponent implements OnInit {
 					timestamp: Date.now(),
 					status: ActionStatus.Fail,
 					data: {
-						query: query.args.map(arg => arg.valueOf())
+						query: this.transformActionData(this.form.value),
 					},
 				},
 			}))
@@ -167,7 +167,7 @@ export class ScEndpointComponent implements OnInit {
 					txHash,
 					caller: caller,
 					data: {
-						payload: this.form.value,
+						payload: this.transformActionData(this.form.value),
 					},
 				},
 			}));
@@ -181,11 +181,33 @@ export class ScEndpointComponent implements OnInit {
 					timestamp: Date.now(),
 					status: ActionStatus.Fail,
 					data: {
-						payload: this.form.value,
+						payload: this.transformActionData(this.form.value),
 					},
 				},
 			}));
 			throw e;
 		}
+	}
+
+	private transformActionData(data: any): any {
+		if (data instanceof Buffer) {
+			return data.toString('hex');
+		}
+
+		if (typeof data === 'object') {
+			Object.keys(data).forEach(key => {
+				data[key] = this.transformActionData(data[key]);
+			});
+
+			return data;
+		}
+
+		if (Array.isArray(data)) {
+			data.forEach((item, index) => {
+				data[index] = this.transformActionData(item);
+			});
+		}
+
+		return data;
 	}
 }
