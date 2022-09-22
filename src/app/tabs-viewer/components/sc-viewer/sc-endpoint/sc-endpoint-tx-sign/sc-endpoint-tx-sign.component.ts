@@ -48,11 +48,6 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 			network: this.network,
 			caller: this.wallet.address,
 			payload: this.payload,
-			value: {
-				toString(): string {
-					return '0';
-				},
-			},
 			functionName: this.endpoint.name,
 		});
 

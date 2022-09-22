@@ -7,7 +7,7 @@ import {
 	AccountOnNetwork,
 	ProxyNetworkProvider
 } from '@elrondnetwork/erdjs-network-providers/out';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address, Transaction } from '@elrondnetwork/erdjs/out';
 import { ITokenInfo } from './interfaces/token-info';
 import { ITokenHolder } from './interfaces/token-holder';
 import { IPaginationOptions } from './interfaces/pagination-options';
@@ -39,7 +39,16 @@ export class ElrondDataProvider {
 	}
 
 	estimateTransactionConst(network: INetworkEnvironment,
-							 data: IEstimateTxData): Observable<number> {
+							 tx: Transaction): Observable<number> {
+		const data: IEstimateTxData = {
+			data: tx.getData().encoded(),
+			sender: tx.getSender().bech32(),
+			nonce: tx.getNonce().valueOf(),
+			value: tx.getValue().toString(),
+			receiver: tx.getReceiver().bech32(),
+			chainID: tx.getChainID().valueOf(),
+			version: 1,
+		};
 		return this.http.post<any>(`${network.gatewayUrl}/transaction/cost`, data).pipe(
 			map((res: {code: string, data: {txGasUnits: number}}) => res.data.txGasUnits)
 		);

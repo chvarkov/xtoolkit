@@ -148,7 +148,6 @@ export class ScEndpointComponent implements OnInit {
 				payload: this.form.value,
 				functionName: this.endpoint.name,
 				network,
-				value: 0,
 				gasLimit,
 				caller,
 				walletCredentials: { mnemonic: wallet.mnemonic },
