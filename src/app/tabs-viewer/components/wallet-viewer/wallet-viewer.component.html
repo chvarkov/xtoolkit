@@ -12,14 +12,14 @@
 		</div>
 	</div>
 
-	<app-tabs>
-		<app-tab title="Tokens">
+	<app-tabs navPosition="bottom">
+		<app-tab top title="Tokens">
 			<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
 		</app-tab>
-		<app-tab title="NFTs">
+		<app-tab top title="NFTs">
 			Coming soon
 		</app-tab>
-		<app-tab title="Transactions">
+		<app-tab top title="Transactions">
 			<app-account-transaction *ngFor="let tx of (transactions$ | async)"
 									 [tx]="tx"
 									 [chainId]="(chainId$ | async) || ''"></app-account-transaction>

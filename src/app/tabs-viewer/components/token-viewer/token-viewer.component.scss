@@ -2,6 +2,7 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
 
 	.header {
 		display: flex;

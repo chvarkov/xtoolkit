@@ -1,6 +1,7 @@
 <div class="tabs-container">
-	<ul class="nav">
+	<ng-content select="[top]"></ng-content>
+	<ul class="nav" [ngClass]="{'bottom-nav': navPosition === 'bottom'}">
 		<li *ngFor="let tab of tabs" class="tab" [ngClass]="{'active': tab.active === true }" (click)="selectTab(tab)">{{ tab.title }} </li>
 	</ul>
-	<ng-content></ng-content>
+	<ng-content select="[bottom]"></ng-content>
 </div>
