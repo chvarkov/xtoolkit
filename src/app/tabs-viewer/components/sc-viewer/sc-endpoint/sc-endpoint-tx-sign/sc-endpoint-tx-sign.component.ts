@@ -40,7 +40,7 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 	}
 
 	async estimate(): Promise<void> {
-		if (!this.network || !this.payload || !this.wallet) {
+		if (!this.network || !this.wallet || (!this.payload && this.endpoint.input.length)) {
 			return;
 		}
 
