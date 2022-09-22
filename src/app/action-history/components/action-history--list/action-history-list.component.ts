@@ -18,6 +18,10 @@ export class ActionHistoryListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.loadActionHistory();
+	}
+
+	loadActionHistory(): void {
 		this.store.dispatch(ActionHistoryAction.loadActionHistory());
 	}
 }
