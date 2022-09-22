@@ -1,11 +1,8 @@
-{{(token$ | async | json) || 'null'}}
-
 <div class="token-container" *ngIf="(token$ | async) as token">
 	<div class="header">
 		<img class="logo" [src]="token.assets?.svgUrl">
 		<div class="content">
 			<div class="title">{{token.ticker}} - {{token.name}}</div>
-<!--			<div class="description">{{token.owner}}</div>-->
 		</div>
 	</div>
 	<app-tabs>
