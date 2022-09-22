@@ -1,4 +1,8 @@
 <div class="tx-sign-container">
+	<ng-container *ngIf="endpoint.modifiers.isPayable()">
+		<input placeholder="Amount" (change)="onChangeTokenAmount($event)">
+		<app-token-identifier-input (changed)="onChangeTokenIdentifier($event)"></app-token-identifier-input>
+	</ng-container>
 	<div class="wallet">
 		<app-select placeHolder="Caller" size="medium" (selectedElement)="onSelectedWallet($event)">
 			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
@@ -9,7 +13,7 @@
 	</div>
 	<div class="actions">
 		<button class="button call" [disabled]="!wallet"
-				(click)="submit(fee)">
+				(click)="submit()">
 			Call
 		</button>
 	</div>

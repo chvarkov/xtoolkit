@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
-import { EndpointDefinition, SmartContract, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
+import { EndpointDefinition, SmartContract, TokenPayment, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
 import { Observable, Subject } from 'rxjs';
 import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
@@ -132,7 +132,10 @@ export class ScEndpointComponent implements OnInit {
 		}
 	}
 
-	async submitTransaction(network: INetworkEnvironment, wallet: GeneratedWallet, gasLimit: number): Promise<void> {
+	async submitTransaction(network: INetworkEnvironment,
+							wallet: GeneratedWallet,
+							gasLimit: number,
+							payment?: TokenPayment): Promise<void> {
 		if (!this.endpoint) {
 			return;
 		}
@@ -148,9 +151,9 @@ export class ScEndpointComponent implements OnInit {
 				payload: this.form.value,
 				functionName: this.endpoint.name,
 				network,
-				value: 0,
 				gasLimit,
 				caller,
+				payment,
 				walletCredentials: { mnemonic: wallet.mnemonic },
 			});
 

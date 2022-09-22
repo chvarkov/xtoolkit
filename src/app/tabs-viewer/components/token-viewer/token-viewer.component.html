@@ -1,3 +1,5 @@
+{{(token$ | async | json) || 'null'}}
+
 <div class="token-container" *ngIf="(token$ | async) as token">
 	<div class="header">
 		<img class="logo" [src]="token.assets?.svgUrl">

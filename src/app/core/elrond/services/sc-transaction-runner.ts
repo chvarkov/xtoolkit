@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-	ContractFunction,
+	ContractFunction, ESDTTransferPayloadBuilder, Interaction,
 	ITransactionValue,
-	SmartContract, Transaction,
+	SmartContract, TokenPayment, Transaction,
 } from '@elrondnetwork/erdjs/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
 import { ElrondDataProvider } from '../elrond.data-provider';
@@ -25,7 +25,7 @@ export interface IScCallOptions {
 	network: INetworkEnvironment;
 	payload: any;
 	functionName: string;
-	value?: ITransactionValue;
+	payment?: TokenPayment;
 	caller: string;
 }
 
@@ -40,7 +40,7 @@ export class ScTransactionRunner {
 				private readonly elrondDataProvider: ElrondDataProvider) {
 	}
 
-	createTx(sc: SmartContract, options: IScCallOptions): Transaction {
+	async createTx(sc: SmartContract, options: IScCallOptions): Promise<Transaction> {
 		const scFn = sc.getEndpoint(options.functionName);
 
 		if (!scFn) {
@@ -51,40 +51,35 @@ export class ScTransactionRunner {
 			throw new Error(`Sc function "${options.functionName}" is readonly`);
 		}
 
-		return sc.call({
-			func: new ContractFunction(scFn.name),
-			gasLimit: {
-				valueOf(): number {
-					return 0;
-				},
-			},
-			chainID: {
-				valueOf(): string {
-					return options.network.chainId;
-				}
-			},
-			args: new ScArgsBuilder(sc).build(options.functionName, options.payload),
-		});
+		let contractFunction = new ContractFunction(options.functionName);
+		let args = new ScArgsBuilder(sc).build(options.functionName, options.payload);
+		let interaction = new Interaction(sc, contractFunction, args);
+
+		const callerAccount = await this.elrondDataProvider.getAccountInfo(options.network, options.caller).toPromise();
+
+		interaction
+			.withNonce(callerAccount.nonce)
+			.withChainID(options.network.chainId);
+
+		if (options.payment) {
+			interaction.withValue(options.payment);
+		}
+
+		const tx = interaction.buildTransaction();
+
+		tx['sender'] = callerAccount.address;
+
+		return tx;
 	}
 
 	async estimate(sc: SmartContract, options: IScCallOptions): Promise<number> {
-		const tx = this.createTx(sc, options);
+		const tx = await this.createTx(sc, options);
 
-		const callerAccount = await this.elrondDataProvider.getAccountInfo(options.network, options.caller).toPromise()
-
-		return this.elrondDataProvider.estimateTransactionConst(options.network, {
-			version: 1,
-			chainID: tx.getChainID().valueOf(),
-			sender: options.caller,
-			value: tx.getValue().toString(),
-			receiver: sc.getAddress().bech32(),
-			data: tx.getData().encoded(),
-			nonce: callerAccount.nonce,
-		}).toPromise();
+		return this.elrondDataProvider.estimateTransactionConst(options.network, tx).toPromise();
 	}
 
 	async run(sc: SmartContract, options: IScTxOptions): Promise<string> {
-		const tx = this.createTx(sc, options);
+		const tx = await this.createTx(sc, options);
 
 		const callerAccount = await this.elrondDataProvider.getAccountInfo(options.network, options.caller).toPromise();
 
