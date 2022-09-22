@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { SelectElement } from '../../../../../core/ui/select/select.component';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { EndpointDefinition, SmartContract } from '@elrondnetwork/erdjs/out';
+import { EndpointDefinition, SmartContract, TokenIdentifierValue, TokenPayment } from '@elrondnetwork/erdjs/out';
 import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
 import { ScTransactionRunner } from '../../../../../core/elrond/services/sc-transaction-runner';
+import BigNumber from 'bignumber.js';
 
 @Component({
 	selector: 'app-sc-endpoint-tx-sign',
@@ -23,9 +24,13 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 
 	@Input() payload: any;
 
-	@Output() onSubmit = new EventEmitter<{wallet: GeneratedWallet, fee: number}>();
+	@Output() onSubmit = new EventEmitter<{wallet: GeneratedWallet, fee: number, payment?: TokenPayment}>();
 
 	wallet?: GeneratedWallet;
+
+	tokenAmount = 0;
+
+	tokenIdentifier = TokenIdentifierValue.egld();
 
 	fee = 50_000;
 
@@ -62,12 +67,16 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 		await this.estimate();
 	}
 
-	submit(fee: number): void {
+	submit(): void {
 		if (!this.wallet) {
 			return;
 		}
 
-		this.onSubmit.emit({wallet: this.wallet, fee});
+		const payment = this.endpoint.modifiers.isPayable()
+			? TokenPayment.fungibleFromAmount(this.tokenIdentifier.toString(), new BigNumber(this.tokenAmount), 0)
+			: undefined;
+
+		this.onSubmit.emit({wallet: this.wallet, fee: this.fee, payment});
 	}
 
 	onChangeFee(e: Event): void {
@@ -75,6 +84,20 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 
 		if (value) {
 			this.fee = value;
+		}
+	}
+
+	onChangeTokenAmount(e: Event): void {
+		const value = +(<HTMLInputElement>e.target).value;
+
+		if (value) {
+			this.tokenAmount = value;
+		}
+	}
+
+	onChangeTokenIdentifier(value: string): void {
+		if (value) {
+			this.tokenIdentifier = TokenIdentifierValue.esdtTokenIdentifier(value);
 		}
 	}
 }

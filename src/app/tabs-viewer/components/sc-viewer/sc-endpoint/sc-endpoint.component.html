@@ -36,7 +36,7 @@
 									 [endpoint]="endpoint"
 									 [network]="network"
 									 [payload]="payload$ | async"
-									 (onSubmit)="submitTransaction(network, $event.wallet, $event.fee)"></app-sc-endpoint-tx-sign>
+									 (onSubmit)="submitTransaction(network, $event.wallet, $event.fee, $event.payment)"></app-sc-endpoint-tx-sign>
 			<app-sc-endpoint-query *ngIf="endpoint.modifiers.isReadonly()"
 								   [wallets]="wallets"
 								   (onSubmit)="sendQuery(network)"></app-sc-endpoint-query>
