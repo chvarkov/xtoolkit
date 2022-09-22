@@ -32,7 +32,7 @@ export class SelectComponent<T = any> implements OnInit, AfterViewInit, OnDestro
 
 	@Input() defaultElement?: SelectElement<T>;
 
-	@Input() size: SelectSize = 'big';
+	@Input() size: SelectSize = 'small';
 
 	@Input() placeHolder = 'Chose option';
 

@@ -4,8 +4,8 @@
 		<app-token-identifier-input (changed)="onChangeTokenIdentifier($event)"></app-token-identifier-input>
 	</ng-container>
 	<div class="wallet">
-		<app-select placeHolder="Caller" size="medium" (selectedElement)="onSelectedWallet($event)">
-			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
+		<app-select placeHolder="Caller" size="small" (selectedElement)="onSelectedWallet($event)">
+			<app-option size="small" *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
 		</app-select>
 	</div>
 	<div class="fee">
