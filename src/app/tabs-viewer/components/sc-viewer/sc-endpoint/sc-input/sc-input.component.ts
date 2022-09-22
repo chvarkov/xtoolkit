@@ -5,7 +5,7 @@ import {
 	BooleanType,
 	BytesType,
 	EndpointParameterDefinition,
-	EnumType,
+	EnumType, StructType,
 	TokenIdentifierType
 } from '@elrondnetwork/erdjs/out';
 import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
@@ -88,5 +88,9 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 
 	isTokenIdentifier(): boolean {
 		return this.input?.type instanceof TokenIdentifierType;
+	}
+
+	isStruct(): boolean {
+		return this.input?.type instanceof StructType;
 	}
 }

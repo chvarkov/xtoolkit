@@ -1,0 +1,10 @@
+<div class="container">
+	<div class="header">
+		{{name}}
+	</div>
+	<div class="fields">
+		<div class="field" *ngFor="let field of getFields()">
+			<app-sc-input class="input" [chainId]="chainId" [input]="field"></app-sc-input>
+		</div>
+	</div>
+</div>

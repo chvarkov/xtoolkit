@@ -1,0 +1,30 @@
+.container {
+	display: flex;
+	flex: 1;
+	width: 100%;
+	flex-direction: column;
+
+	.header {
+		display: flex;
+		width: 100%;
+		color: var(--arg-type-color);
+	}
+
+	.fields {
+		display: flex;
+		flex: 1;
+		width: 100%;
+		flex-direction: column;
+
+		.field {
+			display: flex;
+			flex: 1;
+			width: 100%;
+			flex-direction: row;
+
+			.input {
+				width: 100%;
+			}
+		}
+	}
+}
