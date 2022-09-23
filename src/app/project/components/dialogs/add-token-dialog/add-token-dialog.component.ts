@@ -53,7 +53,7 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 	}
 
 	submit(): void {
-		this.dialogRef.submit(this.tokenId);
+		this.dialogRef.submit(this.tokenId.trim());
 	}
 
 	async issueEstd(network: INetworkEnvironment, wallet: GeneratedWallet): Promise<void> {

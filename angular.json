@@ -24,8 +24,7 @@
 							"@elrondnetwork/erdjs-network-providers",
 							"@elrondnetwork/erdjs-walletcore",
 							"@elrondnetwork/transaction-decoder",
-							"@elrondnetwork/erdjs",
-							"@elrondnetwork/erdjs-snippets"
+							"@elrondnetwork/erdjs"
 						],
 						"outputPath": "dist/elrond-sc",
 						"index": "src/index.html",
