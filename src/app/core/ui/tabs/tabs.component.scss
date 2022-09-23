@@ -11,15 +11,18 @@
 		padding-inline-start: 0;
 		margin-block-start: 0;
 		margin-block-end: 0;
+		background: var(--primary-bg);
 
 		li {
-			display: flex;
-			flex: 1
+			display: block;
+			padding: 0 4px;
+			min-width: 100px;
+			width: auto;
 		}
 	}
 
 	.bottom-nav {
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 	}
 
