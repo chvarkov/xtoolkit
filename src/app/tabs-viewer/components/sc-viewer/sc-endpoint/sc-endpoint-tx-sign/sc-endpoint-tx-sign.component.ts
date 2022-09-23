@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { SelectElement } from '../../../../../core/ui/select/select.component';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { EndpointDefinition, SmartContract, TokenIdentifierValue, TokenPayment } from '@elrondnetwork/erdjs/out';
 import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';

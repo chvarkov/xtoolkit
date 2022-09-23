@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EnumType, EnumVariantDefinition, Type } from '@elrondnetwork/erdjs/out';
-import { SelectElement } from '../../../../../../../core/ui/select/select.component';
 
 @Component({
 	selector: 'app-enum-input',

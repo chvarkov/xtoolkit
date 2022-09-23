@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { NetworkSelector } from '../../../../network/store/network.selector';
-import { SelectElement } from '../../../../core/ui/select/select.component';
 
 @Component({
 	selector: 'app-create-project-dialog',

@@ -9,7 +9,6 @@ import { ESDTInteractor } from '../../../../core/elrond/services/estd-intercator
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
-import { SelectElement } from '../../../../core/ui/select/select.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

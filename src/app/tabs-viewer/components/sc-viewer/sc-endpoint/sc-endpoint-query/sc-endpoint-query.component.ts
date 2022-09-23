@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectElement } from '../../../../../core/ui/select/select.component';
 import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
 
 @Component({
