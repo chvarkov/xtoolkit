@@ -1,7 +1,28 @@
-<app-modal-dialog title="Add token" [dialogRef]="dialogRef">
-	<div content class="content">
-		<input class="token-address" [(ngModel)]="tokenId" placeholder="Token address">
-	</div>
+<app-modal-dialog title="Add token" [dialogRef]="dialogRef" *ngIf="project$ | async as project">
+	<app-tabs content>
+		<app-tab bottom title="Import existing">
+			<div class="content">
+				<input class="token-address" [(ngModel)]="tokenId" placeholder="Token address">
+			</div>
+		</app-tab>
+		<app-tab bottom title="Issue token">
+			<form [formGroup]="issueTokenForm">
+				<input formControlName="name" placeholder="Token name">
+				<input formControlName="ticker" placeholder="Token ticker">
+				<input formControlName="supply" type="number" min="0" placeholder="Mint value">
+				<input formControlName="decimals" type="number" placeholder="Decimals">
+			</form>
+
+			<app-select placeHolder="Token issuer" (selectedElement)="onChangedIssuer($event)">
+				<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
+			</app-select>
+			<button [disabled]="!issueTokenForm.valid"
+					*ngIf="network$ | async as network"
+					(click)="issueEstd(network, wallet)">
+				Deploy
+			</button>
+		</app-tab>
+	</app-tabs>
 	<div actions>
 		<div class="actions">
 			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>

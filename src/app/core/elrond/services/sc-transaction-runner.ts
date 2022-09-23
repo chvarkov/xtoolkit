@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-	ContractFunction, ESDTTransferPayloadBuilder, Interaction,
-	ITransactionValue,
+	ContractFunction, Interaction,
 	SmartContract, TokenPayment, Transaction,
 } from '@elrondnetwork/erdjs/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
@@ -32,6 +31,13 @@ export interface IScCallOptions {
 export interface IScTxOptions extends IScCallOptions {
 	gasLimit: number;
 	walletCredentials: WalletCredentialsAware;
+}
+
+export interface ISignAndSendTxOptions {
+	network: INetworkEnvironment,
+	credentials: WalletCredentialsAware;
+	gasLimit: number;
+	caller: string;
 }
 
 @Injectable({providedIn: 'root'})
@@ -81,13 +87,22 @@ export class ScTransactionRunner {
 	async run(sc: SmartContract, options: IScTxOptions): Promise<string> {
 		const tx = await this.createTx(sc, options);
 
+		return this.signAndSendTx(tx, {
+			network: options.network,
+			credentials: options.walletCredentials,
+			caller: options.caller,
+			gasLimit: options.gasLimit,
+		});
+	}
+
+	async signAndSendTx(tx: Transaction, options: ISignAndSendTxOptions): Promise<string> {
 		const callerAccount = await this.elrondDataProvider.getAccountInfo(options.network, options.caller).toPromise();
 
 		tx.setGasLimit(options.gasLimit);
 
 		tx.setNonce(callerAccount.nonce);
 
-		const signer = this.getSigner(options.walletCredentials);
+		const signer = this.getSigner(options.credentials);
 
 		await signer.sign(tx);
 

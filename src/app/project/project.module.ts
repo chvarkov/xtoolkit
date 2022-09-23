@@ -7,7 +7,7 @@ import { projectReducer } from './store/project.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffect } from './store/project.effect';
 import { CreateProjectDialogComponent } from './components/dialogs/create-project-dialog/create-project-dialog.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenerateWalletDialogComponent } from './components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { UploadAbiDialogComponent } from './components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import { ProjectExplorerComponent } from './components/project-explorer/project-explorer.component';
@@ -24,14 +24,15 @@ import { NetworkModule } from '../network/network.module';
 		ProjectElementComponent,
 		AddTokenDialogComponent,
 	],
-	imports: [
-		CommonModule,
-		CoreModule,
-		StoreModule.forFeature(PROJECT_FEATURE, projectReducer),
-		EffectsModule.forFeature([ProjectEffect]),
-		FormsModule,
-		NetworkModule,
-	],
+    imports: [
+        CommonModule,
+        CoreModule,
+        StoreModule.forFeature(PROJECT_FEATURE, projectReducer),
+        EffectsModule.forFeature([ProjectEffect]),
+        FormsModule,
+        NetworkModule,
+        ReactiveFormsModule,
+    ],
 	exports: [
 		StoreModule,
 		EffectsModule,
