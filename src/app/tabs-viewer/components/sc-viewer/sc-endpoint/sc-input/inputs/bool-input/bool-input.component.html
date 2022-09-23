@@ -1,7 +1,7 @@
-<app-select	[placeHolder]="placeholder"
-			size="small"
-			(selectedElement)="onChange.emit($event.value)">
-	<app-option *ngIf="nullable" [value]="null">null</app-option>
-	<app-option [value]="true">true</app-option>
-	<app-option [value]="false">false</app-option>
-</app-select>
+<mat-select class="bool"
+			[placeholder]="placeholder"
+			(selectionChange)="onChange.emit($event.value)">
+	<mat-option *ngIf="nullable" [value]="null">null</mat-option>
+	<mat-option [value]="true">true</mat-option>
+	<mat-option [value]="false">false</mat-option>
+</mat-select>

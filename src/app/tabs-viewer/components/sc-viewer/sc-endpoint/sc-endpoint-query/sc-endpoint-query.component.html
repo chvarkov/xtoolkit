@@ -1,12 +1,11 @@
 <div class="query-container">
 	<div class="wallet">
-		<app-select placeHolder="Caller"
-					[defaultElement]="{name: 'No caller', value: null}"
-					size="medium"
-					(selectedElement)="onSelectedWallet($event)">
-			<app-option [value]="undefined">No caller</app-option>
-			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
-		</app-select>
+		<mat-select class="wallet-select"
+					placeholder="Caller"
+					(selectionChange)="wallet = $event.value">
+			<mat-option [value]="undefined">No caller</mat-option>
+			<mat-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</mat-option>
+		</mat-select>
 	</div>
 	<div class="actions">
 		<button class="button query" (click)="submit()">Query</button>

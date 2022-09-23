@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectTabsModule } from './tabs-viewer/modules/project-tabs/project-tabs.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
 	declarations: [
@@ -36,6 +37,7 @@ import { ProjectTabsModule } from './tabs-viewer/modules/project-tabs/project-ta
             autoPause: true,
         }),
         ProjectTabsModule,
+        BrowserAnimationsModule,
     ],
 	providers: [],
 	bootstrap: [AppComponent]

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EnumType, EnumVariantDefinition, Type } from '@elrondnetwork/erdjs/out';
-import { SelectElement } from '../../../../../../../core/ui/select/select.component';
 
 @Component({
 	selector: 'app-enum-input',
@@ -24,9 +23,5 @@ export class EnumInputComponent implements OnInit {
 		}
 
 		return this.type.variants;
-	}
-
-	onSelected(e: SelectElement): void {
-		this.changed.emit(e.value);
 	}
 }

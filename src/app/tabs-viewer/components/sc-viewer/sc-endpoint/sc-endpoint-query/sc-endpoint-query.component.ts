@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectElement } from '../../../../../core/ui/select/select.component';
 import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
 
 @Component({
@@ -18,10 +17,6 @@ export class ScEndpointQueryComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-	}
-
-	onSelectedWallet(event: SelectElement<GeneratedWallet | null>): void {
-		this.wallet = event.value || undefined;
 	}
 
 	submit(): void {
