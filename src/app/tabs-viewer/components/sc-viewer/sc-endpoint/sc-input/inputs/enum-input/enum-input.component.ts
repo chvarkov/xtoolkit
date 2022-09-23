@@ -25,8 +25,4 @@ export class EnumInputComponent implements OnInit {
 
 		return this.type.variants;
 	}
-
-	onSelected(e: SelectElement): void {
-		this.changed.emit(e.value);
-	}
 }

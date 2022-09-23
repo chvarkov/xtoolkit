@@ -65,8 +65,4 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 
 		console.log('txHash ' + txHash);
 	}
-
-	onChangedIssuer(e: SelectElement<GeneratedWallet>): void {
-		this.wallet = e.value;
-	}
 }

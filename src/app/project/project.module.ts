@@ -14,6 +14,7 @@ import { ProjectExplorerComponent } from './components/project-explorer/project-
 import { ProjectElementComponent } from './components/project-element/project-element.component';
 import { AddTokenDialogComponent } from './components/dialogs/add-token-dialog/add-token-dialog.component';
 import { NetworkModule } from '../network/network.module';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
 	declarations: [
@@ -32,6 +33,7 @@ import { NetworkModule } from '../network/network.module';
         FormsModule,
         NetworkModule,
         ReactiveFormsModule,
+        MatSelectModule,
     ],
 	exports: [
 		StoreModule,

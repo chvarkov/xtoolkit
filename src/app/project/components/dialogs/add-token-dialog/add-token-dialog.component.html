@@ -13,9 +13,9 @@
 				<input formControlName="decimals" type="number" placeholder="Decimals">
 			</form>
 
-			<app-select placeHolder="Token issuer" (selectedElement)="onChangedIssuer($event)">
-				<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
-			</app-select>
+			<mat-select placeholder="Token issuer" (selectionChange)="wallet = $event.value">
+				<mat-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</mat-option>
+			</mat-select>
 			<button [disabled]="!issueTokenForm.valid"
 					*ngIf="network$ | async as network"
 					(click)="issueEstd(network, wallet)">

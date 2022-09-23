@@ -20,10 +20,6 @@ export class ScEndpointQueryComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	onSelectedWallet(event: SelectElement<GeneratedWallet | null>): void {
-		this.wallet = event.value || undefined;
-	}
-
 	submit(): void {
 		this.onSubmit.emit({wallet: this.wallet});
 	}

@@ -61,8 +61,8 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 		this.fee = fee;
 	}
 
-	async onSelectedWallet(event: SelectElement<GeneratedWallet>): Promise<void> {
-		this.wallet = event.value;
+	async onSelectedWallet(wallet: GeneratedWallet): Promise<void> {
+		this.wallet = wallet;
 
 		await this.estimate();
 	}
