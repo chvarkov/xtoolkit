@@ -93,7 +93,7 @@ export class ProjectEffect {
 
 	addToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addToken),
-		switchMap(({projectId}) => this.modalDialogFactory.show(AddTokenDialogComponent)
+		switchMap(({projectId}) => this.modalDialogFactory.show(AddTokenDialogComponent, {projectId})
 			.afterSubmit$()
 			.pipe(
 				switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(

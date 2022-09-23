@@ -22,6 +22,7 @@ import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.man
 import { AddressComponent } from './ui/address/address.component';
 import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 import { AddressInputComponent } from './ui/address-input/address-input.component';
+import { ESDTInteractor } from './elrond/services/estd-intercator';
 
 @NgModule({
 	declarations: [
@@ -58,6 +59,7 @@ import { AddressInputComponent } from './ui/address-input/address-input.componen
 		},
 		LocalstorageDataProvider,
 		LocalstoragePersonalSettingManager,
+		ESDTInteractor,
 	],
     exports: [
         ElrondModule,
