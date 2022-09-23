@@ -23,7 +23,7 @@
 
 	.bottom-nav {
 		position: fixed;
-		bottom: 0;
+		bottom: var(--tab-height);
 	}
 
 	.tab {
