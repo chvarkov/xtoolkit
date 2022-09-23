@@ -3,8 +3,8 @@
 		<app-sc-viewer-header [sc]="projectSc" [address]="projectSc?.address || ''"
 							  [chainId]="chainId">
 		</app-sc-viewer-header>
-		<app-tabs>
-			<app-tab title="Endpoints">
+		<app-tabs navPosition="bottom">
+			<app-tab top title="Endpoints">
 				<app-toolbar>
 					<app-toolbar-icon-button right-side hint="Import RAW call">add</app-toolbar-icon-button>
 					<app-toolbar-icon-button right-side hint="Expand all">expand_more</app-toolbar-icon-button>
@@ -17,19 +17,19 @@
 								 [sc]="smartContract">
 				</app-sc-endpoint>
 			</app-tab>
-			<app-tab title="Tokens">
+			<app-tab  top title="Tokens">
 				<app-toolbar>
 					<app-toolbar-icon-button right-side hint="Reload">refresh</app-toolbar-icon-button>
 				</app-toolbar>
 				<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
 			</app-tab>
-			<app-tab title="NFTs">
+			<app-tab  top title="NFTs">
 				<app-toolbar>
 					<app-toolbar-icon-button right-side hint="Reload">refresh</app-toolbar-icon-button>
 				</app-toolbar>
 				<app-sc-nfts></app-sc-nfts>
 			</app-tab>
-			<app-tab title="Code">
+			<app-tab  top title="Code">
 				<app-toolbar>
 					<app-toolbar-icon-button right-side hint="Download WASM file">download</app-toolbar-icon-button>
 				</app-toolbar>

@@ -1,5 +1,7 @@
-import { AfterContentInit, Component, ContentChildren, OnInit, QueryList } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, Input, OnInit, QueryList } from '@angular/core';
 import { TabComponent } from './tab/tab.component';
+
+export type NavPosition = 'top' | 'bottom';
 
 @Component({
   selector: 'app-tabs',
@@ -8,6 +10,7 @@ import { TabComponent } from './tab/tab.component';
 })
 export class TabsComponent implements OnInit, AfterContentInit {
 	@ContentChildren(TabComponent) tabs?: QueryList<TabComponent>;
+	@Input() navPosition: NavPosition = 'top';
 
 	ngAfterContentInit(): void {
 		if (!this.tabs) {

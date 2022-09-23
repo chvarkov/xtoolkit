@@ -5,8 +5,8 @@
 			<div class="title">{{token.ticker}} - {{token.name}}</div>
 		</div>
 	</div>
-	<app-tabs>
-		<app-tab title="Info">
+	<app-tabs navPosition="bottom">
+		<app-tab top title="Info">
 			<div>holders {{token.accounts}}</div>
 			<div>burnt {{token.burnt}}</div>
 			<div>decimals {{token.decimals}}</div>
@@ -22,7 +22,7 @@
 			<div>canWipe {{token.canWipe}}</div>
 			<div>owner {{token.owner}}</div>
 		</app-tab>
-		<app-tab title="Roles">
+		<app-tab top title="Roles">
 			<div class="token-roles-element" *ngFor="let role of (tokenRoles$ | async) || []">
 				<app-address [address]="role.address" [chainId]="(chainId$ | async) || ''"></app-address>
 				<div class="roles">
@@ -30,13 +30,13 @@
 				</div>
 			</div>
 		</app-tab>
-		<app-tab title="Holders">
+		<app-tab top title="Holders">
 			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
 				<app-address [address]="holder.address" [chainId]="(chainId$ | async) || ''"></app-address>
 				<span>{{holder.balance}}</span>
 			</div>
 		</app-tab>
-		<app-tab title="Transactions">
+		<app-tab top title="Transactions">
 			<app-token-transfer *ngFor="let transfer of (tokenTransfers$ | async) || []"
 								[chainId]="(chainId$ | async) || ''"
 								[ticket]="token.ticker"

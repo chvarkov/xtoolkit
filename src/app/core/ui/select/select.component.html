@@ -5,6 +5,6 @@
 <div class="options-container"
 	 [ngClass]="getCssClass('options')"
 	 *ngIf="isVisibleOptions"
-	 [ngStyle]="{width: selector.clientWidth  + 'px'}">
+	 [ngStyle]="{minWidth: selector.clientWidth  + 'px'}">
 	<ng-content></ng-content>
 </div>

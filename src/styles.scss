@@ -106,6 +106,14 @@ body {
 input, textarea {
 	background: var(--low-bg);
 	color: var(--text-color);
+	border: solid 1px var(--border-low-color);
+	border-radius: 4px;
+	padding: 2px 4px;
+}
+
+input:focus, input:active, textarea:focus, textarea:active {
+	border: solid 1px var(--border-accent-color);
+	outline: none;
 }
 
 button {
