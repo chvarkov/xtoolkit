@@ -21,6 +21,7 @@
     "@angular/router": "~12.2.0",
     "@elrondnetwork/erdjs": "^11.1.0",
     "@elrondnetwork/erdjs-network-providers": "^1.1.0",
+    "@elrondnetwork/erdjs-snippets": "^3.0.2",
     "@elrondnetwork/erdjs-walletcore": "^2.1.0",
     "@elrondnetwork/transaction-decoder": "^1.0.0",
     "@ngrx/effects": "^12.5.1",
