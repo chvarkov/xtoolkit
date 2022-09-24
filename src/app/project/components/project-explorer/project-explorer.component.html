@@ -12,6 +12,13 @@
 						 [bold]="true"
 						 [expandable]="true"
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
+		<ng-container actions>
+			<app-dropdown-menu horizontal="left">
+				<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="public" text="Change network"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+			</app-dropdown-menu>
+		</ng-container>
 		<div innerElements>
 			<app-project-element [expandable]="true" name="Smart contracts">
 				<ng-container actions>
@@ -50,13 +57,9 @@
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
-			<app-project-element [expandable]="true" type="group" name="NFTs">
+			<app-project-element [expandable]="true" type="group" name="NFTs (coming soon)">
 				<ng-container actions>
 					<button class="material-icons action-button">add</button>
-				</ng-container>
-				<ng-container innerElements>
-					<app-project-element type="nft" name="DOGS-43FA6B"></app-project-element>
-					<app-project-element type="nft" name="CATS-12FF8A"></app-project-element>
 				</ng-container>
 			</app-project-element>
 

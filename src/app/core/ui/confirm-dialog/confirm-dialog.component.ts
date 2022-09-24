@@ -20,7 +20,7 @@ export class ConfirmDialogComponent extends AbstractModalDialog<ConfirmDialogDat
 	}
 
 	ngOnInit(): void {
-
+		this.dialogRef.options.width = '360px';
+		this.dialogRef.options.height = '180px';
 	}
-
 }

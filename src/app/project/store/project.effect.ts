@@ -58,7 +58,10 @@ export class ProjectEffect {
 	deleteWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteWallet),
 		switchMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {title: 'Delete wallet'}).afterSubmit$().pipe(
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete wallet',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
 				map(() => action),
 			);
 		}),
