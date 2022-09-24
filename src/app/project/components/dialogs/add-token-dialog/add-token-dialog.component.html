@@ -1,8 +1,8 @@
 <app-modal-dialog title="Add token" [dialogRef]="dialogRef" *ngIf="project$ | async as project">
-	<mat-tab-group content style="width: 100%">
-		<mat-tab label="Import existing">
+	<app-tabs content style="width: 100%">
+		<app-tab bottom title="Import existing">
 			<div class="content">
-				<div  class="search-input">
+				<div class="search-input">
 					<input (change)="onChangeSearchInput($event)" placeholder="Search token">
 				</div>
 
@@ -16,41 +16,41 @@
 					</div>
 				</div>
 			</div>
-		</mat-tab>
-		<mat-tab label="Issue token">
+		</app-tab>
+		<app-tab bottom title="Issue token">
 			<form [formGroup]="issueTokenForm" class="issue-form">
-				<mat-form-field class="input-control">
-					<mat-label>Name</mat-label>
-					<input matInput formControlName="name" placeholder="Token name">
-				</mat-form-field>
+				<div class="form-control">
+					<div class="label">Token name</div>
+					<input class="field" formControlName="name" placeholder="Token name">
+				</div>
 
-				<mat-form-field class="input-control">
-					<mat-label>Ticker</mat-label>
-					<input matInput formControlName="ticker" placeholder="Token ticker">
-				</mat-form-field>
+				<div class="form-control">
+					<div class="label">Token ticker</div>
+					<input formControlName="ticker" placeholder="Token ticker">
+				</div>
 
-				<mat-form-field class="input-control">
-					<mat-label>Mint value</mat-label>
-					<input matInput formControlName="supply" type="number" min="0" placeholder="Mint value">
-				</mat-form-field>
+				<div class="form-control">
+					<div class="label">Mint value</div>
+					<input formControlName="supply" type="number" min="0" placeholder="Mint value">
+				</div>
 
-				<mat-form-field class="input-control">
-					<mat-label>Decimals</mat-label>
-					<input matInput formControlName="decimals" type="number" min="0" placeholder="Decimals">
-				</mat-form-field>
-
-				<app-select  class="input-control" placeholder="Token issuer" (selectionChange)="wallet = $event.value">
-					<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
-				</app-select>
+				<div class="form-control">
+					<div class="label">Decimals</div>
+					<input formControlName="decimals" type="number" min="0" placeholder="Decimals">
+				</div>
 			</form>
+
+			<app-select  class="input-control" placeholder="Token issuer" (selectionChange)="wallet = $event.value">
+				<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
+			</app-select>
 
 			<button [disabled]="!issueTokenForm.valid"
 					*ngIf="network$ | async as network"
 					(click)="issueEstd(network, wallet)">
 				Deploy
 			</button>
-		</mat-tab>
-	</mat-tab-group>
+		</app-tab>
+	</app-tabs>
 	<div actions>
 		<div class="actions">
 			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
