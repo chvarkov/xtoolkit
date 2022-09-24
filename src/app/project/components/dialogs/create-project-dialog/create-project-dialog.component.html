@@ -2,13 +2,13 @@
 	<div content class="content">
 		<input class="project-name" [(ngModel)]="projectName" placeholder="Project name">
 
-		<mat-select class="network-select"
+		<app-select class="network-select"
 					placeholder="Network"
 					(selectionChange)="chainId = $event.value">
-			<mat-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
+			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
 				{{network.name}}
-			</mat-option>
-		</mat-select>
+			</app-option>
+		</app-select>
 	</div>
 
 	<div actions>

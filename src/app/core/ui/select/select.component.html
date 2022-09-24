@@ -1,0 +1,10 @@
+<div #selector class="select" [ngClass]="getCssClass('element')" (click)="switchShowOptions($event)">
+	{{defaultElement?.name || currentSelectedElement?.name || placeholder}}
+</div>
+
+<div class="options-container"
+	 [ngClass]="getCssClass('options')"
+	 *ngIf="isVisibleOptions"
+	 [ngStyle]="{minWidth: selector.clientWidth  + 'px'}">
+	<ng-content></ng-content>
+</div>

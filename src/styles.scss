@@ -111,10 +111,10 @@ input, textarea {
 	padding: 2px 4px;
 }
 
-//input:focus, input:active, textarea:focus, textarea:active {
-//	border: solid 1px var(--border-accent-color);
-//	outline: none;
-//}
+input:focus, input:active, textarea:focus, textarea:active {
+	border: solid 1px var(--border-accent-color);
+	outline: none;
+}
 
 button {
 	background: none;
