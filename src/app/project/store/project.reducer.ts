@@ -57,6 +57,10 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
+	on(ProjectAction.deleteWalletSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
 	on(ProjectAction.addTokenSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),

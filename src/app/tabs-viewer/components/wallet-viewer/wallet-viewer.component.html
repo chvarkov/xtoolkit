@@ -6,8 +6,10 @@
 			<div>Nonce: {{account.nonce}}</div>
 		</div>
 		<div class="actions">
-			<button *ngIf="wallet$ | async as wallet" (click)="exportMnemonic(wallet)">export keys</button>
-			<button>delete</button>
+			<ng-container *ngIf="wallet$ | async as wallet">
+				<button  (click)="exportMnemonic(wallet)">export keys</button>
+				<button (click)="deleteWallet(wallet)">delete</button>
+			</ng-container>
 		</div>
 	</div>
 

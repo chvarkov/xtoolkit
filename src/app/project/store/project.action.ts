@@ -93,5 +93,10 @@ export class ProjectAction {
 	static readonly searchTokensError = createAction(`[${ProjectAction.name}] search tokens [ERR]`, props<{err: Error}>());
 
 	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: GeneratedWallet}>());
+
+	static readonly deleteWallet = createAction(`[${ProjectAction.name}] delete wallet [...]`, props<{projectId: string, address: string}>());
+	static readonly deleteWalletSuccess = createAction(`[${ProjectAction.name}] delete wallet [OK]`, props<{project: Project}>());
+	static readonly deleteWalletError = createAction(`[${ProjectAction.name}] delete wallet [ERR]`, props<{err: Error}>());
+
 }
 

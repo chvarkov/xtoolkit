@@ -51,4 +51,8 @@ export class WalletViewerComponent implements OnInit {
 	exportMnemonic(wallet: GeneratedWallet): void {
 		this.store.dispatch(ProjectAction.exportMnemonic({wallet}))
 	}
+
+	deleteWallet(wallet: GeneratedWallet): void {
+		this.store.dispatch(ProjectAction.deleteWallet({projectId: this.projectId, address: wallet.address}));
+	}
 }

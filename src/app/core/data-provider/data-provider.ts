@@ -63,6 +63,8 @@ export interface DataProvider {
 
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
 
+	deleteWallet(projectId: string, address: string): Observable<Project>;
+
 	addToken(projectId: string, tokenAddress: string): Observable<Project>;
 
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]>;
