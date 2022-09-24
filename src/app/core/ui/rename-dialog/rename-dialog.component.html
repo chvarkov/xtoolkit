@@ -1,0 +1,14 @@
+<app-modal-dialog title="{{dialogRef.data.title || 'Rename'}}" [dialogRef]="dialogRef">
+	<div content class="content">
+		<input class="name" [(ngModel)]="name" placeholder="New name">
+	</div>
+
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!name"
+					(click)="create()">Rename</button>
+		</div>
+	</div>
+</app-modal-dialog>

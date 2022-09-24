@@ -22,7 +22,11 @@
 		<div innerElements>
 			<app-project-element [expandable]="true" name="Smart contracts">
 				<ng-container actions>
-					<button class="material-icons action-button" (click)="uploadScAbi(project.id)">add</button>
+					<app-dropdown-menu horizontal="left">
+						<app-dropdown-menu-item icon="upload_file"
+												text="Upload ABI"
+												(click)="uploadScAbi(project.id)"></app-dropdown-menu-item>
+					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element
@@ -41,7 +45,14 @@
 			</app-project-element>
 			<app-project-element [expandable]="true" type="group" name="Tokens">
 				<ng-container actions>
-					<button class="material-icons action-button" (click)="addToken(project.id)">add</button>
+					<app-dropdown-menu horizontal="left">
+						<app-dropdown-menu-item icon="add_circle"
+												text="Issue new one"
+												(click)="addToken(project.id)"></app-dropdown-menu-item>
+						<app-dropdown-menu-item icon="manage_search"
+												text="Import"
+												(click)="addToken(project.id)"></app-dropdown-menu-item>
+					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let tokenAddress of project.tokens"
@@ -59,13 +70,30 @@
 			</app-project-element>
 			<app-project-element [expandable]="true" type="group" name="NFTs (coming soon)">
 				<ng-container actions>
-					<button class="material-icons action-button">add</button>
+					<app-dropdown-menu horizontal="left">
+					</app-dropdown-menu>
 				</ng-container>
 			</app-project-element>
 
 			<app-project-element [expandable]="true" type="group" name="Wallets">
 				<ng-container actions>
-					<button class="material-icons action-button" (click)="generateWallet(project.id)">add</button>
+					<app-dropdown-menu horizontal="left">
+						<app-dropdown-menu-item icon="key"
+												text="Add secret key"
+												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
+						<app-dropdown-menu-item icon="article"
+												text="Add mnemonic"
+												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
+						<app-dropdown-menu-item icon="add_task"
+												text="Generate new one"
+												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
+						<app-dropdown-menu-item icon="qr_code_2"
+												text="Connect via Maiar"
+												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
+						<app-dropdown-menu-item icon="public"
+												text="Add web wallet"
+												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
+					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element *ngFor="let wallet of project.wallets"

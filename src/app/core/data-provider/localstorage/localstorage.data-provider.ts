@@ -47,6 +47,25 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(projects);
 	}
 
+	renameProject(projectId: string, name: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(p => p.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.name = name;
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
 	createProject(name: string, chainId: string): Observable<Project> {
 		return this.getProjects()
 			.pipe(
@@ -157,6 +176,31 @@ export class LocalstorageDataProvider implements DataProvider {
 					}
 
 					project.wallets.push(wallet);
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
+	renameWallet(projectId: string, address: string, name: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(p => p.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					const wallet = project.wallets.find(w => w.address === address);
+
+					if (!wallet) {
+						throw new Error('Wallet not found');
+					}
+
+					wallet.name = name;
 
 					this.set(this.projectsKey, projects);
 
