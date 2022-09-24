@@ -1,6 +1,6 @@
-<div #dropdown class="material-icons menu-button" (click)="isOpen = !isOpen">
+<div #dropdown class="material-icons menu-button" (click)="switchShowOptions($event)">
 	more_vert
-	<div class="menu-container" [ngClass]="menuPosition" *ngIf="isOpen">
+	<div class="menu-container" [ngClass]="[horizontal, vertical]" *ngIf="isOpen">
 		<ng-content></ng-content>
 	</div>
 </div>

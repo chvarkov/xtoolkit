@@ -23,6 +23,12 @@
 						*ngFor="let sc of project.smartContracts"
 						type="sc"
 						[name]="sc.name || sc.abi.name">
+						<ng-container actions>
+							<app-dropdown-menu horizontal="left">
+								<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+							</app-dropdown-menu>
+						</ng-container>
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
@@ -35,6 +41,12 @@
 										 (click)="openProjectComponent(project.id, tokenAddress, 'token', tokenAddress)"
 										 type="token"
 										 [name]="tokenAddress">
+						<ng-container actions>
+							<app-dropdown-menu horizontal="left">
+								<app-dropdown-menu-item icon="search" text="Explore"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+							</app-dropdown-menu>
+						</ng-container>
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
@@ -57,6 +69,13 @@
 										 (click)="openProjectComponent(project.id, wallet.name, 'wallet', wallet.address)"
 										 type="wallet"
 										 [name]="wallet.name">
+						<ng-container actions>
+							<app-dropdown-menu horizontal="left">
+								<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename" ></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="key" text="Export keys" ></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+							</app-dropdown-menu>
+						</ng-container>
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
