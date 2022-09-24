@@ -17,6 +17,7 @@ import { TransactionProvider } from '../../core/elrond/services/transaction.prov
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { joinNetwork } from './operators/join-network';
 import { isValidAddress } from '../../core/validators/address-validator';
+import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -239,6 +240,13 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.searchTokensError({err})))
 		))),
 	);
+
+	exportMnemonic$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.exportMnemonic),
+		map(({ wallet }) => {
+			this.modalDialogFactory.show(ExportMnemonicDialogComponent, wallet);
+		}),
+	), {dispatch: false});
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

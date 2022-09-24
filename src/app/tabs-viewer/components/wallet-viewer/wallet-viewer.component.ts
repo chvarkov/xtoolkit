@@ -6,9 +6,8 @@ import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
-import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
-import { map, switchMap } from 'rxjs/operators';
-import { NetworkSelector } from '../../../network/store/network.selector';
+import { map } from 'rxjs/operators';
+import { GeneratedWallet } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-wallet-viewer',
@@ -24,6 +23,7 @@ export class WalletViewerComponent implements OnInit {
 	tokens$?: Observable<ITokenPosition[]>;
 	native$?: Observable<string>;
 	chainId$?: Observable<string>;
+	wallet$?: Observable<GeneratedWallet | undefined>;
 
 	constructor(private readonly store: Store) {
 	}
@@ -37,8 +37,15 @@ export class WalletViewerComponent implements OnInit {
 			map((project) => project?.chainId || ''),
 		);
 
+		this.wallet$ = this.store.select(ProjectSelector.walletsByProjectId(this.projectId)).pipe(
+			map(wallets => wallets.find(w => w.address === w.address)),
+		);
+
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId: this.projectId, address: this.address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId: this.projectId, address: this.address}));
 	}
 
+	exportMnemonic(wallet: GeneratedWallet): void {
+		this.store.dispatch(ProjectAction.exportMnemonic({wallet}))
+	}
 }

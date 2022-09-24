@@ -91,5 +91,7 @@ export class ProjectAction {
 	static readonly searchTokens = createAction(`[${ProjectAction.name}] search tokens [...]`, props<{projectId: string, options: ITokenSearchOptions}>());
 	static readonly searchTokensSuccess = createAction(`[${ProjectAction.name}] search tokens [OK]`, props<{projectId: string, tokens: ITokenInfo[]}>());
 	static readonly searchTokensError = createAction(`[${ProjectAction.name}] search tokens [ERR]`, props<{err: Error}>());
+
+	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: GeneratedWallet}>());
 }
 
