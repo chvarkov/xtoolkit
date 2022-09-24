@@ -23,6 +23,8 @@ import { AddressComponent } from './ui/address/address.component';
 import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 import { AddressInputComponent } from './ui/address-input/address-input.component';
 import { ESDTInteractor } from './elrond/services/estd-intercator';
+import { FormsModule } from '@angular/forms';
+import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -39,13 +41,15 @@ import { ESDTInteractor } from './elrond/services/estd-intercator';
 		DropdownMenuItemComponent,
 		ComponentColorPipe,
 		ComponentIconPipe,
-  AddressComponent,
-  TxHashComponent,
-  AddressInputComponent,
+		AddressComponent,
+		TxHashComponent,
+		AddressInputComponent,
+		RenameDialogComponent,
 	],
 	imports: [
 		CommonModule,
 		ElrondModule,
+		FormsModule,
 	],
 	providers: [
 		ModalDialogFactory,
@@ -61,23 +65,23 @@ import { ESDTInteractor } from './elrond/services/estd-intercator';
 		LocalstoragePersonalSettingManager,
 		ESDTInteractor,
 	],
-    exports: [
-        ElrondModule,
-        ToolbarComponent,
-        SelectComponent,
-        TabsComponent,
-        TabComponent,
-        ToolbarIconButtonComponent,
-        ModalDialogComponent,
-        OptionComponent,
-        ShortStringPipe,
-        DropdownMenuComponent,
-        DropdownMenuItemComponent,
-        ComponentIconPipe,
-        ComponentColorPipe,
-        AddressComponent,
-        TxHashComponent,
-        AddressInputComponent,
-    ],
+	exports: [
+		ElrondModule,
+		ToolbarComponent,
+		SelectComponent,
+		TabsComponent,
+		TabComponent,
+		ToolbarIconButtonComponent,
+		ModalDialogComponent,
+		OptionComponent,
+		ShortStringPipe,
+		DropdownMenuComponent,
+		DropdownMenuItemComponent,
+		ComponentIconPipe,
+		ComponentColorPipe,
+		AddressComponent,
+		TxHashComponent,
+		AddressInputComponent,
+	],
 })
 export class CoreModule { }
