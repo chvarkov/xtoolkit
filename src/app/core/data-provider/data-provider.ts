@@ -61,7 +61,11 @@ export interface DataProvider {
 
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
 
+	renameProject(projectId: string, name: string): Observable<Project>;
+
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
+
+	renameWallet(projectId: string, address: string, name: string): Observable<Project>;
 
 	deleteWallet(projectId: string, address: string): Observable<Project>;
 
