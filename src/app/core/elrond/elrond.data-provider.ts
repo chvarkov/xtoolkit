@@ -15,6 +15,7 @@ import { ITokenTransfer } from './interfaces/token-transfer';
 import { ITokenRole } from './interfaces/token-role';
 import { catchError, map } from 'rxjs/operators';
 import { IEstimateTxData } from './interfaces/estimate-tx-data';
+import { ITokenSearchOptions } from './interfaces/token-search-options';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -57,6 +58,13 @@ export class ElrondDataProvider {
 	getToken(network: INetworkEnvironment,
 			 identifier: string): Observable<ITokenInfo> {
 		return this.http.get<ITokenInfo>(`${network.gatewayUrl}/tokens/${identifier.trim()}`);
+	}
+
+	getTokens(network: INetworkEnvironment,
+			  options?: ITokenSearchOptions): Observable<ITokenInfo[]> {
+		return this.http.get<ITokenInfo[]>(`${network.gatewayUrl}/tokens`, {
+			params: this.createParams(options),
+		});
 	}
 
 	getTokenHolders(network: INetworkEnvironment,
