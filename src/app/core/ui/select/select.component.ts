@@ -58,6 +58,9 @@ export class SelectComponent<T = any> implements OnInit, OnChanges, AfterViewIni
 
 	ngOnChanges(changes: SimpleChanges): void {
 		const size = changes.size;
+		if (!size) {
+			return;
+		}
 		if (size.previousValue !== size.currentValue) {
 			if (this.options) {
 				setTimeout(() => {

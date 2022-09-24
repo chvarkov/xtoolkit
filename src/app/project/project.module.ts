@@ -14,8 +14,6 @@ import { ProjectExplorerComponent } from './components/project-explorer/project-
 import { ProjectElementComponent } from './components/project-element/project-element.component';
 import { AddTokenDialogComponent } from './components/dialogs/add-token-dialog/add-token-dialog.component';
 import { NetworkModule } from '../network/network.module';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatInputModule } from '@angular/material/input';
 import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
 
 @NgModule({
@@ -36,8 +34,6 @@ import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemo
 		FormsModule,
 		NetworkModule,
 		ReactiveFormsModule,
-		MatTabsModule,
-		MatInputModule,
 	],
 	exports: [
 		StoreModule,
