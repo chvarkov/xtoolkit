@@ -15,6 +15,8 @@ import { ProjectElementComponent } from './components/project-element/project-el
 import { AddTokenDialogComponent } from './components/dialogs/add-token-dialog/add-token-dialog.component';
 import { NetworkModule } from '../network/network.module';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
 	declarations: [
@@ -25,16 +27,18 @@ import { MatSelectModule } from '@angular/material/select';
 		ProjectElementComponent,
 		AddTokenDialogComponent,
 	],
-    imports: [
-        CommonModule,
-        CoreModule,
-        StoreModule.forFeature(PROJECT_FEATURE, projectReducer),
-        EffectsModule.forFeature([ProjectEffect]),
-        FormsModule,
-        NetworkModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-    ],
+	imports: [
+		CommonModule,
+		CoreModule,
+		StoreModule.forFeature(PROJECT_FEATURE, projectReducer),
+		EffectsModule.forFeature([ProjectEffect]),
+		FormsModule,
+		NetworkModule,
+		ReactiveFormsModule,
+		MatSelectModule,
+		MatTabsModule,
+		MatInputModule,
+	],
 	exports: [
 		StoreModule,
 		EffectsModule,
