@@ -17,6 +17,8 @@ import { TransactionProvider } from '../../core/elrond/services/transaction.prov
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { joinNetwork } from './operators/join-network';
 import { isValidAddress } from '../../core/validators/address-validator';
+import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
+import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -50,6 +52,19 @@ export class ProjectEffect {
 		switchMap(({projectId, wallet}) => this.dataProvider.addWallet(projectId, wallet).pipe(
 			map((project) => ProjectAction.addWalletSuccess({project, address: wallet.address})),
 			catchError(err => of(ProjectAction.addWalletError({err})),
+			)),
+		)));
+
+	deleteWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWallet),
+		switchMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {title: 'Delete wallet'}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		switchMap(({projectId, address}) => this.dataProvider.deleteWallet(projectId, address).pipe(
+			map((project) => ProjectAction.deleteWalletSuccess({project})),
+			catchError(err => of(ProjectAction.deleteWalletError({err})),
 			)),
 		)));
 
@@ -239,6 +254,13 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.searchTokensError({err})))
 		))),
 	);
+
+	exportMnemonic$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.exportMnemonic),
+		map(({ wallet }) => {
+			this.modalDialogFactory.show(ExportMnemonicDialogComponent, wallet);
+		}),
+	), {dispatch: false});
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

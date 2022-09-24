@@ -17,6 +17,7 @@ import { NetworkModule } from '../network/network.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
+import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -26,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 		ProjectExplorerComponent,
 		ProjectElementComponent,
 		AddTokenDialogComponent,
+  ExportMnemonicDialogComponent,
 	],
 	imports: [
 		CommonModule,

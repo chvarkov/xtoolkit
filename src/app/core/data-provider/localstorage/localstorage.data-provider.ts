@@ -165,6 +165,25 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
+	deleteWallet(projectId: string, address: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.wallets = project.wallets.filter(w => w.address !== address);
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]> {
 		return this.getActionHistory()
 			.pipe(
