@@ -32,16 +32,17 @@ section {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		height: 30px;
-		font-size: 18px;
+		height: 46px;
+		font-size: 1.2em;
 		color: var(--text-accent-color);
-		margin-top: 4px;
-		margin-right: 4px;
+		margin-top: 8px;
+		margin-right: 8px;
 
 		border-bottom: solid 1px var(--border-low-color);
 
 		.title {
 			display: flex;
+			margin-left: 6px;
 		}
 
 		.close {
