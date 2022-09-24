@@ -15,6 +15,7 @@ import { ITokenTransfer } from './interfaces/token-transfer';
 import { ITokenRole } from './interfaces/token-role';
 import { catchError, map } from 'rxjs/operators';
 import { IEstimateTxData } from './interfaces/estimate-tx-data';
+import { ITokenSearchOptions } from './interfaces/token-search-options';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -59,6 +60,13 @@ export class ElrondDataProvider {
 		return this.http.get<ITokenInfo>(`${network.gatewayUrl}/tokens/${identifier.trim()}`);
 	}
 
+	getTokens(network: INetworkEnvironment,
+			  options?: ITokenSearchOptions): Observable<ITokenInfo[]> {
+		return this.http.get<ITokenInfo[]>(`${network.gatewayUrl}/tokens`, {
+			params: this.createParams(options),
+		});
+	}
+
 	getTokenHolders(network: INetworkEnvironment,
 					identifier: string,
 					options: IPaginationOptions): Observable<ITokenHolder[]> {
@@ -82,13 +90,19 @@ export class ElrondDataProvider {
 		);
 	}
 
-	private createParams(value?: Record<string, any>): HttpParams {
-		const params = new HttpParams();
+	private createParams(params?: Record<string, any>): HttpParams {
+		let httpParams: HttpParams = new HttpParams();
 
-		if (value) {
-			Object.keys(value).forEach(key => params.set(key, value[key]));
+		if (!params) {
+			return httpParams;
 		}
 
-		return params;
+		Object.keys(params).forEach(param => {
+			if (params[param] != null) {
+				httpParams = httpParams.set(param, params[param]);
+			}
+		});
+
+		return httpParams;
 	}
 }

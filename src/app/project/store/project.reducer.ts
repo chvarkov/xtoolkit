@@ -23,6 +23,7 @@ export interface ILoadedProjectDataState {
 	tokenHoldersMap: {[identifier: string]: ITokenHolder[]};
 	tokenRolesMap: {[identifier: string]: ITokenRole[]};
 	tokenTransfersMap: {[identifier: string]: ITokenTransfer[]};
+	tokens: ITokenInfo[];
 }
 
 export interface IProjectState extends TabsData {
@@ -153,6 +154,16 @@ export const reducer = createReducer(
 					...state.loadedDataMap[projectId]?.tokenTransfersMap,
 					[identifier]: data,
 				},
+			},
+		},
+	})),
+	on(ProjectAction.searchTokensSuccess, (state, { projectId, tokens }) => ({
+		...state,
+		loadedDataMap: {
+			...state.loadedDataMap,
+			[projectId]: {
+				...state.loadedDataMap[projectId],
+				tokens,
 			},
 		},
 	})),
