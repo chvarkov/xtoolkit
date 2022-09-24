@@ -10,6 +10,8 @@ import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ITokenInfo } from '../../../../core/elrond/interfaces/token-info';
+import { ProjectAction } from '../../../store/project.action';
 
 @Component({
 	selector: 'app-add-token-dialog',
@@ -27,6 +29,8 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 
 	dialogRef!: DialogRef<{projectId: string}, string>;
 
+	tokens$!: Observable<ITokenInfo[]>;
+
 	issueTokenForm!: FormGroup;
 
 	constructor(private readonly store: Store,
@@ -42,6 +46,7 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 		this.network$ = this.project$.pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
+		this.tokens$ = this.store.select(ProjectSelector.tokens(this.dialogRef.data.projectId));
 
 		this.issueTokenForm = this.fb.group({
 			name: ['', Validators.required],
@@ -63,5 +68,14 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 		const txHash = await this.estdInteractor.issueFungibleToken(network, wallet, this.issueTokenForm.value);
 
 		console.log('txHash ' + txHash);
+	}
+
+	onChangeSearchInput(e: Event): void {
+		const value = (<HTMLInputElement>e.target).value;
+
+		this.store.dispatch(ProjectAction.searchTokens({
+			projectId: this.dialogRef.data.projectId,
+			options: {search: value},
+		}))
 	}
 }

@@ -1,8 +1,20 @@
 <app-modal-dialog title="Add token" [dialogRef]="dialogRef" *ngIf="project$ | async as project">
-	<mat-tab-group content>
+	<mat-tab-group content style="width: 100%">
 		<mat-tab label="Import existing">
 			<div class="content">
-				<input class="token-address" [(ngModel)]="tokenId" placeholder="Token address">
+				<div  class="search-input">
+					<input (change)="onChangeSearchInput($event)" placeholder="Search token">
+				</div>
+
+				<div class="token-list" *ngIf="tokens$ | async as tokens">
+					<div class="token-element"
+						 *ngFor="let token of tokens"
+						 (click)="tokenId = token.identifier">
+						{{token.identifier}} - {{token.name}}
+
+						<span class="material-icons selected" *ngIf="tokenId === token.identifier">check_circle</span>
+					</div>
+				</div>
 			</div>
 		</mat-tab>
 		<mat-tab label="Issue token">

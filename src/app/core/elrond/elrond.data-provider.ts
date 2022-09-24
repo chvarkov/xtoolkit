@@ -90,13 +90,19 @@ export class ElrondDataProvider {
 		);
 	}
 
-	private createParams(value?: Record<string, any>): HttpParams {
-		const params = new HttpParams();
+	private createParams(params?: Record<string, any>): HttpParams {
+		let httpParams: HttpParams = new HttpParams();
 
-		if (value) {
-			Object.keys(value).forEach(key => params.set(key, value[key]));
+		if (!params) {
+			return httpParams;
 		}
 
-		return params;
+		Object.keys(params).forEach(param => {
+			if (params[param] != null) {
+				httpParams = httpParams.set(param, params[param]);
+			}
+		});
+
+		return httpParams;
 	}
 }

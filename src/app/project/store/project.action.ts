@@ -10,6 +10,7 @@ import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
+import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
 
 export class ProjectAction {
 	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
@@ -87,5 +88,8 @@ export class ProjectAction {
 	static readonly loadTokenTransfersSuccess = createAction(`[${ProjectAction.name}] load token transfers [OK]`, props<{projectId: string, identifier: string, data: ITokenTransfer[]}>());
 	static readonly loadTokenTransfersError = createAction(`[${ProjectAction.name}] load token transfers [ERR]`, props<{err: Error}>());
 
+	static readonly searchTokens = createAction(`[${ProjectAction.name}] search tokens [...]`, props<{projectId: string, options: ITokenSearchOptions}>());
+	static readonly searchTokensSuccess = createAction(`[${ProjectAction.name}] search tokens [OK]`, props<{projectId: string, tokens: ITokenInfo[]}>());
+	static readonly searchTokensError = createAction(`[${ProjectAction.name}] search tokens [ERR]`, props<{err: Error}>());
 }
 

@@ -228,6 +228,18 @@ export class ProjectEffect {
 		))),
 	);
 
+	searchTokens$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.searchTokens),
+		joinNetwork(this.store),
+		switchMap(([{options}, project, network]) => from(this.elrondDataProvider.getTokens(network,options)).pipe(
+			map((tokens) => ProjectAction.searchTokensSuccess({
+				projectId: project.id,
+				tokens,
+			})),
+			catchError(err => of(ProjectAction.searchTokensError({err})))
+		))),
+	);
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,
