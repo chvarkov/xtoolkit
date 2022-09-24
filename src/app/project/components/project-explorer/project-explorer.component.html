@@ -12,6 +12,13 @@
 						 [bold]="true"
 						 [expandable]="true"
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
+		<ng-container actions>
+			<app-dropdown-menu horizontal="left">
+				<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="public" text="Change network"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+			</app-dropdown-menu>
+		</ng-container>
 		<div innerElements>
 			<app-project-element [expandable]="true" name="Smart contracts">
 				<ng-container actions>
