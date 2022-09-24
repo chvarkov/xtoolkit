@@ -68,11 +68,6 @@ export class ProjectEffect {
 			)),
 		)));
 
-	// addWalletSuccess$ = createEffect(() => this.actions$.pipe(
-	// 	ofType(ProjectAction.addWalletSuccess),
-	// 	switchMap(({address}) => of(ProjectAction.loadPositions({address})))
-	// ));
-
 	generateWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.generateWallet),
 		switchMap(({projectId}) => this.modalDialogFactory.show(GenerateWalletDialogComponent)

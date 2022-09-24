@@ -26,7 +26,6 @@ import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-re
 import { EnumInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/enum-input/enum-input.component';
 import { TokenIdentifierInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/token-identifier-input/token-identifier-input.component';
 import { StructInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/struct-input/struct-input.component';
-import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
 	declarations: [
@@ -51,17 +50,16 @@ import { MatSelectModule } from '@angular/material/select';
 		ScQueryResultComponent,
 		ScQueryResultElementComponent,
 		ScTxResultComponent,
-  EnumInputComponent,
-  TokenIdentifierInputComponent,
-  StructInputComponent,
+		EnumInputComponent,
+		TokenIdentifierInputComponent,
+		StructInputComponent,
 	],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        CoreModule,
-        FormsModule,
-        MatSelectModule
-    ],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		CoreModule,
+		FormsModule,
+	],
 	exports: [
 		ScViewerComponent,
 		TokenViewerComponent,
