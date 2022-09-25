@@ -56,22 +56,6 @@ export class ProjectEffect {
 			)),
 		)));
 
-	deleteWallet$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.deleteWallet),
-		switchMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete wallet',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
-				map(() => action),
-			);
-		}),
-		switchMap(({projectId, address}) => this.dataProvider.deleteWallet(projectId, address).pipe(
-			map((project) => ProjectAction.deleteWalletSuccess({project})),
-			catchError(err => of(ProjectAction.deleteWalletError({err})),
-			)),
-		)));
-
 	generateWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.generateWallet),
 		switchMap(({projectId}) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
@@ -311,6 +295,70 @@ export class ProjectEffect {
 		joinNetwork(this.store),
 		map(([{identifier}, _, network]) => window.open(`${network.explorerUrl}/tokens/${identifier}`)),
 	), {dispatch: false});
+
+	deleteProject$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteProject),
+		switchMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete project',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		switchMap(({projectId}) => this.dataProvider.deleteProject(projectId).pipe(
+			map(() => ProjectAction.deleteProjectSuccess({projectId})),
+			catchError(err => of(ProjectAction.deleteProjectError({err})),
+			)),
+		)));
+
+	deleteSmartContract$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteSmartContract),
+		switchMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete smart contract',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		switchMap(({projectId, scId}) => this.dataProvider.deleteSmartContract(projectId, scId).pipe(
+			map((project) => ProjectAction.deleteSmartContractSuccess({project})),
+			catchError(err => of(ProjectAction.deleteSmartContractError({err})),
+			)),
+		)));
+
+	deleteToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteToken),
+		switchMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete token',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		switchMap(({projectId, identifier}) => this.dataProvider.deleteToken(projectId, identifier).pipe(
+			map((project) => ProjectAction.deleteTokenSuccess({project})),
+			catchError(err => of(ProjectAction.deleteTokenError({err})),
+			)),
+		)));
+
+	deleteWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWallet),
+		switchMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete wallet',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		switchMap(({projectId, address}) => this.dataProvider.deleteWallet(projectId, address).pipe(
+			map((project) => ProjectAction.deleteWalletSuccess({project})),
+			catchError(err => of(ProjectAction.deleteWalletError({err})),
+			)),
+		)));
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

@@ -57,10 +57,6 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
-	on(ProjectAction.deleteWalletSuccess, (state, { project }) => ({
-		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
-	})),
 	on(ProjectAction.addTokenSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
@@ -183,6 +179,22 @@ export const reducer = createReducer(
 	on(ProjectAction.renameWalletSuccess, (state, { project, tabs}) => ({
 		...state,
 		tabs,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.deleteProjectSuccess, (state, { projectId }) => ({
+		...state,
+		projects: state.projects.filter(p => p.id !== projectId),
+	})),
+	on(ProjectAction.deleteSmartContractSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.deleteTokenSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.deleteWalletSuccess, (state, { project }) => ({
+		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
 );
