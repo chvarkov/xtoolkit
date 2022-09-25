@@ -277,7 +277,7 @@ export class ProjectEffect {
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
 		switchMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
-			title: 'Rename project',
+			title: 'Rename wallet',
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, address, name})),
 		)),
