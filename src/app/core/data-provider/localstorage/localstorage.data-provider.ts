@@ -115,6 +115,31 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
+	renameSmartContract(projectId: string, scId: string, name: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(p => p.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					const sc = project.smartContracts.find(sc => sc.id === scId);
+
+					if (!sc) {
+						throw new Error('Smart contract not found');
+					}
+
+					sc.name = name;
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project> {
 		return this.getProjects()
 			.pipe(

@@ -274,6 +274,19 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameSmartContract$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameSmartContract),
+		switchMap(({projectId, scId}) => this.modalDialogFactory.show(RenameDialogComponent, {
+			title: 'Rename smart contract',
+		}).afterSubmit$().pipe(
+			map(({name}) => ({projectId, scId, name})),
+		)),
+		switchMap(({projectId, scId, name}) => this.dataProvider.renameSmartContract(projectId, scId, name).pipe(
+			map((project) => ProjectAction.renameSmartContractSuccess({project})),
+			catchError(err => of(ProjectAction.renameSmartContractError({err})))
+		))),
+	);
+
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
 		switchMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
@@ -281,7 +294,7 @@ export class ProjectEffect {
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, address, name})),
 		)),
-		switchMap(({projectId, address, name}) => this.dataProvider.renameWallet(projectId,address, name).pipe(
+		switchMap(({projectId, address, name}) => this.dataProvider.renameWallet(projectId, address, name).pipe(
 			map((project) => ProjectAction.renameWalletSuccess({project})),
 			catchError(err => of(ProjectAction.renameWalletError({err})))
 		))),
