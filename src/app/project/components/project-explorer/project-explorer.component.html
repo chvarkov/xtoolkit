@@ -14,7 +14,10 @@
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
 		<ng-container actions>
 			<app-dropdown-menu horizontal="left">
-				<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="drive_file_rename_outline"
+										text="Rename"
+										(click)="renameProject(project.id)">
+				</app-dropdown-menu-item>
 				<app-dropdown-menu-item icon="public" text="Change network"></app-dropdown-menu-item>
 				<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
 			</app-dropdown-menu>
@@ -102,7 +105,10 @@
 										 [name]="wallet.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename" ></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="drive_file_rename_outline"
+														text="Rename"
+														(click)="renameWallet(project.id, wallet.address)">
+								</app-dropdown-menu-item>
 								<app-dropdown-menu-item icon="key" text="Export keys" ></app-dropdown-menu-item>
 								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
 							</app-dropdown-menu>

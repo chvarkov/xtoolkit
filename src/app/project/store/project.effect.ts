@@ -19,6 +19,7 @@ import { joinNetwork } from './operators/join-network';
 import { isValidAddress } from '../../core/validators/address-validator';
 import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
 import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
+import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -259,6 +260,32 @@ export class ProjectEffect {
 			this.modalDialogFactory.show(ExportMnemonicDialogComponent, wallet);
 		}),
 	), {dispatch: false});
+
+	renameProject$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameProject),
+		switchMap(({projectId}) => this.modalDialogFactory.show(RenameDialogComponent, {
+			title: 'Rename project',
+		}).afterSubmit$().pipe(
+			map(({name}) => ({projectId, name})),
+		)),
+		switchMap(({projectId, name}) => this.dataProvider.renameProject(projectId, name).pipe(
+			map((project) => ProjectAction.renameProjectSuccess({project})),
+			catchError(err => of(ProjectAction.renameProjectError({err})))
+		))),
+	);
+
+	renameWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameWallet),
+		switchMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
+			title: 'Rename project',
+		}).afterSubmit$().pipe(
+			map(({name}) => ({projectId, address, name})),
+		)),
+		switchMap(({projectId, address, name}) => this.dataProvider.renameWallet(projectId,address, name).pipe(
+			map((project) => ProjectAction.renameWalletSuccess({project})),
+			catchError(err => of(ProjectAction.renameWalletError({err})))
+		))),
+	);
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

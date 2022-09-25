@@ -48,4 +48,12 @@ export class ProjectExplorerComponent implements OnInit {
 						 componentId: string): void {
 		this.store.dispatch(ProjectAction.openProjectTab({projectId, title, componentType, componentId}));
 	}
+
+	renameProject(projectId: string): void {
+		this.store.dispatch(ProjectAction.renameProject({projectId}));
+	}
+
+	renameWallet(projectId: string, address: string): void {
+		this.store.dispatch(ProjectAction.renameWallet({projectId, address}));
+	}
 }
