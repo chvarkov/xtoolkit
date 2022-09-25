@@ -53,6 +53,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.renameProject({projectId}));
 	}
 
+	renameSmartContract(projectId: string, scId: string): void {
+		this.store.dispatch(ProjectAction.renameSmartContract({projectId, scId}));
+	}
+
 	renameWallet(projectId: string, address: string): void {
 		this.store.dispatch(ProjectAction.renameWallet({projectId, address}));
 	}

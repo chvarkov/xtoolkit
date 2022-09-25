@@ -39,7 +39,10 @@
 						[name]="sc.name || sc.abi.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="drive_file_rename_outline" text="Rename"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="drive_file_rename_outline"
+														text="Rename"
+														(click)="renameSmartContract(project.id, sc.id)">
+								</app-dropdown-menu-item>
 								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
 							</app-dropdown-menu>
 						</ng-container>

@@ -59,6 +59,8 @@ export interface DataProvider {
 
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 
+	renameSmartContract(projectId: string, scId: string, name: string): Observable<Project>;
+
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
 
 	renameProject(projectId: string, name: string): Observable<Project>;
