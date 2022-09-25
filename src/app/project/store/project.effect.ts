@@ -306,8 +306,11 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId}) => this.dataProvider.deleteProject(projectId).pipe(
-			map(() => ProjectAction.deleteProjectSuccess({projectId})),
+		switchMap(({projectId}) => forkJoin([
+			this.dataProvider.deleteProject(projectId),
+			this.personalSettingsManager.deleteComponent(projectId, 'project', projectId),
+		]).pipe(
+			map(([_, tabsData]) => ProjectAction.deleteProjectSuccess({projectId, tabsData})),
 			catchError(err => of(ProjectAction.deleteProjectError({err})),
 			)),
 		)));
@@ -322,8 +325,11 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId, scId}) => this.dataProvider.deleteSmartContract(projectId, scId).pipe(
-			map((project) => ProjectAction.deleteSmartContractSuccess({project})),
+		switchMap(({projectId, scId}) => forkJoin([
+			this.dataProvider.deleteSmartContract(projectId, scId),
+			this.personalSettingsManager.deleteComponent(projectId, 'sc', scId),
+		]).pipe(
+			map(([project, tabsData]) => ProjectAction.deleteSmartContractSuccess({project, tabsData})),
 			catchError(err => of(ProjectAction.deleteSmartContractError({err})),
 			)),
 		)));
@@ -338,8 +344,11 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId, identifier}) => this.dataProvider.deleteToken(projectId, identifier).pipe(
-			map((project) => ProjectAction.deleteTokenSuccess({project})),
+		switchMap(({projectId, identifier}) => forkJoin([
+			this.dataProvider.deleteToken(projectId, identifier),
+			this.personalSettingsManager.deleteComponent(projectId, 'token', identifier),
+		]).pipe(
+			map(([project, tabsData]) => ProjectAction.deleteTokenSuccess({project, tabsData})),
 			catchError(err => of(ProjectAction.deleteTokenError({err})),
 			)),
 		)));
@@ -354,8 +363,11 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId, address}) => this.dataProvider.deleteWallet(projectId, address).pipe(
-			map((project) => ProjectAction.deleteWalletSuccess({project})),
+		switchMap(({projectId, address}) => forkJoin([
+			this.dataProvider.deleteWallet(projectId, address),
+				this.personalSettingsManager.deleteComponent(projectId, 'wallet', address),
+		]).pipe(
+			map(([project, tabsData]) => ProjectAction.deleteWalletSuccess({project, tabsData})),
 			catchError(err => of(ProjectAction.deleteWalletError({err})),
 			)),
 		)));

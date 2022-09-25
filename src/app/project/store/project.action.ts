@@ -109,19 +109,19 @@ export class ProjectAction {
 	static readonly exploreToken = createAction(`[${ProjectAction.name}] explore token`, props<{projectId: string, identifier: string}>());
 
 	static readonly deleteProject = createAction(`[${ProjectAction.name}] delete project [...]`, props<{projectId: string}>());
-	static readonly deleteProjectSuccess = createAction(`[${ProjectAction.name}] delete project [OK]`, props<{projectId: string}>());
+	static readonly deleteProjectSuccess = createAction(`[${ProjectAction.name}] delete project [OK]`, props<{projectId: string, tabsData: TabsData}>());
 	static readonly deleteProjectError = createAction(`[${ProjectAction.name}] delete project [ERR]`, props<{err: Error}>());
 
 	static readonly deleteSmartContract = createAction(`[${ProjectAction.name}] delete smart contract [...]`, props<{projectId: string, scId: string}>());
-	static readonly deleteSmartContractSuccess = createAction(`[${ProjectAction.name}] delete smart contract [OK]`, props<{project: Project}>());
+	static readonly deleteSmartContractSuccess = createAction(`[${ProjectAction.name}] delete smart contract [OK]`, props<{project: Project, tabsData: TabsData}>());
 	static readonly deleteSmartContractError = createAction(`[${ProjectAction.name}] delete smart contract [ERR]`, props<{err: Error}>());
 
 	static readonly deleteToken = createAction(`[${ProjectAction.name}] delete token [...]`, props<{projectId: string, identifier: string}>());
-	static readonly deleteTokenSuccess = createAction(`[${ProjectAction.name}] delete token [OK]`, props<{project: Project}>());
+	static readonly deleteTokenSuccess = createAction(`[${ProjectAction.name}] delete token [OK]`, props<{project: Project, tabsData: TabsData}>());
 	static readonly deleteTokenError = createAction(`[${ProjectAction.name}] delete token [ERR]`, props<{err: Error}>());
 
 	static readonly deleteWallet = createAction(`[${ProjectAction.name}] delete wallet [...]`, props<{projectId: string, address: string}>());
-	static readonly deleteWalletSuccess = createAction(`[${ProjectAction.name}] delete wallet [OK]`, props<{project: Project}>());
+	static readonly deleteWalletSuccess = createAction(`[${ProjectAction.name}] delete wallet [OK]`, props<{project: Project, tabsData: TabsData}>());
 	static readonly deleteWalletError = createAction(`[${ProjectAction.name}] delete wallet [ERR]`, props<{err: Error}>());
 }
 

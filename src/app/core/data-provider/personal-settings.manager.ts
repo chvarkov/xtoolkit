@@ -29,6 +29,8 @@ export interface PersonalSettingsManager {
 		   componentId: string,
 		   newName: string): Observable<TabsData>;
 
+	deleteComponent(projectId: string, componentType: ProjectComponentType, componentId: string): Observable<TabsData>;
+
 	closeTab(index: number): Observable<TabsData>;
 
 	moveTab(prevIndex: number, currentIndex: number): Observable<TabsData>;
