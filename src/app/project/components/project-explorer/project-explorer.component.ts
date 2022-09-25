@@ -60,4 +60,24 @@ export class ProjectExplorerComponent implements OnInit {
 	renameWallet(projectId: string, address: string): void {
 		this.store.dispatch(ProjectAction.renameWallet({projectId, address}));
 	}
+
+	exploreToken(projectId: string, identifier: string): void {
+		this.store.dispatch(ProjectAction.exploreToken({projectId, identifier}));
+	}
+
+	deleteProject(projectId: string): void {
+		this.store.dispatch(ProjectAction.deleteProject({projectId}));
+	}
+
+	deleteSmartContract(projectId: string, scId: string): void {
+		this.store.dispatch(ProjectAction.deleteSmartContract({projectId, scId}));
+	}
+
+	deleteToken(projectId: string, identifier: string): void {
+		this.store.dispatch(ProjectAction.deleteToken({projectId, identifier}));
+	}
+
+	deleteWallet(projectId: string, address: string): void {
+		this.store.dispatch(ProjectAction.deleteWallet({projectId, address}));
+	}
 }

@@ -57,9 +57,13 @@ export interface DataProvider {
 
 	createProject(name: string, chainId: string): Observable<Project>;
 
+	deleteProject(projectId: string): Observable<void>;
+
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 
 	renameSmartContract(projectId: string, scId: string, name: string): Observable<Project>;
+
+	deleteSmartContract(projectId: string, scId: string): Observable<Project>;
 
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project>;
 
@@ -71,7 +75,9 @@ export interface DataProvider {
 
 	deleteWallet(projectId: string, address: string): Observable<Project>;
 
-	addToken(projectId: string, tokenAddress: string): Observable<Project>;
+	addToken(projectId: string, identifier: string): Observable<Project>;
+
+	deleteToken(projectId: string, identifier: string): Observable<Project>;
 
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]>;
 

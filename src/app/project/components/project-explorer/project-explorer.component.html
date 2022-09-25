@@ -19,7 +19,10 @@
 										(click)="renameProject(project.id)">
 				</app-dropdown-menu-item>
 				<app-dropdown-menu-item icon="public" text="Change network"></app-dropdown-menu-item>
-				<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="delete"
+										text="Delete"
+										(click)="deleteProject(project.id)">
+				</app-dropdown-menu-item>
 			</app-dropdown-menu>
 		</ng-container>
 		<div innerElements>
@@ -43,7 +46,10 @@
 														text="Rename"
 														(click)="renameSmartContract(project.id, sc.id)">
 								</app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete"
+														text="Delete"
+														(click)="deleteSmartContract(project.id, sc.id)">
+								</app-dropdown-menu-item>
 							</app-dropdown-menu>
 						</ng-container>
 					</app-project-element>
@@ -67,8 +73,14 @@
 										 [name]="tokenAddress">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="search" text="Explore"></app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="search"
+														text="Explore"
+														(click)="exploreToken(project.id, tokenAddress)">
+								</app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete"
+														text="Delete"
+														(click)="deleteToken(project.id, tokenAddress)">
+								</app-dropdown-menu-item>
 							</app-dropdown-menu>
 						</ng-container>
 					</app-project-element>
@@ -113,7 +125,10 @@
 														(click)="renameWallet(project.id, wallet.address)">
 								</app-dropdown-menu-item>
 								<app-dropdown-menu-item icon="key" text="Export keys" ></app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete"
+														text="Delete"
+														(click)="deleteWallet(project.id, wallet.address)">
+								</app-dropdown-menu-item>
 							</app-dropdown-menu>
 						</ng-container>
 					</app-project-element>

@@ -45,6 +45,68 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		);
 	}
 
+	rename(projectId: string,
+		   componentType: ProjectComponentType,
+		   componentId: string,
+		   newName: string): Observable<TabsData> {
+		return this.getOpenedTabs().pipe(
+			map(({ tabs, selectedIndex }) => {
+				tabs = tabs || [];
+
+				const tab = tabs.find(t => t.projectId === projectId && t.componentType === componentType && componentId === componentId);
+
+				if (tab) {
+					tab.title = newName;
+
+					this.set(this.openedTabsKey, tabs);
+				}
+
+				return { tabs, selectedIndex };
+			}),
+		);
+	}
+
+	deleteComponent(projectId: string, componentType: ProjectComponentType, componentId: string): Observable<TabsData> {
+		return this.getOpenedTabs().pipe(
+			map(({ tabs, selectedIndex }) => {
+				if (!tabs?.length) {
+					return { tabs: [] };
+				}
+
+				if (componentType === 'project' && projectId !== componentId) {
+					throw new Error('ProjectId is not equals to ComponentId for Project component');
+				}
+
+				const selectedTab = tabs[selectedIndex || 0] ? {...tabs[selectedIndex || 0]} : undefined;
+
+				const isShouldDeleted = (t?: OpenedProjectTab) => t?.projectId === projectId &&
+					t?.componentType === componentType &&
+					t?.componentId === componentId;
+
+				const isSelectedShouldBeDeleted = isShouldDeleted(selectedTab);
+
+				tabs = componentType === 'project'
+					? tabs.filter(t => t.projectId !== componentId)
+					: tabs.filter(t => !isShouldDeleted(t));
+
+				let index = selectedTab && !isSelectedShouldBeDeleted
+					? tabs.findIndex(t => t.projectId === selectedTab.projectId &&
+						t.componentType === selectedTab.componentType &&
+						t.componentId === selectedTab.componentId)
+					: 0;
+
+				if (index === -1) {
+					index = 0;
+				}
+
+				this.set(this.openedTabsKey, tabs);
+				this.set(this.currentTabIndexKey, index);
+
+				return { tabs, selectedIndex: index };
+			}),
+		);
+	}
+
 	closeTab(index: number): Observable<TabsData> {
 		return this.getOpenedTabs().pipe(
 			map(({ tabs }) => {
