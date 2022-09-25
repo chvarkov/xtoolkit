@@ -109,5 +109,7 @@ export class ProjectAction {
 	static readonly renameWallet = createAction(`[${ProjectAction.name}] rename wallet [...]`, props<{projectId: string, address: string}>());
 	static readonly renameWalletSuccess = createAction(`[${ProjectAction.name}] rename wallet [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameWalletError = createAction(`[${ProjectAction.name}] rename wallet [ERR]`, props<{err: Error}>());
+
+	static readonly exploreToken = createAction(`[${ProjectAction.name}] explore token`, props<{projectId: string, identifier: string}>());
 }
 

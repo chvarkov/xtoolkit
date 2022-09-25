@@ -306,6 +306,12 @@ export class ProjectEffect {
 		))),
 	);
 
+	exploreToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.exploreToken),
+		joinNetwork(this.store),
+		map(([{identifier}, _, network]) => window.open(`${network.explorerUrl}/tokens/${identifier}`)),
+	), {dispatch: false});
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,

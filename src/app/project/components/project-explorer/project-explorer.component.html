@@ -67,7 +67,10 @@
 										 [name]="tokenAddress">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="search" text="Explore"></app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="search"
+														text="Explore"
+														(click)="exploreToken(project.id, tokenAddress)">
+								</app-dropdown-menu-item>
 								<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
 							</app-dropdown-menu>
 						</ng-container>

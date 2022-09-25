@@ -60,4 +60,8 @@ export class ProjectExplorerComponent implements OnInit {
 	renameWallet(projectId: string, address: string): void {
 		this.store.dispatch(ProjectAction.renameWallet({projectId, address}));
 	}
+
+	exploreToken(projectId: string, identifier: string): void {
+		this.store.dispatch(ProjectAction.exploreToken({projectId, identifier}));
+	}
 }
