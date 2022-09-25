@@ -45,6 +45,27 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		);
 	}
 
+	rename(projectId: string,
+		   componentType: ProjectComponentType,
+		   componentId: string,
+		   newName: string): Observable<TabsData> {
+		return this.getOpenedTabs().pipe(
+			map(({ tabs, selectedIndex }) => {
+				tabs = tabs || [];
+
+				const tab = tabs.find(t => t.projectId === projectId && t.componentType === componentType && componentId === componentId);
+
+				if (tab) {
+					tab.title = newName;
+
+					this.set(this.openedTabsKey, tabs);
+				}
+
+				return { tabs, selectedIndex };
+			}),
+		);
+	}
+
 	closeTab(index: number): Observable<TabsData> {
 		return this.getOpenedTabs().pipe(
 			map(({ tabs }) => {

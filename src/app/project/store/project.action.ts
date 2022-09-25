@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { GeneratedWallet, Project } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
-import { TabsData } from '../../core/data-provider/personal-settings.manager';
+import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';
 import { AbiJson } from '../../core/elrond/builders/sc.builder';
 import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
@@ -103,11 +103,11 @@ export class ProjectAction {
 	static readonly renameProjectError = createAction(`[${ProjectAction.name}] rename project [ERR]`, props<{err: Error}>());
 
 	static readonly renameSmartContract = createAction(`[${ProjectAction.name}] rename smart contract [...]`, props<{projectId: string, scId: string}>());
-	static readonly renameSmartContractSuccess = createAction(`[${ProjectAction.name}] rename smart contract [OK]`, props<{project: Project}>());
+	static readonly renameSmartContractSuccess = createAction(`[${ProjectAction.name}] rename smart contract [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameSmartContractError = createAction(`[${ProjectAction.name}] rename smart contract [ERR]`, props<{err: Error}>());
 
 	static readonly renameWallet = createAction(`[${ProjectAction.name}] rename wallet [...]`, props<{projectId: string, address: string}>());
-	static readonly renameWalletSuccess = createAction(`[${ProjectAction.name}] rename wallet [OK]`, props<{project: Project}>());
+	static readonly renameWalletSuccess = createAction(`[${ProjectAction.name}] rename wallet [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameWalletError = createAction(`[${ProjectAction.name}] rename wallet [ERR]`, props<{err: Error}>());
 }
 

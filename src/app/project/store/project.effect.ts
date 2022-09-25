@@ -281,8 +281,11 @@ export class ProjectEffect {
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, scId, name})),
 		)),
-		switchMap(({projectId, scId, name}) => this.dataProvider.renameSmartContract(projectId, scId, name).pipe(
-			map((project) => ProjectAction.renameSmartContractSuccess({project})),
+		switchMap(({projectId, scId, name}) => forkJoin([
+			this.dataProvider.renameSmartContract(projectId, scId, name),
+			this.personalSettingsManager.rename(projectId, 'sc', scId, name),
+		]).pipe(
+			map(([project, { tabs }]) => ProjectAction.renameSmartContractSuccess({project, tabs})),
 			catchError(err => of(ProjectAction.renameSmartContractError({err})))
 		))),
 	);
@@ -294,8 +297,11 @@ export class ProjectEffect {
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, address, name})),
 		)),
-		switchMap(({projectId, address, name}) => this.dataProvider.renameWallet(projectId, address, name).pipe(
-			map((project) => ProjectAction.renameWalletSuccess({project})),
+		switchMap(({projectId, address, name}) => forkJoin([
+			this.dataProvider.renameWallet(projectId, address, name),
+			this.personalSettingsManager.rename(projectId, 'wallet', address, name),
+		]).pipe(
+			map(([project, {tabs}]) => ProjectAction.renameWalletSuccess({project, tabs})),
 			catchError(err => of(ProjectAction.renameWalletError({err})))
 		))),
 	);
