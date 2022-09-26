@@ -34,8 +34,12 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.loadProjects());
 	}
 
-	addToken(projectId: string): void {
-		this.store.dispatch(ProjectAction.addToken({projectId}));
+	importToken(projectId: string): void {
+		this.store.dispatch(ProjectAction.importToken({projectId}));
+	}
+
+	issueToken(projectId: string): void {
+		this.store.dispatch(ProjectAction.issueToken({projectId}));
 	}
 
 	generateWallet(projectId: string): void {

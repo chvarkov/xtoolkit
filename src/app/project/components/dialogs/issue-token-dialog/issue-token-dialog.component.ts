@@ -1,26 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
 import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { GeneratedWallet, Project } from '../../../../core/data-provider/data-provider';
-import { ProjectSelector } from '../../../store/project.selector';
-import { ESDTInteractor } from '../../../../core/elrond/services/estd-intercator';
+import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
+import { ITokenInfo } from '../../../../core/elrond/interfaces/token-info';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { ESDTInteractor } from '../../../../core/elrond/services/estd-intercator';
+import { ProjectSelector } from '../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ITokenInfo } from '../../../../core/elrond/interfaces/token-info';
-import { ProjectAction } from '../../../store/project.action';
 
 @Component({
-	selector: 'app-add-token-dialog',
-	templateUrl: './add-token-dialog.component.html',
-	styleUrls: ['./add-token-dialog.component.scss']
+	selector: 'app-issue-token-dialog',
+	templateUrl: './issue-token-dialog.component.html',
+	styleUrls: ['./issue-token-dialog.component.scss']
 })
-export class AddTokenDialogComponent extends AbstractModalDialog implements OnInit {
-	tokenId = '';
-
+export class IssueTokenDialogComponent extends AbstractModalDialog implements OnInit {
 	wallet!: GeneratedWallet;
 
 	project$?: Observable<Project | undefined>;
@@ -41,7 +38,7 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 
 	ngOnInit(): void {
 		this.dialogRef.options.width = '400px';
-		this.dialogRef.options.height = '420px';
+		this.dialogRef.options.height = '320px';
 		this.project$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId));
 		this.network$ = this.project$.pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
@@ -56,26 +53,21 @@ export class AddTokenDialogComponent extends AbstractModalDialog implements OnIn
 		});
 	}
 
-	submit(): void {
-		this.dialogRef.submit(this.tokenId.trim());
+	onChangeIssuerWallet(wallet: GeneratedWallet): void {
+		this.wallet = wallet;
 	}
 
-	async issueEstd(network: INetworkEnvironment, wallet: GeneratedWallet): Promise<void> {
+	async submit(network: INetworkEnvironment, wallet: GeneratedWallet): Promise<void> {
 		if (!this.issueTokenForm.valid) {
+			return;
+		}
+
+		if (!this.wallet) {
 			return;
 		}
 
 		const txHash = await this.estdInteractor.issueFungibleToken(network, wallet, this.issueTokenForm.value);
 
-		console.log('txHash ' + txHash);
-	}
-
-	onChangeSearchInput(e: Event): void {
-		const value = (<HTMLInputElement>e.target).value;
-
-		this.store.dispatch(ProjectAction.searchTokens({
-			projectId: this.dialogRef.data.projectId,
-			options: {search: value},
-		}))
+		this.dialogRef.submit(txHash);
 	}
 }

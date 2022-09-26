@@ -12,9 +12,10 @@ import { GenerateWalletDialogComponent } from './components/dialogs/generate-wal
 import { UploadAbiDialogComponent } from './components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import { ProjectExplorerComponent } from './components/project-explorer/project-explorer.component';
 import { ProjectElementComponent } from './components/project-element/project-element.component';
-import { AddTokenDialogComponent } from './components/dialogs/add-token-dialog/add-token-dialog.component';
 import { NetworkModule } from '../network/network.module';
 import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
+import { IssueTokenDialogComponent } from './components/dialogs/issue-token-dialog/issue-token-dialog.component';
+import { ImportTokenDialogComponent } from './components/dialogs/import-token-dialog/import-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -23,8 +24,9 @@ import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemo
 		UploadAbiDialogComponent,
 		ProjectExplorerComponent,
 		ProjectElementComponent,
-		AddTokenDialogComponent,
-  ExportMnemonicDialogComponent,
+		ExportMnemonicDialogComponent,
+		IssueTokenDialogComponent,
+		ImportTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

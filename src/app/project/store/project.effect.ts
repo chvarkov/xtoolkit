@@ -11,7 +11,6 @@ import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
 import { GenerateWalletDialogComponent } from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import { UploadAbiDialogComponent } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
-import { AddTokenDialogComponent } from '../components/dialogs/add-token-dialog/add-token-dialog.component';
 import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/data-provider/personal-settings.manager';
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
@@ -20,6 +19,8 @@ import { isValidAddress } from '../../core/validators/address-validator';
 import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
 import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
 import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
+import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
+import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dialog/issue-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -89,18 +90,32 @@ export class ProjectEffect {
 		))),
 	);
 
-	addToken$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.addToken),
-		switchMap(({projectId}) => this.modalDialogFactory.show(AddTokenDialogComponent, {projectId})
+	importToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.importToken),
+		switchMap(({projectId}) => this.modalDialogFactory.show(ImportTokenDialogComponent, {projectId})
 			.afterSubmit$()
 			.pipe(
 				switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(
-					map((updatedProject) => ProjectAction.addTokenSuccess({project: updatedProject}))
+					map((updatedProject) => ProjectAction.importTokenSuccess({project: updatedProject}))
 				)),
 			),
 		),
-		catchError(err => of(ProjectAction.addTokenError({err}))),
+		catchError(err => of(ProjectAction.importTokenError({err}))),
 	));
+
+	issueToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.issueToken),
+		switchMap(({projectId}) => this.modalDialogFactory.show(IssueTokenDialogComponent, {projectId})
+			.afterSubmit$()
+			.pipe(
+				// TODO: Implement waiting tx
+				// switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(
+				// 	map((updatedProject) => ProjectAction.importTokenSuccess({project: updatedProject}))
+				// )),
+			),
+		),
+		catchError(err => of(ProjectAction.importTokenError({err}))),
+	), {dispatch: false});
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectTabs),
