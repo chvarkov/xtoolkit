@@ -24,10 +24,11 @@ export class ImportTokenDialogComponent extends AbstractModalDialog implements O
 	}
 
 	ngOnInit(): void {
-		this.dialogRef.options.width = '400px';
+		this.dialogRef.options.width = '460px';
 		this.dialogRef.options.height = '420px';
 
 		this.tokens$ = this.store.select(ProjectSelector.tokens(this.dialogRef.data.projectId));
+		this.loadToken('');
 	}
 
 	submit(): void {
@@ -37,9 +38,13 @@ export class ImportTokenDialogComponent extends AbstractModalDialog implements O
 	onChangeSearchInput(e: Event): void {
 		const value = (<HTMLInputElement>e.target).value;
 
+		this.loadToken(value);
+	}
+
+	private loadToken(search: string): void {
 		this.store.dispatch(ProjectAction.searchTokens({
 			projectId: this.dialogRef.data.projectId,
-			options: {search: value},
+			options: {search},
 		}));
 	}
 }

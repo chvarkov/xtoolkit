@@ -62,7 +62,6 @@ export class IssueTokenDialogComponent extends AbstractModalDialog implements On
 			return;
 		}
 
-		console.log('wallet', wallet);
 		if (!this.wallet) {
 			return;
 		}

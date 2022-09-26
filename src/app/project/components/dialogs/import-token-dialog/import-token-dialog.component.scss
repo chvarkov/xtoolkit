@@ -1,13 +1,10 @@
 .content {
 	width: 100%;
-
-	.token-address {
-		width: 100%;
-	}
+	padding: 6px;
 
 	.search-input {
-		padding: 6px;
 		width: 100%;
+		padding: 6px 0;
 
 		input {
 			width: 100%;
@@ -18,13 +15,16 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		height: 190px;
+		margin-top: 6px;
+		height: 250px;
 		overflow-y: auto;
+		border: solid 1px var(--border-low-color);
+		border-radius: 2px;
 
 		.token-element {
 			padding: 6px;
 			width: 100%;
-			border-bottom: var(--border-accent-color);
+			border-bottom: solid 1px var(--border-low-color);
 			cursor: pointer;
 			position: relative;
 
