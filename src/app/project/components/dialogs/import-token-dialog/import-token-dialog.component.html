@@ -1,0 +1,27 @@
+<app-modal-dialog title="Import token" [dialogRef]="dialogRef">
+	<div content class="content">
+		<div class="search-input">
+			<input (change)="onChangeSearchInput($event)" placeholder="Search token">
+		</div>
+
+		<div class="token-list" *ngIf="tokens$ | async as tokens">
+			<div class="token-element"
+				 *ngFor="let token of tokens"
+				 (click)="tokenId = token.identifier">
+				{{token.identifier}} - {{token.name}}
+
+				<span class="material-icons selected" *ngIf="tokenId === token.identifier">check_circle</span>
+			</div>
+		</div>
+	</div>
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!tokenId"
+					(click)="submit()">
+				Add
+			</button>
+		</div>
+	</div>
+</app-modal-dialog>

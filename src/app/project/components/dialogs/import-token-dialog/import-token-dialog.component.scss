@@ -1,8 +1,6 @@
 .content {
 	width: 100%;
 
-
-
 	.token-address {
 		width: 100%;
 	}
@@ -36,28 +34,6 @@
 				right: 4px;
 				color: var(--static-green);
 			}
-		}
-	}
-}
-
-.issue-form {
-	padding: 8px;
-	display: flex;
-	flex-direction: column;
-
-	.form-control {
-		display: flex;
-		flex-direction: row;
-		width: 100%;
-		padding: 4px 0;
-
-		.label {
-			width: 160px;
-		}
-
-		.field {
-			display: flex;
-			flex: 1;
 		}
 	}
 }

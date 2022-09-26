@@ -41,9 +41,13 @@ export class ProjectAction {
 	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{project: Project}>());
 	static readonly setScAddressError = createAction(`[${ProjectAction.name}] set sc address [ERR]`, props<{err: Error}>());
 
-	static readonly addToken = createAction(`[${ProjectAction.name}] add token [...]`, props<{projectId: string}>());
-	static readonly addTokenSuccess = createAction(`[${ProjectAction.name}] add token [OK]`, props<{project: Project}>());
-	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
+	static readonly importToken = createAction(`[${ProjectAction.name}] import token [...]`, props<{projectId: string}>());
+	static readonly importTokenSuccess = createAction(`[${ProjectAction.name}] import token [OK]`, props<{project: Project}>());
+	static readonly importTokenError = createAction(`[${ProjectAction.name}] import token [ERR]`, props<{err: Error}>());
+
+	static readonly issueToken = createAction(`[${ProjectAction.name}] issue token [...]`, props<{projectId: string}>());
+	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`, props<{project: Project}>());
+	static readonly issueTokenError = createAction(`[${ProjectAction.name}] issue token [ERR]`, props<{err: Error}>());
 
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());

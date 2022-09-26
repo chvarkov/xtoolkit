@@ -57,7 +57,7 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
-	on(ProjectAction.addTokenSuccess, (state, { project }) => ({
+	on(ProjectAction.importTokenSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
