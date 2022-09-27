@@ -11,7 +11,9 @@
 	</div>
 	<div *ngFor="let position of positions" class="position">
 		<div class="token-info">
-			<img class="token-img" [src]="position.assets?.svgUrl" />
+			<img class="token-img"
+				 [ngClass]="{'empty-token-img': !position.assets?.svgUrl}"
+				 [src]="position.assets?.svgUrl || '/assets/images/token-icon.svg'" />
 			<div class="token-id">{{position.identifier}}</div>
 		</div>
 
