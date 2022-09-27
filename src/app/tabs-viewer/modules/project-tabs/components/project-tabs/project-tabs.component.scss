@@ -55,8 +55,6 @@
 				margin-right: 4px;
 			}
 		}
-
-
 	}
 }
 
@@ -89,6 +87,7 @@
 	.title {
 		display: flex;
 		align-items: center;
+		white-space: nowrap;
 	}
 
 	.icon {
