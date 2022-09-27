@@ -20,6 +20,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	private readonly networksKey = `${this.globalPrefix}.networks`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
 	private readonly actionHistoryKey = `${this.globalPrefix}.action-history`;
+	private readonly tokenIssueWaitListKey = `${this.globalPrefix}.token-issue-wait-list`;
 
 	getNetworks(): Observable<INetworkEnvironment[]> {
 		const networks: INetworkEnvironment[] | null = this.get(this.networksKey);
@@ -351,6 +352,50 @@ export class LocalstorageDataProvider implements DataProvider {
 					this.set(this.actionHistoryKey, list);
 
 					return list;
+				}),
+			);
+	}
+
+	getTokenIssueWaitList(): Observable<string[]> {
+		const waitList: string[] | undefined = this.get(this.tokenIssueWaitListKey);
+
+		if (!waitList) {
+			this.set(this.tokenIssueWaitListKey, []);
+
+			return of([]);
+		}
+
+		return of(waitList);
+	}
+
+	addTokenIssueTransaction(txHash: string): Observable<string[]> {
+		return this.getTokenIssueWaitList()
+			.pipe(
+				map(waitList => {
+					const isAlreadyExists = !!waitList.find(tx => tx === txHash);
+
+					if (isAlreadyExists) {
+						return waitList;
+					}
+
+					waitList.push(txHash);
+
+					this.set(this.tokenIssueWaitListKey, waitList);
+
+					return waitList;
+				}),
+			);
+	}
+
+	deleteTokenIssueTransaction(txHash: string): Observable<string[]> {
+		return this.getTokenIssueWaitList()
+			.pipe(
+				map(waitList => {
+					waitList = waitList.filter(tx => tx !== txHash);
+
+					this.set(this.tokenIssueWaitListKey, waitList);
+
+					return waitList;
 				}),
 			);
 	}

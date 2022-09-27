@@ -85,4 +85,10 @@ export interface DataProvider {
 	getActionHistory(): Observable<ActionHistoryElement[]>;
 
 	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
+
+	addTokenIssueTransaction(txHash: string): Observable<string[]>;
+
+	getTokenIssueWaitList(): Observable<string[]>;
+
+	deleteTokenIssueTransaction(txHash: string): Observable<string[]>;
 }
