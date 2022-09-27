@@ -1,5 +1,6 @@
 <div #selector class="select" [ngClass]="getCssClass('element')" (click)="switchShowOptions($event)">
-	{{defaultElement?.name || currentSelectedElement?.name || placeholder}}
+	<div class="label">{{defaultElement?.name || currentSelectedElement?.name || placeholder}}</div>
+	<div class="icon material-icons">expand_more</div>
 </div>
 
 <div class="options-container"
