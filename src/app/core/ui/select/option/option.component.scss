@@ -9,11 +9,11 @@
 	width: 100%;
 	box-sizing: border-box;
 	border-bottom: solid 1px var(--border-low-color);
-	background: var(--primary-bg);
+	background: var(--low-bg);
 	cursor: pointer;
 
 	&:hover {
-		background: var(--primary-darken-bg);
+		background: var(--border-low-color);
 		color: var(--text-accent-color);
 	}
 }

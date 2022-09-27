@@ -79,6 +79,7 @@
 	color: var(--primary-bg);
 	cursor: pointer;
 	text-align: center;
+	border-right: solid 1px var(--border-low-color);
 
 	&:hover {
 		border-radius: 2px;
