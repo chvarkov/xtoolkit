@@ -16,6 +16,7 @@ import { NetworkModule } from '../network/network.module';
 import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
 import { IssueTokenDialogComponent } from './components/dialogs/issue-token-dialog/issue-token-dialog.component';
 import { ImportTokenDialogComponent } from './components/dialogs/import-token-dialog/import-token-dialog.component';
+import { IsActiveProjectElementPipe } from './pipes/is-active-project-element.pipe';
 
 @NgModule({
 	declarations: [
@@ -27,6 +28,7 @@ import { ImportTokenDialogComponent } from './components/dialogs/import-token-di
 		ExportMnemonicDialogComponent,
 		IssueTokenDialogComponent,
 		ImportTokenDialogComponent,
+		IsActiveProjectElementPipe,
 	],
 	imports: [
 		CommonModule,

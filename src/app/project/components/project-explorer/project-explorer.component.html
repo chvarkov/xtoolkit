@@ -26,7 +26,8 @@
 			</app-dropdown-menu>
 		</ng-container>
 		<div innerElements>
-			<app-project-element [expandable]="true" name="Smart contracts">
+			<app-project-element [expandable]="true"
+								 name="Smart contracts">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
 						<app-dropdown-menu-item icon="upload_file"
@@ -39,6 +40,7 @@
 						(click)="openProjectComponent(project.id, sc.name || sc.abi.name, 'sc', sc.id)"
 						*ngFor="let sc of project.smartContracts"
 						type="sc"
+						[active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
 						[name]="sc.name || sc.abi.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
@@ -70,6 +72,7 @@
 					<app-project-element *ngFor="let tokenAddress of project.tokens"
 										 (click)="openProjectComponent(project.id, tokenAddress, 'token', tokenAddress)"
 										 type="token"
+										 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
 										 [name]="tokenAddress">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
@@ -117,6 +120,7 @@
 					<app-project-element *ngFor="let wallet of project.wallets"
 										 (click)="openProjectComponent(project.id, wallet.name, 'wallet', wallet.address)"
 										 type="wallet"
+										 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
 										 [name]="wallet.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
