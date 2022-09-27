@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GeneratedWallet, Project } from '../../core/data-provider/data-provider';
+import { GeneratedWallet, PendingTokenIssue, Project } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
 import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';
@@ -41,9 +41,11 @@ export class ProjectAction {
 	static readonly setScAddressSuccess = createAction(`[${ProjectAction.name}] set sc address [OK]`, props<{project: Project}>());
 	static readonly setScAddressError = createAction(`[${ProjectAction.name}] set sc address [ERR]`, props<{err: Error}>());
 
-	static readonly importToken = createAction(`[${ProjectAction.name}] import token [...]`, props<{projectId: string}>());
-	static readonly importTokenSuccess = createAction(`[${ProjectAction.name}] import token [OK]`, props<{project: Project}>());
-	static readonly importTokenError = createAction(`[${ProjectAction.name}] import token [ERR]`, props<{err: Error}>());
+	static readonly importToken = createAction(`[${ProjectAction.name}] import token`, props<{projectId: string}>());
+
+	static readonly addToken = createAction(`[${ProjectAction.name}] add token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly addTokenSuccess = createAction(`[${ProjectAction.name}] add token [OK]`, props<{projectId: string, identifier: string}>());
+	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
 
 	static readonly issueToken = createAction(`[${ProjectAction.name}] issue token [...]`, props<{projectId: string}>());
 	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`, props<{project: Project}>());
@@ -127,5 +129,17 @@ export class ProjectAction {
 	static readonly deleteWallet = createAction(`[${ProjectAction.name}] delete wallet [...]`, props<{projectId: string, address: string}>());
 	static readonly deleteWalletSuccess = createAction(`[${ProjectAction.name}] delete wallet [OK]`, props<{project: Project, tabsData: TabsData}>());
 	static readonly deleteWalletError = createAction(`[${ProjectAction.name}] delete wallet [ERR]`, props<{err: Error}>());
+
+	static readonly loadTokenIssueWaitList = createAction(`[${ProjectAction.name}] load token issue wait list [...]`);
+	static readonly loadTokenIssueWaitListSuccess = createAction(`[${ProjectAction.name}] load token issue wait list [OK]`, props<{waitList: PendingTokenIssue[]}>());
+	static readonly loadTokenIssueWaitListError = createAction(`[${ProjectAction.name}] load token issue wait list [ERR]`, props<{err: Error}>());
+
+	static readonly addTokenIssueTxToWaitList = createAction(`[${ProjectAction.name}] add token issue tx to wait list [...]`, props<{data: PendingTokenIssue}>());
+	static readonly addTokenIssueTxToWaitListSuccess = createAction(`[${ProjectAction.name}] add token issue tx to wait list [OK]`, props<{waitList: PendingTokenIssue[]}>());
+	static readonly addTokenIssueTxToWaitListError = createAction(`[${ProjectAction.name}] add token issue tx to wait list [ERR]`, props<{err: Error}>());
+
+	static readonly deleteTokenIssueTxFromWaitList = createAction(`[${ProjectAction.name}] delete token issue tx from wait list [...]`, props<{txHash: string}>());
+	static readonly deleteTokenIssueTxFromWaitListSuccess = createAction(`[${ProjectAction.name}] delete token issue tx from wait list [OK]`, props<{waitList: PendingTokenIssue[]}>());
+	static readonly deleteTokenIssueTxFromWaitListError = createAction(`[${ProjectAction.name}] delete token issue tx from wait list [ERR]`, props<{err: Error}>());
 }
 

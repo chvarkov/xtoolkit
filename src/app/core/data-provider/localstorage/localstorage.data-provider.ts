@@ -2,7 +2,7 @@ import {
 	ActionHistoryElement,
 	ActionStatus,
 	DataProvider,
-	GeneratedWallet,
+	GeneratedWallet, PendingTokenIssue,
 	Project,
 	ProjectScAbi
 } from '../data-provider';
@@ -20,6 +20,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	private readonly networksKey = `${this.globalPrefix}.networks`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
 	private readonly actionHistoryKey = `${this.globalPrefix}.action-history`;
+	private readonly tokenIssueWaitListKey = `${this.globalPrefix}.token-issue-wait-list`;
 
 	getNetworks(): Observable<INetworkEnvironment[]> {
 		const networks: INetworkEnvironment[] | null = this.get(this.networksKey);
@@ -351,6 +352,50 @@ export class LocalstorageDataProvider implements DataProvider {
 					this.set(this.actionHistoryKey, list);
 
 					return list;
+				}),
+			);
+	}
+
+	getTokenIssueWaitList(): Observable<PendingTokenIssue[]> {
+		const waitList: PendingTokenIssue[] | undefined = this.get(this.tokenIssueWaitListKey);
+
+		if (!waitList) {
+			this.set(this.tokenIssueWaitListKey, []);
+
+			return of([]);
+		}
+
+		return of(waitList);
+	}
+
+	addTokenIssueTransaction(data: PendingTokenIssue): Observable<PendingTokenIssue[]> {
+		return this.getTokenIssueWaitList()
+			.pipe(
+				map(waitList => {
+					const isAlreadyExists = !!waitList.find(item => item.txHash === data.txHash);
+
+					if (isAlreadyExists) {
+						return waitList;
+					}
+
+					waitList.push(data);
+
+					this.set(this.tokenIssueWaitListKey, waitList);
+
+					return waitList;
+				}),
+			);
+	}
+
+	deleteTokenIssueTransaction(txHash: string): Observable<PendingTokenIssue[]> {
+		return this.getTokenIssueWaitList()
+			.pipe(
+				map(waitList => {
+					waitList = waitList.filter(item => item.txHash !== txHash);
+
+					this.set(this.tokenIssueWaitListKey, waitList);
+
+					return waitList;
 				}),
 			);
 	}

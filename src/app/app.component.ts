@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NetworkAction } from './network/store/network.action';
 import { Observable } from 'rxjs';
@@ -7,20 +7,22 @@ import { ProjectSelector } from './project/store/project.selector';
 import { OpenedProjectTab } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
 import { map } from 'rxjs/operators';
+import { TokenIssueAwaiter } from './project/services/token-issue.awaiter';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 	title = 'elrond-sc';
 
 	openedTabs$: Observable<OpenedProjectTab[]>;
 
 	currentTabIndex$: Observable<number | undefined>;
 
-	constructor(private readonly store: Store) {
+	constructor(private readonly store: Store,
+				private readonly tokenIssueAwaiter: TokenIssueAwaiter) {
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 	}
@@ -30,6 +32,14 @@ export class AppComponent implements OnInit {
 		setTimeout(() => {
 			this.store.dispatch(ProjectAction.loadProjectTabs());
 		});
+
+		this.tokenIssueAwaiter.enable();
+
+		this.store.dispatch(ProjectAction.loadTokenIssueWaitList());
+	}
+
+	ngOnDestroy() {
+		this.tokenIssueAwaiter.disable();
 	}
 
 	moveTab(prevIndex: number, currentIndex: number): void {

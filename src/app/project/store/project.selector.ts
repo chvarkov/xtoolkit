@@ -106,4 +106,9 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.loadedDataMap[projectId]?.tokens || [],
 	);
+
+	static issueTokenWaitList = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.issueTokenWaitList || [],
+	);
 }

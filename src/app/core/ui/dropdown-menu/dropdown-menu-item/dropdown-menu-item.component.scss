@@ -11,6 +11,10 @@
 		background: var(--primary-darken-bg);
 		color: var(--text-accent-color);
 	}
+
+	&:not(last-child) {
+		border-bottom: solid 1px var(--border-low-color);
+	}
 }
 
 .icon {
@@ -22,6 +26,7 @@
 .text {
 	display: flex;
 	flex: 1;
-	padding: 12px 8px;
+	padding: 14px 8px;
+	font-size: 0.84em;
 	font-family: Poppins;
 }

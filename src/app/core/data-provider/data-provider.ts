@@ -27,6 +27,13 @@ export interface Project {
 	tokens: string[];
 }
 
+export interface PendingTokenIssue {
+	actionId: string;
+	projectId: string;
+	chainId: string;
+	txHash: string;
+}
+
 export enum ActionStatus {
 	Pending = 'pending',
 	Success = 'success',
@@ -34,17 +41,19 @@ export enum ActionStatus {
 }
 
 export enum ActionType {
+	Issue = 'issue',
 	Transaction = 'tx',
 	Query = 'query',
 }
 
 export interface ActionHistoryElement {
-	id: string,
-	type: ActionType,
-	chainId: string,
+	id: string;
+	projectId: string;
+	type: ActionType;
+	chainId: string;
 	title: string;
-	caller?: string
-	txHash?: string
+	caller?: string;
+	txHash?: string;
 	status: ActionStatus;
 	data: Record<string, any>;
 	timestamp: number;
@@ -84,4 +93,10 @@ export interface DataProvider {
 	getActionHistory(): Observable<ActionHistoryElement[]>;
 
 	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
+
+	addTokenIssueTransaction(data: PendingTokenIssue): Observable<PendingTokenIssue[]>;
+
+	getTokenIssueWaitList(): Observable<PendingTokenIssue[]>;
+
+	deleteTokenIssueTransaction(txHash: string): Observable<PendingTokenIssue[]>;
 }
