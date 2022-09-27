@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
 import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
-import { GeneratedWallet, Project } from '../../../../core/data-provider/data-provider';
+import {
+	ActionHistoryElement,
+	ActionStatus,
+	ActionType,
+	GeneratedWallet,
+	Project
+} from '../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { ITokenInfo } from '../../../../core/elrond/interfaces/token-info';
@@ -11,6 +17,7 @@ import { ESDTInteractor } from '../../../../core/elrond/services/estd-intercator
 import { ProjectSelector } from '../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
+import * as uuid from 'uuid';
 
 @Component({
 	selector: 'app-issue-token-dialog',
@@ -24,7 +31,7 @@ export class IssueTokenDialogComponent extends AbstractModalDialog implements On
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
-	dialogRef!: DialogRef<{projectId: string}, string>;
+	dialogRef!: DialogRef<{projectId: string}, ActionHistoryElement>;
 
 	tokens$!: Observable<ITokenInfo[]>;
 
@@ -68,6 +75,16 @@ export class IssueTokenDialogComponent extends AbstractModalDialog implements On
 
 		const txHash = await this.estdInteractor.issueFungibleToken(network, wallet, this.issueTokenForm.value);
 
-		this.dialogRef.submit(txHash);
+		this.dialogRef.submit({
+			id: uuid.v4(),
+			txHash,
+			type: ActionType.Issue,
+			data: this.issueTokenForm.value,
+			chainId: network.chainId,
+			title: 'Issue token',
+			status: ActionStatus.Pending,
+			caller: wallet.address,
+			timestamp: Date.now(),
+		});
 	}
 }

@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
-import { DATA_PROVIDER, DataProvider, ProjectScAbi } from '../../core/data-provider/data-provider';
+import {
+	ActionHistoryElement,
+	DATA_PROVIDER,
+	DataProvider,
+	ProjectScAbi
+} from '../../core/data-provider/data-provider';
 import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
@@ -21,6 +26,7 @@ import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dia
 import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
 import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
 import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dialog/issue-token-dialog.component';
+import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 
 @Injectable()
 export class ProjectEffect {
@@ -112,6 +118,10 @@ export class ProjectEffect {
 				// switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(
 				// 	map((updatedProject) => ProjectAction.importTokenSuccess({project: updatedProject}))
 				// )),
+
+				map((data: ActionHistoryElement) => of([
+					ActionHistoryAction.logAction({ data }),
+				])),
 			),
 		),
 		catchError(err => of(ProjectAction.importTokenError({err}))),
