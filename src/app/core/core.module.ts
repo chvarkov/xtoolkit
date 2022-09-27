@@ -84,6 +84,7 @@ import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
 		AddressComponent,
 		TxHashComponent,
 		AddressInputComponent,
+		DecimalPlacesPipe,
 	],
 })
 export class CoreModule { }

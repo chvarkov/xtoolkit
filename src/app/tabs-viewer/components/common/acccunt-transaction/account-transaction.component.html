@@ -6,5 +6,5 @@
 	<div class="tech-details">
 		<app-address [address]="tx.sender" [chainId]="chainId"></app-address>
 	</div>
-	<div class="finance-details">{{tx.value}} {{tx.fee}}</div>
+	<div class="finance-details">Value: {{tx.value | decimalPlaces:18}} Fee: {{tx.fee | decimalPlaces:18}}</div>
 </div>

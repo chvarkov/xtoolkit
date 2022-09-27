@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="amount">
-			{{native}}
+			{{native | decimalPlaces:18}}
 		</div>
 	</div>
 	<div *ngFor="let position of positions" class="position">
@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="amount">
-			{{position.balance}}
+			{{position.balance | decimalPlaces: position.decimals}}
 		</div>
 	</div>
 </div>
