@@ -7,8 +7,8 @@
 	--text-accent-color: #fff;
 	--text-primary-color: #5288c1;
 
-	--croll-color: #36415b;
-	--croll-hover-color: #3a4564;
+	--scroll-color: #36415b;
+	--scroll-hover-color: #3a4564;
 
 	--border-low-color: #23394b;
 	--border-color: #31536e;
@@ -45,12 +45,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--croll-color);
+	background: var(--scroll-color);
 	border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--croll-hover-color);
+	background: var(--scroll-hover-color);
 }
 
 @font-face {
