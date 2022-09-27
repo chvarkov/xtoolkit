@@ -25,6 +25,7 @@ import { AddressInputComponent } from './ui/address-input/address-input.componen
 import { ESDTInteractor } from './elrond/services/estd-intercator';
 import { FormsModule } from '@angular/forms';
 import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.component';
+import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
 
 @NgModule({
 	declarations: [
@@ -45,6 +46,7 @@ import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.componen
 		TxHashComponent,
 		AddressInputComponent,
 		RenameDialogComponent,
+  DecimalPlacesPipe,
 	],
 	imports: [
 		CommonModule,
