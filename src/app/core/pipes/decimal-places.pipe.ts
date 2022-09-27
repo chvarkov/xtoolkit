@@ -6,6 +6,6 @@ import BigNumber from 'bignumber.js';
 })
 export class DecimalPlacesPipe implements PipeTransform {
 	transform(value: BigNumber.Value, decimals = 18): string {
-		return new BigNumber(value).toFormat(decimals);
+		return new BigNumber(value).dividedBy(new BigNumber(10).pow(decimals)).toFormat(decimals);
 	}
 }
