@@ -6,32 +6,12 @@
 	overflow-y: auto;
 	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
 
-	.header {
-		display: grid;
-		grid-template-columns: 42px auto 240px;
-		padding: 10px 16px;
-		border-bottom: solid 1 var(--border-low-color);
-
-		.icon {
-			margin-right: 10px;
-			font-size: 2em;
-			width: 32px;
-			height: 32px;
-			padding-top: 4px;
-		}
-
-		.info {
-			font-size: 1.1em;
-		}
-
-		.actions {
-			display: flex;
-			flex: 1;
-			flex-direction: row;
-			height: 40px;
-		}
+	.toolbar-left-side {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding-left: 12px;
 	}
-
 
 	.content {
 		width: 100%;

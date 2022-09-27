@@ -1,17 +1,12 @@
 <div class="wallet" *ngIf="(account$ | async) as account">
-	<div class="header">
-		<div class="icon material-icons" [ngStyle]="{color: 'wallet' | componentColor}"> account_balance_wallet </div>
-		<div class="info">
+	<app-toolbar>
+		<div left-side class="toolbar-left-side">
 			<app-address [chainId]="(chainId$ | async) || ''" [address]="address"></app-address>
-			<div>Nonce: {{account.nonce}}</div>
 		</div>
-		<div class="actions">
-			<ng-container *ngIf="wallet$ | async as wallet">
-				<button  (click)="exportMnemonic(wallet)">export keys</button>
-				<button (click)="deleteWallet(wallet)">delete</button>
-			</ng-container>
-		</div>
-	</div>
+		<app-toolbar-icon-button right-side hint="Rename">drive_file_rename_outline</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side hint="Export keys">key</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
+	</app-toolbar>
 
 	<app-tabs navPosition="bottom">
 		<app-tab top title="Tokens">
