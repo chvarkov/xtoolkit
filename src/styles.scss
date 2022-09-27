@@ -14,12 +14,13 @@
 	--border-color: #31536e;
 	--border-accent-color: #4875a2;
 
-	--submit-button-bg: #5288c1;
+	--submit-button-bg: #4292df;
 	--cancel-button-bg: #2f3d4f;
 
 	--static-red: #b04b4b;
 	--static-yellow: #b09a4b;
 	--static-green: #4aa444;
+	--static-low-green: #4a9344;
 	--static-gray: #adadad;
 	--static-purpure: #a57eff;
 	--static-cyan: #47af88;
@@ -122,4 +123,12 @@ button {
 	color: var(--text-color);
 	cursor: pointer;
 	border-radius: 4px;
+}
+
+.action-button {
+	padding: 10px 12px
+}
+
+.primary-action {
+	background: var(--submit-button-bg);
 }
