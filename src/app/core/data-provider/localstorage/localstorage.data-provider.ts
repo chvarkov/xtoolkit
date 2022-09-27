@@ -2,7 +2,7 @@ import {
 	ActionHistoryElement,
 	ActionStatus,
 	DataProvider,
-	GeneratedWallet,
+	GeneratedWallet, PendingTokenIssue,
 	Project,
 	ProjectScAbi
 } from '../data-provider';
@@ -356,8 +356,8 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	getTokenIssueWaitList(): Observable<string[]> {
-		const waitList: string[] | undefined = this.get(this.tokenIssueWaitListKey);
+	getTokenIssueWaitList(): Observable<PendingTokenIssue[]> {
+		const waitList: PendingTokenIssue[] | undefined = this.get(this.tokenIssueWaitListKey);
 
 		if (!waitList) {
 			this.set(this.tokenIssueWaitListKey, []);
@@ -368,17 +368,20 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(waitList);
 	}
 
-	addTokenIssueTransaction(txHash: string): Observable<string[]> {
+	addTokenIssueTransaction(projectId: string, txHash: string): Observable<PendingTokenIssue[]> {
 		return this.getTokenIssueWaitList()
 			.pipe(
 				map(waitList => {
-					const isAlreadyExists = !!waitList.find(tx => tx === txHash);
+					const isAlreadyExists = !!waitList.find(item => item.txHash === txHash);
 
 					if (isAlreadyExists) {
 						return waitList;
 					}
 
-					waitList.push(txHash);
+					waitList.push({
+						projectId,
+						txHash,
+					});
 
 					this.set(this.tokenIssueWaitListKey, waitList);
 
@@ -387,11 +390,11 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	deleteTokenIssueTransaction(txHash: string): Observable<string[]> {
+	deleteTokenIssueTransaction(projectId: string, txHash: string): Observable<PendingTokenIssue[]> {
 		return this.getTokenIssueWaitList()
 			.pipe(
 				map(waitList => {
-					waitList = waitList.filter(tx => tx !== txHash);
+					waitList = waitList.filter(item => item.txHash !== txHash);
 
 					this.set(this.tokenIssueWaitListKey, waitList);
 
