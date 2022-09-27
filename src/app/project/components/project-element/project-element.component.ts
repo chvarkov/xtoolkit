@@ -15,6 +15,8 @@ export class ProjectElementComponent implements OnInit {
 
 	@Input() isGroup = true;
 
+	@Input() active?: boolean | null;
+
 	@Input() type: ProjectComponentType = 'group';
 
 	isExpanded = true;

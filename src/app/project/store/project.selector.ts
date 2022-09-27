@@ -45,6 +45,13 @@ export class ProjectSelector {
 		(state: IProjectState) => state.tabs || [],
 	);
 
+	static activeTab = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.selectedIndex != null && state.tabs
+			? state.tabs?.[state.selectedIndex]
+			: undefined,
+	);
+
 	static currentTabIndex = createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.selectedIndex,
