@@ -101,12 +101,17 @@ export class ProjectEffect {
 		switchMap(({projectId}) => this.modalDialogFactory.show(ImportTokenDialogComponent, {projectId})
 			.afterSubmit$()
 			.pipe(
-				switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(
-					map((updatedProject) => ProjectAction.importTokenSuccess({project: updatedProject}))
-				)),
+				map((identifier) => ProjectAction.addToken({projectId, identifier})),
 			),
 		),
-		catchError(err => of(ProjectAction.importTokenError({err}))),
+	));
+
+	addToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addToken),
+		switchMap(({projectId, identifier}) => this.dataProvider.addToken(projectId, identifier).pipe(
+			map(() => ProjectAction.addTokenSuccess({projectId, identifier}))
+		)),
+		catchError(err => of(ProjectAction.addTokenError({err}))),
 	));
 
 	issueToken$ = createEffect(() => this.actions$.pipe(
@@ -114,18 +119,21 @@ export class ProjectEffect {
 		switchMap(({projectId}) => this.modalDialogFactory.show(IssueTokenDialogComponent, {projectId})
 			.afterSubmit$()
 			.pipe(
-				// TODO: Implement waiting tx
-				// switchMap((tokenAddress: string) => this.dataProvider.addToken(projectId, tokenAddress).pipe(
-				// 	map((updatedProject) => ProjectAction.importTokenSuccess({project: updatedProject}))
-				// )),
-
-				map((data: ActionHistoryElement) => of([
+				switchMap((data: ActionHistoryElement) => of(
+					ProjectAction.addTokenIssueTxToWaitList({
+						data: {
+							projectId: data.projectId,
+							txHash: data.txHash || '',
+							actionId: data.id,
+							chainId: data.chainId,
+						},
+					}),
 					ActionHistoryAction.logAction({ data }),
-				])),
+				)),
 			),
 		),
-		catchError(err => of(ProjectAction.importTokenError({err}))),
-	), {dispatch: false});
+		catchError(err => of(ProjectAction.addTokenError({err}))),
+	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectTabs),
@@ -396,6 +404,30 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteWalletError({err})),
 			)),
 		)));
+
+	loadTokenIssueWaitList$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTokenIssueWaitList),
+		switchMap(() => this.dataProvider.getTokenIssueWaitList().pipe(
+			map((waitList) => ProjectAction.loadTokenIssueWaitListSuccess({waitList})),
+			catchError(err => of(ProjectAction.loadTokenIssueWaitListError({err})))
+		))),
+	);
+
+	addTokenIssueTxToWaitList$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addTokenIssueTxToWaitList),
+		switchMap(({data}) => this.dataProvider.addTokenIssueTransaction(data).pipe(
+			map((waitList) => ProjectAction.addTokenIssueTxToWaitListSuccess({waitList})),
+			catchError(err => of(ProjectAction.addTokenIssueTxToWaitListError({err})))
+		))),
+	);
+
+	deleteTokenIssueTxFromWaitList$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteTokenIssueTxFromWaitList),
+		switchMap(({txHash}) => this.dataProvider.deleteTokenIssueTransaction(txHash).pipe(
+			map((waitList) => ProjectAction.deleteTokenIssueTxFromWaitListSuccess({waitList})),
+			catchError(err => of(ProjectAction.deleteTokenIssueTxFromWaitListError({err})))
+		))),
+	);
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

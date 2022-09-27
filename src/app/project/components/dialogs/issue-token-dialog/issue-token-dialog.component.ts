@@ -78,6 +78,7 @@ export class IssueTokenDialogComponent extends AbstractModalDialog implements On
 		this.dialogRef.submit({
 			id: uuid.v4(),
 			txHash,
+			projectId: this.dialogRef.data.projectId,
 			type: ActionType.Issue,
 			data: this.issueTokenForm.value,
 			chainId: network.chainId,

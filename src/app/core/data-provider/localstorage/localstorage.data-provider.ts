@@ -368,20 +368,17 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(waitList);
 	}
 
-	addTokenIssueTransaction(projectId: string, txHash: string): Observable<PendingTokenIssue[]> {
+	addTokenIssueTransaction(data: PendingTokenIssue): Observable<PendingTokenIssue[]> {
 		return this.getTokenIssueWaitList()
 			.pipe(
 				map(waitList => {
-					const isAlreadyExists = !!waitList.find(item => item.txHash === txHash);
+					const isAlreadyExists = !!waitList.find(item => item.txHash === data.txHash);
 
 					if (isAlreadyExists) {
 						return waitList;
 					}
 
-					waitList.push({
-						projectId,
-						txHash,
-					});
+					waitList.push(data);
 
 					this.set(this.tokenIssueWaitListKey, waitList);
 
@@ -390,7 +387,7 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	deleteTokenIssueTransaction(projectId: string, txHash: string): Observable<PendingTokenIssue[]> {
+	deleteTokenIssueTransaction(txHash: string): Observable<PendingTokenIssue[]> {
 		return this.getTokenIssueWaitList()
 			.pipe(
 				map(waitList => {

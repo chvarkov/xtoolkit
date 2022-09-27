@@ -28,6 +28,8 @@ import * as uuid from 'uuid';
 export class ScEndpointComponent implements OnInit {
 	isShowing = false;
 
+	@Input() projectId!: string;
+
 	@Input() sc!: SmartContract;
 
 	@Input() endpoint?: EndpointDefinition;
@@ -96,6 +98,7 @@ export class ScEndpointComponent implements OnInit {
 
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
+					projectId: this.projectId,
 					id: uuid.v4(),
 					chainId: this.chainId,
 					type: ActionType.Query,
@@ -118,6 +121,7 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					projectId: this.projectId,
 					chainId: this.chainId,
 					type: ActionType.Query,
 					title: query.func.name,
@@ -162,6 +166,7 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					projectId: this.projectId,
 					chainId: this.chainId,
 					type: ActionType.Transaction,
 					title: this.endpoint.name,
@@ -178,6 +183,7 @@ export class ScEndpointComponent implements OnInit {
 			this.store.dispatch(ActionHistoryAction.logAction({
 				data: {
 					id: uuid.v4(),
+					projectId: this.projectId,
 					chainId: this.chainId,
 					type: ActionType.Transaction,
 					title: this.endpoint.name,

@@ -28,7 +28,9 @@ export interface Project {
 }
 
 export interface PendingTokenIssue {
+	actionId: string;
 	projectId: string;
+	chainId: string;
 	txHash: string;
 }
 
@@ -45,12 +47,13 @@ export enum ActionType {
 }
 
 export interface ActionHistoryElement {
-	id: string,
-	type: ActionType,
-	chainId: string,
+	id: string;
+	projectId: string;
+	type: ActionType;
+	chainId: string;
 	title: string;
-	caller?: string
-	txHash?: string
+	caller?: string;
+	txHash?: string;
 	status: ActionStatus;
 	data: Record<string, any>;
 	timestamp: number;
@@ -91,9 +94,9 @@ export interface DataProvider {
 
 	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
 
-	addTokenIssueTransaction(projectId: string, txHash: string): Observable<PendingTokenIssue[]>;
+	addTokenIssueTransaction(data: PendingTokenIssue): Observable<PendingTokenIssue[]>;
 
 	getTokenIssueWaitList(): Observable<PendingTokenIssue[]>;
 
-	deleteTokenIssueTransaction(projectId: string, txHash: string): Observable<PendingTokenIssue[]>;
+	deleteTokenIssueTransaction(txHash: string): Observable<PendingTokenIssue[]>;
 }

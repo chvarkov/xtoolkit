@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { ProjectAction } from './project.action';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { TabsData } from '../../core/data-provider/personal-settings.manager';
-import { Project } from '../../core/data-provider/data-provider';
+import { PendingTokenIssue, Project } from '../../core/data-provider/data-provider';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
@@ -29,12 +29,14 @@ export interface ILoadedProjectDataState {
 export interface IProjectState extends TabsData {
 	projects: Project[];
 	loadedDataMap: {[projectId: string]: ILoadedProjectDataState}
+	issueTokenWaitList: PendingTokenIssue[];
 }
 
 const initialState: IProjectState = {
 	projects: [],
 	loadedDataMap: {},
 	tabs: [],
+	issueTokenWaitList: [],
 };
 
 export const reducer = createReducer(
@@ -57,9 +59,9 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
-	on(ProjectAction.importTokenSuccess, (state, { project }) => ({
+	on(ProjectAction.addTokenSuccess, (state, { projectId, identifier }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		projects: state.projects.map(p => p.id !== projectId ? p : {...p, tokens: [...p.tokens, identifier]}),
 	})),
 	on(ProjectAction.loadProjectTabsSuccess,
 		ProjectAction.openProjectTabSuccess,
@@ -200,6 +202,18 @@ export const reducer = createReducer(
 		...state,
 		...tabsData,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.loadTokenIssueWaitListSuccess, (state, {waitList}) => ({
+		...state,
+		issueTokenWaitList: waitList,
+	})),
+	on(ProjectAction.addTokenIssueTxToWaitListSuccess, (state, {waitList}) => ({
+		...state,
+		issueTokenWaitList: waitList,
+	})),
+	on(ProjectAction.deleteTokenIssueTxFromWaitListSuccess, (state, {waitList}) => ({
+		...state,
+		issueTokenWaitList: waitList,
 	})),
 );
 
