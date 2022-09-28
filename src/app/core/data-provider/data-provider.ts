@@ -96,6 +96,8 @@ export interface DataProvider {
 
 	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
 
+	clearActionHistory(): Observable<void>;
+
 	addTokenIssueTransaction(data: PendingTokenIssue): Observable<PendingTokenIssue[]>;
 
 	getTokenIssueWaitList(): Observable<PendingTokenIssue[]>;

@@ -1,14 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { DefinitionOfFungibleTokenOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { ProjectAction } from '../../../project/store/project.action';
 import { ITokenInfo } from '../../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../../core/elrond/interfaces/token-transfer';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
+import { NetworkSelector } from '../../../network/store/network.selector';
 
 @Component({
 	selector: 'app-token-viewer',
@@ -23,7 +24,7 @@ export class TokenViewerComponent implements OnInit {
 	tokenHolders$?: Observable<ITokenHolder[]>;
 	tokenRoles$?: Observable<ITokenRole[]>;
 	tokenTransfers$?: Observable<ITokenTransfer[]>;
-	chainId$?: Observable<string>;
+	network$?: Observable<INetworkEnvironment | undefined>;
 
 	constructor(private readonly store: Store) {
 	}
@@ -33,14 +34,26 @@ export class TokenViewerComponent implements OnInit {
 		this.tokenHolders$ = this.store.select(ProjectSelector.tokenHolders(this.projectId, this.identifier));
 		this.tokenRoles$ = this.store.select(ProjectSelector.tokenRoles(this.projectId, this.identifier));
 		this.tokenTransfers$ = this.store.select(ProjectSelector.tokenTransfers(this.projectId, this.identifier));
-		this.chainId$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+		this.network$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
 			map(project => project?.chainId || ''),
+			switchMap((chainId) => this.store.select(NetworkSelector.networkByChainId(chainId))),
 		);
 
+		this.loadData();
+	}
+
+	explore(network: INetworkEnvironment): void {
+		window.open(`${network.explorerUrl}/tokens/${this.identifier}`, '_blank');
+	}
+
+	delete(): void {
+		this.store.dispatch(ProjectAction.deleteToken({projectId: this.projectId, identifier: this.identifier}));
+	}
+
+	loadData(): void {
 		this.store.dispatch(ProjectAction.loadToken({projectId: this.projectId, identifier: this.identifier}));
 		this.store.dispatch(ProjectAction.loadTokenHolders({projectId: this.projectId, identifier: this.identifier}));
 		this.store.dispatch(ProjectAction.loadTokenRoles({projectId: this.projectId, identifier: this.identifier}));
 		this.store.dispatch(ProjectAction.loadTokenTransfers({projectId: this.projectId, identifier: this.identifier}));
 	}
-
 }

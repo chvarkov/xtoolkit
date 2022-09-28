@@ -43,13 +43,19 @@ export class WalletViewerComponent implements OnInit {
 		this.wallet$ = this.store.select(ProjectSelector.walletsByProjectId(this.projectId)).pipe(
 			map(wallets => wallets.find(w => w.address === w.address)),
 		);
+	}
 
+	loadData(): void {
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId: this.projectId, address: this.address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId: this.projectId, address: this.address}));
 	}
 
+	renameWallet(): void {
+		this.store.dispatch(ProjectAction.renameWallet({projectId: this.projectId, address: this.address}));
+	}
+
 	exportMnemonic(wallet: GeneratedWallet): void {
-		this.store.dispatch(ProjectAction.exportMnemonic({wallet}))
+		this.store.dispatch(ProjectAction.exportMnemonic({wallet}));
 	}
 
 	deleteWallet(wallet: GeneratedWallet): void {

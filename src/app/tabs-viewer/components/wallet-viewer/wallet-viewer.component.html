@@ -3,9 +3,23 @@
 		<div left-side class="toolbar-left-side">
 			<app-address [chainId]="(chainId$ | async) || ''" [address]="address"></app-address>
 		</div>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Rename">drive_file_rename_outline</app-toolbar-icon-button>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Export keys">key</app-toolbar-icon-button>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Refresh">refresh</app-toolbar-icon-button>
+		<app-toolbar-icon-button *ngIf="wallet$ | async as wallet"
+								 right-side appTooltip tooltip="Delete wallet"
+								 (click)="deleteWallet(wallet)">
+			delete
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side appTooltip tooltip="Rename"
+								 (click)="renameWallet()">
+			drive_file_rename_outline
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button *ngIf="wallet$ | async as wallet"
+								 right-side appTooltip tooltip="Export keys"
+								 (click)="exportMnemonic(wallet)">
+			key
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side appTooltip
+								 tooltip="Refresh"
+								 (click)="loadData()">refresh</app-toolbar-icon-button>
 	</app-toolbar>
 
 	<app-tabs navPosition="bottom">

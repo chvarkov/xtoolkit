@@ -6,7 +6,19 @@
 				 [src]="token.assets?.svgUrl || '/assets/images/token-icon.svg'">
 			<span>{{token.ticker}}</span>
 		</div>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Refresh">refresh</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side appTooltip tooltip="Delete token"
+								 (click)="delete()">
+			delete
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button *ngIf="network$ | async as network"
+								 right-side appTooltip tooltip="Explore"
+								 (click)="explore(network)">
+			search
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side appTooltip tooltip="Refresh"
+								 (click)="loadData()">
+			refresh
+		</app-toolbar-icon-button>
 	</app-toolbar>
 	<app-tabs navPosition="bottom">
 		<app-tab top title="Info">
@@ -43,7 +55,7 @@
 				<div class="properties">
 					<div class="prop-name">Owner</div>
 					<div class="prop-value">
-						<app-address [chainId]="(chainId$ | async) || ''"
+						<app-address [chainId]="(network$ | async)?.chainId || ''"
 									 [address]="token.owner"></app-address>
 					</div>
 
@@ -106,7 +118,7 @@
 		</app-tab>
 		<app-tab top title="Roles">
 			<div class="token-roles-element" *ngFor="let role of (tokenRoles$ | async) || []">
-				<app-address [address]="role.address" [chainId]="(chainId$ | async) || ''"></app-address>
+				<app-address [address]="role.address" [chainId]="(network$ | async)?.chainId || ''"></app-address>
 				<div class="roles">
 					<span class="role-label" *ngFor="let permission of role.roles">{{permission}}</span>
 				</div>
@@ -114,13 +126,13 @@
 		</app-tab>
 		<app-tab top title="Holders">
 			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
-				<app-address [address]="holder.address" [chainId]="(chainId$ | async) || ''"></app-address>
+				<app-address [address]="holder.address" [chainId]="(network$ | async)?.chainId || ''"></app-address>
 				<span>{{holder.balance | decimalPlaces: +token.decimals}}</span>
 			</div>
 		</app-tab>
 		<app-tab top title="Transactions">
 			<app-token-transfer *ngFor="let transfer of (tokenTransfers$ | async) || []"
-								[chainId]="(chainId$ | async) || ''"
+								[chainId]="(network$ | async)?.chainId || ''"
 								[ticket]="token.ticker"
 								[transfer]="transfer">
 			</app-token-transfer>

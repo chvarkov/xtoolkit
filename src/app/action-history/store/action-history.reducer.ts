@@ -19,6 +19,10 @@ export const reducer = createReducer(
 		...state,
 		list,
 	})),
+	on(ActionHistoryAction.clearActionHistory, (state) => ({
+		...state,
+		list: [],
+	})),
 );
 
 export function actionHistoryReducer(state: ITransactionState | undefined, action: Action): ITransactionState {
