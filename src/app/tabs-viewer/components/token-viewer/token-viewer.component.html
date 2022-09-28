@@ -115,7 +115,7 @@
 		<app-tab top title="Holders">
 			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
 				<app-address [address]="holder.address" [chainId]="(chainId$ | async) || ''"></app-address>
-				<span>{{holder.balance}}</span>
+				<span>{{holder.balance | decimalPlaces: +token.decimals}}</span>
 			</div>
 		</app-tab>
 		<app-tab top title="Transactions">
