@@ -345,15 +345,21 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	getActionHistory(): Observable<ActionHistoryElement[]> {
-		const projects: ActionHistoryElement[] | undefined = this.get(this.actionHistoryKey);
+		const history: ActionHistoryElement[] | undefined = this.get(this.actionHistoryKey);
 
-		if (!projects) {
+		if (!history) {
 			this.set(this.actionHistoryKey, []);
 
 			return of([]);
 		}
 
-		return of(projects);
+		return of(history);
+	}
+
+	clearActionHistory(): Observable<void> {
+		this.set(this.actionHistoryKey, []);
+
+		return of();
 	}
 
 	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {
