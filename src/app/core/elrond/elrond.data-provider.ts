@@ -39,6 +39,11 @@ export class ElrondDataProvider {
 		});
 	}
 
+	getTransaction(network: INetworkEnvironment,
+				   txHash: string): Observable<any> { // TODO: Add tx type
+		return this.http.get<any>(`${network.gatewayUrl}/transactions/${txHash}`);
+	}
+
 	estimateTransactionConst(network: INetworkEnvironment,
 							 tx: Transaction): Observable<number> {
 		const data: IEstimateTxData = {
