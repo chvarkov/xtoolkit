@@ -4,16 +4,25 @@
 	flex-direction: column;
 	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
 
+	.toolbar-left-side {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding-left: 12px;
+
+		.logo {
+			width: 24px;
+			height: 24px;
+			margin-right: 10px;
+		}
+	}
+
 	.header {
 		display: flex;
 		flex-direction: row;
 		padding: 10px;
 
-		.logo {
-			width: 32px;
-			height: 32px;
-			margin-right: 10px;
-		}
+
 
 		.content {
 			display: flex;
