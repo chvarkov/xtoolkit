@@ -1,10 +1,8 @@
-<app-modal-dialog title="Create project" [dialogRef]="dialogRef">
+<app-modal-dialog title="Update project network" [dialogRef]="dialogRef">
 	<div content class="content">
-		<input class="project-name" [(ngModel)]="projectName" placeholder="Project name">
-
 		<app-select class="network-select"
 					placeholder="Network"
-					(selectionChange)="onChangeChainId($event)">
+					(selectionChange)="onChangeNetwork($event)">
 			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
 				{{network.name}}
 			</app-option>
@@ -15,8 +13,8 @@
 		<div class="actions">
 			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
 			<button class="create-button"
-					[disabled]="!projectName || !chainId"
-					(click)="create()">Create</button>
+					[disabled]="!chainId"
+					(click)="update()">Update</button>
 		</div>
 	</div>
 </app-modal-dialog>

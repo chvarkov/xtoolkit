@@ -27,6 +27,7 @@ import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog
 import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
 import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dialog/issue-token-dialog.component';
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
+import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -37,6 +38,17 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.loadProjectsError({err})),
 		)),
 	)));
+
+	updateProjectNetwork$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.updateProjectNetwork),
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(UpdateProjectNetworkDialogComponent).afterSubmit$().pipe(
+			map(chainId => ({projectId, chainId})),
+		)),
+		mergeMap(({projectId, chainId}) => this.dataProvider.updateProjectNetwork(projectId, chainId).pipe(
+			map((project) => ProjectAction.updateProjectNetworkSuccess({project})),
+			catchError(err => of(ProjectAction.updateProjectNetworkError({err})),
+			)),
+		)));
 
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),

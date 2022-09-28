@@ -48,6 +48,25 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(projects);
 	}
 
+	updateProjectNetwork(projectId: string, chainId: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(p => p.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.chainId = chainId;
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
 	deleteProject(projectId: string): Observable<void> {
 		return this.getProjects()
 			.pipe(

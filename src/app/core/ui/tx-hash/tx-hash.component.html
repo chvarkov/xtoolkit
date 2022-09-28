@@ -1,10 +1,11 @@
 <span class="tx-hash">
 	{{label}}
 	{{txHash}}
-	<span class="material-icons action" (click)="copy()">
+	<span class="material-icons action" (click)="copy()" appTooltip tooltip="Copy">
 		content_copy
 	</span>
 	<span class="material-icons action"
+		  appTooltip tooltip="Explore"
 		  *ngIf="(network$ | async) as network"
 		  (click)="explore(network.explorerUrl)">
 		search

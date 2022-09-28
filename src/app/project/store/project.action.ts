@@ -17,6 +17,10 @@ export class ProjectAction {
 	static readonly loadProjectsSuccess = createAction(`[${ProjectAction.name}] load projects [OK]`, props<{data: Project[]}>());
 	static readonly loadProjectsError = createAction(`[${ProjectAction.name}] load projects [ERR]`, props<{err: Error}>());
 
+	static readonly updateProjectNetwork = createAction(`[${ProjectAction.name}] update project network [...]`, props<{projectId: string}>());
+	static readonly updateProjectNetworkSuccess = createAction(`[${ProjectAction.name}] update project network [OK]`, props<{project: Project}>());
+	static readonly updateProjectNetworkError = createAction(`[${ProjectAction.name}] update project network [ERR]`, props<{err: Error}>());
+
 	static readonly createProject = createAction(`[${ProjectAction.name}] create project [...]`);
 	static readonly createProjectSuccess = createAction(`[${ProjectAction.name}] create project [OK]`, props<{project: Project}>());
 	static readonly createProjectError = createAction(`[${ProjectAction.name}] create project [ERR]`, props<{err: Error}>());

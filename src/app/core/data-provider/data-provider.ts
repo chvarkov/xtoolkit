@@ -64,6 +64,8 @@ export interface DataProvider {
 
 	getProjects(): Observable<Project[]>;
 
+	updateProjectNetwork(projectId: string, chainId: string): Observable<Project>;
+
 	createProject(name: string, chainId: string): Observable<Project>;
 
 	deleteProject(projectId: string): Observable<void>;

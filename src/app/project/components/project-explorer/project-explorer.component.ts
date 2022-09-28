@@ -69,6 +69,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.exploreToken({projectId, identifier}));
 	}
 
+	updateProjectNetwork(projectId: string): void {
+		this.store.dispatch(ProjectAction.updateProjectNetwork({projectId}));
+	}
+
 	deleteProject(projectId: string): void {
 		this.store.dispatch(ProjectAction.deleteProject({projectId}));
 	}
