@@ -21,7 +21,10 @@
 										text="Rename"
 										(click)="renameProject(project.id)">
 				</app-dropdown-menu-item>
-				<app-dropdown-menu-item icon="public" text="Change network"></app-dropdown-menu-item>
+				<app-dropdown-menu-item icon="public"
+										text="Change network"
+										(click)="updateProjectNetwork(project.id)">
+				</app-dropdown-menu-item>
 				<app-dropdown-menu-item icon="delete"
 										text="Delete"
 										(click)="deleteProject(project.id)">

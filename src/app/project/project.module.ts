@@ -18,6 +18,7 @@ import { IssueTokenDialogComponent } from './components/dialogs/issue-token-dial
 import { ImportTokenDialogComponent } from './components/dialogs/import-token-dialog/import-token-dialog.component';
 import { IsActiveProjectElementPipe } from './pipes/is-active-project-element.pipe';
 import { TokenIssueAwaiter } from './services/token-issue.awaiter';
+import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { TokenIssueAwaiter } from './services/token-issue.awaiter';
 		IssueTokenDialogComponent,
 		ImportTokenDialogComponent,
 		IsActiveProjectElementPipe,
+  UpdateProjectNetworkDialogComponent,
 	],
 	imports: [
 		CommonModule,

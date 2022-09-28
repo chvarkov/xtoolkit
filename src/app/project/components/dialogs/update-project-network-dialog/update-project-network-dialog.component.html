@@ -1,0 +1,20 @@
+<app-modal-dialog title="Update project network" [dialogRef]="dialogRef">
+	<div content class="content">
+		<app-select class="network-select"
+					placeholder="Network"
+					(selectionChange)="onChangeNetwork($event)">
+			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
+				{{network.name}}
+			</app-option>
+		</app-select>
+	</div>
+
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!chainId"
+					(click)="update()">Update</button>
+		</div>
+	</div>
+</app-modal-dialog>
