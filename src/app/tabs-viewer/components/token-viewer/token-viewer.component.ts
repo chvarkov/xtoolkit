@@ -29,7 +29,6 @@ export class TokenViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log(`onInit(${this.identifier})`);
 		this.token$ = this.store.select(ProjectSelector.token(this.projectId, this.identifier));
 		this.tokenHolders$ = this.store.select(ProjectSelector.tokenHolders(this.projectId, this.identifier));
 		this.tokenRoles$ = this.store.select(ProjectSelector.tokenRoles(this.projectId, this.identifier));
