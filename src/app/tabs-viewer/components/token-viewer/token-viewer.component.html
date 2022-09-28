@@ -6,7 +6,7 @@
 				 [src]="token.assets?.svgUrl || '/assets/images/token-icon.svg'">
 			<span>{{token.ticker}}</span>
 		</div>
-		<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side appTooltip tooltip="Refresh">refresh</app-toolbar-icon-button>
 	</app-toolbar>
 	<app-tabs navPosition="bottom">
 		<app-tab top title="Info">

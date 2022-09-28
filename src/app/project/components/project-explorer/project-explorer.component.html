@@ -1,11 +1,11 @@
 <app-toolbar title="Projects">
-	<app-toolbar-icon-button right-side hint="Select opened element">
+	<app-toolbar-icon-button right-side appTooltip tooltip="Select opened element">
 		ads_click
 	</app-toolbar-icon-button>
 	<app-toolbar-icon-button right-side appTooltip tooltip="Create" (click)="createProject()">
 		add
 	</app-toolbar-icon-button>
-	<app-toolbar-icon-button right-side hint="Refresh" (click)="loadProjects()">
+	<app-toolbar-icon-button right-side appTooltip tooltip="Refresh" (click)="loadProjects()">
 		refresh
 	</app-toolbar-icon-button>
 </app-toolbar>

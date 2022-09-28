@@ -7,10 +7,11 @@
 	<div class="icons">
 		<ng-container *ngIf="!isInvalidAddress(input.value)">
 				<span class="material-icons action"
+					  appTooltip tooltip="Copy"
 					  (click)="clipboard.copy(address)">
 					content_copy
 				</span>
-			<span class="material-icons action" *ngIf="network$ | async as network"
+			<span class="material-icons action" appTooltip tooltip="Explore" *ngIf="network$ | async as network"
 				  (click)="explore(network.explorerUrl)">
 					search
 				</span>
