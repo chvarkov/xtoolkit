@@ -9,3 +9,14 @@
 	overflow-y: auto;
 	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
 }
+
+.toolbar-left-side {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left: 6px;
+
+	app-address-input {
+		width: 620px;
+	}
+}

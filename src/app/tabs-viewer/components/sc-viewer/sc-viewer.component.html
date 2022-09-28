@@ -1,15 +1,15 @@
 <div class="sc-viewer-container" *ngIf="projectSc">
 	<ng-container *ngIf="(projectSc.abi | sc:projectSc?.address || '') as smartContract">
-		<app-sc-viewer-header [sc]="projectSc" [address]="projectSc?.address || ''"
-							  [chainId]="chainId">
-		</app-sc-viewer-header>
+		<app-toolbar>
+			<div left-side class="toolbar-left-side">
+				<app-address-input [chainId]="chainId" [address]="projectSc?.address || ''"></app-address-input>
+			</div>
+			<app-toolbar-icon-button right-side hint="Import RAW call">add</app-toolbar-icon-button>
+			<app-toolbar-icon-button right-side hint="Expand all">expand_more</app-toolbar-icon-button>
+			<app-toolbar-icon-button right-side hint="Hide all">expand_less</app-toolbar-icon-button>
+		</app-toolbar>
 		<app-tabs navPosition="bottom">
 			<app-tab top title="Endpoints">
-				<app-toolbar>
-					<app-toolbar-icon-button right-side hint="Import RAW call">add</app-toolbar-icon-button>
-					<app-toolbar-icon-button right-side hint="Expand all">expand_more</app-toolbar-icon-button>
-					<app-toolbar-icon-button right-side hint="Hide all">expand_less</app-toolbar-icon-button>
-				</app-toolbar>
 				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
 								 [projectId]="projectSc.id"
 								 [chainId]="chainId"
