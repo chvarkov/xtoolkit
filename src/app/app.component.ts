@@ -8,6 +8,8 @@ import { OpenedProjectTab } from './core/data-provider/personal-settings.manager
 import { ProjectAction } from './project/store/project.action';
 import { map } from 'rxjs/operators';
 import { TokenIssueAwaiter } from './project/services/token-issue.awaiter';
+import { LayoutSelector } from './layout/store/layout.selector';
+import { LayoutAction } from './layout/store/layout.action';
 
 @Component({
 	selector: 'app-root',
@@ -21,10 +23,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	currentTabIndex$: Observable<number | undefined>;
 
+	isVisibleLoadingScreen$: Observable<boolean>;
+
 	constructor(private readonly store: Store,
 				private readonly tokenIssueAwaiter: TokenIssueAwaiter) {
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
+		this.isVisibleLoadingScreen$ = this.store.select(LayoutSelector.isLoadingScreenVisible);
 	}
 
 	async ngOnInit(): Promise<void> {
@@ -36,6 +41,10 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.tokenIssueAwaiter.enable();
 
 		this.store.dispatch(ProjectAction.loadTokenIssueWaitList());
+
+		setTimeout(() => {
+			this.store.dispatch(LayoutAction.toggleLoadingScreen({visible: false}));
+		}, 2600);
 	}
 
 	ngOnDestroy() {

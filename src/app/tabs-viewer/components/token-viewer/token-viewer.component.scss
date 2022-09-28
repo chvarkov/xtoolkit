@@ -75,3 +75,78 @@
 		}
 	}
 }
+
+.token-info {
+	display: flex;
+	flex-direction: column;
+
+	.token-metrics {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		padding: 4px;
+	}
+
+	.properties {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+
+		.prop-name {
+			color: var(--text-color);
+			padding: 6px;
+		}
+
+		.prop-value {
+			color: var(--text-color);
+			padding: 6px;
+			width: 100%;
+
+			.option-value {
+				padding: 2px 16px;
+				border-radius: 16px;
+				display: initial;
+				font-size: 0.9em;
+			}
+
+			.enabled {
+				color: var(--static-green);
+				border: solid 1px var(--static-green);
+			}
+
+			.disabled {
+				color: var(--border-accent-color);
+				border: solid 1px var(--border-accent-color);
+			}
+		}
+	}
+
+	.section-label {
+		width: 100%;
+		padding: 6px 8px;
+		color: var(--text-color);
+		font-weight: 600;
+		border-bottom: solid 1px var(--border-low-color);
+		text-transform: uppercase;
+	}
+
+	.metric {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 4px;
+		border-radius: 2px;
+		border: solid 1px var(--border-color);
+		margin: 4px;
+
+		.value {
+			padding: 4px 0;
+			color: var(--text-color);
+		}
+
+		.label {
+			font-size: 0.92em;
+			color: var(--border-accent-color);
+			text-transform: uppercase;
+		}
+	}
+}

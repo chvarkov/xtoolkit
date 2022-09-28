@@ -10,20 +10,99 @@
 	</app-toolbar>
 	<app-tabs navPosition="bottom">
 		<app-tab top title="Info">
-			<div>holders {{token.accounts}}</div>
-			<div>burnt {{token.burnt}}</div>
-			<div>decimals {{token.decimals}}</div>
-			<div>minted {{token.minted}}</div>
-			<div>supply {{token.supply}}</div>
-			<div>initialMinted {{token.initialMinted}}</div>
-			<div>canBurn {{token.canBurn}}</div>
-			<div>canChangeOwner {{token.canChangeOwner}}</div>
-			<div>canFreeze {{token.canFreeze}}</div>
-			<div>canMint {{token.canMint}}</div>
-			<div>canPause {{token.canPause}}</div>
-			<div>canUpgrade {{token.canUpgrade}}</div>
-			<div>canWipe {{token.canWipe}}</div>
-			<div>owner {{token.owner}}</div>
+			<div class="token-info">
+				<div class="section-label">metrics</div>
+				<div class="token-metrics">
+					<div class="metric">
+						<div class="value">{{token.supply | decimalPlaces: +token.decimals}}</div>
+						<div class="label">supply</div>
+					</div>
+					<div class="metric">
+						<div class="value">{{token.minted | decimalPlaces: +token.decimals}}</div>
+						<div class="label">minted</div>
+					</div>
+					<div class="metric">
+						<div class="value">{{token.accounts}}</div>
+						<div class="label">holders</div>
+					</div>
+					<div class="metric">
+						<div class="value">{{token.circulatingSupply | decimalPlaces: +token.decimals}}</div>
+						<div class="label">circulating supply</div>
+					</div>
+					<div class="metric">
+						<div class="value">{{token.burnt | decimalPlaces: +token.decimals}}</div>
+						<div class="label">burnt</div>
+					</div>
+					<div class="metric">
+						<div class="value">{{token.transactions}}</div>
+						<div class="label">transactions</div>
+					</div>
+
+				</div>
+				<div class="section-label">properties</div>
+				<div class="properties">
+					<div class="prop-name">Owner</div>
+					<div class="prop-value">
+						<app-address [chainId]="(chainId$ | async) || ''"
+									 [address]="token.owner"></app-address>
+					</div>
+
+					<div class="prop-name">Decimals</div>
+					<div class="prop-value">{{token.decimals}}</div>
+
+					<div class="prop-name">Initial minted</div>
+					<div class="prop-value">{{token.initialMinted | decimalPlaces: +token.decimals}}</div>
+
+					<div class="prop-name">canMint</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canMint ? 'enabled' : 'disabled'">
+							{{token.canMint ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+
+					<div class="prop-name">canBurn</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canBurn ? 'enabled' : 'disabled'">
+							{{token.canBurn ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+
+					<div class="prop-name">canFreeze</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canFreeze ? 'enabled' : 'disabled'">
+							{{token.canFreeze ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+
+					<div class="prop-name">canPause</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canPause ? 'enabled' : 'disabled'">
+							{{token.canPause ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+
+					<div class="prop-name">canWipe</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canWipe ? 'enabled' : 'disabled'">
+							{{token.canWipe ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+
+					<div class="prop-name">canChangeOwner</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canChangeOwner ? 'enabled' : 'disabled'">
+							{{token.canChangeOwner ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+
+					<div class="prop-name">canUpgrade</div>
+					<div class="prop-value">
+						<div class="option-value" [ngClass]="token.canUpgrade ? 'enabled' : 'disabled'">
+							{{token.canUpgrade ? 'enabled' : 'disabled'}}
+						</div>
+					</div>
+				</div>
+			</div>
 		</app-tab>
 		<app-tab top title="Roles">
 			<div class="token-roles-element" *ngFor="let role of (tokenRoles$ | async) || []">
@@ -36,7 +115,7 @@
 		<app-tab top title="Holders">
 			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
 				<app-address [address]="holder.address" [chainId]="(chainId$ | async) || ''"></app-address>
-				<span>{{holder.balance}}</span>
+				<span>{{holder.balance | decimalPlaces: +token.decimals}}</span>
 			</div>
 		</app-tab>
 		<app-tab top title="Transactions">
