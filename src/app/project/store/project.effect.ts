@@ -7,7 +7,7 @@ import {
 	DataProvider,
 	ProjectScAbi
 } from '../../core/data-provider/data-provider';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
@@ -32,7 +32,7 @@ import { ActionHistoryAction } from '../../action-history/store/action-history.a
 export class ProjectEffect {
 	loadProjects$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjects),
-		switchMap(() => this.dataProvider.getProjects().pipe(
+		mergeMap(() => this.dataProvider.getProjects().pipe(
 			map((data) => ProjectAction.loadProjectsSuccess({data})),
 			catchError(err => of(ProjectAction.loadProjectsError({err})),
 		)),
@@ -40,8 +40,8 @@ export class ProjectEffect {
 
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),
-		switchMap(() => this.modalDialogFactory.show(CreateProjectDialogComponent).afterSubmit$()),
-		switchMap(({ name, chainId }) => this.dataProvider.createProject(name, chainId).pipe(
+		exhaustMap(() => this.modalDialogFactory.show(CreateProjectDialogComponent).afterSubmit$()),
+		mergeMap(({ name, chainId }) => this.dataProvider.createProject(name, chainId).pipe(
 			map((project) => ProjectAction.createProjectSuccess({project})),
 			catchError(err => of(ProjectAction.createProjectError({err})),
 			)),
@@ -49,7 +49,7 @@ export class ProjectEffect {
 
 	addAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAbi),
-		switchMap(({projectId, abi, name}) => this.dataProvider.addAbi(projectId, abi, name).pipe(
+		mergeMap(({projectId, abi, name}) => this.dataProvider.addAbi(projectId, abi, name).pipe(
 			map((project) => ProjectAction.addAbiSuccess({project})),
 			catchError(err => of(ProjectAction.addAbiError({err})),
 			)),
@@ -57,7 +57,7 @@ export class ProjectEffect {
 
 	addWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addWallet),
-		switchMap(({projectId, wallet}) => this.dataProvider.addWallet(projectId, wallet).pipe(
+		mergeMap(({projectId, wallet}) => this.dataProvider.addWallet(projectId, wallet).pipe(
 			map((project) => ProjectAction.addWalletSuccess({project, address: wallet.address})),
 			catchError(err => of(ProjectAction.addWalletError({err})),
 			)),
@@ -65,7 +65,7 @@ export class ProjectEffect {
 
 	generateWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.generateWallet),
-		switchMap(({projectId}) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
 			.afterSubmit$()
 			.pipe(
 				map((wallet) => ProjectAction.addWallet({projectId, wallet}))
@@ -75,7 +75,7 @@ export class ProjectEffect {
 
 	uploadAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.uploadAbi),
-		switchMap(({projectId}) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId}).afterSubmit$().pipe(
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId}).afterSubmit$().pipe(
 			map((data: ProjectScAbi) => ProjectAction.addAbi({
 				projectId,
 				name: data.name || data.abi.name,
@@ -86,7 +86,7 @@ export class ProjectEffect {
 
 	setScAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.setScAddress),
-		switchMap(({projectId, scId, address}) => this.dataProvider.setScAddress(
+		mergeMap(({projectId, scId, address}) => this.dataProvider.setScAddress(
 			projectId,
 			scId,
 			address,
@@ -98,7 +98,7 @@ export class ProjectEffect {
 
 	importToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.importToken),
-		switchMap(({projectId}) => this.modalDialogFactory.show(ImportTokenDialogComponent, {projectId})
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(ImportTokenDialogComponent, {projectId})
 			.afterSubmit$()
 			.pipe(
 				map((identifier) => ProjectAction.addToken({projectId, identifier})),
@@ -108,7 +108,7 @@ export class ProjectEffect {
 
 	addToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addToken),
-		switchMap(({projectId, identifier}) => this.dataProvider.addToken(projectId, identifier).pipe(
+		mergeMap(({projectId, identifier}) => this.dataProvider.addToken(projectId, identifier).pipe(
 			map(() => ProjectAction.addTokenSuccess({projectId, identifier}))
 		)),
 		catchError(err => of(ProjectAction.addTokenError({err}))),
@@ -116,7 +116,7 @@ export class ProjectEffect {
 
 	issueToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.issueToken),
-		switchMap(({projectId}) => this.modalDialogFactory.show(IssueTokenDialogComponent, {projectId})
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(IssueTokenDialogComponent, {projectId})
 			.afterSubmit$()
 			.pipe(
 				switchMap((data: ActionHistoryElement) => of(
@@ -137,7 +137,7 @@ export class ProjectEffect {
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectTabs),
-		switchMap(() => this.personalSettingsManager.getOpenedTabs().pipe(
+		mergeMap(() => this.personalSettingsManager.getOpenedTabs().pipe(
 			map((tabsData) => ProjectAction.loadProjectTabsSuccess({tabsData})),
 			catchError(err => of(ProjectAction.loadProjectTabsError({err})))),
 		),
@@ -145,7 +145,7 @@ export class ProjectEffect {
 
 	openProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.openProjectTab),
-		switchMap(({projectId, title, componentType, componentId}) => this.personalSettingsManager.openTab(projectId, title, componentType, componentId).pipe(
+		mergeMap(({projectId, title, componentType, componentId}) => this.personalSettingsManager.openTab(projectId, title, componentType, componentId).pipe(
 			map((tabsData) => ProjectAction.openProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.openProjectTabError({err})))),
 		),
@@ -153,7 +153,7 @@ export class ProjectEffect {
 
 	closeProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.closeProjectTab),
-		switchMap(({index}) => this.personalSettingsManager.closeTab(index).pipe(
+		mergeMap(({index}) => this.personalSettingsManager.closeTab(index).pipe(
 			map((tabsData) => ProjectAction.closeProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.closeProjectTabError({err})))),
 		),
@@ -161,7 +161,7 @@ export class ProjectEffect {
 
 	moveProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.moveProjectTab),
-		switchMap(({prevIndex, currentIndex}) => this.personalSettingsManager.moveTab(prevIndex, currentIndex).pipe(
+		mergeMap(({prevIndex, currentIndex}) => this.personalSettingsManager.moveTab(prevIndex, currentIndex).pipe(
 			map((tabsData) => ProjectAction.moveProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.moveProjectTabError({err})))),
 		),
@@ -169,7 +169,7 @@ export class ProjectEffect {
 
 	selectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.selectTab),
-		switchMap(({index}) => this.personalSettingsManager.selectTab(index).pipe(
+		mergeMap(({index}) => this.personalSettingsManager.selectTab(index).pipe(
 			map((tabsData) => ProjectAction.selectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.selectTabError({err})))),
 		),
@@ -179,7 +179,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.loadAccountAndPositions),
 		filter(({address}) => !!address && isValidAddress(address)),
 		joinNetwork(this.store),
-		switchMap(([{address}, project, network]) => forkJoin([
+		mergeMap(([{address}, project, network]) => forkJoin([
 			this.elrondDataProvider.getTokenPositions(network, address),
 			from(this.elrondDataProvider.getProxy(network).getAccount(new Address(address))),
 		]).pipe(
@@ -197,7 +197,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.loadAccountTransactions),
 		filter(({address}) => !!address && isValidAddress(address)),
 		joinNetwork(this.store),
-		switchMap(([{address}, project, network]) => this.txProvider.getTransactions(network, address).pipe(
+		mergeMap(([{address}, project, network]) => this.txProvider.getTransactions(network, address).pipe(
 			map((list) => ProjectAction.loadAccountTransactionsSuccess({
 				projectId: project.id,
 				address,
@@ -210,7 +210,7 @@ export class ProjectEffect {
 	loadToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadToken),
 		joinNetwork(this.store),
-		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getToken(network, identifier)).pipe(
+		mergeMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getToken(network, identifier)).pipe(
 			map((data) => ProjectAction.loadTokenSuccess({
 				projectId: project.id,
 				identifier,
@@ -223,7 +223,7 @@ export class ProjectEffect {
 	loadTokenHolders$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenHolders),
 		joinNetwork(this.store),
-		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenHolders(network, identifier, {})).pipe(
+		mergeMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenHolders(network, identifier, {})).pipe(
 			map((data) => ProjectAction.loadTokenHoldersSuccess({
 				projectId: project.id,
 				identifier,
@@ -236,7 +236,7 @@ export class ProjectEffect {
 	loadTokenRoles$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenHolders),
 		joinNetwork(this.store),
-		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenRoles(network, identifier)).pipe(
+		mergeMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenRoles(network, identifier)).pipe(
 			map((data) => ProjectAction.loadTokenRolesSuccess({
 				projectId: project.id,
 				identifier,
@@ -249,7 +249,7 @@ export class ProjectEffect {
 	loadTokenTransfers$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenTransfers),
 		joinNetwork(this.store),
-		switchMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenTransfers(network, identifier, {})).pipe(
+		mergeMap(([{identifier}, project, network]) => from(this.elrondDataProvider.getTokenTransfers(network, identifier, {})).pipe(
 			map((data) => ProjectAction.loadTokenTransfersSuccess({
 				projectId: project.id,
 				identifier,
@@ -262,7 +262,7 @@ export class ProjectEffect {
 	searchTokens$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.searchTokens),
 		joinNetwork(this.store),
-		switchMap(([{options}, project, network]) => from(this.elrondDataProvider.getTokens(network,options)).pipe(
+		mergeMap(([{options}, project, network]) => from(this.elrondDataProvider.getTokens(network,options)).pipe(
 			map((tokens) => ProjectAction.searchTokensSuccess({
 				projectId: project.id,
 				tokens,
@@ -280,12 +280,12 @@ export class ProjectEffect {
 
 	renameProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameProject),
-		switchMap(({projectId}) => this.modalDialogFactory.show(RenameDialogComponent, {
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(RenameDialogComponent, {
 			title: 'Rename project',
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, name})),
 		)),
-		switchMap(({projectId, name}) => this.dataProvider.renameProject(projectId, name).pipe(
+		mergeMap(({projectId, name}) => this.dataProvider.renameProject(projectId, name).pipe(
 			map((project) => ProjectAction.renameProjectSuccess({project})),
 			catchError(err => of(ProjectAction.renameProjectError({err})))
 		))),
@@ -293,12 +293,12 @@ export class ProjectEffect {
 
 	renameSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameSmartContract),
-		switchMap(({projectId, scId}) => this.modalDialogFactory.show(RenameDialogComponent, {
+		exhaustMap(({projectId, scId}) => this.modalDialogFactory.show(RenameDialogComponent, {
 			title: 'Rename smart contract',
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, scId, name})),
 		)),
-		switchMap(({projectId, scId, name}) => forkJoin([
+		mergeMap(({projectId, scId, name}) => forkJoin([
 			this.dataProvider.renameSmartContract(projectId, scId, name),
 			this.personalSettingsManager.rename(projectId, 'sc', scId, name),
 		]).pipe(
@@ -309,12 +309,12 @@ export class ProjectEffect {
 
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
-		switchMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
+		exhaustMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
 			title: 'Rename wallet',
 		}).afterSubmit$().pipe(
 			map(({name}) => ({projectId, address, name})),
 		)),
-		switchMap(({projectId, address, name}) => forkJoin([
+		mergeMap(({projectId, address, name}) => forkJoin([
 			this.dataProvider.renameWallet(projectId, address, name),
 			this.personalSettingsManager.rename(projectId, 'wallet', address, name),
 		]).pipe(
@@ -331,7 +331,7 @@ export class ProjectEffect {
 
 	deleteProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteProject),
-		switchMap(action => {
+		exhaustMap(action => {
 			return this.modalDialogFactory.show(ConfirmDialogComponent, {
 				title: 'Delete project',
 				message: 'Are you sure? After deletion, it will not be possible to restore.',
@@ -339,7 +339,7 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId}) => forkJoin([
+		mergeMap(({projectId}) => forkJoin([
 			this.dataProvider.deleteProject(projectId),
 			this.personalSettingsManager.deleteComponent(projectId, 'project', projectId),
 		]).pipe(
@@ -350,7 +350,7 @@ export class ProjectEffect {
 
 	deleteSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteSmartContract),
-		switchMap(action => {
+		exhaustMap(action => {
 			return this.modalDialogFactory.show(ConfirmDialogComponent, {
 				title: 'Delete smart contract',
 				message: 'Are you sure? After deletion, it will not be possible to restore.',
@@ -358,7 +358,7 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId, scId}) => forkJoin([
+		mergeMap(({projectId, scId}) => forkJoin([
 			this.dataProvider.deleteSmartContract(projectId, scId),
 			this.personalSettingsManager.deleteComponent(projectId, 'sc', scId),
 		]).pipe(
@@ -369,7 +369,7 @@ export class ProjectEffect {
 
 	deleteToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteToken),
-		switchMap(action => {
+		exhaustMap(action => {
 			return this.modalDialogFactory.show(ConfirmDialogComponent, {
 				title: 'Delete token',
 				message: 'Are you sure? After deletion, it will not be possible to restore.',
@@ -377,7 +377,7 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId, identifier}) => forkJoin([
+		mergeMap(({projectId, identifier}) => forkJoin([
 			this.dataProvider.deleteToken(projectId, identifier),
 			this.personalSettingsManager.deleteComponent(projectId, 'token', identifier),
 		]).pipe(
@@ -388,7 +388,7 @@ export class ProjectEffect {
 
 	deleteWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteWallet),
-		switchMap(action => {
+		exhaustMap(action => {
 			return this.modalDialogFactory.show(ConfirmDialogComponent, {
 				title: 'Delete wallet',
 				message: 'Are you sure? After deletion, it will not be possible to restore.',
@@ -396,7 +396,7 @@ export class ProjectEffect {
 				map(() => action),
 			);
 		}),
-		switchMap(({projectId, address}) => forkJoin([
+		mergeMap(({projectId, address}) => forkJoin([
 			this.dataProvider.deleteWallet(projectId, address),
 				this.personalSettingsManager.deleteComponent(projectId, 'wallet', address),
 		]).pipe(
@@ -407,7 +407,7 @@ export class ProjectEffect {
 
 	loadTokenIssueWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenIssueWaitList),
-		switchMap(() => this.dataProvider.getTokenIssueWaitList().pipe(
+		mergeMap(() => this.dataProvider.getTokenIssueWaitList().pipe(
 			map((waitList) => ProjectAction.loadTokenIssueWaitListSuccess({waitList})),
 			catchError(err => of(ProjectAction.loadTokenIssueWaitListError({err})))
 		))),
@@ -415,7 +415,7 @@ export class ProjectEffect {
 
 	addTokenIssueTxToWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addTokenIssueTxToWaitList),
-		switchMap(({data}) => this.dataProvider.addTokenIssueTransaction(data).pipe(
+		mergeMap(({data}) => this.dataProvider.addTokenIssueTransaction(data).pipe(
 			map((waitList) => ProjectAction.addTokenIssueTxToWaitListSuccess({waitList})),
 			catchError(err => of(ProjectAction.addTokenIssueTxToWaitListError({err})))
 		))),
@@ -423,7 +423,7 @@ export class ProjectEffect {
 
 	deleteTokenIssueTxFromWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteTokenIssueTxFromWaitList),
-		switchMap(({txHash}) => this.dataProvider.deleteTokenIssueTransaction(txHash).pipe(
+		mergeMap(({txHash}) => this.dataProvider.deleteTokenIssueTransaction(txHash).pipe(
 			map((waitList) => ProjectAction.deleteTokenIssueTxFromWaitListSuccess({waitList})),
 			catchError(err => of(ProjectAction.deleteTokenIssueTxFromWaitListError({err})))
 		))),
