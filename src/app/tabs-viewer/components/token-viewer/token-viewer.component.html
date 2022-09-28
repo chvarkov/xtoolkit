@@ -1,7 +1,9 @@
 <div class="token-container" *ngIf="(token$ | async) as token">
 	<app-toolbar>
 		<div left-side class="toolbar-left-side">
-			<img class="logo" [src]="token.assets?.svgUrl">
+			<img class="token-img"
+				 [ngClass]="{'empty-token-img': !token.assets?.svgUrl}"
+				 [src]="token.assets?.svgUrl || '/assets/images/token-icon.svg'">
 			<span>{{token.ticker}}</span>
 		</div>
 		<app-toolbar-icon-button right-side hint="Refresh">refresh</app-toolbar-icon-button>
