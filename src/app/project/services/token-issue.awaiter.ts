@@ -9,6 +9,7 @@ import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@elr
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { ProjectAction } from '../store/project.action';
+import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
 
 @Injectable({providedIn: 'root'})
 export class TokenIssueAwaiter {
@@ -17,7 +18,8 @@ export class TokenIssueAwaiter {
 	private readonly sub = new Subscription();
 
 	constructor(private readonly store: Store,
-				private readonly proxyProvider: ElrondProxyProvider) {
+				private readonly proxyProvider: ElrondProxyProvider,
+				private readonly elrondDataProvider: ElrondDataProvider) {
 		this.waitList$ = this.store.select(ProjectSelector.issueTokenWaitList);
 	}
 
@@ -62,14 +64,18 @@ export class TokenIssueAwaiter {
 				}, (tx) => {
 					return tx.status.isFailed() || tx.status.isExecuted() || tx.status.isInvalid();
 				})
-					.then((tx) => {
+					.then(async (tx) => {
 						const status = tx.status.isExecuted() ? ActionStatus.Success : ActionStatus.Fail;
 
 						switch (status) {
 							case ActionStatus.Success:
+								const identifier = await this.elrondDataProvider.getTransaction(network, tx.hash)
+									.toPromise()
+									.then((res: any) => res.operations[0].identifier);
+
 								this.store.dispatch(ProjectAction.addToken({
 									projectId: data.projectId,
-									identifier: 'TEST-111111', // TODO: Parse identifier from tx
+									identifier,
 								}));
 
 								this.store.dispatch(ActionHistoryAction.updateActionStatus({
