@@ -1,5 +1,7 @@
 <app-toolbar title="Action history">
-	<app-toolbar-icon-button right-side appTooltip tooltip="Clear" (click)="clearActionHistory()">
+	<app-toolbar-icon-button *ngIf="(actionHistory$ | async)?.length"
+							 right-side appTooltip tooltip="Clear"
+							 (click)="clearActionHistory()">
 		delete
 	</app-toolbar-icon-button>
 	<app-toolbar-icon-button right-side appTooltip tooltip="Reload" (click)="loadActionHistory()">
