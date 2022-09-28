@@ -32,6 +32,14 @@ export class ActionHistoryEffect {
 			)),
 		)));
 
+	clearActionHistory$ = createEffect(() => this.actions$.pipe(
+		ofType(ActionHistoryAction.clearActionHistory),
+		switchMap(() => this.dataProvider.clearActionHistory().pipe(
+			map((list) => ActionHistoryAction.clearActionHistorySuccess()),
+			catchError(err => of(ActionHistoryAction.clearActionHistoryError({err})),
+			)),
+		)));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {

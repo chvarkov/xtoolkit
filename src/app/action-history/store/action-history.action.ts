@@ -13,5 +13,9 @@ export class ActionHistoryAction {
 	static readonly updateActionStatus = createAction(`[${ActionHistoryAction.name}] update action status [...]`, props<{id: string, status: ActionStatus}>());
 	static readonly updateActionStatusSuccess = createAction(`[${ActionHistoryAction.name}] update action status [OK]`, props<{list: ActionHistoryElement[]}>());
 	static readonly updateActionStatusError = createAction(`[${ActionHistoryAction.name}] update action status [ERR]`, props<{err: Error}>());
+
+	static readonly clearActionHistory = createAction(`[${ActionHistoryAction.name}] clear action history [...]`);
+	static readonly clearActionHistorySuccess = createAction(`[${ActionHistoryAction.name}] clear action history [OK]`);
+	static readonly clearActionHistoryError = createAction(`[${ActionHistoryAction.name}] clear action history [ERR]`, props<{err: Error}>());
 }
 

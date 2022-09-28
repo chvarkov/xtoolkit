@@ -24,4 +24,8 @@ export class ActionHistoryListComponent implements OnInit {
 	loadActionHistory(): void {
 		this.store.dispatch(ActionHistoryAction.loadActionHistory());
 	}
+
+	clearActionHistory(): void {
+		this.store.dispatch(ActionHistoryAction.clearActionHistory());
+	}
 }
