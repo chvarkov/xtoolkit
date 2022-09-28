@@ -28,7 +28,7 @@ export class CreateProjectDialogComponent extends AbstractModalDialog implements
 
 	ngOnInit(): void {
 		this.dialogRef.options.width = '300px';
-		this.dialogRef.options.height = '210px';
+		this.dialogRef.options.height = '220px';
 	}
 
 	create(): void {
