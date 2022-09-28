@@ -4,7 +4,7 @@
 
 		<app-select class="network-select"
 					placeholder="Network"
-					(selectionChange)="chainId = $event.value">
+					(selectionChange)="onChangeChainId($event)">
 			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
 				{{network.name}}
 			</app-option>

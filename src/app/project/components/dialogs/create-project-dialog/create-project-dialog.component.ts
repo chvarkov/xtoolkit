@@ -34,4 +34,8 @@ export class CreateProjectDialogComponent extends AbstractModalDialog implements
 	create(): void {
 		this.dialogRef.submit({name: this.projectName, chainId: this.chainId});
 	}
+
+	onChangeChainId(chainId: string): void {
+		this.chainId = chainId;
+	}
 }
