@@ -26,6 +26,8 @@ import { ESDTInteractor } from './elrond/services/estd-intercator';
 import { FormsModule } from '@angular/forms';
 import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.component';
 import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
+import { TooltipComponent } from './ui/tooltip/tooltip.component';
+import { TooltipDirective } from './ui/tooltip/tooltip.directive';
 
 @NgModule({
 	declarations: [
@@ -46,7 +48,9 @@ import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
 		TxHashComponent,
 		AddressInputComponent,
 		RenameDialogComponent,
-  DecimalPlacesPipe,
+		DecimalPlacesPipe,
+		TooltipComponent,
+		TooltipDirective,
 	],
 	imports: [
 		CommonModule,
@@ -85,6 +89,7 @@ import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
 		TxHashComponent,
 		AddressInputComponent,
 		DecimalPlacesPipe,
+		TooltipDirective,
 	],
 })
 export class CoreModule { }
