@@ -21,6 +21,7 @@
 			<app-wallet-viewer *ngIf="tab.componentType === 'wallet'"
 							   [projectId]="tab.projectId"
 							   [address]="tab.componentId"></app-wallet-viewer>
+			<app-address-book-viewer *ngIf="tab.componentType === 'address_book'"></app-address-book-viewer>
 		</app-project-tab>
 	</app-project-tabs>
 	<app-action-list actionHistory></app-action-list>

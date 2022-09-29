@@ -3,7 +3,9 @@
 		   placeholder="Address"
 		   [ngClass]="{invalid: isInvalidAddress(input.value)}"
 		   [value]="address"
-		   (change)="onChangeAddress($event)">
+		   (change)="onChangeAddress($event)"
+		   (blur)="onBlur()"
+		   (focus)="onFocus()">
 	<div class="icons">
 		<ng-container *ngIf="!isInvalidAddress(input.value)">
 				<span class="material-icons action"
@@ -11,11 +13,36 @@
 					  (click)="clipboard.copy(address)">
 					content_copy
 				</span>
-			<span class="material-icons action" appTooltip tooltip="Explore" *ngIf="network$ | async as network"
-				  (click)="explore(network.explorerUrl)">
+				<span class="material-icons action"
+					  appTooltip tooltip="Explore"
+					  *ngIf="network$ | async as network"
+					  (click)="explore(network.explorerUrl)">
 					search
 				</span>
 		</ng-container>
 		<span class="material-icons invalid-icon" *ngIf="isInvalidAddress(input.value)">cancel</span>
+	</div>
+
+	<div class="history-container" *ngIf="isOptionsVisible">
+		<div class="option"
+			 *ngFor="let option of (savedAddress$ | async) || []"
+			 (click)="onSelectAddress(option)">
+			<div class="icon material-icons" [ngStyle]="{color: option.type | componentColor}">
+				{{option.type | componentIcon}}
+			</div>
+			<div class="content">
+				<div class="title">
+					<span class="name" [ngStyle]="{color: option.type | componentColor}">
+						wallet
+					</span>
+
+					<span class="date">{{option.savedAt | date: 'medium'}}</span>
+				</div>
+
+				<div class="address">
+					{{option.address}}
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

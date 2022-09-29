@@ -9,5 +9,11 @@
 	</app-toolbar-icon-button>
 </app-toolbar>
 <div class="transaction-list-container">
-	<app-action *ngFor="let item of actionHistory$ | async" [data]="item"></app-action>
+	<ng-container *ngIf="(actionHistory$ | async)?.length; else emptyState">
+		<app-action *ngFor="let item of actionHistory$ | async" [data]="item"></app-action>
+	</ng-container>
 </div>
+
+<ng-template #emptyState>
+	<div class="empty-state">NO RECORDS</div>
+</ng-template>

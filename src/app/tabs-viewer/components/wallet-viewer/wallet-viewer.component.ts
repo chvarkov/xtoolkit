@@ -43,6 +43,8 @@ export class WalletViewerComponent implements OnInit {
 		this.wallet$ = this.store.select(ProjectSelector.walletsByProjectId(this.projectId)).pipe(
 			map(wallets => wallets.find(w => w.address === w.address)),
 		);
+
+		this.loadData();
 	}
 
 	loadData(): void {

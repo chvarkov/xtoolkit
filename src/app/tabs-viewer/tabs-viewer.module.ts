@@ -26,6 +26,8 @@ import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-re
 import { EnumInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/enum-input/enum-input.component';
 import { TokenIdentifierInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/token-identifier-input/token-identifier-input.component';
 import { StructInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/struct-input/struct-input.component';
+import { AddressBookViewerComponent } from './components/address-book-viewer/address-book-viewer.component';
+import { NetworkModule } from '../network/network.module';
 
 @NgModule({
 	declarations: [
@@ -53,17 +55,20 @@ import { StructInputComponent } from './components/sc-viewer/sc-endpoint/sc-inpu
 		EnumInputComponent,
 		TokenIdentifierInputComponent,
 		StructInputComponent,
+		AddressBookViewerComponent,
 	],
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
 		CoreModule,
 		FormsModule,
+		NetworkModule,
 	],
 	exports: [
 		ScViewerComponent,
 		TokenViewerComponent,
 		WalletViewerComponent,
+		AddressBookViewerComponent,
 	]
 })
 export class TabsViewerModule { }

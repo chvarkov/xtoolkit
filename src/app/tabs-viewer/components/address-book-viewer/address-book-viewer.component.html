@@ -1,0 +1,35 @@
+<div class="container">
+	<app-toolbar>
+		<div left-side class="title">Address book</div>
+		<app-toolbar-icon-button right-side appTooltip tooltip="Add address">add</app-toolbar-icon-button>
+	</app-toolbar>
+
+	<ng-container *ngIf="savedAddress$ | async as addressList">
+		<div class="table-container">
+			<table class="table" *ngIf="addressList.length">
+				<tr *ngFor="let elem of addressList" class="row">
+					<td>
+						<div class="address">
+							<span class="icon material-icons" [ngStyle]="{color: elem.type | componentColor}">{{elem.type | componentIcon}}</span>
+							<app-address [address]="elem.address" [chainId]="elem.chainId || 'T'"></app-address>
+						</div>
+					</td>
+					<td>
+						{{(elem.chainId || '' | networkName | async) || 'Any network'}}
+					</td>
+					<td class="date">
+						{{elem.savedAt | date: 'medium'}}
+					</td>
+					<td class="options">
+						<app-dropdown-menu horizontal="left">
+							<app-dropdown-menu-item icon="edit" text="Edit"></app-dropdown-menu-item>
+							<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+						</app-dropdown-menu>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+	</ng-container>
+
+</div>

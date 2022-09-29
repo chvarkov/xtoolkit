@@ -2,3 +2,14 @@
 	overflow-y: auto;
 	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--footer-height));
 }
+
+.empty-state {
+	text-transform: uppercase;
+	display: flex;
+	height: 100%;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.2em;
+	color: var(--text-color);
+}
