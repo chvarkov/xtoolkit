@@ -9,6 +9,8 @@ export class ComponentColorPipe implements PipeTransform {
 		switch (value) {
 			case 'project':
 				return '#FFF';
+			case 'abi':
+				return '#f59664';
 			case 'sc':
 				return '#7effbd';
 			case 'token':

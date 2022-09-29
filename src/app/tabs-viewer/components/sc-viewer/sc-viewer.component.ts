@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GeneratedWallet, ProjectScAbi } from '../../../core/data-provider/data-provider';
+import { GeneratedWallet, ProjectAbi, ProjectSmartContract } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../project/store/project.action';
 import { Observable, of } from 'rxjs';
@@ -16,7 +16,9 @@ import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 export class ScViewerComponent implements OnInit {
 	@Input() chainId: string = '';
 
-	@Input() projectSc?: ProjectScAbi | null;
+	@Input() abi?: ProjectAbi | null;
+
+	@Input() sc?: ProjectSmartContract | null;
 
 	account$?: Observable<AccountOnNetwork>;
 	transactions$?: Observable<IElrondTransaction[]>;
@@ -31,8 +33,8 @@ export class ScViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		const projectId = this.projectSc?.projectId || '';
-		const address = this.projectSc?.address || '';
+		const projectId = this.abi?.projectId || '';
+		const address = this.sc?.address || '';
 
 		this.account$ = this.store.select(ProjectSelector.account(projectId, address));
 		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(projectId, address));

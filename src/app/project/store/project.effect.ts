@@ -5,7 +5,7 @@ import {
 	ActionHistoryElement,
 	DATA_PROVIDER,
 	DataProvider,
-	ProjectScAbi
+	ProjectSmartContract
 } from '../../core/data-provider/data-provider';
 import { catchError, exhaustMap, filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
@@ -15,7 +15,10 @@ import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
 import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
 import { GenerateWalletDialogComponent } from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
-import { UploadAbiDialogComponent } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
+import {
+	IUploadedAbi,
+	UploadAbiDialogComponent
+} from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/data-provider/personal-settings.manager';
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
@@ -88,10 +91,10 @@ export class ProjectEffect {
 	uploadAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.uploadAbi),
 		exhaustMap(({projectId}) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId}).afterSubmit$().pipe(
-			map((data: ProjectScAbi) => ProjectAction.addAbi({
+			map((data: IUploadedAbi) => ProjectAction.addAbi({
 				projectId,
-				name: data.name || data.abi.name,
-				abi: data.abi,
+				name: data.name,
+				abi: data.content,
 			})),
 		)),
 	));

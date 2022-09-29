@@ -30,6 +30,12 @@ export class ProjectSelector {
 			.find(sc => sc.id === scId),
 	);
 
+	static abiById = (projectId: string, abiId: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => (state.projects.find(p => p.id === projectId)?.abiInterfaces || [])
+			.find(abi => abi.id === abiId),
+	);
+
 	static walletsByProjectId = (projectId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.wallets || [],

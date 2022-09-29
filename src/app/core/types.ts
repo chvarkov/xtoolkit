@@ -1,1 +1,1 @@
-export type ProjectComponentType = 'project' | 'group' | 'sc' | 'token' | 'nft' | 'wallet' | 'address_book';
+export type ProjectComponentType = 'project' | 'group' | 'abi' | 'sc' | 'token' | 'nft' | 'wallet' | 'address_book';

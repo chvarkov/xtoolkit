@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
 import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
-import { ProjectScAbi } from '../../../../core/data-provider/data-provider';
+import { ProjectAbi } from '../../../../core/data-provider/data-provider';
 import { AbiJson } from '../../../../core/elrond/builders/sc.builder';
 
-export interface IUploadedSc extends Omit<ProjectScAbi, 'id'> {
+export interface IUploadedAbi extends Omit<ProjectAbi, 'id'> {
 }
 
 @Component({
@@ -25,7 +25,7 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 		endpoints: [],
 	};
 
-	dialogRef!: DialogRef<{ projectId: string }, IUploadedSc>;
+	dialogRef!: DialogRef<{ projectId: string }, IUploadedAbi>;
 
 	constructor() {
 		super();
@@ -54,9 +54,8 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 	submit(): void {
 		this.dialogRef.submit({
 			name: this.smartContractName,
-			abi: this.abi,
+			content: this.abi,
 			projectId: this.dialogRef.data.projectId,
-			address: '',
 		});
 	}
 }

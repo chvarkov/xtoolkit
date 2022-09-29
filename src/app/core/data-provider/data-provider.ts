@@ -10,22 +10,30 @@ export interface GeneratedWallet {
 	mnemonic: string[];
 }
 
-export interface ProjectScAbi {
-	name?: string;
+export interface ProjectSmartContract {
+	name: string;
 	id: string;
+	abiId: string;
 	projectId: string;
 	address: string;
-	abi: AbiJson;
 }
 
 export interface Project {
 	id: string;
 	chainId: string;
 	name: string;
-	smartContracts: ProjectScAbi[];
+	abiInterfaces: ProjectAbi[];
+	smartContracts: ProjectSmartContract[];
 	wallets: GeneratedWallet[];
 	tokens: string[];
 	addressBook: ProjectAddress[];
+}
+
+export interface ProjectAbi {
+	id: string;
+	projectId: string;
+	name: string;
+	content: AbiJson;
 }
 
 export interface ProjectAddress {
@@ -80,6 +88,12 @@ export interface DataProvider {
 	deleteProject(projectId: string): Observable<void>;
 
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
+
+	renameAbi(projectId: string, abiId: string, name: string): Observable<Project>;
+
+	deleteAbi(projectId: string, abiId: string): Observable<Project>;
+
+	createSmartContract(projectId: string, abiId: string, name: string, address: string): Observable<Project>;
 
 	renameSmartContract(projectId: string, scId: string, name: string): Observable<Project>;
 
