@@ -19,6 +19,8 @@ export class ComponentIconPipe implements PipeTransform {
 				return 'photo_library';
 			case 'group':
 				return 'folder';
+			case 'address_book':
+				return 'book';
 		}
 	}
 }
