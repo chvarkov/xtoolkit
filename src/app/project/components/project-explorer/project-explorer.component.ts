@@ -53,6 +53,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.openProjectTab({projectId, title, componentType, componentId}));
 	}
 
+	openAddressBook(project: Project): void {
+		this.openProjectComponent(project.id,`${project.name} address book`, 'address_book', project.id);
+	}
+
 	renameProject(projectId: string): void {
 		this.store.dispatch(ProjectAction.renameProject({projectId}));
 	}

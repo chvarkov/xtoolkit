@@ -17,8 +17,10 @@ export interface TabsData {
 }
 
 export interface SavedAddress {
+	projectId: string;
 	address: string;
 	type: 'wallet' | 'sc';
+	chainId?: string;
 	savedAt: number;
 }
 

@@ -16,7 +16,10 @@
 						 [expandable]="true"
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
 		<ng-container actions>
-			<app-toolbar-icon-button appTooltip tooltip="Address book">bookmark</app-toolbar-icon-button>
+			<app-toolbar-icon-button appTooltip tooltip="Address book"
+									 (click)="openAddressBook(project)">
+				bookmark
+			</app-toolbar-icon-button>
 			<app-dropdown-menu horizontal="left">
 				<app-dropdown-menu-item icon="drive_file_rename_outline"
 										text="Rename"

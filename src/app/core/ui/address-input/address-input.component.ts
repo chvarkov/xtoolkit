@@ -24,21 +24,25 @@ export class AddressInputComponent implements OnInit {
 
 	savedAddress$?: Observable<SavedAddress[]> = of([
 		{
+			projectId: '',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
+			projectId: '',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'sc',
 			savedAt: Date.now(),
 		},
 		{
+			projectId: '',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
+			projectId: '',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'sc',
 			savedAt: Date.now(),
