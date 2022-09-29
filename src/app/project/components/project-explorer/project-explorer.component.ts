@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project, ProjectScAbi } from '../../../core/data-provider/data-provider';
+import { Project, ProjectSmartContract } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
@@ -28,6 +28,10 @@ export class ProjectExplorerComponent implements OnInit {
 
 	uploadScAbi(projectId: string): void {
 		this.store.dispatch(ProjectAction.uploadAbi({projectId}));
+	}
+
+	addSmartContract(projectId: string): void {
+		this.store.dispatch(ProjectAction.addSmartContract({projectId}));
 	}
 
 	loadProjects(): void {
@@ -65,6 +69,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.renameSmartContract({projectId, scId}));
 	}
 
+	renameAbi(projectId: string, abiId: string): void {
+		// TODO: Implement it.
+	}
+
 	renameWallet(projectId: string, address: string): void {
 		this.store.dispatch(ProjectAction.renameWallet({projectId, address}));
 	}
@@ -83,6 +91,10 @@ export class ProjectExplorerComponent implements OnInit {
 
 	deleteSmartContract(projectId: string, scId: string): void {
 		this.store.dispatch(ProjectAction.deleteSmartContract({projectId, scId}));
+	}
+
+	deleteAbi(projectId: string, abiId: string): void {
+		// TODO: Implement it.
 	}
 
 	deleteToken(projectId: string, identifier: string): void {

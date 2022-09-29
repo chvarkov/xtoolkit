@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { SavedAddress } from '../../../core/data-provider/personal-settings.manager';
+import { ProjectAddress } from '../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-address-book-viewer',
@@ -9,134 +9,88 @@ import { SavedAddress } from '../../../core/data-provider/personal-settings.mana
 	styleUrls: ['./address-book-viewer.component.scss']
 })
 export class AddressBookViewerComponent implements OnInit {
-	savedAddress$?: Observable<SavedAddress[]> = of([
+	savedAddress$?: Observable<ProjectAddress[]> = of([
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			chainId: 'T',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			chainId: 'T',
 			type: 'sc',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			chainId: 'T',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			chainId: 'T',
 			type: 'sc',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			chainId: 'T',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			chainId: 'T',
 			type: 'sc',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			chainId: 'T',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			chainId: 'T',
 			type: 'sc',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'sc',
-			chainId: 'T',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			chainId: 'T',
 			type: 'sc',
 			savedAt: Date.now(),
 		},

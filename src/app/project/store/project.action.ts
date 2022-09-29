@@ -29,6 +29,10 @@ export class ProjectAction {
 	static readonly addAbiSuccess = createAction(`[${ProjectAction.name}] add abi [OK]`, props<{project: Project}>());
 	static readonly addAbiError = createAction(`[${ProjectAction.name}] add abi [ERR]`, props<{err: Error}>());
 
+	static readonly addSmartContract = createAction(`[${ProjectAction.name}] add smart contract [...]`, props<{projectId: string}>());
+	static readonly addSmartContractSuccess = createAction(`[${ProjectAction.name}] add smart contract [OK]`, props<{project: Project}>());
+	static readonly addSmartContractError = createAction(`[${ProjectAction.name}] add smart contract [ERR]`, props<{err: Error}>());
+
 	static readonly loadAccountAndPositions = createAction(`[${ProjectAction.name}] load account and positions [...]`, props<{projectId: string, address: string}>());
 	static readonly loadAccountAndPositionsSuccess = createAction(`[${ProjectAction.name}] load account and positions [OK]`, props<{projectId: string, native: string, account: AccountOnNetwork, tokens: ITokenPosition[]}>());
 	static readonly loadAccountAndPositionsError = createAction(`[${ProjectAction.name}] load account and positions [ERR]`, props<{err: Error}>());

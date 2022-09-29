@@ -19,6 +19,7 @@ import { ImportTokenDialogComponent } from './components/dialogs/import-token-di
 import { IsActiveProjectElementPipe } from './pipes/is-active-project-element.pipe';
 import { TokenIssueAwaiter } from './services/token-issue.awaiter';
 import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
+import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -32,6 +33,7 @@ import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update
 		ImportTokenDialogComponent,
 		IsActiveProjectElementPipe,
   UpdateProjectNetworkDialogComponent,
+  AddSmartContractDialogComponent,
 	],
 	imports: [
 		CommonModule,

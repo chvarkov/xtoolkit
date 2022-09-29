@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../../project/store/project.action';
-import { ProjectScAbi } from '../../../../core/data-provider/data-provider';
+import { ProjectSmartContract } from '../../../../core/data-provider/data-provider';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { isValidAddress } from '../../../../core/validators/address-validator';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
@@ -13,7 +13,7 @@ import { NetworkSelector } from '../../../../network/store/network.selector';
 	styleUrls: ['./sc-viewer-header.component.scss']
 })
 export class ScViewerHeaderComponent implements OnInit, OnDestroy {
-	@Input() sc!: ProjectScAbi;
+	@Input() sc!: ProjectSmartContract;
 	@Input() address: string = '';
 	@Input() chainId: string = '';
 

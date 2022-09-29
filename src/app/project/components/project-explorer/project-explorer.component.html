@@ -37,7 +37,7 @@
 		</ng-container>
 		<div innerElements>
 			<app-project-element [expandable]="true"
-								 name="Smart contracts">
+								 name="ABI interfaces">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
 						<app-dropdown-menu-item icon="upload_file"
@@ -47,11 +47,42 @@
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element
-						(click)="openProjectComponent(project.id, sc.name || sc.abi.name, 'sc', sc.id)"
+						(click)="openProjectComponent(project.id, abi.name, 'abi', abi.id)"
+						*ngFor="let abi of project.abiInterfaces"
+						type="abi"
+						[active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
+						[name]="abi.name || abi.name">
+						<ng-container actions>
+							<app-dropdown-menu horizontal="left">
+								<app-dropdown-menu-item icon="drive_file_rename_outline"
+														text="Rename"
+														(click)="renameAbi(project.id, abi.id)">
+								</app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete"
+														text="Delete"
+														(click)="deleteAbi(project.id, abi.id)">
+								</app-dropdown-menu-item>
+							</app-dropdown-menu>
+						</ng-container>
+					</app-project-element>
+				</ng-container>
+			</app-project-element>
+			<app-project-element [expandable]="true"
+								 name="Smart contracts">
+				<ng-container actions>
+					<app-dropdown-menu horizontal="left">
+						<app-dropdown-menu-item icon="add"
+												text="Add smart contract"
+												(click)="addSmartContract(project.id)"></app-dropdown-menu-item>
+					</app-dropdown-menu>
+				</ng-container>
+				<ng-container innerElements>
+					<app-project-element
+						(click)="openProjectComponent(project.id, sc.name || sc.name, 'sc', sc.id)"
 						*ngFor="let sc of project.smartContracts"
 						type="sc"
 						[active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
-						[name]="sc.name || sc.abi.name">
+						[name]="sc.name || sc.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
 								<app-dropdown-menu-item icon="drive_file_rename_outline"

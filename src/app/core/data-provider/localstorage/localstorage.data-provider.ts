@@ -3,8 +3,8 @@ import {
 	ActionStatus,
 	DataProvider,
 	GeneratedWallet, PendingTokenIssue,
-	Project,
-	ProjectScAbi
+	Project, ProjectAbi, ProjectAddress,
+	ProjectSmartContract
 } from '../data-provider';
 import { Observable, of } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
@@ -111,9 +111,11 @@ export class LocalstorageDataProvider implements DataProvider {
 						id: uuid.v4(),
 						name,
 						chainId,
+						abiInterfaces: [],
 						smartContracts: [],
 						wallets: [],
 						tokens: [],
+						addressBook: [],
 					};
 
 					projects.push(project);
@@ -125,16 +127,86 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	addAbi(projectId: string, abi: AbiJson, name: string = abi.name): Observable<Project> {
+	addAbi(projectId: string, content: AbiJson, name: string = content.name): Observable<Project> {
 		return this.getProjects()
 			.pipe(
 				map((projects => {
-					const sc: ProjectScAbi = {
+					const abi: ProjectAbi = {
+						id: uuid.v4(),
+						projectId,
+						name,
+						content,
+					};
+
+					const project = projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.abiInterfaces.push(abi);
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
+	renameAbi(projectId: string, abiId: string, name: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(p => p.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					const abi = project.abiInterfaces.find(sc => sc.id === abiId);
+
+					if (!abi) {
+						throw new Error('Abi interface not found');
+					}
+
+					abi.name = name;
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
+	deleteAbi(projectId: string, abiId: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const project = projects.find(i => i.id === projectId);
+
+					if (!project) {
+						throw new Error('Project not found');
+					}
+
+					project.abiInterfaces = project.abiInterfaces.filter(abi => abi.id !== abiId);
+
+					this.set(this.projectsKey, projects);
+
+					return project;
+				})),
+			);
+	}
+
+	createSmartContract(projectId: string, abiId: string, name: string, address: string): Observable<Project> {
+		return this.getProjects()
+			.pipe(
+				map((projects => {
+					const sc: ProjectSmartContract = {
 						id: uuid.v4(),
 						name,
-						abi,
+						abiId,
 						projectId,
-						address: '',
+						address,
 					};
 
 					const project = projects.find(i => i.id === projectId);
@@ -423,6 +495,48 @@ export class LocalstorageDataProvider implements DataProvider {
 					return waitList;
 				}),
 			);
+	}
+
+	addProjectAddress(data: ProjectAddress): Observable<Project> {
+		return this.getProjects().pipe(
+			map(projects => {
+				const project = projects.find(p => p.id === data.projectId);
+
+				if (!project) {
+					throw new Error('Project not found');
+				}
+
+				const existingAddress = project.addressBook.find(a => a.address === data.address);
+
+				if (existingAddress) {
+					throw new Error('Address already exists');
+				}
+
+				project.addressBook.push(data);
+
+				this.set(this.projectsKey, projects);
+
+				return project;
+			}),
+		);
+	}
+
+	deleteProjectAddress(projectId: string, address: string): Observable<Project> {
+		return this.getProjects().pipe(
+			map(projects => {
+				const project = projects.find(p => p.id === projectId);
+
+				if (!project) {
+					throw new Error('Project not found');
+				}
+
+				project.addressBook = project.addressBook.filter(a => a.address !== address);
+
+				this.set(this.projectsKey, projects);
+
+				return project;
+			}),
+		);
 	}
 
 	private set<T>(key: string, value: T): void {

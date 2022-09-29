@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NetworkAction } from './network/store/network.action';
 import { Observable } from 'rxjs';
-import { ProjectScAbi } from './core/data-provider/data-provider';
+import { ProjectAbi, ProjectSmartContract } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
 import { OpenedProjectTab } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
@@ -63,8 +63,12 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.selectTab({index}));
 	}
 
-	getScById$(projectId: string, scId: string): Observable<ProjectScAbi | undefined> {
+	getScById$(projectId: string, scId: string): Observable<ProjectSmartContract | undefined> {
 		return this.store.select(ProjectSelector.smartContractsById(projectId, scId));
+	}
+
+	getAbiById$(projectId: string, abiId: string): Observable<ProjectAbi | undefined> {
+		return this.store.select(ProjectSelector.abiById(projectId, abiId));
 	}
 
 	getProjectChainId$(projectId: string): Observable<string> {

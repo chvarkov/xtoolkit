@@ -5,7 +5,7 @@ import { INetworkEnvironment } from '../../elrond/interfaces/network-environment
 import { Observable, of } from 'rxjs';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import { isValidAddress } from '../../validators/address-validator';
-import { SavedAddress } from '../../data-provider/personal-settings.manager';
+import { ProjectAddress } from '../../data-provider/data-provider';
 
 @Component({
 	selector: 'app-address-input',
@@ -22,27 +22,87 @@ export class AddressInputComponent implements OnInit {
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
-	savedAddress$?: Observable<SavedAddress[]> = of([
+	savedAddress$?: Observable<ProjectAddress[]> = of([
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'sc',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'Wallet Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'wallet',
 			savedAt: Date.now(),
 		},
 		{
 			projectId: '',
+			name: 'SC Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'sc',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'Wallet Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'wallet',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'SC Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'sc',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'Wallet Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'wallet',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'SC Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'sc',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'Wallet Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'wallet',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'SC Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'sc',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'Wallet Name',
+			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
+			type: 'wallet',
+			savedAt: Date.now(),
+		},
+		{
+			projectId: '',
+			name: 'SC Name',
 			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
 			type: 'sc',
 			savedAt: Date.now(),
@@ -81,7 +141,7 @@ export class AddressInputComponent implements OnInit {
 		this.setValue(value);
 	}
 
-	onSelectAddress(savedAddress: SavedAddress): void {
+	onSelectAddress(savedAddress: ProjectAddress): void {
 		this.setValue(savedAddress.address);
 
 		this.address = savedAddress.address;

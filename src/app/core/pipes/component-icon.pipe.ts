@@ -11,6 +11,8 @@ export class ComponentIconPipe implements PipeTransform {
 				return 'folder_copy';
 			case 'sc':
 				return 'code';
+			case 'abi':
+				return 'data_object';
 			case 'token':
 				return 'token';
 			case 'wallet':

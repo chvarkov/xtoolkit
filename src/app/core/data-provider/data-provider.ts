@@ -10,21 +10,38 @@ export interface GeneratedWallet {
 	mnemonic: string[];
 }
 
-export interface ProjectScAbi {
-	name?: string;
+export interface ProjectSmartContract {
+	name: string;
 	id: string;
+	abiId: string;
 	projectId: string;
 	address: string;
-	abi: AbiJson;
 }
 
 export interface Project {
 	id: string;
 	chainId: string;
 	name: string;
-	smartContracts: ProjectScAbi[];
+	abiInterfaces: ProjectAbi[];
+	smartContracts: ProjectSmartContract[];
 	wallets: GeneratedWallet[];
 	tokens: string[];
+	addressBook: ProjectAddress[];
+}
+
+export interface ProjectAbi {
+	id: string;
+	projectId: string;
+	name: string;
+	content: AbiJson;
+}
+
+export interface ProjectAddress {
+	projectId: string;
+	name: string;
+	address: string;
+	type: 'wallet' | 'sc';
+	savedAt: number;
 }
 
 export interface PendingTokenIssue {
@@ -72,6 +89,12 @@ export interface DataProvider {
 
 	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
 
+	renameAbi(projectId: string, abiId: string, name: string): Observable<Project>;
+
+	deleteAbi(projectId: string, abiId: string): Observable<Project>;
+
+	createSmartContract(projectId: string, abiId: string, name: string, address: string): Observable<Project>;
+
 	renameSmartContract(projectId: string, scId: string, name: string): Observable<Project>;
 
 	deleteSmartContract(projectId: string, scId: string): Observable<Project>;
@@ -103,4 +126,8 @@ export interface DataProvider {
 	getTokenIssueWaitList(): Observable<PendingTokenIssue[]>;
 
 	deleteTokenIssueTransaction(txHash: string): Observable<PendingTokenIssue[]>;
+
+	addProjectAddress(data: ProjectAddress): Observable<Project>;
+
+	deleteProjectAddress(projectId: string, address: string): Observable<Project>;
 }
