@@ -16,14 +16,6 @@ export interface TabsData {
 	selectedIndex?: number;
 }
 
-export interface SavedAddress {
-	projectId: string;
-	address: string;
-	type: 'wallet' | 'sc';
-	chainId?: string;
-	savedAt: number;
-}
-
 export interface PersonalSettingsManager {
 	getOpenedTabs(): Observable<TabsData>;
 
@@ -44,10 +36,4 @@ export interface PersonalSettingsManager {
 	moveTab(prevIndex: number, currentIndex: number): Observable<TabsData>;
 
 	selectTab(index: number): Observable<TabsData>;
-
-	getSavedAddress(): Observable<SavedAddress[]>;
-
-	saveAddress(data: SavedAddress): Observable<SavedAddress[]>;
-
-	deleteAddress(address: string): Observable<SavedAddress[]>;
 }

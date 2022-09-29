@@ -3,7 +3,7 @@ import {
 	ActionStatus,
 	DataProvider,
 	GeneratedWallet, PendingTokenIssue,
-	Project,
+	Project, ProjectAddress,
 	ProjectScAbi
 } from '../data-provider';
 import { Observable, of } from 'rxjs';
@@ -114,6 +114,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						smartContracts: [],
 						wallets: [],
 						tokens: [],
+						addressBook: [],
 					};
 
 					projects.push(project);
@@ -423,6 +424,48 @@ export class LocalstorageDataProvider implements DataProvider {
 					return waitList;
 				}),
 			);
+	}
+
+	addProjectAddress(data: ProjectAddress): Observable<Project> {
+		return this.getProjects().pipe(
+			map(projects => {
+				const project = projects.find(p => p.id === data.projectId);
+
+				if (!project) {
+					throw new Error('Project not found');
+				}
+
+				const existingAddress = project.addressBook.find(a => a.address === data.address);
+
+				if (existingAddress) {
+					throw new Error('Address already exists');
+				}
+
+				project.addressBook.push(data);
+
+				this.set(this.projectsKey, projects);
+
+				return project;
+			}),
+		);
+	}
+
+	deleteProjectAddress(projectId: string, address: string): Observable<Project> {
+		return this.getProjects().pipe(
+			map(projects => {
+				const project = projects.find(p => p.id === projectId);
+
+				if (!project) {
+					throw new Error('Project not found');
+				}
+
+				project.addressBook = project.addressBook.filter(a => a.address !== address);
+
+				this.set(this.projectsKey, projects);
+
+				return project;
+			}),
+		);
 	}
 
 	private set<T>(key: string, value: T): void {

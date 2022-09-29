@@ -11,11 +11,11 @@
 					<td>
 						<div class="address">
 							<span class="icon material-icons" [ngStyle]="{color: elem.type | componentColor}">{{elem.type | componentIcon}}</span>
-							<app-address [address]="elem.address" [chainId]="elem.chainId || 'T'"></app-address>
+							<app-address [address]="elem.address"></app-address>
 						</div>
 					</td>
 					<td>
-						{{(elem.chainId || '' | networkName | async) || 'Any network'}}
+						{{elem.name}}
 					</td>
 					<td class="date">
 						{{elem.savedAt | date: 'medium'}}

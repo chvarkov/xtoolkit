@@ -25,6 +25,15 @@ export interface Project {
 	smartContracts: ProjectScAbi[];
 	wallets: GeneratedWallet[];
 	tokens: string[];
+	addressBook: ProjectAddress[];
+}
+
+export interface ProjectAddress {
+	projectId: string;
+	name: string;
+	address: string;
+	type: 'wallet' | 'sc';
+	savedAt: number;
 }
 
 export interface PendingTokenIssue {
@@ -103,4 +112,8 @@ export interface DataProvider {
 	getTokenIssueWaitList(): Observable<PendingTokenIssue[]>;
 
 	deleteTokenIssueTransaction(txHash: string): Observable<PendingTokenIssue[]>;
+
+	addProjectAddress(data: ProjectAddress): Observable<Project>;
+
+	deleteProjectAddress(projectId: string, address: string): Observable<Project>;
 }

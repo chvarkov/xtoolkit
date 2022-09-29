@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OpenedProjectTab, PersonalSettingsManager, SavedAddress, TabsData } from '../personal-settings.manager';
+import { OpenedProjectTab, PersonalSettingsManager, TabsData } from '../personal-settings.manager';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
@@ -9,7 +9,6 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 export class LocalstoragePersonalSettingManager implements PersonalSettingsManager {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly openedTabsKey = `${this.globalPrefix}.opened_tabs`;
-	private readonly savedAddressesKey = `${this.globalPrefix}.saved_addresses`;
 	private readonly currentTabIndexKey = `${this.globalPrefix}.current_tab_index`;
 
 	getOpenedTabs(): Observable<TabsData> {
@@ -177,48 +176,6 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				this.set(this.currentTabIndexKey, index);
 
 				return { tabs, selectedIndex: index };
-			}),
-		);
-	}
-
-	getSavedAddress(): Observable<SavedAddress[]> {
-		const addresses: SavedAddress[] | undefined = this.get(this.savedAddressesKey);
-
-		if (!addresses) {
-			this.set(this.savedAddressesKey, []);
-
-			return of([]);
-		}
-
-		return of(addresses);
-	}
-
-	saveAddress(data: SavedAddress): Observable<SavedAddress[]> {
-		return this.getSavedAddress().pipe(
-			map(addresses => {
-				const existingAddress = addresses.find(a => a.address === data.address);
-
-				if (existingAddress) {
-					return addresses;
-				}
-
-				addresses.push(data);
-
-				this.set(this.savedAddressesKey, addresses);
-
-				return addresses;
-			}),
-		);
-	}
-
-	deleteAddress(address: string): Observable<SavedAddress[]> {
-		return this.getSavedAddress().pipe(
-			map(addresses => {
-				addresses = addresses.filter(i => i.address !== address);
-
-				this.set(this.savedAddressesKey, addresses);
-
-				return addresses;
 			}),
 		);
 	}
