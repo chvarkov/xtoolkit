@@ -1,0 +1,25 @@
+<app-modal-dialog title="Create smart contract" [dialogRef]="dialogRef">
+	<div content class="content">
+		<input class="project-name" [(ngModel)]="projectName" placeholder="Smart contract name">
+
+<!--		TODO: Fix hardcoded chainId -->
+		<app-address-input [chainId]="'T'" (changed)="address = $event"></app-address-input>
+
+		<app-select class="network-select"
+					placeholder="Network"
+					(selectionChange)="onChangeAbiId($event)">
+			<app-option *ngFor="let abi of (abiInterfaces$ | async) || []" [value]="abi.id">
+				{{abi.name}}
+			</app-option>
+		</app-select>
+	</div>
+
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!projectName || !abiId || !address"
+					(click)="create()">Create</button>
+		</div>
+	</div>
+</app-modal-dialog>

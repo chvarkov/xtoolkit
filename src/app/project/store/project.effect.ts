@@ -31,6 +31,7 @@ import { ImportTokenDialogComponent } from '../components/dialogs/import-token-d
 import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dialog/issue-token-dialog.component';
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
+import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -97,6 +98,22 @@ export class ProjectEffect {
 				abi: data.content,
 			})),
 		)),
+	));
+
+	addSmartContract$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addSmartContract),
+		exhaustMap(({projectId}) => this.modalDialogFactory.show(AddSmartContractDialogComponent, {projectId}).afterSubmit$().pipe(
+			map(({ name, address, abiId }) => ({
+				projectId,
+				name,
+				address,
+				abiId,
+			})),
+		)),
+		mergeMap(({projectId, name, address, abiId}) => this.dataProvider.createSmartContract(projectId, abiId, name, address).pipe(
+			map((project) => ProjectAction.addSmartContractSuccess({project})),
+			catchError(err => of(ProjectAction.addSmartContractError({err})))),
+		),
 	));
 
 	setScAddress$ = createEffect(() => this.actions$.pipe(

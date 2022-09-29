@@ -219,6 +219,10 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
+	on(ProjectAction.addSmartContractSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
 );
 
 export function projectReducer(state: IProjectState | undefined, action: Action): IProjectState {

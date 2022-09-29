@@ -30,6 +30,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.uploadAbi({projectId}));
 	}
 
+	addSmartContract(projectId: string): void {
+		this.store.dispatch(ProjectAction.addSmartContract({projectId}));
+	}
+
 	loadProjects(): void {
 		this.store.dispatch(ProjectAction.loadProjects());
 	}
