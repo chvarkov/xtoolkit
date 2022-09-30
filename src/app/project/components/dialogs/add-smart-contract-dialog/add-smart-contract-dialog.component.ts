@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
 import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
 import { Observable } from 'rxjs';
-import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { Store } from '@ngrx/store';
-import { NetworkSelector } from '../../../../network/store/network.selector';
 import { ProjectSelector } from '../../../store/project.selector';
 import { ProjectAbi } from '../../../../core/data-provider/data-provider';
 import { map } from 'rxjs/operators';
@@ -34,8 +32,8 @@ export class AddSmartContractDialogComponent  extends AbstractModalDialog implem
 			map(project => project?.abiInterfaces || []),
 		);
 
-		this.dialogRef.options.width = '300px';
-		this.dialogRef.options.height = '220px';
+		this.dialogRef.options.width = '560px';
+		this.dialogRef.options.height = '260px';
 	}
 
 	create(): void {

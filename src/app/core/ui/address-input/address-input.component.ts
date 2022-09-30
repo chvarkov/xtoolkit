@@ -18,6 +18,8 @@ export class AddressInputComponent implements OnInit {
 
 	@Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
+	@Input() showAddressBook = true;
+
 	isOptionsVisible = false;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
@@ -116,7 +118,9 @@ export class AddressInputComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
+		if (this.showAddressBook) {
+			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
+		}
 	}
 
 	onFocus(): void {

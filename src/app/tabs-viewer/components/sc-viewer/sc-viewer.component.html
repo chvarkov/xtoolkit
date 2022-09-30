@@ -2,7 +2,8 @@
 	<ng-container *ngIf="(abi.content | sc:sc?.address || '') as smartContract">
 		<app-toolbar>
 			<div left-side class="toolbar-left-side">
-				<app-address-input [chainId]="chainId" [address]="sc?.address || ''"></app-address-input>
+				<app-address-input *ngIf="!sc" [chainId]="chainId"></app-address-input>
+				<app-address *ngIf="sc" [chainId]="chainId" [address]="sc.address || ''"></app-address>
 			</div>
 			<app-toolbar-icon-button right-side appTooltip tooltip="Import RAW call">add</app-toolbar-icon-button>
 			<app-toolbar-icon-button right-side appTooltip tooltip="Expand all">expand_more</app-toolbar-icon-button>

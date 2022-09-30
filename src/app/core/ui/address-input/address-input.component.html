@@ -23,7 +23,7 @@
 		<span class="material-icons invalid-icon" *ngIf="isInvalidAddress(input.value)">cancel</span>
 	</div>
 
-	<div class="history-container" *ngIf="isOptionsVisible">
+	<div class="history-container" *ngIf="showAddressBook && isOptionsVisible">
 		<div class="option"
 			 *ngFor="let option of (savedAddress$ | async) || []"
 			 (click)="onSelectAddress(option)">
