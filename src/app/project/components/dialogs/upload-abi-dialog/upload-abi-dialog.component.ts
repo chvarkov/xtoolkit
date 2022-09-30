@@ -33,14 +33,14 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 
 	ngOnInit(): void {
 		this.dialogRef.options.width = '300px';
-		this.dialogRef.options.height = '160px';
+		this.dialogRef.options.height = '200px';
 	}
 
 	async onFileSelected(event: any) {
 		const file: File = event.target.files[0];
 
 		if (file) {
-			this.dialogRef.options.height = '260px';
+			this.dialogRef.options.height = '280px';
 			this.fileName = file.name;
 			const content = await file.text();
 			this.abi = JSON.parse(content);
