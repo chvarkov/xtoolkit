@@ -223,6 +223,15 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
+	on(ProjectAction.deleteAbiSuccess, (state, { project, tabsData }) => ({
+		...state,
+		...tabsData,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.renameAbiSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
 );
 
 export function projectReducer(state: IProjectState | undefined, action: Action): IProjectState {

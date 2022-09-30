@@ -70,7 +70,7 @@ export class ProjectExplorerComponent implements OnInit {
 	}
 
 	renameAbi(projectId: string, abiId: string): void {
-		// TODO: Implement it.
+		this.store.dispatch(ProjectAction.renameAbi({projectId, abiId}));
 	}
 
 	renameWallet(projectId: string, address: string): void {
@@ -94,7 +94,7 @@ export class ProjectExplorerComponent implements OnInit {
 	}
 
 	deleteAbi(projectId: string, abiId: string): void {
-		// TODO: Implement it.
+		this.store.dispatch(ProjectAction.deleteAbi({projectId, abiId}));
 	}
 
 	deleteToken(projectId: string, identifier: string): void {

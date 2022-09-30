@@ -339,6 +339,22 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameAbi$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAbi),
+		exhaustMap(({projectId, abiId}) => this.modalDialogFactory.show(RenameDialogComponent, {
+			title: 'Rename ABI interface',
+		}).afterSubmit$().pipe(
+			map(({name}) => ({projectId, abiId, name})),
+		)),
+		mergeMap(({projectId, abiId, name}) => forkJoin([
+			this.dataProvider.renameAbi(projectId, abiId, name),
+			this.personalSettingsManager.rename(projectId, 'abi', abiId, name),
+		]).pipe(
+			map(([project, { tabs }]) => ProjectAction.renameAbiSuccess({project, tabs})),
+			catchError(err => of(ProjectAction.renameAbiError({err})))
+		))),
+	);
+
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
 		exhaustMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
@@ -396,6 +412,25 @@ export class ProjectEffect {
 		]).pipe(
 			map(([project, tabsData]) => ProjectAction.deleteSmartContractSuccess({project, tabsData})),
 			catchError(err => of(ProjectAction.deleteSmartContractError({err})),
+			)),
+		)));
+
+	deleteAbi$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAbi),
+		exhaustMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete ABI interface',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		mergeMap(({projectId, abiId}) => forkJoin([
+			this.dataProvider.deleteAbi(projectId, abiId),
+			this.personalSettingsManager.deleteComponent(projectId, 'abi', abiId),
+		]).pipe(
+			map(([project, tabsData]) => ProjectAction.deleteAbiSuccess({project, tabsData})),
+			catchError(err => of(ProjectAction.deleteAbiError({err})),
 			)),
 		)));
 
