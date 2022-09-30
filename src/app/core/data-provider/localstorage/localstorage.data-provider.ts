@@ -189,6 +189,7 @@ export class LocalstorageDataProvider implements DataProvider {
 					}
 
 					project.abiInterfaces = project.abiInterfaces.filter(abi => abi.id !== abiId);
+					project.smartContracts = project.smartContracts.filter(sc => sc.abiId !== abiId);
 
 					this.set(this.projectsKey, projects);
 

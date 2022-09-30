@@ -112,6 +112,10 @@ export class ProjectAction {
 	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project}>());
 	static readonly renameProjectError = createAction(`[${ProjectAction.name}] rename project [ERR]`, props<{err: Error}>());
 
+	static readonly renameAbi = createAction(`[${ProjectAction.name}] rename abi [...]`, props<{projectId: string, abiId: string}>());
+	static readonly renameAbiSuccess = createAction(`[${ProjectAction.name}] rename abi [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
+	static readonly renameAbiError = createAction(`[${ProjectAction.name}] rename abi [ERR]`, props<{err: Error}>());
+
 	static readonly renameSmartContract = createAction(`[${ProjectAction.name}] rename smart contract [...]`, props<{projectId: string, scId: string}>());
 	static readonly renameSmartContractSuccess = createAction(`[${ProjectAction.name}] rename smart contract [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameSmartContractError = createAction(`[${ProjectAction.name}] rename smart contract [ERR]`, props<{err: Error}>());
@@ -125,6 +129,10 @@ export class ProjectAction {
 	static readonly deleteProject = createAction(`[${ProjectAction.name}] delete project [...]`, props<{projectId: string}>());
 	static readonly deleteProjectSuccess = createAction(`[${ProjectAction.name}] delete project [OK]`, props<{projectId: string, tabsData: TabsData}>());
 	static readonly deleteProjectError = createAction(`[${ProjectAction.name}] delete project [ERR]`, props<{err: Error}>());
+
+	static readonly deleteAbi = createAction(`[${ProjectAction.name}] delete abi [...]`, props<{projectId: string, abiId: string}>());
+	static readonly deleteAbiSuccess = createAction(`[${ProjectAction.name}] delete abi [OK]`, props<{project: Project, tabsData: TabsData}>());
+	static readonly deleteAbiError = createAction(`[${ProjectAction.name}] delete abi [ERR]`, props<{err: Error}>());
 
 	static readonly deleteSmartContract = createAction(`[${ProjectAction.name}] delete smart contract [...]`, props<{projectId: string, scId: string}>());
 	static readonly deleteSmartContractSuccess = createAction(`[${ProjectAction.name}] delete smart contract [OK]`, props<{project: Project, tabsData: TabsData}>());
