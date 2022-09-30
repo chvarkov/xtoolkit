@@ -1,8 +1,12 @@
 .content {
-	padding: 20px 0;
+	padding: 8px 0;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+
+	.field {
+		margin: 6px 0;
+	}
 
 	.sc-name {
 		width: 100%;
