@@ -3,7 +3,10 @@
 		<input class="field project-name" [(ngModel)]="projectName" placeholder="Smart contract name">
 
 <!--		TODO: Fix hardcoded chainId -->
-		<app-address-input class="field" [chainId]="'T'" (changed)="address = $event"></app-address-input>
+		<app-address-input class="field" [showAddressBook]="false"
+						   [chainId]="'T'"
+						   (changed)="address = $event">
+		</app-address-input>
 
 		<app-select class="network-select"
 					placeholder="Network"
