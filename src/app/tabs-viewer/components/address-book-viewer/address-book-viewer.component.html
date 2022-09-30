@@ -9,17 +9,17 @@
 			<table class="table" *ngIf="addressList.length">
 				<tr *ngFor="let elem of addressList" class="row">
 					<td>
-						<div class="address">
+						<div class="name">
 							<span class="icon material-icons" [ngStyle]="{color: elem.type | componentColor}">{{elem.type | componentIcon}}</span>
-							<app-address [address]="elem.address"></app-address>
+							{{elem.name}}
 						</div>
 					</td>
-					<td>
-						{{elem.name}}
+					<td class="address-cell">
+						<app-address [address]="elem.address"></app-address>
 					</td>
-					<td class="date">
-						{{elem.savedAt | date: 'medium'}}
-					</td>
+<!--					<td class="date">-->
+<!--						{{elem.savedAt | date: 'medium'}}-->
+<!--					</td>-->
 					<td class="options">
 						<app-dropdown-menu horizontal="left">
 							<app-dropdown-menu-item icon="edit" text="Edit"></app-dropdown-menu-item>
