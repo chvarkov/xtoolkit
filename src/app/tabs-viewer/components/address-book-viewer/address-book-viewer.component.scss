@@ -25,13 +25,17 @@
 			}
 		}
 
-		.address {
+		.name {
 			display: flex;
 			flex-direction: row;
 
 			.icon {
 				margin-right: 10px;
 			}
+		}
+
+		.address-cell {
+			width: 440px;
 		}
 
 		.date {

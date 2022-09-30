@@ -129,5 +129,7 @@ export interface DataProvider {
 
 	addProjectAddress(data: ProjectAddress): Observable<Project>;
 
+	renameProjectAddress(projectId: string, address: string, name: string): Observable<Project>;
+
 	deleteProjectAddress(projectId: string, address: string): Observable<Project>;
 }

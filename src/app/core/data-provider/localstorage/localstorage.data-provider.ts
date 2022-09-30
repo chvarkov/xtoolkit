@@ -522,6 +522,30 @@ export class LocalstorageDataProvider implements DataProvider {
 		);
 	}
 
+	renameProjectAddress(projectId: string, address: string, name: string): Observable<Project> {
+		return this.getProjects().pipe(
+			map(projects => {
+				const project = projects.find(p => p.id === projectId);
+
+				if (!project) {
+					throw new Error('Project not found');
+				}
+
+				const addressElem = project.addressBook.find(a => a.address === address);
+
+				if (!addressElem) {
+					throw new Error('Address not found');
+				}
+
+				addressElem.name = name;
+
+				this.set(this.projectsKey, projects);
+
+				return project;
+			}),
+		);
+	}
+
 	deleteProjectAddress(projectId: string, address: string): Observable<Project> {
 		return this.getProjects().pipe(
 			map(projects => {
