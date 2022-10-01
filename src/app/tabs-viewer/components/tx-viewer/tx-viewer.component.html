@@ -37,6 +37,11 @@
 							<div class="shard">(Shard {{tx.receiverShard}})</div>
 						</div>
 
+						<ng-container *ngIf="tx.function">
+							<div class="grid-cell">Method</div>
+							<div class="grid-cell">{{tx.function}}</div>
+						</ng-container>
+
 						<ng-container *ngIf="getTransferOperations(tx) as transferOperations">
 							<div class="grid-cell">Operations</div>
 							<div class="grid-cell">
