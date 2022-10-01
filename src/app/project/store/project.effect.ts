@@ -486,6 +486,35 @@ export class ProjectEffect {
 		)),
 	));
 
+	renameAddress$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAddress),
+		exhaustMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
+			title: 'Rename address',
+		}).afterSubmit$().pipe(
+			map(({name}) => ({projectId, address, name})),
+		)),
+		mergeMap(({projectId, address, name}) => this.dataProvider.renameProjectAddress(projectId, address, name).pipe(
+			map((project) => ProjectAction.renameAddressSuccess({project})),
+			catchError(err => of(ProjectAction.renameAddressError({err})))
+		))),
+	);
+
+	deleteAddress$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAddress),
+		exhaustMap(action => {
+			return this.modalDialogFactory.show(ConfirmDialogComponent, {
+				title: 'Delete address',
+				message: 'Are you sure? After deletion, it will not be possible to restore.',
+			}).afterSubmit$().pipe(
+				map(() => action),
+			);
+		}),
+		mergeMap(({projectId, address}) => this.dataProvider.deleteProjectAddress(projectId, address).pipe(
+			map((project) => ProjectAction.deleteAddressSuccess({project})),
+			catchError(err => of(ProjectAction.deleteAddressError({err})))
+		))),
+	);
+
 	loadTokenIssueWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenIssueWaitList),
 		mergeMap(() => this.dataProvider.getTokenIssueWaitList().pipe(

@@ -21,13 +21,16 @@
 					<td class="address-cell">
 						<app-address [address]="elem.address"></app-address>
 					</td>
-<!--					<td class="date">-->
-<!--						{{elem.savedAt | date: 'medium'}}-->
-<!--					</td>-->
 					<td class="options">
 						<app-dropdown-menu horizontal="left">
-							<app-dropdown-menu-item icon="edit" text="Edit"></app-dropdown-menu-item>
-							<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+							<app-dropdown-menu-item icon="edit"
+													text="Rename"
+													(click)="renameAddress(elem.address)">
+							</app-dropdown-menu-item>
+							<app-dropdown-menu-item icon="delete"
+													text="Delete"
+													(click)="deleteAddress(elem.address)">
+							</app-dropdown-menu-item>
 						</app-dropdown-menu>
 					</td>
 				</tr>

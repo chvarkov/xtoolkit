@@ -237,6 +237,14 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
+	on(ProjectAction.renameAddressSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.deleteAddressSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
 
 	...ProjectAction.errorActions.map((action): ReducerTypes<IProjectState, any> => on(action, (state, { err, type }): IProjectState => {
 		console.error(`Action: ${type}`, err);

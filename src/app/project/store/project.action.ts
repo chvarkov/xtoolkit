@@ -162,6 +162,13 @@ export class ProjectAction {
 	static readonly addAddressSuccess = createAction(`[${ProjectAction.name}] add project address [OK]`, props<{project: Project}>());
 	static readonly addAddressError = createAction(`[${ProjectAction.name}] add project address [ERR]`, props<{err: Error}>());
 
+	static readonly renameAddress = createAction(`[${ProjectAction.name}] rename project address [...]`, props<{projectId: string, address: string}>());
+	static readonly renameAddressSuccess = createAction(`[${ProjectAction.name}] rename project address [OK]`, props<{project: Project}>());
+	static readonly renameAddressError = createAction(`[${ProjectAction.name}] rename project address [ERR]`, props<{err: Error}>());
+
+	static readonly deleteAddress = createAction(`[${ProjectAction.name}] delete project address [...]`, props<{projectId: string, address: string}>());
+	static readonly deleteAddressSuccess = createAction(`[${ProjectAction.name}] delete project address [OK]`, props<{project: Project}>());
+	static readonly deleteAddressError = createAction(`[${ProjectAction.name}] delete project address [ERR]`, props<{err: Error}>());
 
 	static readonly errorActions = [
 		ProjectAction.loadProjectsError,
@@ -198,6 +205,8 @@ export class ProjectAction {
 		ProjectAction.addTokenIssueTxToWaitListError,
 		ProjectAction.deleteTokenIssueTxFromWaitListError,
 		ProjectAction.addAddressError,
+		ProjectAction.renameAddressError,
+		ProjectAction.deleteAddressError,
 	];
 }
 
