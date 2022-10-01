@@ -46,11 +46,31 @@ export interface ITxLogEvent {
 export interface ITxOperation {
 	id: string;
 	action: string;
-	type: string;
+	type: 'estd' | 'signalError';
 	sender: string;
 	receiver: string;
 	data: string;
 	message: string;
+	decimals?: number;
+	esdtType?: 'FungibleESDT';
+	identifier?: string;
+	value?: string;
+	name?: string;
+}
+
+export interface ITxScResult {
+	callType: string;
+	data: string;
+	gasLimit: number;
+	gasPrice: number;
+	hash: string;
+	nonce: number;
+	originalTxHash: string;
+	prevTxHash: string;
+	receiver: string;
+	sender: string;
+	timestamp: number;
+	value: string;
 }
 
 export interface IElrondFullTransaction {
@@ -80,4 +100,5 @@ export interface IElrondFullTransaction {
 		events: ITxLogEvent[],
 	},
 	operations: ITxOperation;
+	results?: ITxScResult[];
 }
