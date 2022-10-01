@@ -12,8 +12,9 @@
 		<div class="actions">
 			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
 			<button class="create-button"
+					*ngIf="network$ | async as network"
 					[disabled]="!name || !address"
-					(click)="create()">Create</button>
+					(click)="create(network)">Create</button>
 		</div>
 	</div>
 </app-modal-dialog>

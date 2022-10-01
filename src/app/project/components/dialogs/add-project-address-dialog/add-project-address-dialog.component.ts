@@ -5,6 +5,11 @@ import { Observable } from 'rxjs';
 import { Project, ProjectAddress } from '../../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../store/project.selector';
+import { ElrondDataProvider } from '../../../../core/elrond/elrond.data-provider';
+import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
+import { Address } from '@elrondnetwork/erdjs/out';
+import { switchMap } from 'rxjs/operators';
+import { NetworkSelector } from '../../../../network/store/network.selector';
 
 @Component({
 	selector: 'app-add-project-address-dialog',
@@ -19,28 +24,40 @@ export class AddProjectAddressDialogComponent extends AbstractModalDialog implem
 	dialogRef!: DialogRef<{ projectId: string }, ProjectAddress>;
 
 	project$?: Observable<Project | undefined>;
+	network$?: Observable<INetworkEnvironment | undefined>;
 
-	constructor(private readonly store: Store) {
+	constructor(private readonly store: Store,
+				private readonly elrondDataProvider: ElrondDataProvider) {
 		super();
 	}
 
 	ngOnInit(): void {
 		this.project$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId));
 
+		this.network$ = this.project$.pipe(
+			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
+		);
+
 		this.dialogRef.options.width = '560px';
 		this.dialogRef.options.height = '260px';
 	}
 
-	create(): void {
+	async create(network: INetworkEnvironment): Promise<void> {
+		if (!this.address) {
+			return;
+		}
+
+		const type = await this.elrondDataProvider.getProxy(network).getAccount(new Address(this.address))
+			.then(acc => acc.code ? 'sc' : 'wallet');
+
 		const address: ProjectAddress = {
 			address: this.address,
 			name: this.name,
 			projectId: this.dialogRef.data.projectId,
-			type: 'wallet',
+			type,
 			savedAt: Date.now(),
 		};
 
-		console.log('create', address);
 		this.dialogRef.submit(address);
 	}
 }

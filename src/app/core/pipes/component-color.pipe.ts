@@ -19,6 +19,8 @@ export class ComponentColorPipe implements PipeTransform {
 				return '#0FF0FF';
 			case 'nft':
 				return '#e37ef3';
+			case 'tx':
+				return '#7cfa7e';
 			case 'group':
 			case 'address_book':
 				return '#EDEDED';

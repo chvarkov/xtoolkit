@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -15,7 +15,11 @@ export class TxHashComponent implements OnInit {
 
 	@Input() txHash: string = '';
 
+	@Input() interactive: boolean = false;
+
 	@Input() label: string = '';
+
+	@Output() open: EventEmitter<string> = new EventEmitter<string>();
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 

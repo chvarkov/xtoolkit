@@ -28,6 +28,7 @@ import { TokenIdentifierInputComponent } from './components/sc-viewer/sc-endpoin
 import { StructInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/struct-input/struct-input.component';
 import { AddressBookViewerComponent } from './components/address-book-viewer/address-book-viewer.component';
 import { NetworkModule } from '../network/network.module';
+import { TxViewerComponent } from './components/tx-viewer/tx-viewer.component';
 
 @NgModule({
 	declarations: [
@@ -56,6 +57,7 @@ import { NetworkModule } from '../network/network.module';
 		TokenIdentifierInputComponent,
 		StructInputComponent,
 		AddressBookViewerComponent,
+		TxViewerComponent,
 	],
 	imports: [
 		CommonModule,
@@ -69,6 +71,7 @@ import { NetworkModule } from '../network/network.module';
 		TokenViewerComponent,
 		WalletViewerComponent,
 		AddressBookViewerComponent,
+		TxViewerComponent,
 	]
 })
 export class TabsViewerModule { }
