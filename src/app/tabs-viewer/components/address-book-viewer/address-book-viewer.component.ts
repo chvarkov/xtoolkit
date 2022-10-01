@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { ProjectAddress } from '../../../core/data-provider/data-provider';
 import { ProjectAction } from '../../../project/store/project.action';
+import { ProjectSelector } from '../../../project/store/project.selector';
 
 @Component({
 	selector: 'app-address-book-viewer',
@@ -12,100 +13,24 @@ import { ProjectAction } from '../../../project/store/project.action';
 export class AddressBookViewerComponent implements OnInit {
 	@Input() projectId: string = '';
 
-	savedAddress$?: Observable<ProjectAddress[]> = of([
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-	]);
+	addressBook$?: Observable<ProjectAddress[] | undefined>;
 
 	constructor(private readonly store: Store) {
 	}
 
 	ngOnInit(): void {
+		this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.projectId));
 	}
 
 	addAddress(): void {
 		this.store.dispatch(ProjectAction.addAddress({projectId: this.projectId}));
+	}
+
+	renameAddress(address: string): void {
+		this.store.dispatch(ProjectAction.renameAddress({projectId: this.projectId, address}));
+	}
+
+	deleteAddress(address: string): void {
+		this.store.dispatch(ProjectAction.deleteAddress({projectId: this.projectId, address}));
 	}
 }

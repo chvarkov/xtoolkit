@@ -117,4 +117,9 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.issueTokenWaitList || [],
 	);
+
+	static projectAddresses = (projectId: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.addressBook || [],
+	);
 }

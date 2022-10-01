@@ -8,7 +8,7 @@
 		</app-toolbar-icon-button>
 	</app-toolbar>
 
-	<ng-container *ngIf="savedAddress$ | async as addressList">
+	<ng-container *ngIf="addressBook$ | async as addressList">
 		<div class="table-container">
 			<table class="table" *ngIf="addressList.length">
 				<tr *ngFor="let elem of addressList" class="row">
@@ -21,13 +21,16 @@
 					<td class="address-cell">
 						<app-address [address]="elem.address"></app-address>
 					</td>
-<!--					<td class="date">-->
-<!--						{{elem.savedAt | date: 'medium'}}-->
-<!--					</td>-->
 					<td class="options">
 						<app-dropdown-menu horizontal="left">
-							<app-dropdown-menu-item icon="edit" text="Edit"></app-dropdown-menu-item>
-							<app-dropdown-menu-item icon="delete" text="Delete"></app-dropdown-menu-item>
+							<app-dropdown-menu-item icon="edit"
+													text="Rename"
+													(click)="renameAddress(elem.address)">
+							</app-dropdown-menu-item>
+							<app-dropdown-menu-item icon="delete"
+													text="Delete"
+													(click)="deleteAddress(elem.address)">
+							</app-dropdown-menu-item>
 						</app-dropdown-menu>
 					</td>
 				</tr>
