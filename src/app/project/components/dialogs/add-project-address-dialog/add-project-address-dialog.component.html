@@ -1,0 +1,20 @@
+<app-modal-dialog title="Create address" [dialogRef]="dialogRef">
+	<div content class="content">
+		<input class="field project-name" [(ngModel)]="name" placeholder="Address name">
+
+		<!--		TODO: Fix hardcoded chainId -->
+		<app-address-input class="field" [showAddressBook]="false"
+						   [chainId]="'T'"
+						   (changed)="address = $event">
+		</app-address-input>
+	</div>
+
+	<div actions>
+		<div class="actions">
+			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+			<button class="create-button"
+					[disabled]="!name || !address"
+					(click)="create()">Create</button>
+		</div>
+	</div>
+</app-modal-dialog>

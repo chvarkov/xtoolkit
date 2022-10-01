@@ -4,7 +4,7 @@ import { ProjectAction } from './project.action';
 import {
 	ActionHistoryElement,
 	DATA_PROVIDER,
-	DataProvider,
+	DataProvider, ProjectAddress,
 	ProjectSmartContract
 } from '../../core/data-provider/data-provider';
 import { catchError, exhaustMap, filter, map, mergeMap, switchMap } from 'rxjs/operators';
@@ -32,6 +32,7 @@ import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dia
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
+import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -471,6 +472,19 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteWalletError({err})),
 			)),
 		)));
+
+	addAddress$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addAddress),
+		exhaustMap(action => {
+			return this.modalDialogFactory.show(AddProjectAddressDialogComponent, {
+				projectId: action.projectId,
+			}).afterSubmit$();
+		}),
+		mergeMap((address: ProjectAddress) => this.dataProvider.addProjectAddress(address).pipe(
+			map((project) => ProjectAction.addAddressSuccess({project})),
+			catchError(err => of(ProjectAction.addAddressError({err}))),
+		)),
+	));
 
 	loadTokenIssueWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenIssueWaitList),

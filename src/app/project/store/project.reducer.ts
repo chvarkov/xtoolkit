@@ -9,6 +9,7 @@ import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
+import { ReducerTypes } from '@ngrx/store/src/reducer_creator';
 
 export interface IPositionsState {
 	native: string;
@@ -232,6 +233,16 @@ export const reducer = createReducer(
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
 	})),
+	on(ProjectAction.addAddressSuccess, (state, { project }) => ({
+		...state,
+		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+
+	...ProjectAction.errorActions.map((action): ReducerTypes<IProjectState, any> => on(action, (state, { err, type }): IProjectState => {
+		console.error(`Action: ${type}`, err);
+
+		return state as any;
+	}))
 );
 
 export function projectReducer(state: IProjectState | undefined, action: Action): IProjectState {
