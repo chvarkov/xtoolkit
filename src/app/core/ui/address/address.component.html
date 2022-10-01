@@ -1,6 +1,6 @@
 <span class="address">
 	{{label}}
-	{{address}}
+	{{address | shortString:maxLength}}
 	<span class="material-icons action" appTooltip tooltip="Copy" (click)="copy()">
 		content_copy
 	</span>
