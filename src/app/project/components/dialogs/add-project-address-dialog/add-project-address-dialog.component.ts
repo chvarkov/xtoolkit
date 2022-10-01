@@ -38,9 +38,6 @@ export class AddProjectAddressDialogComponent extends AbstractModalDialog implem
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
 
-		this.project$.subscribe((proj) => console.log('project', proj));
-		this.network$.subscribe((net) => console.log('network', net));
-
 		this.dialogRef.options.width = '560px';
 		this.dialogRef.options.height = '260px';
 	}
