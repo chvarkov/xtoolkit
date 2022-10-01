@@ -12,7 +12,7 @@
 					<div>{{tx.status}}</div>
 
 					<div>Date</div>
-					<div>{{tx.timestamp | date: 'medium'}}</div>
+					<div>{{tx.timestamp * 1000 | date: 'medium'}}</div>
 
 					<div>Miniblock</div>
 					<div>{{tx.miniBlockHash}}</div>
