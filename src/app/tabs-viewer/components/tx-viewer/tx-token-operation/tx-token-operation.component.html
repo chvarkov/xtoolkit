@@ -1,0 +1,19 @@
+<div class="tx-token-operation" *ngIf="operation">
+	<div class="section">
+		<div class="index" *ngIf="index != null">[{{index}}]</div>
+		<app-address class="address"
+					 [address]="operation.sender"
+					 [chainId]="chainId"
+					 [maxLength]="8">
+		</app-address>
+		<div class="arrow material-icons">arrow_right_alt</div>
+		<app-address class="address"
+					 [address]="operation.receiver"
+					 [chainId]="chainId"
+					 [maxLength]="8">
+		</app-address>
+	</div>
+	<div class="section">
+		{{operation.value || 0 | decimalPlaces:operation.decimals || 0}} {{operation.identifier}}
+	</div>
+</div>

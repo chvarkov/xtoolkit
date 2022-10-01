@@ -45,7 +45,7 @@ export interface ITxLogEvent {
 
 export interface ITxOperation {
 	id: string;
-	action: string;
+	action: 'transfer' | string;
 	type: 'estd' | 'signalError';
 	sender: string;
 	receiver: string;
@@ -99,6 +99,6 @@ export interface IElrondFullTransaction {
 		address: string;
 		events: ITxLogEvent[],
 	},
-	operations: ITxOperation;
+	operations: ITxOperation[];
 	results?: ITxScResult[];
 }

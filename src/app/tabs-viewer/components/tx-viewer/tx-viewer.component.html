@@ -37,6 +37,17 @@
 							<div class="shard">(Shard {{tx.receiverShard}})</div>
 						</div>
 
+						<ng-container *ngIf="getTransferOperations(tx) as transferOperations">
+							<div class="grid-cell">Operations</div>
+							<div class="grid-cell">
+								<app-tx-token-operation *ngFor="let operation of transferOperations; let i = index"
+														[chainId]="network.chainId"
+														[operation]="operation"
+														[index]="i">
+								</app-tx-token-operation>
+							</div>
+						</ng-container>
+
 						<div class="grid-cell">Value</div>
 						<div class="grid-cell">
 							{{tx.value}}
