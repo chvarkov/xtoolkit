@@ -157,5 +157,47 @@ export class ProjectAction {
 	static readonly deleteTokenIssueTxFromWaitList = createAction(`[${ProjectAction.name}] delete token issue tx from wait list [...]`, props<{txHash: string}>());
 	static readonly deleteTokenIssueTxFromWaitListSuccess = createAction(`[${ProjectAction.name}] delete token issue tx from wait list [OK]`, props<{waitList: PendingTokenIssue[]}>());
 	static readonly deleteTokenIssueTxFromWaitListError = createAction(`[${ProjectAction.name}] delete token issue tx from wait list [ERR]`, props<{err: Error}>());
+
+	static readonly addAddress = createAction(`[${ProjectAction.name}] add project address [...]`, props<{projectId: string}>());
+	static readonly addAddressSuccess = createAction(`[${ProjectAction.name}] add project address [OK]`, props<{project: Project}>());
+	static readonly addAddressError = createAction(`[${ProjectAction.name}] add project address [ERR]`, props<{err: Error}>());
+
+
+	static readonly errorActions = [
+		ProjectAction.loadProjectsError,
+		ProjectAction.updateProjectNetworkError,
+		ProjectAction.createProjectError,
+		ProjectAction.addAbiError,
+		ProjectAction.addSmartContractError,
+		ProjectAction.loadAccountAndPositionsError,
+		ProjectAction.addWalletError,
+		ProjectAction.addTokenError,
+		ProjectAction.setScAddressError,
+		ProjectAction.issueTokenError,
+		ProjectAction.loadProjectTabsError,
+		ProjectAction.openProjectTabError,
+		ProjectAction.closeProjectTabError,
+		ProjectAction.moveProjectTabError,
+		ProjectAction.selectTabError,
+		ProjectAction.loadAccountTransactionsError,
+		ProjectAction.loadTokenError,
+		ProjectAction.loadTokenHoldersError,
+		ProjectAction.loadTokenRolesError,
+		ProjectAction.loadTokenTransfersError,
+		ProjectAction.searchTokensError,
+		ProjectAction.renameProjectError,
+		ProjectAction.renameAbiError,
+		ProjectAction.renameSmartContractError,
+		ProjectAction.renameWalletError,
+		ProjectAction.deleteProjectError,
+		ProjectAction.deleteAbiError,
+		ProjectAction.deleteSmartContractError,
+		ProjectAction.deleteTokenError,
+		ProjectAction.deleteWalletError,
+		ProjectAction.loadTokenIssueWaitListError,
+		ProjectAction.addTokenIssueTxToWaitListError,
+		ProjectAction.deleteTokenIssueTxFromWaitListError,
+		ProjectAction.addAddressError,
+	];
 }
 

@@ -2,9 +2,8 @@
 	<div content class="content">
 		<input class="field project-name" [(ngModel)]="projectName" placeholder="Smart contract name">
 
-<!--		TODO: Fix hardcoded chainId -->
 		<app-address-input class="field" [showAddressBook]="false"
-						   [chainId]="'T'"
+						   [chainId]="(project$ | async)?.chainId || ''"
 						   (changed)="address = $event">
 		</app-address-input>
 

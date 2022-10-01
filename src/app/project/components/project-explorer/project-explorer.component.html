@@ -17,6 +17,10 @@
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
 		<ng-container actions>
 			<app-dropdown-menu horizontal="left">
+				<app-dropdown-menu-item icon="bookmark"
+										text="Open address book"
+										(click)="openAddressBook(project)">
+				</app-dropdown-menu-item>
 				<app-dropdown-menu-item icon="drive_file_rename_outline"
 										text="Rename"
 										(click)="renameProject(project.id)">

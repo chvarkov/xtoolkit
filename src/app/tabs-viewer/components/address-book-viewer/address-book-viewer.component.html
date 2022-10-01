@@ -1,7 +1,11 @@
 <div class="container">
 	<app-toolbar>
 		<div left-side class="title">Address book</div>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Add address">add</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side
+								 appTooltip tooltip="Add address"
+								 (click)="addAddress()">
+			add
+		</app-toolbar-icon-button>
 	</app-toolbar>
 
 	<ng-container *ngIf="savedAddress$ | async as addressList">

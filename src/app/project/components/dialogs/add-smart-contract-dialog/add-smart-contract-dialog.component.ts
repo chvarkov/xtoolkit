@@ -4,8 +4,10 @@ import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../store/project.selector';
-import { ProjectAbi } from '../../../../core/data-provider/data-provider';
-import { map } from 'rxjs/operators';
+import { Project, ProjectAbi } from '../../../../core/data-provider/data-provider';
+import { map, switchMap } from 'rxjs/operators';
+import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
+import { NetworkSelector } from '../../../../network/store/network.selector';
 
 @Component({
 	selector: 'app-add-smart-contract-dialog',
@@ -23,6 +25,8 @@ export class AddSmartContractDialogComponent  extends AbstractModalDialog implem
 
 	abiInterfaces$?: Observable<ProjectAbi[]>;
 
+	project$?: Observable<Project | undefined>;
+
 	constructor(private readonly store: Store) {
 		super();
 	}
@@ -31,6 +35,7 @@ export class AddSmartContractDialogComponent  extends AbstractModalDialog implem
 		this.abiInterfaces$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId)).pipe(
 			map(project => project?.abiInterfaces || []),
 		);
+		this.project$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId));
 
 		this.dialogRef.options.width = '560px';
 		this.dialogRef.options.height = '260px';

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { ProjectAddress } from '../../../core/data-provider/data-provider';
+import { ProjectAction } from '../../../project/store/project.action';
 
 @Component({
 	selector: 'app-address-book-viewer',
@@ -9,6 +10,8 @@ import { ProjectAddress } from '../../../core/data-provider/data-provider';
 	styleUrls: ['./address-book-viewer.component.scss']
 })
 export class AddressBookViewerComponent implements OnInit {
+	@Input() projectId: string = '';
+
 	savedAddress$?: Observable<ProjectAddress[]> = of([
 		{
 			projectId: '',
@@ -102,4 +105,7 @@ export class AddressBookViewerComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	addAddress(): void {
+		this.store.dispatch(ProjectAction.addAddress({projectId: this.projectId}));
+	}
 }
