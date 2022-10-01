@@ -1,93 +1,98 @@
 <ng-container *ngIf="(tx$ | async) as tx">
-	<div class="tx-container" *ngIf="(network$ | async) as network">
-		<app-tabs navPosition="bottom">
-			<app-tab top title="Details">
-				<div class="details">
-					<div class="grid-cell">Hash</div>
-					<div class="grid-cell">
-						<app-tx-hash [txHash]="txHash" [chainId]="network.chainId"></app-tx-hash>
+	<ng-container *ngIf="(network$ | async) as network">
+		<app-toolbar>
+			<div left-side class="header-tx-hash">
+				<span class="label">Hash:</span>
+				<app-tx-hash [txHash]="txHash" [chainId]="network.chainId"></app-tx-hash>
+			</div>
+
+			<app-toolbar-icon-button right-side appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
+		</app-toolbar>
+		<div class="tx-container">
+			<app-tabs navPosition="bottom">
+				<app-tab top title="Details">
+					<div class="details">
+						<div class="grid-cell">Status</div>
+						<div class="grid-cell">
+							<app-account-transaction-status-badge class="tx-status"
+																  [status]="tx.status">
+							</app-account-transaction-status-badge>
+						</div>
+
+						<div class="grid-cell">Date</div>
+						<div class="grid-cell">{{tx.timestamp * 1000 | date: 'medium'}}</div>
+
+						<div class="grid-cell">Miniblock</div>
+						<div class="grid-cell">{{tx.miniBlockHash}}</div>
+
+						<div class="grid-cell">Sender</div>
+						<div class="address-field grid-cell">
+							<app-address [address]="tx.sender" [chainId]="network.chainId"></app-address>
+							<div class="shard">(Shard {{tx.senderShard}})</div>
+						</div>
+
+						<div class="grid-cell">Receiver</div>
+						<div class="address-field grid-cell">
+							<app-address [address]="tx.receiver" [chainId]="network.chainId"></app-address>
+							<div class="shard">(Shard {{tx.receiverShard}})</div>
+						</div>
+
+						<div class="grid-cell">Value</div>
+						<div class="grid-cell">
+							{{tx.value}}
+						</div>
+
+						<div class="grid-cell">Fee</div>
+						<div class="grid-cell">
+							{{tx.fee}}
+						</div>
+
+						<div class="grid-cell">Gas limit</div>
+						<div class="grid-cell">
+							{{tx.gasLimit}}
+						</div>
+
+						<div class="grid-cell">Gas used</div>
+						<div class="grid-cell">
+							{{tx.gasUsed}}
+						</div>
+
+						<div class="grid-cell">Gas price</div>
+						<div class="grid-cell">
+							{{tx.gasPrice}}
+						</div>
+
+						<div class="grid-cell">Nonce</div>
+						<div class="grid-cell">
+							{{tx.nonce}}
+						</div>
+
+						<div class="grid-cell">Data</div>
+						<textarea class="tx-data grid-cell" readonly>{{tx.data}}</textarea>
 					</div>
+				</app-tab>
+				<app-tab top title="SC results">
 
-					<div class="grid-cell">Status</div>
-					<div class="grid-cell">
-						<app-account-transaction-status-badge class="tx-status"
-															  [status]="tx.status">
-						</app-account-transaction-status-badge>
+				</app-tab>
+				<app-tab top title="Logs">
+					<div>
+						<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 					</div>
+					<div class="tx-log" *ngFor="let txLog of tx.logs.events">
+						<div class="grid-cell">Address</div>
+						<app-address class="grid-cell" [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 
-					<div class="grid-cell">Date</div>
-					<div class="grid-cell">{{tx.timestamp * 1000 | date: 'medium'}}</div>
+						<div class="grid-cell">Identifier</div>
+						<div class="grid-cell">{{txLog.identifier}}</div>
 
-					<div class="grid-cell">Miniblock</div>
-					<div class="grid-cell">{{tx.miniBlockHash}}</div>
+						<div class="grid-cell">Topics</div>
+						<textarea readonly class="tx-data grid-cell">{{txLog.topics.join('\n')}}</textarea>
 
-					<div class="grid-cell">Sender</div>
-					<div class="address-field grid-cell">
-						<app-address [address]="tx.sender" [chainId]="network.chainId"></app-address>
-						<div class="shard">(Shard {{tx.senderShard}})</div>
+						<div class="grid-cell">Data</div>
+						<textarea readonly class="tx-data grid-cell">{{txLog.data}}</textarea>
 					</div>
-
-					<div class="grid-cell">Receiver</div>
-					<div class="address-field grid-cell">
-						<app-address [address]="tx.receiver" [chainId]="network.chainId"></app-address>
-						<div class="shard">(Shard {{tx.receiverShard}})</div>
-					</div>
-
-					<div class="grid-cell">Value</div>
-					<div class="grid-cell">
-						{{tx.value}}
-					</div>
-
-					<div class="grid-cell">Fee</div>
-					<div class="grid-cell">
-						{{tx.fee}}
-					</div>
-
-					<div class="grid-cell">Gas limit</div>
-					<div class="grid-cell">
-						{{tx.gasLimit}}
-					</div>
-
-					<div class="grid-cell">Gas used</div>
-					<div class="grid-cell">
-						{{tx.gasUsed}}
-					</div>
-
-					<div class="grid-cell">Gas price</div>
-					<div class="grid-cell">
-						{{tx.gasPrice}}
-					</div>
-
-					<div class="grid-cell">Nonce</div>
-					<div class="grid-cell">
-						{{tx.nonce}}
-					</div>
-
-					<div class="grid-cell">Data</div>
-					<textarea class="tx-data grid-cell" readonly>{{tx.data}}</textarea>
-				</div>
-			</app-tab>
-			<app-tab top title="SC results">
-
-			</app-tab>
-			<app-tab top title="Logs">
-				<div>
-					<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
-				</div>
-				<div class="tx-log" *ngFor="let txLog of tx.logs.events">
-					<div class="grid-cell">Address</div>
-					<app-address class="grid-cell" [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
-
-					<div class="grid-cell">Identifier</div>
-					<div class="grid-cell">{{txLog.identifier}}</div>
-
-					<div class="grid-cell">Topics</div>
-					<textarea readonly class="tx-data grid-cell">{{txLog.topics.join('\n')}}</textarea>
-
-					<div class="grid-cell">Data</div>
-					<textarea readonly class="tx-data grid-cell">{{txLog.data}}</textarea>
-				</div>
-			</app-tab>
-		</app-tabs>
-	</div>
+				</app-tab>
+			</app-tabs>
+		</div>
+	</ng-container>
 </ng-container>

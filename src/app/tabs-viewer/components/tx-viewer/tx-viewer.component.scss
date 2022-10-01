@@ -3,8 +3,19 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
-	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height));
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height));
 	padding: 8px;
+}
+
+.header-tx-hash {
+	display: flex;
+	margin-left: 8px;
+	justify-content: center;
+	align-items: center;
+
+	.label {
+		margin-right: 8px;
+	}
 }
 
 .details {
