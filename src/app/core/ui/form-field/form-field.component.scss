@@ -1,0 +1,13 @@
+.field {
+	display: flex;
+	flex-direction: column;
+
+	.title {
+		font-size: 0.76em;
+		color: var(--field-label-color);
+	}
+
+	.errors {
+		font-size: 0.76em;
+	}
+}
