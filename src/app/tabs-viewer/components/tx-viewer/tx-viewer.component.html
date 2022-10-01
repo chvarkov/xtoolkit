@@ -1,1 +1,74 @@
-<p>TX: {{txHash}}</p>
+<ng-container *ngIf="(tx$ | async) as tx">
+	<div class="tx-container" *ngIf="(network$ | async) as network">
+		<app-tabs navPosition="bottom">
+			<app-tab top title="Details">
+				<div class="details">
+					<div>Hash</div>
+					<div>
+						<app-tx-hash [txHash]="txHash" [chainId]="network.chainId"></app-tx-hash>
+					</div>
+
+					<div>Status</div>
+					<div>{{tx.status}}</div>
+
+					<div>Date</div>
+					<div>{{tx.timestamp | date: 'medium'}}</div>
+
+					<div>Miniblock</div>
+					<div>{{tx.miniBlockHash}}</div>
+
+					<div>Sender</div>
+					<div class="address-field">
+						<app-address [address]="tx.sender" [chainId]="network.chainId"></app-address>
+						<div class="shard">(Shard {{tx.senderShard}})</div>
+					</div>
+
+					<div>Receiver</div>
+					<div class="address-field">
+						<app-address [address]="tx.receiver" [chainId]="network.chainId"></app-address>
+						<div class="shard">(Shard {{tx.receiverShard}})</div>
+					</div>
+
+					<div>Value</div>
+					<div>
+						{{tx.value}}
+					</div>
+
+					<div>Fee</div>
+					<div>
+						{{tx.fee}}
+					</div>
+
+					<div>Gas limit</div>
+					<div>
+						{{tx.gasLimit}}
+					</div>
+
+					<div>Gas used</div>
+					<div>
+						{{tx.gasUsed}}
+					</div>
+
+					<div>Gas price</div>
+					<div>
+						{{tx.gasPrice}}
+					</div>
+
+					<div>Nonce</div>
+					<div>
+						{{tx.nonce}}
+					</div>
+
+					<div>Data</div>
+					<textarea class="tx-data" readonly>{{tx.data}}</textarea>
+				</div>
+			</app-tab>
+			<app-tab top title="SC result">
+
+			</app-tab>
+			<app-tab top title="Logs">
+
+			</app-tab>
+		</app-tabs>
+	</div>
+</ng-container>

@@ -20,7 +20,7 @@ export interface IElrondTransaction {
 	gasUsed: number;
 	miniBlockHash: string;
 	nonce: string;
-	receiver: IElrondReceiverAssets;
+	receiver: string;
 	receiverShard: number;
 	round: number;
 	sender: string;

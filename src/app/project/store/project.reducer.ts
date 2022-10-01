@@ -17,7 +17,8 @@ export interface IPositionsState {
 }
 
 export interface ILoadedProjectDataState {
-	transactionsMap: {[address: string]: IElrondTransaction[]};
+	transactionsMap: {[txHash: string]: IElrondTransaction};
+	accountTransactionsMap: {[address: string]: IElrondTransaction[]};
 	accountsMap: {[address: string]: AccountOnNetwork};
 	positionsMap: {[address: string]: IPositionsState};
 	tokensMap: {[identifier: string]: ITokenInfo};
@@ -101,8 +102,8 @@ export const reducer = createReducer(
 		loadedDataMap: {
 			[projectId]: {
 				...state.loadedDataMap[projectId],
-				transactionsMap: {
-					...state.loadedDataMap[projectId]?.transactionsMap,
+				accountTransactionsMap: {
+					...state.loadedDataMap[projectId]?.accountTransactionsMap,
 					[address]: list,
 				},
 			},
@@ -244,6 +245,19 @@ export const reducer = createReducer(
 	on(ProjectAction.deleteAddressSuccess, (state, { project }) => ({
 		...state,
 		projects: state.projects.map(p => p.id === project.id ? project : p),
+	})),
+	on(ProjectAction.loadTransactionSuccess, (state, { projectId, tx }) => ({
+		...state,
+		loadedDataMap: {
+			...state.loadedDataMap,
+			[projectId]: {
+				...state.loadedDataMap[projectId],
+				transactionsMap: {
+					...state.loadedDataMap[projectId]?.transactionsMap,
+					[tx.txHash]: tx,
+				},
+			},
+		},
 	})),
 
 	...ProjectAction.errorActions.map((action): ReducerTypes<IProjectState, any> => on(action, (state, { err, type }): IProjectState => {

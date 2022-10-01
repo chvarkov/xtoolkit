@@ -75,7 +75,7 @@ export class ProjectSelector {
 
 	static accountTransactions = (projectId: string, address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.transactionsMap?.[address] || [],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.accountTransactionsMap?.[address] || [],
 	);
 
 	static accountNativeAmount = (projectId: string, address: string) => createSelector(
@@ -121,5 +121,10 @@ export class ProjectSelector {
 	static projectAddresses = (projectId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.addressBook || [],
+	);
+
+	static tx = (projectId: string, txHash: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap[projectId]?.transactionsMap?.[txHash],
 	);
 }

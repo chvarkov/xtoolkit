@@ -1,0 +1,27 @@
+.tx-container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height));
+	padding: 8px;
+}
+
+.details {
+	display: grid;
+	grid-template-columns: 120px 1fr;
+}
+
+.address-field {
+	display: flex;
+	flex-direction: row;
+
+	.shard {
+		margin-left: 8px;
+	}
+}
+
+.tx-data {
+	width: 100%;
+	height: 50px;
+}

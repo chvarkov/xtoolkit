@@ -170,6 +170,10 @@ export class ProjectAction {
 	static readonly deleteAddressSuccess = createAction(`[${ProjectAction.name}] delete project address [OK]`, props<{project: Project}>());
 	static readonly deleteAddressError = createAction(`[${ProjectAction.name}] delete project address [ERR]`, props<{err: Error}>());
 
+	static readonly loadTransaction = createAction(`[${ProjectAction.name}] load transaction [...]`, props<{projectId: string, txHash: string}>());
+	static readonly loadTransactionSuccess = createAction(`[${ProjectAction.name}] load transaction [OK]`, props<{projectId: string, tx: IElrondTransaction}>());
+	static readonly loadTransactionError = createAction(`[${ProjectAction.name}] load transaction [ERR]`, props<{err: Error}>());
+
 	static readonly errorActions = [
 		ProjectAction.loadProjectsError,
 		ProjectAction.updateProjectNetworkError,
