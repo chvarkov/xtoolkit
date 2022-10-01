@@ -4,7 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 	name: 'shortString',
 })
 export class ShortStringPipe implements PipeTransform {
-	transform(value: string, maxLength = 16, separator = '...'): string {
+	transform(value: string, maxLength?: number, separator = '...'): string {
+		if (maxLength == null) {
+			return value;
+		}
+
 		if (value.length <= maxLength) {
 			return value;
 		}
@@ -16,5 +20,4 @@ export class ShortStringPipe implements PipeTransform {
 			value.substring(value.length - part, value.length),
 		].join(separator);
 	}
-
 }

@@ -22,7 +22,6 @@ export class AccountTransactionComponent implements OnInit {
 	}
 
 	openTx(): void {
-		console.log('openTx');
 		if (!this.tx) {
 			return;
 		}

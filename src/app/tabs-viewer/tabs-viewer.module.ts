@@ -29,6 +29,7 @@ import { StructInputComponent } from './components/sc-viewer/sc-endpoint/sc-inpu
 import { AddressBookViewerComponent } from './components/address-book-viewer/address-book-viewer.component';
 import { NetworkModule } from '../network/network.module';
 import { TxViewerComponent } from './components/tx-viewer/tx-viewer.component';
+import { TxTokenOperationComponent } from './components/tx-viewer/tx-token-operation/tx-token-operation.component';
 
 @NgModule({
 	declarations: [
@@ -58,6 +59,7 @@ import { TxViewerComponent } from './components/tx-viewer/tx-viewer.component';
 		StructInputComponent,
 		AddressBookViewerComponent,
 		TxViewerComponent,
+  TxTokenOperationComponent,
 	],
 	imports: [
 		CommonModule,

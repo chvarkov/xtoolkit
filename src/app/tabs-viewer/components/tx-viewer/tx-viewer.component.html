@@ -37,6 +37,17 @@
 							<div class="shard">(Shard {{tx.receiverShard}})</div>
 						</div>
 
+						<ng-container *ngIf="getTransferOperations(tx) as transferOperations">
+							<div class="grid-cell">Operations</div>
+							<div class="grid-cell">
+								<app-tx-token-operation *ngFor="let operation of transferOperations; let i = index"
+														[chainId]="network.chainId"
+														[operation]="operation"
+														[index]="i">
+								</app-tx-token-operation>
+							</div>
+						</ng-container>
+
 						<div class="grid-cell">Value</div>
 						<div class="grid-cell">
 							{{tx.value}}
@@ -71,8 +82,23 @@
 						<textarea class="tx-data grid-cell" readonly>{{tx.data}}</textarea>
 					</div>
 				</app-tab>
-				<app-tab top title="SC results">
+				<app-tab top title="SC results" *ngIf="tx.results?.length">
+					<div class="tx-sc-result" *ngFor="let scResult of tx.results">
+						<div class="grid-cell">Hash</div>
+						<app-tx-hash class="grid-cell" [txHash]="scResult.hash" [chainId]="network.chainId"></app-tx-hash>
 
+						<div class="grid-cell">From</div>
+						<app-address class="grid-cell" [address]="scResult.sender" [chainId]="network.chainId"></app-address>
+
+						<div class="grid-cell">To</div>
+						<app-address class="grid-cell" [address]="scResult.receiver" [chainId]="network.chainId"></app-address>
+
+						<div class="grid-cell">Value</div>
+						<div class="grid-cell">{{scResult.value}}</div>
+
+						<div class="grid-cell">Data</div>
+						<textarea readonly class="tx-data grid-cell">{{scResult.data}}</textarea>
+					</div>
 				</app-tab>
 				<app-tab top title="Logs">
 					<div>

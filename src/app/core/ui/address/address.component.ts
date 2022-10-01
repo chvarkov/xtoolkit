@@ -17,6 +17,8 @@ export class AddressComponent implements OnInit {
 
     @Input() label: string = '';
 
+    @Input() maxLength?: number;
+
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	constructor(private readonly clipboard: Clipboard,

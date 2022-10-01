@@ -6,7 +6,7 @@ import { ProjectAction } from '../../../project/store/project.action';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../network/store/network.selector';
-import { IElrondFullTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
+import { IElrondFullTransaction, ITxOperation } from '../../../core/elrond/interfaces/elrond-transaction';
 
 @Component({
 	selector: 'app-tx-viewer',
@@ -20,6 +20,10 @@ export class TxViewerComponent implements OnInit {
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	tx$?: Observable<IElrondFullTransaction | undefined>;
+
+	getTransferOperations(tx: IElrondFullTransaction): ITxOperation[] {
+		return tx.operations.filter(op => op.action === 'transfer');
+	}
 
 	constructor(private readonly store: Store) {
 	}
