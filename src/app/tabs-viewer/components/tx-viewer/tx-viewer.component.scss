@@ -12,6 +12,10 @@
 	grid-template-columns: 120px 1fr;
 }
 
+.grid-cell {
+	padding: 4px 0;
+}
+
 .address-field {
 	display: flex;
 	flex-direction: row;
@@ -19,6 +23,10 @@
 	.shard {
 		margin-left: 8px;
 	}
+}
+
+.tx-status {
+	display: inline-block;
 }
 
 .tx-data {
