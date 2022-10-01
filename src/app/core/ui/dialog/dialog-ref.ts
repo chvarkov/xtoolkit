@@ -11,12 +11,12 @@ export class DialogRef<I = any, O = any> {
 
 	submit(data: O): void {
 		this.submitSubject.next(data);
-		this.submitSubject.complete();
+		this.completeSteams();
 	}
 
 	close(): void {
 		this.closeSubject.next();
-		this.closeSubject.complete();
+		this.completeSteams();
 	}
 
 	afterSubmit$(): Observable<O> {
@@ -32,5 +32,10 @@ export class DialogRef<I = any, O = any> {
 			this.afterSubmit$(),
 			this.afterClose$(),
 		);
+	}
+
+	private completeSteams(): void {
+		this.closeSubject.complete();
+		this.submitSubject.complete();
 	}
 }
