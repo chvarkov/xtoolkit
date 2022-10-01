@@ -4,7 +4,7 @@ import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { TabsData } from '../../core/data-provider/personal-settings.manager';
 import { PendingTokenIssue, Project } from '../../core/data-provider/data-provider';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
-import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
+import { IElrondFullTransaction, IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
@@ -17,7 +17,7 @@ export interface IPositionsState {
 }
 
 export interface ILoadedProjectDataState {
-	transactionsMap: {[txHash: string]: IElrondTransaction};
+	transactionsMap: {[txHash: string]: IElrondFullTransaction};
 	accountTransactionsMap: {[address: string]: IElrondTransaction[]};
 	accountsMap: {[address: string]: AccountOnNetwork};
 	positionsMap: {[address: string]: IPositionsState};

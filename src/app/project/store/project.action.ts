@@ -4,7 +4,7 @@ import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
 import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';
 import { AbiJson } from '../../core/elrond/builders/sc.builder';
-import { IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
+import { IElrondFullTransaction, IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
 import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
@@ -171,7 +171,7 @@ export class ProjectAction {
 	static readonly deleteAddressError = createAction(`[${ProjectAction.name}] delete project address [ERR]`, props<{err: Error}>());
 
 	static readonly loadTransaction = createAction(`[${ProjectAction.name}] load transaction [...]`, props<{projectId: string, txHash: string}>());
-	static readonly loadTransactionSuccess = createAction(`[${ProjectAction.name}] load transaction [OK]`, props<{projectId: string, tx: IElrondTransaction}>());
+	static readonly loadTransactionSuccess = createAction(`[${ProjectAction.name}] load transaction [OK]`, props<{projectId: string, tx: IElrondFullTransaction}>());
 	static readonly loadTransactionError = createAction(`[${ProjectAction.name}] load transaction [ERR]`, props<{err: Error}>());
 
 	static readonly errorActions = [

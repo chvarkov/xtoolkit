@@ -16,6 +16,7 @@ import { ITokenRole } from './interfaces/token-role';
 import { catchError, map } from 'rxjs/operators';
 import { IEstimateTxData } from './interfaces/estimate-tx-data';
 import { ITokenSearchOptions } from './interfaces/token-search-options';
+import { IElrondFullTransaction } from './interfaces/elrond-transaction';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -40,7 +41,7 @@ export class ElrondDataProvider {
 	}
 
 	getTransaction(network: INetworkEnvironment,
-				   txHash: string): Observable<any> { // TODO: Add tx type
+				   txHash: string): Observable<IElrondFullTransaction> {
 		return this.http.get<any>(`${network.gatewayUrl}/transactions/${txHash}`);
 	}
 
