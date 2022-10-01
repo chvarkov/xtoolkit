@@ -34,3 +34,10 @@
 	height: 50px;
 	resize: none;
 }
+
+.tx-log {
+	padding: 6px 6px 6px 18px;
+	border-bottom: solid 1px var(--border-low-color);
+	display: grid;
+	grid-template-columns: 100px 1fr;
+}

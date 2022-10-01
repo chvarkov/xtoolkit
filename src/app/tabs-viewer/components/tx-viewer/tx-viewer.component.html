@@ -71,7 +71,22 @@
 
 			</app-tab>
 			<app-tab top title="Logs">
+				<div>
+					<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
+				</div>
+				<div class="tx-log" *ngFor="let txLog of tx.logs.events">
+					<div class="grid-cell">Address</div>
+					<app-address class="grid-cell" [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 
+					<div class="grid-cell">Identifier</div>
+					<div class="grid-cell">{{txLog.identifier}}</div>
+
+					<div class="grid-cell">Topics</div>
+					<textarea readonly class="tx-data grid-cell">{{txLog.topics.join('\n')}}</textarea>
+
+					<div class="grid-cell">Data</div>
+					<textarea readonly class="tx-data grid-cell">{{txLog.data}}</textarea>
+				</div>
 			</app-tab>
 		</app-tabs>
 	</div>
