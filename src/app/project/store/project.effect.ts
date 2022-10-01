@@ -539,6 +539,15 @@ export class ProjectEffect {
 		))),
 	);
 
+	loadTransaction$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadTransaction),
+		joinNetwork(this.store),
+		mergeMap(([{ txHash }, project, network]) => this.elrondDataProvider.getTransaction(network, txHash).pipe(
+			map((tx) => ProjectAction.loadTransactionSuccess({projectId: project.id, tx})),
+			catchError(err => of(ProjectAction.loadTransactionError({err})))
+		))),
+	);
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,
