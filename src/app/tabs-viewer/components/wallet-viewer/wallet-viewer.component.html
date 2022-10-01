@@ -31,6 +31,7 @@
 		</app-tab>
 		<app-tab top title="Transactions">
 			<app-account-transaction *ngFor="let tx of (transactions$ | async)"
+									 [projectId]="projectId"
 									 [tx]="tx"
 									 [chainId]="(chainId$ | async) || ''"></app-account-transaction>
 		</app-tab>

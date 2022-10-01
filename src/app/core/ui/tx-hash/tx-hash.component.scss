@@ -4,8 +4,11 @@
 	align-items: center;
 
 	.interactive {
-		text-decoration: underline;
 		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 
 	.action {

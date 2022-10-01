@@ -1,6 +1,10 @@
 <div *ngIf="tx" class="transaction-container">
 	<div class="primary-info">
-		<app-tx-hash [txHash]="tx.txHash" [chainId]="chainId"></app-tx-hash>
+		<app-tx-hash [txHash]="tx.txHash"
+					 [interactive]="true"
+					 [chainId]="chainId"
+					 (open)="openTx()">
+		</app-tx-hash>
 		<app-account-transaction-status-badge [status]="tx.status"></app-account-transaction-status-badge>
 	</div>
 	<div class="tech-details">
