@@ -1,6 +1,11 @@
 <div class="tx-sign-container">
 	<ng-container *ngIf="endpoint.modifiers.isPayable()">
-		<input placeholder="Amount" (change)="onChangeTokenAmount($event)">
+		<app-form-field title="Amount">
+			<input class="amount-input"
+				   type="number"
+				   placeholder="Amount"
+				   (change)="onChangeTokenAmount($event)">
+		</app-form-field>
 		<app-token-identifier-input (changed)="onChangeTokenIdentifier($event)"></app-token-identifier-input>
 	</ng-container>
 	<div class="wallet">
@@ -9,7 +14,13 @@
 		</app-select>
 	</div>
 	<div class="fee">
-		<input type="number" [value]="fee" placeholder="fee" (change)="onChangeFee($event)">
+		<app-form-field title="Fee">
+			<input class="fee-input"
+				   type="number"
+				   [value]="fee"
+				   placeholder="Fee"
+				   (change)="onChangeFee($event)">
+		</app-form-field>
 	</div>
 	<div class="actions">
 		<button class="action-button primary-action" [disabled]="!wallet"

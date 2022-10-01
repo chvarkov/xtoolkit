@@ -12,8 +12,16 @@
 		width: 200px;
 	}
 
-	.fee {
+	.amount-input {
+		width: 120px;
+	}
 
+	.fee {
+		padding: 0 8px;
+
+		.fee-input {
+			width: 130px;
+		}
 	}
 
 	.actions {
