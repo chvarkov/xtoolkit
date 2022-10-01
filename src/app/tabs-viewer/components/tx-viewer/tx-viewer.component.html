@@ -101,7 +101,7 @@
 					</div>
 				</app-tab>
 				<app-tab top title="Logs">
-					<div>
+					<div class="tx-logs-address">
 						<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 					</div>
 					<div class="tx-log" *ngFor="let txLog of tx.logs.events">

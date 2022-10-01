@@ -4,7 +4,6 @@
 	flex-direction: column;
 	overflow-y: auto;
 	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height));
-	padding: 8px;
 }
 
 .header-tx-hash {
@@ -21,6 +20,7 @@
 .details {
 	display: grid;
 	grid-template-columns: 120px 1fr;
+	padding: 8px;
 }
 
 .grid-cell {
@@ -47,15 +47,19 @@
 }
 
 .tx-log {
-	padding: 6px 6px 6px 18px;
+	padding: 8px 8px 8px 22px;
 	border-bottom: solid 1px var(--border-low-color);
 	display: grid;
 	grid-template-columns: 100px 1fr;
 }
 
 .tx-sc-result {
-	padding: 6px 6px 6px 18px;
+	padding: 8px;
 	border-bottom: solid 1px var(--border-low-color);
 	display: grid;
 	grid-template-columns: 100px 1fr;
+}
+
+.tx-logs-address {
+	padding: 8px;
 }
