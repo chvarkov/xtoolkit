@@ -121,6 +121,16 @@ input:focus, input:active, textarea:focus, textarea:active {
 	outline: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
 button {
 	background: none;
 	border: solid 1px transparent;
