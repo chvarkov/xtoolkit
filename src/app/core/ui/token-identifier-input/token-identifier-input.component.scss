@@ -1,0 +1,58 @@
+.token-identifier-input {
+	display: flex;
+	flex: 1;
+	position: relative;
+
+	.input {
+		display: flex;
+		flex: 1;
+	}
+
+	.icons {
+		right: 4px;
+		top: 4px;
+		position: absolute;
+
+		.action {
+			cursor: pointer;
+			font-size: 1.18em;
+
+			&:hover {
+				color: var(--text-accent-color);
+			}
+		}
+
+		.invalid-icon {
+			color: var(--static-red);
+		}
+	}
+}
+
+.invalid {
+	color: var(--static-red);
+	border-color: var(--static-red);
+}
+
+.identifiers-container {
+	width: 200px;
+	max-height: 200px;
+	position: absolute;
+	top: 30px;
+	background: var(--primary-bg);
+	border: solid 1px var(--border-color);
+	overflow-y: auto;
+	border-radius: 6px;
+
+	.option {
+		width: 100%;
+		padding: 8px;
+		display: flex;
+		flex-direction: row;
+		cursor: pointer;
+		border-bottom: solid 1px var(--border-low-color);
+
+		&:hover {
+			background: var(--low-bg);
+		}
+	}
+}

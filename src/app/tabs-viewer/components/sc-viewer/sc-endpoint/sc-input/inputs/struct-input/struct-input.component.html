@@ -4,7 +4,12 @@
 	</div>
 	<div class="fields">
 		<div class="field" *ngFor="let field of getFields()" [formGroup]="form">
-			<app-sc-input class="input" [chainId]="chainId" [input]="field" [formControlName]="field.name"></app-sc-input>
+			<app-sc-input class="input"
+						  [chainId]="chainId"
+						  [projectId]="projectId"
+						  [input]="field"
+						  [formControlName]="field.name">
+			</app-sc-input>
 		</div>
 	</div>
 </div>

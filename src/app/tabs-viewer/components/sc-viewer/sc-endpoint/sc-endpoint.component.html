@@ -26,11 +26,13 @@
 			<app-sc-input *ngFor="let input of endpoint?.input || []"
 						  [input]="input"
 						  [chainId]="chainId"
+						  [projectId]="projectId"
 						  [formControlName]="input.name"></app-sc-input>
 		</form>
 
 		<ng-container *ngIf="network$ | async as network">
 			<app-sc-endpoint-tx-sign *ngIf="!endpoint.modifiers.isReadonly()"
+									 [projectId]="projectId"
 									 [wallets]="wallets"
 									 [sc]="sc"
 									 [endpoint]="endpoint"

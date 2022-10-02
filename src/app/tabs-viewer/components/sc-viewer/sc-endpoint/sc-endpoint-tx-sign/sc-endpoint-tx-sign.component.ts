@@ -11,6 +11,8 @@ import BigNumber from 'bignumber.js';
 	styleUrls: ['./sc-endpoint-tx-sign.component.scss']
 })
 export class ScEndpointTxSignComponent implements OnInit, OnChanges {
+	@Input() projectId: string = '';
+
 	@Input() wallets: GeneratedWallet[] = [];
 
 	@Input() network?: INetworkEnvironment;

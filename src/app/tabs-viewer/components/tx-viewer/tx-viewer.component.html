@@ -37,6 +37,11 @@
 							<div class="shard">(Shard {{tx.receiverShard}})</div>
 						</div>
 
+						<ng-container *ngIf="tx.function">
+							<div class="grid-cell">Method</div>
+							<div class="grid-cell">{{tx.function}}</div>
+						</ng-container>
+
 						<ng-container *ngIf="getTransferOperations(tx) as transferOperations">
 							<div class="grid-cell">Operations</div>
 							<div class="grid-cell">
@@ -101,7 +106,7 @@
 					</div>
 				</app-tab>
 				<app-tab top title="Logs">
-					<div>
+					<div class="tx-logs-address">
 						<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 					</div>
 					<div class="tx-log" *ngFor="let txLog of tx.logs.events">

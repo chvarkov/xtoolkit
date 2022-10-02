@@ -28,6 +28,8 @@ import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.componen
 import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
 import { TooltipComponent } from './ui/tooltip/tooltip.component';
 import { TooltipDirective } from './ui/tooltip/tooltip.directive';
+import { FormFieldComponent } from './ui/form-field/form-field.component';
+import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token-identifier-input.component';
 
 @NgModule({
 	declarations: [
@@ -51,6 +53,9 @@ import { TooltipDirective } from './ui/tooltip/tooltip.directive';
 		DecimalPlacesPipe,
 		TooltipComponent,
 		TooltipDirective,
+		FormFieldComponent,
+		TokenIdentifierInputComponent,
+		TokenIdentifierInputComponent,
 	],
 	imports: [
 		CommonModule,
@@ -90,6 +95,8 @@ import { TooltipDirective } from './ui/tooltip/tooltip.directive';
 		AddressInputComponent,
 		DecimalPlacesPipe,
 		TooltipDirective,
+		FormFieldComponent,
+		TokenIdentifierInputComponent,
 	],
 })
 export class CoreModule { }

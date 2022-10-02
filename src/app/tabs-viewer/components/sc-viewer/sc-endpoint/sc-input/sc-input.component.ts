@@ -23,6 +23,8 @@ import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesyste
 	],
 })
 export class ScInputComponent implements OnInit, ControlValueAccessor {
+	@Input() projectId: string = '';
+
 	@Input() chainId: string = '';
 
 	@Input() input?: EndpointParameterDefinition;
