@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class StructInputComponent implements OnInit, OnDestroy {
 	@Output() changed: EventEmitter<Record<string, any>> = new EventEmitter<Record<string, any>>();
 
+	@Input() projectId: string = '';
 	@Input() chainId: string = '';
 	@Input() name: string = '';
 	@Input() type?: Type;

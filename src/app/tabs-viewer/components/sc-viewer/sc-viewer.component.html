@@ -12,7 +12,7 @@
 		<app-tabs navPosition="bottom">
 			<app-tab top title="Endpoints">
 				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
-								 [projectId]="abi.id"
+								 [projectId]="abi.projectId"
 								 [chainId]="chainId"
 								 [endpoint]="endpoint"
 								 [wallets]="(wallets$ | async) || []"

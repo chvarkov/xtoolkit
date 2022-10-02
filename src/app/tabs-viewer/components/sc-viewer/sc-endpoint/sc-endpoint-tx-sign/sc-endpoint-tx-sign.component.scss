@@ -7,28 +7,31 @@
 	border-top: solid 1px var(--border-low-color);
 	margin-top: 6px;
 	padding-top: 6px;
+}
 
-	.wallet {
-		width: 200px;
-	}
+.wallet {
+	width: 200px;
+}
 
-	.amount-input {
-		width: 120px;
-	}
+.token-identifier-input {
+}
 
-	.fee {
-		padding: 0 8px;
+.amount-input {
+	width: 120px;
+}
 
-		.fee-input {
-			width: 130px;
-		}
-	}
+.input-field {
+	padding: 0 8px;
+}
 
-	.actions {
-		display: flex;
-		flex-direction: row;
-		padding: 8px;
-		box-sizing: border-box;
-		justify-content: flex-end;
-	}
+.fee-input {
+	width: 130px;
+}
+
+.actions {
+	display: flex;
+	flex-direction: row;
+	padding: 8px;
+	box-sizing: border-box;
+	justify-content: flex-end;
 }

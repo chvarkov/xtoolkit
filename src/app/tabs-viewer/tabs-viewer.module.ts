@@ -24,7 +24,6 @@ import { ScQueryResultComponent } from './components/sc-viewer/sc-endpoint/sc-qu
 import { ScQueryResultElementComponent } from './components/sc-viewer/sc-endpoint/sc-query-result/sc-query-result-element/sc-query-result-element.component';
 import { ScTxResultComponent } from './components/sc-viewer/sc-endpoint/sc-tx-result/sc-tx-result.component';
 import { EnumInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/enum-input/enum-input.component';
-import { TokenIdentifierInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/token-identifier-input/token-identifier-input.component';
 import { StructInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/struct-input/struct-input.component';
 import { AddressBookViewerComponent } from './components/address-book-viewer/address-book-viewer.component';
 import { NetworkModule } from '../network/network.module';
@@ -55,11 +54,10 @@ import { TxTokenOperationComponent } from './components/tx-viewer/tx-token-opera
 		ScQueryResultElementComponent,
 		ScTxResultComponent,
 		EnumInputComponent,
-		TokenIdentifierInputComponent,
 		StructInputComponent,
 		AddressBookViewerComponent,
 		TxViewerComponent,
-  TxTokenOperationComponent,
+		TxTokenOperationComponent,
 	],
 	imports: [
 		CommonModule,

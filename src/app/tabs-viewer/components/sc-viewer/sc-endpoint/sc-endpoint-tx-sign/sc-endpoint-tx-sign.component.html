@@ -1,19 +1,30 @@
 <div class="tx-sign-container">
 	<ng-container *ngIf="endpoint.modifiers.isPayable()">
-		<app-form-field title="Amount">
-			<input class="amount-input"
-				   type="number"
-				   placeholder="Amount"
-				   (change)="onChangeTokenAmount($event)">
-		</app-form-field>
-		<app-token-identifier-input (changed)="onChangeTokenIdentifier($event)"></app-token-identifier-input>
+		<div class="input-field">
+			<app-form-field title="Amount">
+				<input class="amount-input"
+					   type="number"
+					   placeholder="Amount"
+					   (change)="onChangeTokenAmount($event)">
+			</app-form-field>
+		</div>
+
+		<div class="input-field">
+			<app-form-field title="Token identifier">
+				<app-token-identifier-input class="token-identifier-input"
+											[chainId]="network?.chainId || ''"
+											[projectId]="projectId"
+											(changed)="onChangeTokenIdentifier($event)">
+				</app-token-identifier-input>
+			</app-form-field>
+		</div>
 	</ng-container>
 	<div class="wallet">
 		<app-select placeholder="Caller" (selectionChange)="onSelectedWallet($event.value)">
 			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
 		</app-select>
 	</div>
-	<div class="fee">
+	<div class="input-field">
 		<app-form-field title="Fee">
 			<input class="fee-input"
 				   type="number"
