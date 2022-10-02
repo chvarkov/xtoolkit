@@ -39,7 +39,7 @@ export class ActionComponent implements OnInit {
 						getTransaction(txHash: string): Promise<ITransactionOnNetwork> {
 							return proxy.getTransaction(txHash);
 						},
-					}, 3000, 5000);
+					}, 3000);
 
 					this.transactionWatcher.awaitOnCondition({
 						...tx,

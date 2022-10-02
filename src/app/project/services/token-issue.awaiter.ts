@@ -54,7 +54,7 @@ export class TokenIssueAwaiter {
 					getTransaction(txHash: string): Promise<ITransactionOnNetwork> {
 						return proxy.getTransaction(txHash);
 					},
-				}, 3000, 5000);
+				}, 3000);
 
 				watcher.awaitOnCondition({
 					...tx,
