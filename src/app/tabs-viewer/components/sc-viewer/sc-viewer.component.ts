@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { GeneratedWallet, ProjectAbi, ProjectSmartContract } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../project/store/project.action';
@@ -7,6 +7,8 @@ import { ProjectSelector } from '../../../project/store/project.selector';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
+import { Event } from '@angular/router';
+import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
 
 @Component({
 	selector: 'app-sc-viewer',
@@ -19,6 +21,8 @@ export class ScViewerComponent implements OnInit {
 	@Input() abi?: ProjectAbi | null;
 
 	@Input() sc?: ProjectSmartContract | null;
+
+	@ViewChildren(ScEndpointComponent) private readonly endpointList?: QueryList<ScEndpointComponent>;
 
 	account$?: Observable<AccountOnNetwork>;
 	transactions$?: Observable<IElrondTransaction[]>;
@@ -46,5 +50,13 @@ export class ScViewerComponent implements OnInit {
 
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId, address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId, address}));
+	}
+
+	expandAll(): void {
+		this.endpointList?.forEach(endpoint => endpoint.show());
+	}
+
+	hideAll(): void {
+		this.endpointList?.forEach(endpoint => endpoint.hide());
 	}
 }
