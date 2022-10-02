@@ -23,6 +23,7 @@ export class ComponentColorPipe implements PipeTransform {
 				return '#7cfa7e';
 			case 'group':
 			case 'address_book':
+			case 'home':
 				return '#EDEDED';
 		}
 	}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OpenedProjectTab, PersonalSettingsManager, TabsData } from '../personal-settings.manager';
+import { OpenedProjectTab, PersonalSettingsManager, SELF_PROJECT_ID, TabsData } from '../personal-settings.manager';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
@@ -121,6 +121,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 
 				tabs.pop();
 
+				this.pushHomeIfListIsEmpty(tabs);
+
 				this.set(this.openedTabsKey, tabs);
 				this.set(this.currentTabIndexKey, 0);
 
@@ -181,12 +183,20 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	private getOpenedTabList(): OpenedProjectTab[] {
-		return this.get(this.openedTabsKey) || [];
+		return this.pushHomeIfListIsEmpty(this.get(this.openedTabsKey) || []);
 	}
 
-	private getCurrentTabIndex(): number | undefined {
+	private pushHomeIfListIsEmpty(list: OpenedProjectTab[]): OpenedProjectTab[] {
+		if (!list.length) {
+			list.push({projectId: SELF_PROJECT_ID, title: 'Home', index: 0, componentType: 'home', componentId: SELF_PROJECT_ID});
+		}
+
+		return list;
+	}
+
+	private getCurrentTabIndex(): number {
 		const index = +this.get<string>(this.currentTabIndexKey);
-		return !isNaN(index) ? index : undefined;
+		return !isNaN(index) ? index : 0;
 	}
 
 	private set<T>(key: string, value: T): void {
