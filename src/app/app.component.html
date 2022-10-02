@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="isVisibleLoadingScreen$ | async"></app-loading-screen>
 <app-layout #layout>
-	<app-logo logo></app-logo>
+	<app-logo logo (click)="onLogoClick()"></app-logo>
 	<app-project-explorer project (resize)="layout.resizePanel('left', $event)"></app-project-explorer>
 	<app-project-tabs
 		scViewer
