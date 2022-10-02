@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project, ProjectSmartContract } from '../../../core/data-provider/data-provider';
+import { Project } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
@@ -13,6 +13,8 @@ import { ProjectComponentType } from '../../../core/types';
 })
 export class ProjectExplorerComponent implements OnInit {
 	projects$: Observable<Project[]>;
+
+	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
 	constructor(private readonly store: Store) {
 		this.projects$ = this.store.select(ProjectSelector.projects);

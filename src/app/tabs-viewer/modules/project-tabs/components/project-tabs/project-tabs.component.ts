@@ -10,8 +10,7 @@ import {
 	ViewChildren,
 } from '@angular/core';
 import { ProjectTabComponent } from '../project-tab/project-tab.component';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({

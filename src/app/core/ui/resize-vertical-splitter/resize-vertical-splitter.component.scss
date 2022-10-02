@@ -1,0 +1,21 @@
+.resize-splitter {
+	width: 6px;
+	height: 100%;
+	background: none;
+	position: absolute;
+	cursor: ew-resize;
+	z-index: 100;
+
+	&:hover {
+		background: var(--border-accent-color);
+		opacity: 0.6;
+	}
+}
+
+.left {
+	left: -3px;
+}
+
+.right {
+	right: 3px;
+}

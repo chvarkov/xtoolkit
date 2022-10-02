@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ActionHistorySelector } from '../../store/action-history.selector';
@@ -14,6 +14,8 @@ import { txTabName } from '../../../core/helpers/tx-tab-name';
 })
 export class ActionHistoryListComponent implements OnInit {
 	actionHistory$: Observable<ActionHistoryElement[]>;
+
+	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
 	constructor(private readonly store: Store) {
 		this.actionHistory$ = this.store.select(ActionHistorySelector.list);
