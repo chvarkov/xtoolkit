@@ -29,6 +29,7 @@ import { AddressBookViewerComponent } from './components/address-book-viewer/add
 import { NetworkModule } from '../network/network.module';
 import { TxViewerComponent } from './components/tx-viewer/tx-viewer.component';
 import { TxTokenOperationComponent } from './components/tx-viewer/tx-token-operation/tx-token-operation.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
 	declarations: [
@@ -58,6 +59,7 @@ import { TxTokenOperationComponent } from './components/tx-viewer/tx-token-opera
 		AddressBookViewerComponent,
 		TxViewerComponent,
 		TxTokenOperationComponent,
+		HomePageComponent,
 	],
 	imports: [
 		CommonModule,
@@ -72,6 +74,7 @@ import { TxTokenOperationComponent } from './components/tx-viewer/tx-token-opera
 		WalletViewerComponent,
 		AddressBookViewerComponent,
 		TxViewerComponent,
+		HomePageComponent,
 	]
 })
 export class TabsViewerModule { }

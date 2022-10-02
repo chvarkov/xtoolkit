@@ -3,6 +3,8 @@ import { ProjectComponentType } from '../types';
 
 export const PERSONAL_SETTINGS_MANAGER = 'CORE:PERSONAL_SETTINGS_MANAGER';
 
+export const SELF_PROJECT_ID = 'self';
+
 export interface OpenedProjectTab {
 	index: number;
 	title: string;

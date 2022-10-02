@@ -25,6 +25,8 @@ export class ComponentIconPipe implements PipeTransform {
 				return 'receipt_long';
 			case 'address_book':
 				return 'book';
+			case 'home':
+				return 'home';
 		}
 	}
 }

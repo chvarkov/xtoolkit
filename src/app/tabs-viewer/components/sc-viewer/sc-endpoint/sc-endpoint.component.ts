@@ -67,13 +67,13 @@ export class ScEndpointComponent implements OnInit {
 		this.payload$ = this.form.valueChanges;
 	}
 
-	show(event: Event): void {
-		event.stopPropagation();
+	show(event?: Event): void {
+		event?.stopPropagation();
 		this.isShowing = true;
 	}
 
-	hide(event: Event): void {
-		event.stopPropagation();
+	hide(event?: Event): void {
+		event?.stopPropagation();
 		this.isShowing = false;
 	}
 
