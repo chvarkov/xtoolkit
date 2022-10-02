@@ -2,7 +2,11 @@
 	<ng-container *ngIf="(abi.content | sc:sc?.address || '') as smartContract">
 		<app-toolbar>
 			<div left-side class="toolbar-left-side">
-				<app-address-input *ngIf="!sc" [chainId]="chainId"></app-address-input>
+				<app-address-input *ngIf="!sc"
+								   [chainId]="chainId"
+								   [projectId]="projectId"
+								   type="sc">
+				</app-address-input>
 				<app-address *ngIf="sc" [chainId]="chainId" [address]="sc.address || ''"></app-address>
 			</div>
 			<app-toolbar-icon-button right-side

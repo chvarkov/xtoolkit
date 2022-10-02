@@ -25,7 +25,7 @@
 
 	<div class="history-container" *ngIf="showAddressBook && isOptionsVisible">
 		<div class="option"
-			 *ngFor="let option of (savedAddress$ | async) || []"
+			 *ngFor="let option of (addressBook$ | async) || []"
 			 (click)="onSelectAddress(option)">
 			<div class="icon material-icons" [ngStyle]="{color: option.type | componentColor}">
 				{{option.type | componentIcon}}

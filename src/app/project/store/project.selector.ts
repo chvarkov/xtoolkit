@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { PROJECT_FEATURE } from '../constants';
 import { IProjectState } from './project.reducer';
-import { Project } from '../../core/data-provider/data-provider';
+import { Project, ProjectAddress } from '../../core/data-provider/data-provider';
 
 export class ProjectSelector {
 	static projects = createSelector(
@@ -118,9 +118,13 @@ export class ProjectSelector {
 		(state: IProjectState) => state.issueTokenWaitList || [],
 	);
 
-	static projectAddresses = (projectId: string) => createSelector(
+	static projectAddresses = (projectId: string, type?: 'sc' | 'wallet') => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.addressBook || [],
+		(state: IProjectState) => {
+			const list = state.projects.find(p => p.id === projectId)?.addressBook || [];
+
+			return !type ? list : list.filter(i => i.type === type);
+		},
 	);
 
 	static tx = (projectId: string, txHash: string) => createSelector(

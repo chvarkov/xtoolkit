@@ -2,6 +2,7 @@
 	<div class="material-icons icon" [ngStyle]="{color: 'sc' | componentColor}">code</div>
 
 	<app-address-input class="address" [address]="address"
+					   type="sc"
 					   [chainId]="chainId"
 					   (changed)="onChangeAddress($event)"></app-address-input>
 </form>
