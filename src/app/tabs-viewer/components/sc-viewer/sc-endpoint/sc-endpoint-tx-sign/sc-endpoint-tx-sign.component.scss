@@ -35,3 +35,7 @@
 	box-sizing: border-box;
 	justify-content: flex-end;
 }
+
+.call-btn {
+	width: var(--endpoint-action-button-width);
+}

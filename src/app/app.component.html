@@ -1,7 +1,7 @@
 <app-loading-screen *ngIf="isVisibleLoadingScreen$ | async"></app-loading-screen>
-<app-layout>
+<app-layout #layout>
 	<app-logo logo></app-logo>
-	<app-project-explorer project></app-project-explorer>
+	<app-project-explorer project (resize)="layout.resizePanel('left', $event)"></app-project-explorer>
 	<app-project-tabs
 		scViewer
 		(move)="moveTab($event.prevIndex, $event.currentIndex)"
@@ -39,5 +39,5 @@
 			<app-home-page *ngIf="tab.componentType === 'home'"></app-home-page>
 		</app-project-tab>
 	</app-project-tabs>
-	<app-action-list actionHistory></app-action-list>
+	<app-action-list actionHistory (resize)="layout.resizePanel('right', $event)"></app-action-list>
 </app-layout>

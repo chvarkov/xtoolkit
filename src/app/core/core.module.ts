@@ -30,6 +30,8 @@ import { TooltipComponent } from './ui/tooltip/tooltip.component';
 import { TooltipDirective } from './ui/tooltip/tooltip.directive';
 import { FormFieldComponent } from './ui/form-field/form-field.component';
 import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token-identifier-input.component';
+import { ResizeVerticalSplitterComponent } from './ui/resize-vertical-splitter/resize-vertical-splitter.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
 	declarations: [
@@ -56,11 +58,13 @@ import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token
 		FormFieldComponent,
 		TokenIdentifierInputComponent,
 		TokenIdentifierInputComponent,
+  ResizeVerticalSplitterComponent,
 	],
 	imports: [
 		CommonModule,
 		ElrondModule,
 		FormsModule,
+		DragDropModule,
 	],
 	providers: [
 		ModalDialogFactory,
@@ -76,27 +80,28 @@ import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token
 		LocalstoragePersonalSettingManager,
 		ESDTInteractor,
 	],
-	exports: [
-		ElrondModule,
-		ToolbarComponent,
-		SelectComponent,
-		TabsComponent,
-		TabComponent,
-		ToolbarIconButtonComponent,
-		ModalDialogComponent,
-		OptionComponent,
-		ShortStringPipe,
-		DropdownMenuComponent,
-		DropdownMenuItemComponent,
-		ComponentIconPipe,
-		ComponentColorPipe,
-		AddressComponent,
-		TxHashComponent,
-		AddressInputComponent,
-		DecimalPlacesPipe,
-		TooltipDirective,
-		FormFieldComponent,
-		TokenIdentifierInputComponent,
-	],
+    exports: [
+        ElrondModule,
+        ToolbarComponent,
+        SelectComponent,
+        TabsComponent,
+        TabComponent,
+        ToolbarIconButtonComponent,
+        ModalDialogComponent,
+        OptionComponent,
+        ShortStringPipe,
+        DropdownMenuComponent,
+        DropdownMenuItemComponent,
+        ComponentIconPipe,
+        ComponentColorPipe,
+        AddressComponent,
+        TxHashComponent,
+        AddressInputComponent,
+        DecimalPlacesPipe,
+        TooltipDirective,
+        FormFieldComponent,
+        TokenIdentifierInputComponent,
+        ResizeVerticalSplitterComponent,
+    ],
 })
 export class CoreModule { }

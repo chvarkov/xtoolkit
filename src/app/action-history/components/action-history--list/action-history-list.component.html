@@ -1,3 +1,4 @@
+<app-resize-vertical-splitter (dx)="resize.emit($event)" side="right"></app-resize-vertical-splitter>
 <app-toolbar title="Action history">
 	<app-toolbar-icon-button *ngIf="(actionHistory$ | async)?.length"
 							 right-side appTooltip tooltip="Clear"
