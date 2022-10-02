@@ -19,6 +19,8 @@ export class TxHashComponent implements OnInit {
 
 	@Input() label: string = '';
 
+	@Input() maxLength?: number
+
 	@Output() open: EventEmitter<string> = new EventEmitter<string>();
 
 	network$?: Observable<INetworkEnvironment | undefined>;
