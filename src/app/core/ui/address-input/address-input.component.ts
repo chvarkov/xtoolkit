@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import { isValidAddress } from '../../validators/address-validator';
 import { ProjectAddress } from '../../data-provider/data-provider';
+import { ProjectSelector } from '../../../project/store/project.selector';
 
 @Component({
 	selector: 'app-address-input',
@@ -13,9 +14,10 @@ import { ProjectAddress } from '../../data-provider/data-provider';
 	styleUrls: ['./address-input.component.scss']
 })
 export class AddressInputComponent implements OnInit {
+	@Input() projectId: string = ''
 	@Input() chainId: string = ''
 	@Input() address: string = '';
-
+	@Input() type?: 'sc' | 'wallet';
 	@Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
 	@Input() showAddressBook = true;
@@ -24,92 +26,7 @@ export class AddressInputComponent implements OnInit {
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
-	savedAddress$?: Observable<ProjectAddress[]> = of([
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'Wallet Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'wallet',
-			savedAt: Date.now(),
-		},
-		{
-			projectId: '',
-			name: 'SC Name',
-			address: 'erd1ff377y7qdldtsahvt28ec45zkyu0pepuup33adhr8wr2yuelwv7qpevs9e',
-			type: 'sc',
-			savedAt: Date.now(),
-		},
-	]);
+	addressBook$?: Observable<ProjectAddress[] | undefined>;
 
 	private prevValue?: string;
 
@@ -120,6 +37,7 @@ export class AddressInputComponent implements OnInit {
 	ngOnInit(): void {
 		if (this.showAddressBook) {
 			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
+			this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.projectId, this.type));
 		}
 	}
 

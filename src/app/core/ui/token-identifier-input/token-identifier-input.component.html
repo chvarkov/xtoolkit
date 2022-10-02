@@ -1,6 +1,5 @@
 <div class="token-identifier-input">
 	<input #input class="input"
-		   placeholder="Token identifier"
 		   [ngClass]="{invalid: isInvalidIdentifier(input.value)}"
 		   [value]="identifier"
 		   (change)="onChangeTokenIdentifier($event)"

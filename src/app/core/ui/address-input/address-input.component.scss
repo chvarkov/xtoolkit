@@ -35,7 +35,7 @@
 
 .history-container {
 	width: 560px;
-	height: 200px;
+	max-height: 200px;
 	position: absolute;
 	top: 30px;
 	background: var(--primary-bg);

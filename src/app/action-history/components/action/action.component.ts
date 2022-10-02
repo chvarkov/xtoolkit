@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import { take } from 'rxjs/operators';
 import { ActionHistoryAction } from '../../store/action-history.action';
+import { ProjectAction } from '../../../project/store/project.action';
+import { txTabName } from '../../../core/helpers/tx-tab-name';
 
 @Component({
 	selector: 'app-action',
@@ -67,5 +69,17 @@ export class ActionComponent implements OnInit {
 			&& this.data.type === ActionType.Transaction
 			&& this.data.status === ActionStatus.Pending
 			&& !!this.data.txHash);
+	}
+
+	openTx(): void {
+		if (!this.data || !this.data.txHash) {
+			return;
+		}
+		this.store.dispatch(ProjectAction.openProjectTab({
+			projectId: this.data.projectId,
+			componentId: this.data.txHash,
+			componentType: 'tx',
+			title: txTabName(this.data.txHash),
+		}));
 	}
 }

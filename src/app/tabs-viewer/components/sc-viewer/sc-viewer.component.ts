@@ -16,6 +16,7 @@ import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
 	styleUrls: ['./sc-viewer.component.scss'],
 })
 export class ScViewerComponent implements OnInit {
+	@Input() projectId: string = '';
 	@Input() chainId: string = '';
 
 	@Input() abi?: ProjectAbi | null;

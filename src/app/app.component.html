@@ -13,12 +13,14 @@
 						 [type]="tab.componentType">
 			<ng-container *ngIf="tab.componentType === 'sc'">
 				<app-sc-viewer *ngIf="getScById$(tab.projectId, tab.componentId) | async as sc"
+							   [projectId]="tab.projectId"
 							   [chainId]="(getProjectChainId$(tab.projectId) | async) || ''"
 							   [sc]="sc" [abi]="getAbiById$(tab.projectId, sc.abiId) | async">
 				</app-sc-viewer>
 			</ng-container>
 
 			<app-sc-viewer *ngIf="tab.componentType === 'abi'"
+						   [projectId]="tab.projectId"
 						   [chainId]="(getProjectChainId$(tab.projectId) | async) || ''"
 						   [abi]="getAbiById$(tab.projectId, tab.componentId) | async">
 			</app-sc-viewer>
