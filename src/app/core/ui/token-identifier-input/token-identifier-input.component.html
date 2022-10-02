@@ -23,10 +23,11 @@
 		<span class="material-icons invalid-icon" *ngIf="isInvalidIdentifier(input.value)">cancel</span>
 	</div>
 
-	<div class="history-container" *ngIf="showIdentifiers && isOptionsVisible">
+	<div class="identifiers-container" *ngIf="showIdentifiers && isOptionsVisible">
 		<div class="option"
 			 *ngFor="let option of (tokenIdentifiers$ | async) || []"
 			 (click)="onSelectTokenIdentifier(option)">
+			{{option}}
 		</div>
 	</div>
 </div>

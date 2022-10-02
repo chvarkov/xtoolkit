@@ -40,7 +40,7 @@ export class TokenIdentifierInputComponent implements OnInit {
 			this.tokenIdentifiers$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
 				map(project => project?.tokens || []),
 				map(tokens => [TokenIdentifierValue.egld().toString(), ...tokens]),
-			)
+			);
 		}
 	}
 
