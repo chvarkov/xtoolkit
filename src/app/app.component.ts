@@ -4,7 +4,7 @@ import { NetworkAction } from './network/store/network.action';
 import { Observable } from 'rxjs';
 import { ProjectAbi, ProjectSmartContract } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
-import { OpenedProjectTab } from './core/data-provider/personal-settings.manager';
+import { OpenedProjectTab, SELF_PROJECT_ID } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
 import { map } from 'rxjs/operators';
 import { TokenIssueAwaiter } from './project/services/token-issue.awaiter';
@@ -76,5 +76,14 @@ export class AppComponent implements OnInit, OnDestroy {
 			.pipe(
 				map(proj => proj?.chainId || '')
 			);
+	}
+
+	onLogoClick(): void {
+		this.store.dispatch(ProjectAction.openProjectTab({
+			projectId: SELF_PROJECT_ID,
+			title: 'Home',
+			componentType: 'home',
+			componentId: SELF_PROJECT_ID,
+		}));
 	}
 }

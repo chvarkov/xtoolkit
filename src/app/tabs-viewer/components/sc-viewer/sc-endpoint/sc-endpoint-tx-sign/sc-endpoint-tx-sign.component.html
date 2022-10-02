@@ -19,7 +19,7 @@
 		</div>
 	</ng-container>
 	<div class="wallet">
-		<app-select placeholder="Caller" (selectionChange)="onSelectedWallet($event.value)">
+		<app-select label="Caller" (selectionChange)="onSelectedWallet($event.value)">
 			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>
 		</app-select>
 	</div>

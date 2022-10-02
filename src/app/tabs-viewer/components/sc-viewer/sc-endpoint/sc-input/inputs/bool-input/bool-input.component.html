@@ -1,5 +1,5 @@
 <app-select class="bool"
-			[placeholder]="placeholder"
+            [label]="placeholder"
 			(selectionChange)="onChange.emit($event.value)">
 	<app-option *ngIf="nullable" [value]="null">null</app-option>
 	<app-option [value]="true">true</app-option>

@@ -1,7 +1,7 @@
 <div class="query-container">
-	<div class="wallet">
+	<div class="caller">
 		<app-select class="wallet-select"
-					placeholder="Caller"
+					label="Caller"
 					(selectionChange)="wallet = $event.value">
 			<app-option [value]="undefined">No caller</app-option>
 			<app-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</app-option>

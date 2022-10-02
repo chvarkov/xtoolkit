@@ -11,24 +11,10 @@
 	border-bottom: solid 1px var(--border-low-color);
 	background: var(--low-bg);
 	cursor: pointer;
+	padding: 4px 8px;
 
 	&:hover {
-		background: var(--border-low-color);
+		background: var(--primary-darken-bg);
 		color: var(--text-accent-color);
 	}
-}
-
-.element-small {
-	font-size: 16px;
-	padding: 8px 10px;
-}
-
-.element-medium {
-	font-size: 18px;
-	padding: 10px 12px;
-}
-
-.element-big {
-	font-size: 22px;
-	padding: 12px 14px;
 }

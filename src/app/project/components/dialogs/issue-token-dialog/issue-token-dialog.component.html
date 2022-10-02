@@ -22,7 +22,7 @@
 			</div>
 		</form>
 
-		<app-select class="input-control" placeholder="Token issuer" (selectionChange)="onChangeIssuerWallet($event)">
+		<app-select class="input-control" label="Token issuer" (selectionChange)="onChangeIssuerWallet($event)">
 			<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
 		</app-select>
 	</div>

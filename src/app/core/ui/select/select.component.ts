@@ -25,7 +25,7 @@ export type SelectSize = 'supersmall' | 'small' | 'medium' | 'big';
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss']
 })
-export class SelectComponent<T = any> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class SelectComponent<T = any> implements OnInit, AfterViewInit, OnDestroy {
 	@ViewChild('selector', {static: true}) eRef?: ElementRef;
 	@ContentChildren(OptionComponent) options?: QueryList<OptionComponent>;
 
@@ -33,7 +33,7 @@ export class SelectComponent<T = any> implements OnInit, OnChanges, AfterViewIni
 
 	@Input() size: SelectSize = 'small';
 
-	@Input() placeholder = 'Chose option';
+	@Input() label = 'Chose option';
 
 	@Input() icon = 'more_vert';
 
@@ -53,20 +53,6 @@ export class SelectComponent<T = any> implements OnInit, OnChanges, AfterViewIni
 	ngOnInit(): void {
 		if (this.defaultElement) {
 			this.currentSelectedElement = this.defaultElement;
-		}
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		const size = changes.size;
-		if (!size) {
-			return;
-		}
-		if (size.previousValue !== size.currentValue) {
-			if (this.options) {
-				setTimeout(() => {
-					this.options?.forEach(item => item.size = size.currentValue);
-				});
-			}
 		}
 	}
 
@@ -90,12 +76,6 @@ export class SelectComponent<T = any> implements OnInit, OnChanges, AfterViewIni
 		list.forEach(option => {
 			this.optionsEventsSub.add(option.selected.subscribe((e) => {
 				this.selectElement(e);
-
-				if (this.options) {
-					setTimeout(() => {
-						this.options?.forEach(item => item.size = this.size);
-					});
-				}
 			}));
 		});
 	}
@@ -125,9 +105,5 @@ export class SelectComponent<T = any> implements OnInit, OnChanges, AfterViewIni
 		if (!this.eRef?.nativeElement.contains(event.target)) {
 			this.isVisibleOptions = false;
 		}
-	}
-
-	getCssClass(className: string): string {
-		return `${className}-${this.size}`;
 	}
 }
