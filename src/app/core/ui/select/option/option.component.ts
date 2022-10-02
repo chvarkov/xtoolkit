@@ -13,8 +13,6 @@ export class OptionComponent {
 
 	@Output() selected: EventEmitter<SelectElement> = new EventEmitter<SelectElement>();
 
-	@Input() size: SelectSize = 'small';
-
 	onClick(e: Event): void {
 		e.stopPropagation();
 		const name = this.content?.nativeElement?.innerText;
@@ -22,9 +20,5 @@ export class OptionComponent {
 		if (name) {
 			this.selected.emit({name, value: this.value});
 		}
-	}
-
-	getCssClass(className: string): string {
-		return `${className}-${this.size}`;
 	}
 }

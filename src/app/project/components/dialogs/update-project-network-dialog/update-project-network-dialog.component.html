@@ -1,7 +1,7 @@
 <app-modal-dialog title="Update project network" [dialogRef]="dialogRef">
 	<div content class="content">
 		<app-select class="network-select"
-					placeholder="Network"
+                    label="Network"
 					(selectionChange)="onChangeNetwork($event)">
 			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
 				{{network.name}}

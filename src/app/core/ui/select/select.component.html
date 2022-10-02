@@ -1,11 +1,13 @@
-<div #selector class="select" [ngClass]="getCssClass('element')" (click)="switchShowOptions($event)">
-	<div class="label">{{defaultElement?.name || currentSelectedElement?.name || placeholder}}</div>
-	<div class="icon material-icons">expand_more</div>
+<div #selector class="select" [ngClass]="{active: isVisibleOptions}" (click)="switchShowOptions($event)">
+	<div class="content">
+		<div class="label">{{label}}</div>
+		<div class="value">{{defaultElement?.name || currentSelectedElement?.name || 'No value'}}</div>
+	</div>
+	<div class="icon material-icons">{{isVisibleOptions ? 'expand_less' : 'expand_more'}}</div>
 </div>
 
 <div class="options-container"
-	 [ngClass]="getCssClass('options')"
 	 *ngIf="isVisibleOptions"
-	 [ngStyle]="{minWidth: selector.clientWidth  + 'px'}">
+	 [ngStyle]="{minWidth: selector.offsetWidth  + 'px'}">
 	<ng-content></ng-content>
 </div>

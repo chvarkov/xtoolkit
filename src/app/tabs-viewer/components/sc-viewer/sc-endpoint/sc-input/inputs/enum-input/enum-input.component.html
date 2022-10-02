@@ -1,4 +1,4 @@
-<app-select class="enum" placeholder="Select enum value" (selectionChange)="changed.emit($event.value)">
+<app-select class="enum" label="Select enum value" (selectionChange)="changed.emit($event.value)">
 	<app-option *ngFor="let option of getEnum()"
 				[value]="option.discriminant">
 		{{option.name}} [{{option.discriminant}}]
