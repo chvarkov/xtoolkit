@@ -33,7 +33,7 @@
 			<div class="content">
 				<div class="title">
 					<span class="name" [ngStyle]="{color: option.type | componentColor}">
-						wallet
+						{{type === 'sc' ? 'Smart contract' : 'Wallet'}}
 					</span>
 
 					<span class="date">{{option.savedAt | date: 'medium'}}</span>
