@@ -10,12 +10,12 @@
 
 	.icons {
 		right: 4px;
-		top: 4px;
+		top: 2px;
 		position: absolute;
 
 		.action {
 			cursor: pointer;
-			font-size: 1.18em;
+			font-size: 1.12em;
 
 			&:hover {
 				color: var(--text-accent-color);
@@ -24,6 +24,7 @@
 
 		.invalid-icon {
 			color: var(--static-red);
+			font-size: 1em;
 		}
 	}
 }
