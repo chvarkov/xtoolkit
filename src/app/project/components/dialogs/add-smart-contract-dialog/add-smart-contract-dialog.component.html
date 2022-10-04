@@ -8,7 +8,7 @@
 		</app-address-input>
 
 		<app-select class="network-select"
-                    label="Network"
+                    label="API interface"
 					(selectionChange)="onChangeAbiId($event)">
 			<app-option *ngFor="let abi of (abiInterfaces$ | async) || []" [value]="abi.id">
 				{{abi.name}}

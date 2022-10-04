@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../store/project.selector';
 import { Project, ProjectAbi } from '../../../../core/data-provider/data-provider';
-import { map, switchMap } from 'rxjs/operators';
-import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
-import { NetworkSelector } from '../../../../network/store/network.selector';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-add-smart-contract-dialog',
