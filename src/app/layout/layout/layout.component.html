@@ -1,4 +1,4 @@
-<div #layout class="layout-container">
+<div #layout class="layout-container" [ngStyle]="{'grid-template-columns': gridTemplateColumns$ | async}">
 	<div class="header-element">
 		<ng-content select="[logo]"></ng-content>
 	</div>

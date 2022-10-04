@@ -18,6 +18,11 @@ export interface TabsData {
 	selectedIndex?: number;
 }
 
+export interface LayoutState {
+	leftPanelWidth: number;
+	rightPanelWidth: number;
+}
+
 export interface PersonalSettingsManager {
 	getOpenedTabs(): Observable<TabsData>;
 
@@ -38,4 +43,8 @@ export interface PersonalSettingsManager {
 	moveTab(prevIndex: number, currentIndex: number): Observable<TabsData>;
 
 	selectTab(index: number): Observable<TabsData>;
+
+	getLayoutState(): Observable<LayoutState>;
+
+	setLayoutState(partialState: Partial<LayoutState>): Observable<LayoutState>;
 }

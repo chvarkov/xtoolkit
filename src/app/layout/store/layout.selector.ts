@@ -1,10 +1,15 @@
 import { createSelector } from '@ngrx/store';
 import { LAYOUT_FEATURE } from '../constants';
-import { ILayoutState } from './layout.reducer';
+import { IAppLayoutState } from './layout.reducer';
 
 export class LayoutSelector {
 	static isLoadingScreenVisible = createSelector(
 		(app: Record<string, any>) => app[LAYOUT_FEATURE],
-		(state: ILayoutState) => state.isLoadingScreenVisible,
+		(state: IAppLayoutState) => state.isLoadingScreenVisible,
+	);
+
+	static panelsWidth = createSelector(
+		(app: Record<string, any>) => app[LAYOUT_FEATURE],
+		(state: IAppLayoutState) => ({left: state.leftPanelWidth, right: state.rightPanelWidth}),
 	);
 }
