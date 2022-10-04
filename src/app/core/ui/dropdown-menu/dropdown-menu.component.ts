@@ -28,11 +28,4 @@ export class DropdownMenuComponent {
 		e.stopPropagation();
 		this.isOpen = !this.isOpen;
 	}
-
-	@HostListener('document:click', ['$event'])
-	checkClick(event: Event): void {
-		if (!this.selfRef?.nativeElement.contains(event.target)) {
-			this.isOpen = false;
-		}
-	}
 }

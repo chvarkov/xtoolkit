@@ -1,6 +1,6 @@
 <div class="toolbar-container">
 	<div class="left-side">
-		<span *ngIf="title" class="toolbar-title">{{title}}</span>
+		<span *ngIf="title" class="toolbar-title" [ngClass]="'title-' + titleSize">{{title}}</span>
 		<ng-content select="[left-side]"></ng-content>
 	</div>
 	<div class="right-side">

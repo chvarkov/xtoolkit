@@ -1,0 +1,45 @@
+<div class="container" [formGroup]="form">
+	<app-toolbar [title]="name" titleSize="small">
+		<app-toolbar-icon-button right-side
+								 appTooltip
+								 tooltip="Clear array">
+			delete
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button right-side
+								 appTooltip
+								 tooltip="Add element"
+								 (click)="addElement()">
+			add
+		</app-toolbar-icon-button>
+	</app-toolbar>
+	<div class="list"
+		 formArrayName="list"
+		 cdkDropList
+		 cdkDropListLockAxis="y"
+		 [cdkDropListAutoScrollDisabled]="false"
+		 cdkDropListOrientation="horizontal"
+		 (cdkDropListDropped)="moveItem($event.previousIndex, $event.currentIndex)">
+		<div *ngFor="let elem of list.value; let i = index"
+			 class="element"
+			 cdkDrag>
+			<div class="index">
+				[{{i}}]
+			</div>
+			<div class="input">
+				<app-sc-input [projectId]="projectId"
+							  [formControlName]="i"
+							  [type]="type.getFirstTypeParameter()"
+							  [chainId]="chainId">
+				</app-sc-input>
+			</div>
+			<div class="actions">
+				<div class="material-icons delete-icon"
+					 appTooltip
+					 tooltip="Delete element"
+					 (click)="delete(i)">
+					close
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

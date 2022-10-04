@@ -24,7 +24,8 @@
 	<ng-container *ngIf="isShowing">
 		<form [formGroup]="form" class="inputs">
 			<app-sc-input *ngFor="let input of endpoint?.input || []"
-						  [input]="input"
+						  [name]="input.name"
+						  [type]="input.type"
 						  [chainId]="chainId"
 						  [projectId]="projectId"
 						  [formControlName]="input.name"></app-sc-input>

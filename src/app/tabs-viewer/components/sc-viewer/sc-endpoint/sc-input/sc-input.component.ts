@@ -1,12 +1,12 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
-	AddressType,
+	AddressType, ArrayVecType,
 	BooleanType,
 	BytesType,
 	EndpointParameterDefinition,
 	EnumType, StructType,
-	TokenIdentifierType
+	TokenIdentifierType, Type, VariadicType
 } from '@elrondnetwork/erdjs/out';
 import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
 
@@ -27,7 +27,8 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 
 	@Input() chainId: string = '';
 
-	@Input() input?: EndpointParameterDefinition;
+	@Input() name: string = '';
+	@Input() type?: Type;
 
 
 	private onChange: Function = () => null;
@@ -69,30 +70,38 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 	}
 
 	isBoolType(): boolean {
-		return this.input?.type instanceof BooleanType;
+		return this.type instanceof BooleanType;
 	}
 
 	isNumericalType(): boolean {
-		return this.input?.type instanceof NumericalType;
+		return this.type instanceof NumericalType;
 	}
 
 	isBytesType(): boolean {
-		return this.input?.type instanceof BytesType;
+		return this.type instanceof BytesType;
 	}
 
 	isEnum(): boolean {
-		return this.input?.type instanceof EnumType;
+		return this.type instanceof EnumType;
 	}
 
 	isAddress(): boolean {
-		return this.input?.type instanceof AddressType;
+		return this.type instanceof AddressType;
 	}
 
 	isTokenIdentifier(): boolean {
-		return this.input?.type instanceof TokenIdentifierType;
+		return this.type instanceof TokenIdentifierType;
 	}
 
 	isStruct(): boolean {
-		return this.input?.type instanceof StructType;
+		return this.type instanceof StructType;
+	}
+
+	isVariadic(): boolean {
+		return this.type instanceof VariadicType;
+	}
+
+	isArray(): boolean {
+		return this.type instanceof ArrayVecType;
 	}
 }

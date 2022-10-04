@@ -1,0 +1,45 @@
+:host {
+	width: 100%;
+}
+
+.container {
+	width: 100%;
+
+	.list {
+		width: 100%;
+		max-height: 260px;
+	}
+}
+
+.element {
+	display: flex;
+	flex-direction: row;
+	background: var(--low-bg);
+	border-bottom: solid 1px var(--border-low-color);
+
+	.index {
+		width: 50px;
+		padding: 8px;
+		font-weight: 600;
+		opacity: 0.8;
+		cursor: grab;
+	}
+
+	.input {
+		width: 100%;
+	}
+
+	.actions {
+		padding-left: 8px;
+
+		.delete-icon {
+			color: var(--static-red);
+			opacity: 0.9;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+}

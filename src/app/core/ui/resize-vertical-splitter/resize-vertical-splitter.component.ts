@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
 export type SplitterSide = 'left' | 'right';
 
@@ -20,21 +20,19 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	onMouseDown(): void {
+		this.isMoving = true;
+	}
+
+	@HostListener('document:mousemove', ['$event'])
 	onMouseMove(e: MouseEvent): void {
 		if (this.isMoving) {
 			this.dx.emit(e.movementX);
 		}
 	}
 
-	onMouseDown(): void {
-		this.isMoving = true;
-	}
-
+	@HostListener('document:mouseup', ['$event'])
 	onMouseUp(): void {
-		this.isMoving = false;
-	}
-
-	onMouseOut(): void {
 		this.isMoving = false;
 	}
 }

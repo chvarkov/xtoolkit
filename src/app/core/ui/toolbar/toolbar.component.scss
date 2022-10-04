@@ -22,7 +22,20 @@
 
 		.toolbar-title {
 			padding: 6px;
+			display: flex;
+			align-items: center;
+		}
+
+		.title-big {
 			font-size: 1.2em;
+		}
+
+		.title-medium {
+			font-size: 1em;
+		}
+
+		.title-small {
+			font-size: 0.88em;
 		}
 	}
 }
