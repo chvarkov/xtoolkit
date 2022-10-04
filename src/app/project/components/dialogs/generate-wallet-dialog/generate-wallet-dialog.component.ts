@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
