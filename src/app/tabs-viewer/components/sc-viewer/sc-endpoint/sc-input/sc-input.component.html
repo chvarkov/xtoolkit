@@ -1,5 +1,5 @@
-<div class="input-container" *ngIf="input">
-	<div class="name">{{input.name}}</div>
+<div class="input-container" *ngIf="type">
+	<div class="name" *ngIf="name">{{name}}</div>
 
 	<div class="input" [ngSwitch]="true">
 		<app-bool-input *ngSwitchCase="isBoolType()"
@@ -7,10 +7,10 @@
 		<app-bytes-input *ngSwitchCase="isBytesType()"
 						 (changed)="writeValue($event)"></app-bytes-input>
 		<app-number-input *ngSwitchCase="isNumericalType()"
-						  [type]="input?.type"
+						  [type]="type"
 						  (changed)="writeValue($event)"></app-number-input>
 		<app-enum-input *ngSwitchCase="isEnum()"
-						[type]="input?.type"
+						[type]="type"
 						(changed)="writeValue($event)"></app-enum-input>
 		<app-address-input *ngSwitchCase="isAddress()"
 						   [projectId]="projectId"
@@ -25,10 +25,15 @@
 						  class="struct"
 						  [projectId]="projectId"
 						  [chainId]="chainId"
-						  [name]="input.type.getName()"
-						  [type]="input.type"
+						  [name]="type.getName()"
+						  [type]="type"
 						  (changed)="writeValue($event)"></app-struct-input>
-		<input *ngSwitchDefault class="input">
+		<app-array-input *ngSwitchCase="isVariadic()"
+						 [projectId]="projectId"
+						 [chainId]="chainId"
+						 [type]="type"
+						 [name]="type.getName()"></app-array-input>
+		<input *ngSwitchDefault class="input" [value]="type.getClassName()">
 	</div>
 
 </div>
