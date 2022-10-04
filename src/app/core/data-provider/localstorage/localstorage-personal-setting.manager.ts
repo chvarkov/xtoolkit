@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
-import { OpenedProjectTab, PersonalSettingsManager, SELF_PROJECT_ID, TabsData } from '../personal-settings.manager';
+import {
+	LayoutState,
+	OpenedProjectTab,
+	PersonalSettingsManager,
+	SELF_PROJECT_ID,
+	TabsData
+} from '../personal-settings.manager';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { stat } from 'fs';
+import { ILayoutState } from '../../../layout/store/layout.reducer';
 
 @Injectable({providedIn: 'root'})
 export class LocalstoragePersonalSettingManager implements PersonalSettingsManager {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly openedTabsKey = `${this.globalPrefix}.opened_tabs`;
 	private readonly currentTabIndexKey = `${this.globalPrefix}.current_tab_index`;
+	private readonly layoutStateKey = `${this.globalPrefix}.layout_state`;
 
 	getOpenedTabs(): Observable<TabsData> {
 		return of({
@@ -178,6 +187,38 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				this.set(this.currentTabIndexKey, index);
 
 				return { tabs, selectedIndex: index };
+			}),
+		);
+	}
+
+	getLayoutState(): Observable<LayoutState> {
+		const state: LayoutState = this.get(this.layoutStateKey);
+
+		if (state) {
+			return of(state);
+		}
+
+		const defaultState: LayoutState = {
+			leftPanelWidth: 450,
+			rightPanelWidth: 450,
+		};
+
+		this.set(this.layoutStateKey, defaultState);
+
+		return of(defaultState);
+	}
+
+	setLayoutState(partialState: Partial<LayoutState>): Observable<LayoutState> {
+		return this.getLayoutState().pipe(
+			map(state => {
+				const merged = {
+					...state,
+					partialState,
+				};
+
+				this.set(this.layoutStateKey, merged);
+
+				return merged;
 			}),
 		);
 	}
