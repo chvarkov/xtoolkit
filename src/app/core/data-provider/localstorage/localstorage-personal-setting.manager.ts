@@ -10,8 +10,6 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { stat } from 'fs';
-import { ILayoutState } from '../../../layout/store/layout.reducer';
 
 @Injectable({providedIn: 'root'})
 export class LocalstoragePersonalSettingManager implements PersonalSettingsManager {
@@ -199,8 +197,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		}
 
 		const defaultState: LayoutState = {
-			leftPanelWidth: 450,
-			rightPanelWidth: 450,
+			leftPanelWidth: 420,
+			rightPanelWidth: 420,
 		};
 
 		this.set(this.layoutStateKey, defaultState);
@@ -213,7 +211,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			map(state => {
 				const merged = {
 					...state,
-					partialState,
+					...partialState,
 				};
 
 				this.set(this.layoutStateKey, merged);

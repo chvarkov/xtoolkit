@@ -1,6 +1,6 @@
 .layout-container {
 	display: grid;
-	grid-template-columns: 420px 1fr 420px;
+	//grid-template-columns: 420px 1fr 420px;
 	grid-template-rows: var(--header-height) 1fr var(--footer-height);
 	height: 100vh;
 }

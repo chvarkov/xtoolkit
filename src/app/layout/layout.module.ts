@@ -7,6 +7,8 @@ import { LoadingScreenComponent } from './components/loading-screen/loading-scre
 import { StoreModule } from '@ngrx/store';
 import { LAYOUT_FEATURE } from './constants';
 import { layoutReducer } from './store/layout.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { LayoutEffect } from './store/layout.effect';
 
 @NgModule({
 	declarations: [
@@ -18,11 +20,13 @@ import { layoutReducer } from './store/layout.reducer';
 		CommonModule,
 		CoreModule,
 		StoreModule.forFeature(LAYOUT_FEATURE, layoutReducer),
+		EffectsModule.forFeature([LayoutEffect]),
 	],
 	exports: [
 		LayoutComponent,
 		LogoComponent,
 		StoreModule,
+		EffectsModule,
 		LoadingScreenComponent,
 	],
 })
