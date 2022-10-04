@@ -1,5 +1,6 @@
 <div class="address-input">
 	<input #input class="input"
+		   autocomplete="nope"
 		   placeholder="Address"
 		   [ngClass]="{invalid: isInvalidAddress(input.value)}"
 		   [value]="address"
