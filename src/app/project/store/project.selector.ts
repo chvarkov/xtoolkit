@@ -131,4 +131,9 @@ export class ProjectSelector {
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.loadedDataMap[projectId]?.transactionsMap?.[txHash],
 	);
+
+	static projectExplorerNodeMap = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.explorerNodeMap || [],
+	);
 }

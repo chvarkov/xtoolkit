@@ -548,6 +548,35 @@ export class ProjectEffect {
 		))),
 	);
 
+	loadProjectExplorerState$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadProjectExplorerState),
+		mergeMap(() => this.personalSettingsManager.getProjectExplorerState().pipe(
+			map((explorerState) => ProjectAction.loadProjectExplorerStateSuccess({explorerState})),
+			catchError(err => of(ProjectAction.loadProjectExplorerStateError({err})))
+		))),
+	);
+
+	updateProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.updateProjectExplorerTree),
+		mergeMap(({nodeId, isOpen, withParents, withChildren}) => this.personalSettingsManager.updateProjectExplorerTree(
+			nodeId,
+			isOpen,
+			withParents,
+			withChildren,
+		).pipe(
+			map((explorerState) => ProjectAction.updateProjectExplorerTreeSuccess({explorerState})),
+			catchError(err => of(ProjectAction.updateProjectExplorerTreeError({err})))
+		))),
+	);
+
+	syncProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.syncProjectExplorerTree),
+		mergeMap(() => this.personalSettingsManager.getProjectExplorerState().pipe(
+			map((explorerState) => ProjectAction.syncProjectExplorerTreeSuccess({explorerState})),
+			catchError(err => of(ProjectAction.syncProjectExplorerTreeError({err})))
+		))),
+	);
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly modalDialogFactory: ModalDialogFactory,

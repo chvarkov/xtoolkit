@@ -13,9 +13,11 @@
 
 <div class="project-explorer">
 	<app-project-element *ngFor="let project of (projects$ | async) || []"
+						 [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
 						 [bold]="true"
 						 [expandable]="true"
-						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'">
+						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'"
+						 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
 		<ng-container actions>
 			<app-dropdown-menu horizontal="left">
 				<app-dropdown-menu-item icon="bookmark"
@@ -38,6 +40,8 @@
 		</ng-container>
 		<div innerElements>
 			<app-project-element [expandable]="true"
+								 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'abi') | async)"
+								 (onExpand)="onExpandElement(project.id, 'group', 'abi', $event)"
 								 name="ABI interfaces">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
@@ -50,6 +54,8 @@
 					<app-project-element
 						(click)="openProjectComponent(project.id, abi.name, 'abi', abi.id)"
 						*ngFor="let abi of project.abiInterfaces"
+						[isExpanded]="((project.id | isExpandedExplorerNode:'abi': abi.id) | async)"
+						(onExpand)="onExpandElement(project.id, 'abi', abi.id, $event)"
 						type="abi"
 						[active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
 						[name]="abi.name || abi.name">
@@ -69,6 +75,8 @@
 				</ng-container>
 			</app-project-element>
 			<app-project-element [expandable]="true"
+								 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'sc') | async)"
+								 (onExpand)="onExpandElement(project.id, 'group', 'sc', $event)"
 								 name="Smart contracts">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
@@ -83,6 +91,8 @@
 						*ngFor="let sc of project.smartContracts"
 						type="sc"
 						[active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
+						[isExpanded]="((project.id | isExpandedExplorerNode:'sc': sc.id) | async)"
+						(onExpand)="onExpandElement(project.id, 'sc', sc.id, $event)"
 						[name]="sc.name || sc.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
@@ -99,7 +109,11 @@
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
-			<app-project-element [expandable]="true" type="group" name="Tokens">
+			<app-project-element [expandable]="true"
+								 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'token') | async)"
+								 (onExpand)="onExpandElement(project.id, 'group', 'token', $event)"
+								 type="group"
+								 name="Tokens">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
 						<app-dropdown-menu-item icon="add_circle"
@@ -113,6 +127,8 @@
 				<ng-container innerElements>
 					<app-project-element *ngFor="let tokenAddress of project.tokens"
 										 (click)="openProjectComponent(project.id, tokenAddress, 'token', tokenAddress)"
+										 [isExpanded]="((project.id | isExpandedExplorerNode:'token': tokenAddress) | async)"
+										 (onExpand)="onExpandElement(project.id, 'token', tokenAddress, $event)"
 										 type="token"
 										 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
 										 [name]="tokenAddress">
@@ -131,14 +147,22 @@
 					</app-project-element>
 				</ng-container>
 			</app-project-element>
-			<app-project-element [expandable]="true" type="group" name="NFTs (coming soon)">
+			<app-project-element [expandable]="true"
+								 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'nft') | async)"
+								 (onExpand)="onExpandElement(project.id, 'group', 'nft', $event)"
+								 type="group"
+								 name="NFTs (coming soon)">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
 					</app-dropdown-menu>
 				</ng-container>
 			</app-project-element>
 
-			<app-project-element [expandable]="true" type="group" name="Wallets">
+			<app-project-element [expandable]="true"
+								 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'wallet') | async)"
+								 (onExpand)="onExpandElement(project.id, 'group', 'wallet', $event)"
+								 type="group"
+								 name="Wallets">
 				<ng-container actions>
 					<app-dropdown-menu horizontal="left">
 						<app-dropdown-menu-item icon="key"
@@ -161,6 +185,8 @@
 				<ng-container innerElements>
 					<app-project-element *ngFor="let wallet of project.wallets"
 										 (click)="openProjectComponent(project.id, wallet.name, 'wallet', wallet.address)"
+										 [isExpanded]="((project.id | isExpandedExplorerNode:'wallet': wallet.address) | async)"
+										 (onExpand)="onExpandElement(project.id, 'wallet', wallet.address, $event)"
 										 type="wallet"
 										 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
 										 [name]="wallet.name">

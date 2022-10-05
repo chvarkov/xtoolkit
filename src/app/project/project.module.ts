@@ -21,6 +21,7 @@ import { TokenIssueAwaiter } from './services/token-issue.awaiter';
 import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from './components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
+import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
 
 @NgModule({
 	declarations: [
@@ -36,6 +37,7 @@ import { AddProjectAddressDialogComponent } from './components/dialogs/add-proje
 		UpdateProjectNetworkDialogComponent,
 		AddSmartContractDialogComponent,
 		AddProjectAddressDialogComponent,
+		IsExpandedExplorerNodePipe,
 	],
 	imports: [
 		CommonModule,

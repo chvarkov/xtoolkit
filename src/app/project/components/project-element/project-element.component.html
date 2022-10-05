@@ -1,7 +1,7 @@
 <div class="project-element" [ngClass]="{active: this.active}">
 	<div *ngIf="expandable"
 		 class="material-icons expand" (click)="toggleExpand()">
-		{{isExpanded ? 'expand_more' : 'chevron_right'}}
+		{{isExpanded == null ? true : isExpanded ? 'expand_more' : 'chevron_right'}}
 	</div>
 	<div class="material-icons icon"
 		 [ngStyle]="{color: type | componentColor}"
@@ -19,6 +19,6 @@
 	</div>
 </div>
 
-<div class="content" *ngIf="isExpanded">
+<div class="content" *ngIf="isExpanded == null ? true : isExpanded">
 	<ng-content select="[innerElements]"></ng-content>
 </div>

@@ -1,10 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
 import { ProjectComponentType } from '../../../core/types';
+import {
+	getProjectComponentNodeId,
+	PERSONAL_SETTINGS_MANAGER,
+	PersonalSettingsManager, ProjectExplorerNode, ProjectExplorerState
+} from '../../../core/data-provider/personal-settings.manager';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-project-explorer',
@@ -13,15 +19,37 @@ import { ProjectComponentType } from '../../../core/types';
 })
 export class ProjectExplorerComponent implements OnInit {
 	projects$: Observable<Project[]>;
+	projectExplorerState$: Observable<{ [id: string]: ProjectExplorerNode }>;
 
 	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
-	constructor(private readonly store: Store) {
+	constructor(private readonly store: Store,
+				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly ps: PersonalSettingsManager) {
 		this.projects$ = this.store.select(ProjectSelector.projects);
+		this.projectExplorerState$ = this.store.select(ProjectSelector.projectExplorerNodeMap);
+
+		this.projects$.pipe(
+			filter(list => !!list.length),
+			take(1),
+		).subscribe((projects) => {
+			if (projects) {
+				this.ps.syncProjectExplorerTree(projects).subscribe((s) => console.log('updated state', s));
+			}
+		})
 	}
 
 	ngOnInit(): void {
 		this.loadProjects();
+		this.store.dispatch(ProjectAction.loadProjectExplorerState());
+	}
+
+	onExpandElement(projectId: string, type: ProjectComponentType, componentId: string, isExpanded: boolean): void {
+		this.store.dispatch(ProjectAction.updateProjectExplorerTree({
+			nodeId: getProjectComponentNodeId(projectId, type, componentId),
+			withChildren: false,
+			withParents: false,
+			isOpen: isExpanded,
+		}))
 	}
 
 	createProject(): void {
