@@ -71,6 +71,7 @@ export const reducer = createReducer(
 		ProjectAction.closeProjectTabSuccess,
 		ProjectAction.moveProjectTabSuccess,
 		ProjectAction.selectTabSuccess,
+		ProjectAction.pushProjectTabAsFirstSuccess,
 		(state, { tabsData }) => ({
 			...state,
 			...tabsData,

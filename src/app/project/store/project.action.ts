@@ -70,6 +70,10 @@ export class ProjectAction {
 	static readonly openProjectTabSuccess = createAction(`[${ProjectAction.name}] open project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly openProjectTabError = createAction(`[${ProjectAction.name}] open project tab [ERR]`, props<{err: Error}>());
 
+	static readonly pushProjectTabAsFirst = createAction(`[${ProjectAction.name}] push project tab as first [...]`, props<{index: number}>());
+	static readonly pushProjectTabAsFirstSuccess = createAction(`[${ProjectAction.name}] push project tab as first [OK]`, props<{tabsData: TabsData}>());
+	static readonly pushProjectTabAsFirstError = createAction(`[${ProjectAction.name}] push project tab as first [ERR]`, props<{err: Error}>());
+
 	static readonly closeProjectTab = createAction(`[${ProjectAction.name}] close project tab [...]`, props<{index: number}>());
 	static readonly closeProjectTabSuccess = createAction(`[${ProjectAction.name}] close project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly closeProjectTabError = createAction(`[${ProjectAction.name}] close project tab [ERR]`, props<{err: Error}>());
@@ -201,6 +205,7 @@ export class ProjectAction {
 		ProjectAction.issueTokenError,
 		ProjectAction.loadProjectTabsError,
 		ProjectAction.openProjectTabError,
+		ProjectAction.pushProjectTabAsFirstError,
 		ProjectAction.closeProjectTabError,
 		ProjectAction.moveProjectTabError,
 		ProjectAction.selectTabError,

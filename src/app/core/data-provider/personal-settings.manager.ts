@@ -43,6 +43,8 @@ export interface PersonalSettingsManager {
 			componentType: ProjectComponentType,
 			componentId: string): Observable<TabsData>;
 
+	pushTabAsFirst(index: number): Observable<TabsData>;
+
 	rename(projectId: string,
 		   componentType: ProjectComponentType,
 		   componentId: string,
