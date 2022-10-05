@@ -274,12 +274,12 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	updateProjectExplorerTree(id: string,
-							  isOpen: boolean,
+							  isExpanded: boolean,
 							  withParents: boolean,
 							  withChildren: boolean): Observable<ProjectExplorerState> {
 		return this.getProjectExplorerState().pipe(
 			map((state) => {
-				this.updateProjectStateTree(state, isOpen, [id], withParents, withChildren);
+				this.updateProjectStateTree(state, isExpanded, [id], withParents, withChildren);
 
 				this.set(this.projectExplorerStateKey, state);
 
@@ -297,7 +297,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 					if (!state.explorerNodeMap[projectNodeId]) {
 						state.explorerNodeMap[projectNodeId] = {
 							id: projectNodeId,
-							isOpen: true,
+							isExpanded: true,
 							childrenIds: [],
 						};
 					}
@@ -354,7 +354,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		if (!stateRef.explorerNodeMap[currentNodeId]) {
 			stateRef.explorerNodeMap[currentNodeId] = {
 				id: currentNodeId,
-				isOpen: true,
+				isExpanded: true,
 				childrenIds: [],
 				parentId: parentRef.id,
 			};
@@ -366,7 +366,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	private updateProjectStateTree(stateRef: ProjectExplorerState,
-								   isOpen: boolean,
+								   isExpanded: boolean,
 								   ids: string[],
 								   withParent: boolean,
 								   withChildren: boolean): void {
@@ -378,7 +378,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				continue;
 			}
 
-			current.isOpen = isOpen;
+			current.isExpanded = isExpanded;
 
 			if (withParent && current.parentId) {
 				idsToMutate.push(current.parentId);
@@ -391,7 +391,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		}
 
 		if (idsToMutate.length) {
-			this.updateProjectStateTree(stateRef, isOpen, idsToMutate, withParent, withChildren);
+			this.updateProjectStateTree(stateRef, isExpanded, idsToMutate, withParent, withChildren);
 		}
 	};
 

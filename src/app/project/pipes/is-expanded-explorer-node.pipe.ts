@@ -24,7 +24,7 @@ export class IsExpandedExplorerNodePipe implements PipeTransform {
 					return true;
 				}
 
-				return map[id].isOpen;
+				return map[id].isExpanded;
 			}),
 		);
 	}

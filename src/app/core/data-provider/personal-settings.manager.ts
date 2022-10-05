@@ -26,7 +26,7 @@ export interface LayoutState {
 
 export interface ProjectExplorerNode {
 	id: string;
-	isOpen: boolean;
+	isExpanded: boolean;
 	parentId?: string;
 	childrenIds: string[],
 }
@@ -65,7 +65,7 @@ export interface PersonalSettingsManager {
 	getProjectExplorerState(): Observable<ProjectExplorerState>;
 
 	updateProjectExplorerTree(id: string,
-							  isOpen: boolean,
+							  isExpanded: boolean,
 							  withParents: boolean,
 							  withChildren: boolean): Observable<ProjectExplorerState>;
 

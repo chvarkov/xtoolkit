@@ -39,9 +39,9 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.sub.add(
 			this.projects$.pipe(
 				filter(list => !!list.length),
-			).subscribe((projects) => {
+			).subscribe(async (projects) => {
 				if (projects) {
-					this.ps.syncProjectExplorerTree(projects);
+					await this.ps.syncProjectExplorerTree(projects).toPromise();
 				}
 			}),
 		);
@@ -78,7 +78,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 			nodeId: getProjectComponentNodeId(projectId, type, componentId),
 			withChildren: false,
 			withParents: false,
-			isOpen: isExpanded,
+			isExpanded: isExpanded,
 			isShowActiveTab: false,
 		}))
 	}
