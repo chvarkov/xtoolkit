@@ -8,9 +8,10 @@ import { ProjectComponentType } from '../../../core/types';
 import {
 	getProjectComponentNodeId,
 	PERSONAL_SETTINGS_MANAGER,
-	PersonalSettingsManager, ProjectExplorerNode, ProjectExplorerState
+	PersonalSettingsManager,
+	ProjectExplorerNode,
 } from '../../../core/data-provider/personal-settings.manager';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-project-explorer',
@@ -30,7 +31,6 @@ export class ProjectExplorerComponent implements OnInit {
 
 		this.projects$.pipe(
 			filter(list => !!list.length),
-			take(1),
 		).subscribe((projects) => {
 			if (projects) {
 				this.ps.syncProjectExplorerTree(projects).subscribe((s) => console.log('updated state', s));
