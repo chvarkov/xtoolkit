@@ -51,11 +51,12 @@
 					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
-					<app-project-element
+					<app-project-element #abiElem
 						(click)="openProjectComponent(project.id, abi.name, 'abi', abi.id)"
 						*ngFor="let abi of project.abiInterfaces"
 						[isExpanded]="((project.id | isExpandedExplorerNode:'abi': abi.id) | async)"
 						(onExpand)="onExpandElement(project.id, 'abi', abi.id, $event)"
+						(onActivate)="onActivateElement(abiElem)"
 						type="abi"
 						[active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
 						[name]="abi.name || abi.name">
@@ -86,13 +87,14 @@
 					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
-					<app-project-element
+					<app-project-element #scElem
 						(click)="openProjectComponent(project.id, sc.name || sc.name, 'sc', sc.id)"
 						*ngFor="let sc of project.smartContracts"
 						type="sc"
 						[active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
 						[isExpanded]="((project.id | isExpandedExplorerNode:'sc': sc.id) | async)"
 						(onExpand)="onExpandElement(project.id, 'sc', sc.id, $event)"
+						(onActivate)="onActivateElement(scElem)"
 						[name]="sc.name || sc.name">
 						<ng-container actions>
 							<app-dropdown-menu horizontal="left">
@@ -125,10 +127,11 @@
 					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
-					<app-project-element *ngFor="let tokenAddress of project.tokens"
+					<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens"
 										 (click)="openProjectComponent(project.id, tokenAddress, 'token', tokenAddress)"
 										 [isExpanded]="((project.id | isExpandedExplorerNode:'token': tokenAddress) | async)"
 										 (onExpand)="onExpandElement(project.id, 'token', tokenAddress, $event)"
+										 (onActivate)="onActivateElement(tokenElem)"
 										 type="token"
 										 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
 										 [name]="tokenAddress">
@@ -183,10 +186,11 @@
 					</app-dropdown-menu>
 				</ng-container>
 				<ng-container innerElements>
-					<app-project-element *ngFor="let wallet of project.wallets"
+					<app-project-element #walletElem *ngFor="let wallet of project.wallets"
 										 (click)="openProjectComponent(project.id, wallet.name, 'wallet', wallet.address)"
 										 [isExpanded]="((project.id | isExpandedExplorerNode:'wallet': wallet.address) | async)"
 										 (onExpand)="onExpandElement(project.id, 'wallet', wallet.address, $event)"
+										 (onActivate)="onActivateElement(walletElem)"
 										 type="wallet"
 										 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
 										 [name]="wallet.name">
