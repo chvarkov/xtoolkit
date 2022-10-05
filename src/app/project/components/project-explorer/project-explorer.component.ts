@@ -78,7 +78,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 			nodeId: getProjectComponentNodeId(projectId, type, componentId),
 			withChildren: false,
 			withParents: false,
-			isOpen: isExpanded,
+			isExpanded: isExpanded,
 			isShowActiveTab: false,
 		}))
 	}

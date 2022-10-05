@@ -186,7 +186,7 @@ export class ProjectAction {
 	static readonly syncProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] sync project explorer tree [OK]`, props<{explorerState: ProjectExplorerState}>());
 	static readonly syncProjectExplorerTreeError = createAction(`[${ProjectAction.name}] load transaction explorer [ERR]`, props<{err: Error}>());
 
-	static readonly updateProjectExplorerTree = createAction(`[${ProjectAction.name}] update project explorer tree [...]`, props<{isShowActiveTab: boolean, nodeId: string, isOpen: boolean, withParents: boolean, withChildren: boolean}>());
+	static readonly updateProjectExplorerTree = createAction(`[${ProjectAction.name}] update project explorer tree [...]`, props<{isShowActiveTab: boolean, nodeId: string, isExpanded: boolean, withParents: boolean, withChildren: boolean}>());
 	static readonly updateProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] update project explorer tree [OK]`, props<{isShowActiveTab: boolean, explorerState: ProjectExplorerState}>());
 	static readonly updateProjectExplorerTreeError = createAction(`[${ProjectAction.name}] update project explorer tree [ERR]`, props<{err: Error}>());
 

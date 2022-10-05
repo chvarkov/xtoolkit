@@ -571,9 +571,9 @@ export class ProjectEffect {
 
 	updateProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectExplorerTree),
-		mergeMap(({nodeId, isOpen, withParents, withChildren, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(
+		mergeMap(({nodeId, isExpanded, withParents, withChildren, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(
 			nodeId,
-			isOpen,
+			isExpanded,
 			withParents,
 			withChildren,
 		).pipe(
@@ -604,7 +604,7 @@ export class ProjectEffect {
 					nodeId,
 					withChildren: false,
 					withParents: true,
-					isOpen: true,
+					isExpanded: true,
 					isShowActiveTab: true,
 				});
 			}),
