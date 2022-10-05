@@ -68,8 +68,16 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 					return {tabs, selectedIndex};
 				}
 				const updatedList: OpenedProjectTab[] = [
-					current,
-					...tabs.filter((_, index) => index !== index),
+					{
+						...current,
+						index: 0,
+					},
+					...tabs
+						.filter((t) => t.index !== index)
+						.map((item, index) => ({
+							...item,
+							index: index + 1,
+						})),
 				];
 
 				this.set(this.openedTabsKey, updatedList);
