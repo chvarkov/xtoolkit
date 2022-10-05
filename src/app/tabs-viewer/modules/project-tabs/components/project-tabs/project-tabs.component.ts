@@ -3,14 +3,14 @@ import {
 	AfterViewInit,
 	Component,
 	ContentChildren,
-	ElementRef, EventEmitter, HostListener,
+	ElementRef, EventEmitter, HostListener, OnDestroy,
 	OnInit, Output,
 	QueryList,
 	ViewChild,
 	ViewChildren,
 } from '@angular/core';
 import { ProjectTabComponent } from '../project-tab/project-tab.component';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
 	templateUrl: './project-tabs.component.html',
 	styleUrls: ['./project-tabs.component.scss']
 })
-export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterViewInit {
+export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
 	@ViewChild('container', {static: true}) container?: ElementRef;
 	@ContentChildren(ProjectTabComponent) tabs?: QueryList<ProjectTabComponent>;
 	@ViewChildren('tabItems') tabItems?: QueryList<ElementRef>;
@@ -29,15 +29,15 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 	@Output() move = new EventEmitter<{prevIndex: number, currentIndex: number}>();
 	@Output() selectedTab = new EventEmitter<number>();
 
+	private sub = new Subscription();
+
 	ngAfterViewInit() {
 		if (this.tabItems) {
 			this.onChangeTabHeader(this.tabItems.toArray());
 
-			this.tabItems?.changes.pipe(
-				map((tabItems: any[]) => {
-					this.onChangeTabHeader(tabItems);
-				}),
-			);
+			this.sub.add(this.tabItems?.changes.subscribe((tabItems: any[]) => {
+				this.onChangeTabHeader(tabItems);
+			}));
 		}
 	}
 
@@ -85,6 +85,10 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 	}
 
 	ngOnInit(): void {
+	}
+
+	ngOnDestroy(): void {
+		this.sub.unsubscribe();
 	}
 
 	@HostListener('window:resize', ['$event'])
