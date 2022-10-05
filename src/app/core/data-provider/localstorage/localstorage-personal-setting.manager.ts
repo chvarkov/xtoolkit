@@ -347,7 +347,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				continue;
 			}
 
-			current.isOpen = true;
+			current.isOpen = isOpen;
 
 			if (withParent && current.parentId) {
 				idsToMutate.push(current.parentId);
