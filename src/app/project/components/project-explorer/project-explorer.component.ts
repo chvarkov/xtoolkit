@@ -43,6 +43,10 @@ export class ProjectExplorerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.loadProjectExplorerState());
 	}
 
+	showCurrentTab(): void {
+		this.store.dispatch(ProjectAction.showCurrentTabInExplorer());
+	}
+
 	onExpandElement(projectId: string, type: ProjectComponentType, componentId: string, isExpanded: boolean): void {
 		this.store.dispatch(ProjectAction.updateProjectExplorerTree({
 			nodeId: getProjectComponentNodeId(projectId, type, componentId),

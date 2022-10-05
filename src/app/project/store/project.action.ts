@@ -186,6 +186,8 @@ export class ProjectAction {
 	static readonly updateProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] update project explorer tree [OK]`, props<{explorerState: ProjectExplorerState}>());
 	static readonly updateProjectExplorerTreeError = createAction(`[${ProjectAction.name}] update project explorer tree [ERR]`, props<{err: Error}>());
 
+	static readonly showCurrentTabInExplorer = createAction(`[${ProjectAction.name}] show current tab in explorer`);
+
 	static readonly errorActions = [
 		ProjectAction.loadProjectsError,
 		ProjectAction.updateProjectNetworkError,
