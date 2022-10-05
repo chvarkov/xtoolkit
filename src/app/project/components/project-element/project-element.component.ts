@@ -19,15 +19,19 @@ export class ProjectElementComponent implements OnInit {
 
 	@Input() type: ProjectComponentType = 'group';
 
-	isExpanded = true;
+	@Input() isExpanded: boolean | null = true;
 
 	@Output() click: EventEmitter<void> = new EventEmitter<void>();
+
+	@Output() onExpand: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	ngOnInit(): void {
 	}
 
 	toggleExpand(): void {
-		this.isExpanded = !this.isExpanded;
+		const isExpanded = !(this.isExpanded == null ? true : this.isExpanded);
+
+		this.onExpand.emit(isExpanded);
 	}
 
 	onClick(): void {

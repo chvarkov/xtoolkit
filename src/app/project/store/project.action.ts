@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { GeneratedWallet, PendingTokenIssue, Project } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
-import { OpenedProjectTab, TabsData } from '../../core/data-provider/personal-settings.manager';
+import { OpenedProjectTab, ProjectExplorerState, TabsData } from '../../core/data-provider/personal-settings.manager';
 import { AbiJson } from '../../core/elrond/builders/sc.builder';
 import { IElrondFullTransaction, IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
@@ -174,6 +174,18 @@ export class ProjectAction {
 	static readonly loadTransactionSuccess = createAction(`[${ProjectAction.name}] load transaction [OK]`, props<{projectId: string, tx: IElrondFullTransaction}>());
 	static readonly loadTransactionError = createAction(`[${ProjectAction.name}] load transaction [ERR]`, props<{err: Error}>());
 
+	static readonly loadProjectExplorerState = createAction(`[${ProjectAction.name}] load project explorer state [...]`);
+	static readonly loadProjectExplorerStateSuccess = createAction(`[${ProjectAction.name}] load project explorer state [OK]`, props<{explorerState: ProjectExplorerState}>());
+	static readonly loadProjectExplorerStateError = createAction(`[${ProjectAction.name}] load project explorer state [ERR]`, props<{err: Error}>());
+
+	static readonly syncProjectExplorerTree = createAction(`[${ProjectAction.name}] sync project explorer tree [...]`, props<{projects: Project[]}>());
+	static readonly syncProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] sync project explorer tree [OK]`, props<{explorerState: ProjectExplorerState}>());
+	static readonly syncProjectExplorerTreeError = createAction(`[${ProjectAction.name}] load transaction explorer [ERR]`, props<{err: Error}>());
+
+	static readonly updateProjectExplorerTree = createAction(`[${ProjectAction.name}] update project explorer tree [...]`, props<{nodeId: string, isOpen: boolean, withParents: boolean, withChildren: boolean}>());
+	static readonly updateProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] update project explorer tree [OK]`, props<{explorerState: ProjectExplorerState}>());
+	static readonly updateProjectExplorerTreeError = createAction(`[${ProjectAction.name}] update project explorer tree [ERR]`, props<{err: Error}>());
+
 	static readonly errorActions = [
 		ProjectAction.loadProjectsError,
 		ProjectAction.updateProjectNetworkError,
@@ -211,6 +223,9 @@ export class ProjectAction {
 		ProjectAction.addAddressError,
 		ProjectAction.renameAddressError,
 		ProjectAction.deleteAddressError,
+		ProjectAction.loadProjectExplorerStateError,
+		ProjectAction.syncProjectExplorerTreeError,
+		ProjectAction.updateProjectExplorerTreeError,
 	];
 }
 
