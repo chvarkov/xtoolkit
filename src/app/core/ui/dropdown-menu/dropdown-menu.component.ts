@@ -21,6 +21,7 @@ export class DropdownMenuComponent {
 
 	isOpen = false;
 
+	@Input() icon = '';
 	@Input() horizontal:'left' | 'right' = 'right';
 	@Input() vertical: 'top' | 'bottom' = 'bottom';
 
