@@ -359,7 +359,9 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 
 		}
 
-		this.updateProjectStateTree(stateRef, isOpen, idsToMutate, withParent, withChildren);
+		if (idsToMutate.length) {
+			this.updateProjectStateTree(stateRef, isOpen, idsToMutate, withParent, withChildren);
+		}
 	};
 
 	private getOpenedTabList(): OpenedProjectTab[] {
