@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { ProjectTabComponent } from '../project-tab/project-tab.component';
 import { Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-project-tabs',
