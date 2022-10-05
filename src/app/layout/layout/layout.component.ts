@@ -23,7 +23,7 @@ export class LayoutComponent implements OnInit {
 	ngOnInit(): void {
 		this.store.dispatch(LayoutAction.loadLayoutState());
 		this.gridTemplateColumns$ = this.store.select(LayoutSelector.panelsWidth).pipe(
-			map(({left, right}) => `${left}px 1fr ${right}px`),
+			map(({left, right}) => `${left}px calc(100vw - ${right + left}px) ${right}px`),
 		);
 	}
 
