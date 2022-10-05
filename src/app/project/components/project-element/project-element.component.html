@@ -1,4 +1,4 @@
-<div class="project-element" [ngClass]="{active: this.active}">
+<div #container class="project-element" [ngClass]="{active: this.active}">
 	<div *ngIf="expandable"
 		 class="material-icons expand" (click)="toggleExpand()">
 		{{isExpanded == null ? true : isExpanded ? 'expand_more' : 'chevron_right'}}

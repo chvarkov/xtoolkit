@@ -7,8 +7,8 @@ import {
 	DataProvider, ProjectAddress,
 	ProjectSmartContract
 } from '../../core/data-provider/data-provider';
-import { catchError, exhaustMap, filter, map, mergeMap, switchMap } from 'rxjs/operators';
-import { forkJoin, from, of } from 'rxjs';
+import { catchError, exhaustMap, filter, map, mergeMap, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { EMPTY, forkJoin, from, of } from 'rxjs';
 import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
 import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
@@ -19,7 +19,11 @@ import {
 	IUploadedAbi,
 	UploadAbiDialogComponent
 } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
-import { PERSONAL_SETTINGS_MANAGER, PersonalSettingsManager } from '../../core/data-provider/personal-settings.manager';
+import {
+	getProjectComponentNodeId, OpenedProjectTab,
+	PERSONAL_SETTINGS_MANAGER,
+	PersonalSettingsManager
+} from '../../core/data-provider/personal-settings.manager';
 import { TransactionProvider } from '../../core/elrond/services/transaction.provider';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { joinNetwork } from './operators/join-network';
@@ -33,6 +37,7 @@ import { ActionHistoryAction } from '../../action-history/store/action-history.a
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
+import { ProjectSelector } from './project.selector';
 
 @Injectable()
 export class ProjectEffect {
@@ -558,13 +563,13 @@ export class ProjectEffect {
 
 	updateProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectExplorerTree),
-		mergeMap(({nodeId, isOpen, withParents, withChildren}) => this.personalSettingsManager.updateProjectExplorerTree(
+		mergeMap(({nodeId, isOpen, withParents, withChildren, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(
 			nodeId,
 			isOpen,
 			withParents,
 			withChildren,
 		).pipe(
-			map((explorerState) => ProjectAction.updateProjectExplorerTreeSuccess({explorerState})),
+			map((explorerState) => ProjectAction.updateProjectExplorerTreeSuccess({explorerState, isShowActiveTab})),
 			catchError(err => of(ProjectAction.updateProjectExplorerTreeError({err})))
 		))),
 	);
@@ -576,6 +581,27 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.syncProjectExplorerTreeError({err})))
 		))),
 	);
+
+	showCurrentTabInExplorer$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.showCurrentTabInExplorer),
+		switchMap((args) => this.store.select(ProjectSelector.activeTab).pipe(
+			take(1),
+			map(opened => {
+				if (!opened) {
+					throw new Error('No tab');
+				}
+
+				const nodeId = getProjectComponentNodeId(opened.projectId, opened.componentType, opened.componentId);
+				return ProjectAction.updateProjectExplorerTree({
+					nodeId,
+					withChildren: false,
+					withParents: true,
+					isOpen: true,
+					isShowActiveTab: true,
+				});
+			}),
+		)),
+	));
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
