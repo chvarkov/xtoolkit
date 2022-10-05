@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { ProjectTabComponent } from '../project-tab/project-tab.component';
 import { Subject, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ProjectAction } from '../../../../../project/store/project.action';
 
 @Component({
 	selector: 'app-project-tabs',
@@ -29,6 +31,9 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 	@Output() selectedTab = new EventEmitter<number>();
 
 	private sub = new Subscription();
+
+	constructor(private readonly store: Store) {
+	}
 
 	ngAfterViewInit() {
 		if (this.tabItems) {
@@ -88,6 +93,10 @@ export class ProjectTabsComponent  implements OnInit, AfterContentInit, AfterVie
 
 	ngOnDestroy(): void {
 		this.sub.unsubscribe();
+	}
+
+	pushTabAsFirst(index: number): void {
+		this.store.dispatch(ProjectAction.pushProjectTabAsFirst({index}));
 	}
 
 	@HostListener('window:resize', ['$event'])

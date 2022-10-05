@@ -189,6 +189,14 @@ export class ProjectEffect {
 		),
 	));
 
+	pushProjectTabAsFirst$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.pushProjectTabAsFirst),
+		mergeMap(({index}) => this.personalSettingsManager.pushTabAsFirst(index).pipe(
+			map((tabsData) => ProjectAction.pushProjectTabAsFirstSuccess({tabsData})),
+			catchError(err => of(ProjectAction.pushProjectTabAsFirstError({err})))),
+		),
+	));
+
 	closeProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.closeProjectTab),
 		mergeMap(({index}) => this.personalSettingsManager.closeTab(index).pipe(

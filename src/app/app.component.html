@@ -8,6 +8,7 @@
 		(close)="closeTab($event)"
 		(selectedTab)="selectTab($event)">
 		<app-project-tab *ngFor="let tab of openedTabs$ | async; let i = index"
+						 [index]="tab.index"
 						 [active]="i === (currentTabIndex$ | async)"
 						 [title]="tab.title"
 						 [type]="tab.componentType">

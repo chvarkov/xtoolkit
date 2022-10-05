@@ -25,7 +25,8 @@
 									[color]="invisibleTab.type | componentColor"
 									[icon]="invisibleTab.type | componentIcon"
 									[text]="invisibleTab.title"
-									[ngStyle]="{color: invisibleTab.type | componentColor}">
+									[ngStyle]="{color: invisibleTab.type | componentColor}"
+									(click)="pushTabAsFirst(invisibleTab.index)">
 			</app-dropdown-menu-item>
 		</app-dropdown-menu>
 	</ng-container>

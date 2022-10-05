@@ -7,6 +7,8 @@ import { ProjectComponentType } from '../../../../../core/types';
 	styleUrls: ['./project-tab.component.scss']
 })
 export class ProjectTabComponent implements OnInit {
+	@Input() index: number = 0;
+
 	@Input() title: string = '';
 
 	@Input() type: ProjectComponentType = 'group';
