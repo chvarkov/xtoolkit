@@ -2,7 +2,8 @@
 	<app-toolbar [title]="name" titleSize="small">
 		<app-toolbar-icon-button right-side
 								 appTooltip
-								 tooltip="Clear array">
+								 tooltip="Clear array"
+								 (click)="clear()">
 			delete
 		</app-toolbar-icon-button>
 		<app-toolbar-icon-button right-side
@@ -12,14 +13,15 @@
 			add
 		</app-toolbar-icon-button>
 	</app-toolbar>
+
 	<div class="list"
-		 formArrayName="list"
 		 cdkDropList
 		 cdkDropListLockAxis="y"
 		 [cdkDropListAutoScrollDisabled]="false"
 		 cdkDropListOrientation="horizontal"
-		 (cdkDropListDropped)="moveItem($event.previousIndex, $event.currentIndex)">
-		<div *ngFor="let elem of list.value; let i = index"
+		 (cdkDropListDropped)="moveItem($event.previousIndex, $event.currentIndex)"
+		 formArrayName="list">
+		<div *ngFor="let control of list.controls; let i = index"
 			 class="element"
 			 cdkDrag>
 			<div class="index">
@@ -27,7 +29,7 @@
 			</div>
 			<div class="input">
 				<app-sc-input [projectId]="projectId"
-							  [formControlName]="i"
+							  [formControl]="getControl(i)"
 							  [type]="type.getFirstTypeParameter()"
 							  [chainId]="chainId">
 				</app-sc-input>
