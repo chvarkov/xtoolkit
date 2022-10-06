@@ -22,13 +22,12 @@ import BigNumber from 'bignumber.js';
 export class NumberInputComponent implements OnInit {
 	readonly maxLength = 39;
 
+	@Input() value: BigNumber = new BigNumber(0);
 	@Input() type?: Type;
 	@Output() changed: EventEmitter<BigNumber> = new EventEmitter<BigNumber>();
 
 	constructor() {
 	}
-
-	value: BigNumber = new BigNumber(0);
 
 	ngOnInit(): void {
 	}
@@ -94,6 +93,8 @@ export class NumberInputComponent implements OnInit {
 	onChange(e: Event): void {
 		const value = (<HTMLInputElement>e.target).value;
 
-		this.changed.emit(new BigNumber(value));
+		this.value = new BigNumber(value);
+
+		this.changed.emit(this.value);
 	}
 }

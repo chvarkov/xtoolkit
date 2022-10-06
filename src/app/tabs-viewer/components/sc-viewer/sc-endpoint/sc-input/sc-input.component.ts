@@ -4,7 +4,6 @@ import {
 	AddressType, ArrayVecType,
 	BooleanType,
 	BytesType,
-	EndpointParameterDefinition,
 	EnumType, StructType,
 	TokenIdentifierType, Type, VariadicType
 } from '@elrondnetwork/erdjs/out';
@@ -45,20 +44,20 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 		// this.disabled = isDisabled;
 	}
 
-	val = '';
+	val: any;
 
-	set value(val: string) {
+	set value(val: any) {
 		this.val = val
 		this.onChange(val)
 		this.onTouch(val)
 	}
 
-	get value(): string {
+	get value(): any {
 		return this.val;
 	}
 
 	writeValue(value: any) {
-		this.value = value
+		this.value = value;
 	}
 
 	registerOnChange(fn: any) {

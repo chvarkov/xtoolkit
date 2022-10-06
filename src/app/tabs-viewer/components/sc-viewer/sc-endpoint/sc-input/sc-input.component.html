@@ -8,6 +8,7 @@
 						 (changed)="writeValue($event)"></app-bytes-input>
 		<app-number-input *ngSwitchCase="isNumericalType()"
 						  [type]="type"
+						  [value]="value"
 						  (changed)="writeValue($event)"></app-number-input>
 		<app-enum-input *ngSwitchCase="isEnum()"
 						[type]="type"
