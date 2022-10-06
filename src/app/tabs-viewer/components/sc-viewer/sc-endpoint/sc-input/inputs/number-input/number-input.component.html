@@ -1,7 +1,7 @@
 <div class="number-input-container">
 	<input class="input"
 		   type="number"
-		   [value]="value?.toFormat()"
+		   [value]="value?.toString()"
 		   [min]="getMin().toString()"
 		   [max]="getMax().toString()"
 		   (change)="onChange($event)">
