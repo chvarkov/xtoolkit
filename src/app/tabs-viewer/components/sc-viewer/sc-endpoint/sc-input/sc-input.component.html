@@ -8,17 +8,20 @@
 						 (changed)="writeValue($event)"></app-bytes-input>
 		<app-number-input *ngSwitchCase="isNumericalType()"
 						  [type]="type"
+						  [value]="value"
 						  (changed)="writeValue($event)"></app-number-input>
 		<app-enum-input *ngSwitchCase="isEnum()"
 						[type]="type"
 						(changed)="writeValue($event)"></app-enum-input>
 		<app-address-input *ngSwitchCase="isAddress()"
 						   [projectId]="projectId"
+						   [address]="value"
 						   class="address"
 						   [chainId]="chainId"
 						   (changed)="writeValue($event)"></app-address-input>
 		<app-token-identifier-input *ngSwitchCase="isTokenIdentifier()"
 									[projectId]="projectId"
+									[identifier]="value"
 									[chainId]="chainId"
 									(changed)="writeValue($event)"></app-token-identifier-input>
 		<app-struct-input *ngSwitchCase="isStruct()"
@@ -33,7 +36,9 @@
 						 [chainId]="chainId"
 						 [type]="type"
 						 [name]="type.getName()"></app-array-input>
-		<input *ngSwitchDefault class="input" [value]="type.getClassName()">
+		<div *ngSwitchDefault class="unsupported-type">
+			Type {{type.getClassName()}} is not supported yet
+		</div>
 	</div>
 
 </div>

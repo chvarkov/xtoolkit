@@ -15,5 +15,14 @@
 		.address, .struct {
 			width: 100%;
 		}
+
+		.unsupported-type {
+			width: 100%;
+			margin: 2px 0;
+			padding: 8px;
+			border-radius: 2px;
+			border: solid 1px var(--static-red);
+			color: var(--static-red);
+		}
 	}
 }

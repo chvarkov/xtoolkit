@@ -39,14 +39,13 @@ export class ArrayInputComponent implements OnInit {
 
 		moveItemInArray(arr, prevIndex, currentIndex);
 
-		console.log('before', arr)
-		console.log(`move (${prevIndex}, ${currentIndex})`)
-		console.log('after', arr)
+		this.list.controls.forEach((ctrl, index) => {
+			ctrl.setValue(arr[index]);
+		});
+	}
 
-
-		this.list.setValue(arr);
-
-		console.log('LIST', this.list.value);
+	getControl(i: number): FormControl {
+		return this.list.at(i) as FormControl;
 	}
 
 	delete(index: number): void {
