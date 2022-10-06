@@ -33,7 +33,9 @@
 						 [chainId]="chainId"
 						 [type]="type"
 						 [name]="type.getName()"></app-array-input>
-		<input *ngSwitchDefault class="input" [value]="type.getClassName()">
+		<div *ngSwitchDefault class="unsupported-type">
+			Type {{type.getClassName()}} is not supported yet
+		</div>
 	</div>
 
 </div>
