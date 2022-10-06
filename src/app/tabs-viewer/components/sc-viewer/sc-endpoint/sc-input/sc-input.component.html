@@ -15,11 +15,13 @@
 						(changed)="writeValue($event)"></app-enum-input>
 		<app-address-input *ngSwitchCase="isAddress()"
 						   [projectId]="projectId"
+						   [address]="value"
 						   class="address"
 						   [chainId]="chainId"
 						   (changed)="writeValue($event)"></app-address-input>
 		<app-token-identifier-input *ngSwitchCase="isTokenIdentifier()"
 									[projectId]="projectId"
+									[identifier]="value"
 									[chainId]="chainId"
 									(changed)="writeValue($event)"></app-token-identifier-input>
 		<app-struct-input *ngSwitchCase="isStruct()"
