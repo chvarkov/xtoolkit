@@ -21,16 +21,14 @@ export class SettingsPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.networks$ = this.store.select(NetworkSelector.networks);
-
-		this.networks$.subscribe((list) => console.log('LSIT', list));
 	}
 
 	addNetwork(): void {
 		this.store.dispatch(NetworkAction.addNetwork());
 	}
 
-	updateNetwork(chainId: string): void {
-		this.store.dispatch(NetworkAction.updateNetwork({chainId}));
+	updateNetwork(network: INetworkEnvironment): void {
+		this.store.dispatch(NetworkAction.updateNetwork({network}));
 	}
 
 	deleteNetwork(chainId: string): void {

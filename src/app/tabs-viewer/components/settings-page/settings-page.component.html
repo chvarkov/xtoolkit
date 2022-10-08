@@ -22,7 +22,7 @@
 							<app-dropdown-menu horizontal="left" *ngIf="!defaultChainIds.includes(network.chainId)">
 								<app-dropdown-menu-item icon="edit"
 														text="Update"
-														(click)="updateNetwork(network.chainId)">
+														(click)="updateNetwork(network)">
 								</app-dropdown-menu-item>
 								<app-dropdown-menu-item icon="delete"
 														text="Delete"
