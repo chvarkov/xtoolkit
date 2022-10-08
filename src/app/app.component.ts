@@ -86,4 +86,13 @@ export class AppComponent implements OnInit, OnDestroy {
 			componentId: SELF_PROJECT_ID,
 		}));
 	}
+
+	openSettings(): void {
+		this.store.dispatch(ProjectAction.openProjectTab({
+			projectId: SELF_PROJECT_ID,
+			title: 'Settings',
+			componentType: 'settings',
+			componentId: SELF_PROJECT_ID,
+		}));
+	}
 }

@@ -27,6 +27,8 @@ export class ComponentIconPipe implements PipeTransform {
 				return 'book';
 			case 'home':
 				return 'home';
+			case 'settings':
+				return 'settings';
 		}
 	}
 }

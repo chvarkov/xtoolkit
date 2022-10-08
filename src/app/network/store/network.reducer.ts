@@ -18,6 +18,24 @@ export const reducer = createReducer(
 			list,
 		};
 	}),
+	on(NetworkAction.addNetworkSuccess, (state, { list }) => {
+		return {
+			...state,
+			list,
+		};
+	}),
+	on(NetworkAction.updateNetworkSuccess, (state, { list }) => {
+		return {
+			...state,
+			list,
+		};
+	}),
+	on(NetworkAction.deleteNetworkSuccess, (state, { list }) => {
+		return {
+			...state,
+			list,
+		};
+	}),
 );
 
 

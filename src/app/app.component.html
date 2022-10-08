@@ -38,7 +38,12 @@
 			<app-tx-viewer *ngIf="tab.componentType === 'tx'" [txHash]="tab.componentId"
 						   [projectId]="tab.projectId"></app-tx-viewer>
 			<app-home-page *ngIf="tab.componentType === 'home'"></app-home-page>
+			<app-settings-page *ngIf="tab.componentType === 'settings'"></app-settings-page>
 		</app-project-tab>
 	</app-project-tabs>
 	<app-action-list actionHistory (resize)="layout.resizePanel('right', $event)"></app-action-list>
+
+	<app-header-toolbar headerToolbar>
+		<app-header-icon-button (click)="openSettings()">settings</app-header-icon-button>
+	</app-header-toolbar>
 </app-layout>

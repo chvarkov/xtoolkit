@@ -1,4 +1,25 @@
 :root {
+	--static-red: #b04b4b;
+	--static-yellow: #b09a4b;
+	--static-green: #4aa444;
+	--static-low-green: #4a9344;
+	--static-gray: #adadad;
+	--static-purpure: #a57eff;
+	--static-cyan: #47af88;
+	--static-white: #fff;
+
+	--arg-name-color: #4a7db7;
+	--arg-type-color: #47af88;
+
+	--header-height: 68px;
+	--tab-height: 30px;
+	--project-selector-height: 70px;
+	--toolbar-height: 38px;
+	--footer-height: 24px;
+	--endpoint-action-button-width: 70px;
+}
+
+.dark-theme {
 	--primary-bg: #17212b;
 	--primary-darken-bg: #16202AFF;
 	--high-bg: #242f3d;
@@ -18,24 +39,32 @@
 	--submit-button-bg: #4292df;
 	--cancel-button-bg: #2f3d4f;
 
-	--static-red: #b04b4b;
-	--static-yellow: #b09a4b;
-	--static-green: #4aa444;
-	--static-low-green: #4a9344;
-	--static-gray: #adadad;
-	--static-purpure: #a57eff;
-	--static-cyan: #47af88;
-	--static-white: #fff;
+	--tooltip-bg: #000;
+	--tooltip-text: #fff;
+}
 
-	--arg-name-color: #4a7db7;
-	--arg-type-color: #47af88;
+.light-theme {
+	--primary-bg: #e8e8e8;
+	--primary-darken-bg: #d9d9d9;
+	--high-bg: #dadada;
+	--low-bg: #f1f1f1;
+	--field-label-color: #7a7c7c;
+	--text-color: #253346;
+	--text-accent-color: #161f28;
+	--text-primary-color: #5288c1;
 
-	--header-height: 68px;
-	--tab-height: 30px;
-	--project-selector-height: 70px;
-	--toolbar-height: 38px;
-	--footer-height: 24px;
-	--endpoint-action-button-width: 70px;
+	--scroll-color: #c2c2c2;
+	--scroll-hover-color: #a8a8a8;
+
+	--border-low-color: #c4d2dc;
+	--border-color: #c1cbd2;
+	--border-accent-color: #536e7e;
+
+	--submit-button-bg: #4292df;
+	--cancel-button-bg: #2f3d4f;
+
+	--tooltip-bg: #000;
+	--tooltip-text: #fff;
 }
 
 ::-webkit-scrollbar {

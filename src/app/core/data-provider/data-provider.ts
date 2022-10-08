@@ -79,6 +79,12 @@ export interface ActionHistoryElement {
 export interface DataProvider {
 	getNetworks(): Observable<INetworkEnvironment[]>;
 
+	addNetwork(network: INetworkEnvironment): Observable<INetworkEnvironment[]>;
+
+	updateNetwork(chainId: string, network: INetworkEnvironment): Observable<INetworkEnvironment[]>;
+
+	deleteNetwork(chainId: string): Observable<INetworkEnvironment[]>;
+
 	getProjects(): Observable<Project[]>;
 
 	updateProjectNetwork(projectId: string, chainId: string): Observable<Project>;
