@@ -36,6 +36,57 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(networks);
 	}
 
+	addNetwork(network: INetworkEnvironment): Observable<INetworkEnvironment[]> {
+		return this.getNetworks()
+			.pipe(
+				map((networks => {
+					if (networks.find(n => n.chainId === network.chainId)) {
+						throw new Error(`Network with chainId="${network.chainId}" already exists`);
+					}
+
+					networks.push(network);
+
+					this.set(this.networksKey, networks);
+
+					return networks;
+				})),
+			);
+	}
+
+	updateNetwork(chainId: string, network: INetworkEnvironment): Observable<INetworkEnvironment[]> {
+		return this.getNetworks()
+			.pipe(
+				map((networks => {
+					if (DEFAULT_NETWORKS.find(n => n.chainId === chainId)) {
+						throw new Error(`Cannot delete default network`);
+					}
+
+					networks = networks.map(n => n.chainId !== chainId ? n : network);
+
+					this.set(this.networksKey, networks);
+
+					return networks;
+				})),
+			);
+	}
+
+	deleteNetwork(chainId: string): Observable<INetworkEnvironment[]> {
+		return this.getNetworks()
+			.pipe(
+				map((networks => {
+					if (DEFAULT_NETWORKS.find(n => n.chainId === chainId)) {
+						throw new Error(`Cannot delete default network`);
+					}
+
+					networks = networks.filter(n => n.chainId !== chainId);
+
+					this.set(this.networksKey, networks);
+
+					return networks;
+				})),
+			);
+	}
+
 	getProjects(): Observable<Project[]> {
 		const projects: Project[] | undefined = this.get(this.projectsKey);
 
