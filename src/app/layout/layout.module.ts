@@ -9,12 +9,16 @@ import { LAYOUT_FEATURE } from './constants';
 import { layoutReducer } from './store/layout.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { LayoutEffect } from './store/layout.effect';
+import { HeaderIconButtonComponent } from './components/header-icon-button/header-icon-button.component';
+import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
 
 @NgModule({
 	declarations: [
 		LayoutComponent,
 		LogoComponent,
 		LoadingScreenComponent,
+		HeaderIconButtonComponent,
+		HeaderToolbarComponent,
 	],
 	imports: [
 		CommonModule,
@@ -28,6 +32,8 @@ import { LayoutEffect } from './store/layout.effect';
 		StoreModule,
 		EffectsModule,
 		LoadingScreenComponent,
+		HeaderIconButtonComponent,
+		HeaderToolbarComponent,
 	],
 })
 export class LayoutModule { }

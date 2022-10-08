@@ -1,0 +1,19 @@
+.icon-button {
+	display: flex;
+	flex-direction: row;
+	width: 46px;
+	height: 46px;
+	margin: 2px 4px;
+	border: solid 1px transparent;
+
+	&:hover {
+		color: var(--text-accent-color);
+		border: solid 1px var(--border-accent-color);
+	}
+
+	.icon {
+		font-size: 30px;
+		padding: 6px;
+		margin-left: -5px;
+	}
+}
