@@ -32,6 +32,7 @@ import { TxTokenOperationComponent } from './components/tx-viewer/tx-token-opera
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ArrayInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/array-input/array-input.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 
 @NgModule({
 	declarations: [
@@ -62,16 +63,17 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 		TxViewerComponent,
 		TxTokenOperationComponent,
 		HomePageComponent,
-  ArrayInputComponent,
+		ArrayInputComponent,
+		SettingsPageComponent,
 	],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        CoreModule,
-        FormsModule,
-        NetworkModule,
-        DragDropModule,
-    ],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		CoreModule,
+		FormsModule,
+		NetworkModule,
+		DragDropModule,
+	],
 	exports: [
 		ScViewerComponent,
 		TokenViewerComponent,

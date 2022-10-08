@@ -24,6 +24,7 @@ export class ComponentColorPipe implements PipeTransform {
 			case 'group':
 			case 'address_book':
 			case 'home':
+			case 'settings':
 				return 'var(--text-color)';
 		}
 	}
