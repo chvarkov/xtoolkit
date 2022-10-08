@@ -12,7 +12,7 @@
 					<div class="space-after" *ngIf="(endpoint?.input?.length || 0) - 1 !== i">, </div>
 				</ng-container>)
 			</div>
-			<div class="args-count">
+			<div class="args-count" *ngIf="endpoint.input.length">
 				{{endpoint.input.length}} args
 			</div>
 		</div>
