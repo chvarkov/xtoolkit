@@ -1,1 +1,38 @@
-<p>settings-page works!</p>
+<div class="container">
+	<app-tabs navPosition="bottom">
+		<app-tab top title="Networks">
+			<app-toolbar>
+				<div left-side class="title">Settings</div>
+				<app-toolbar-icon-button right-side
+										 appTooltip tooltip="Add network"
+										 (click)="addNetwork()">
+					add
+				</app-toolbar-icon-button>
+			</app-toolbar>
+			<div class="tab-content" *ngIf="networks$ | async as networks">
+				<table class="table" *ngIf="networks.length">
+					<tr *ngFor="let network of networks" class="row">
+						<td class="name">
+							{{network.name}} ({{network.chainId}})
+						</td>
+						<td class="url-cell">
+							{{network.gatewayUrl}}
+						</td>
+						<td class="options">
+							<app-dropdown-menu horizontal="left" *ngIf="!defaultChainIds.includes(network.chainId)">
+								<app-dropdown-menu-item icon="edit"
+														text="Update"
+														(click)="updateNetwork(network.chainId)">
+								</app-dropdown-menu-item>
+								<app-dropdown-menu-item icon="delete"
+														text="Delete"
+														(click)="deleteNetwork(network.chainId)">
+								</app-dropdown-menu-item>
+							</app-dropdown-menu>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</app-tab>
+	</app-tabs>
+</div>

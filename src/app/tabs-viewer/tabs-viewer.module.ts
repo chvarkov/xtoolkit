@@ -74,13 +74,14 @@ import { SettingsPageComponent } from './components/settings-page/settings-page.
 		NetworkModule,
 		DragDropModule,
 	],
-	exports: [
-		ScViewerComponent,
-		TokenViewerComponent,
-		WalletViewerComponent,
-		AddressBookViewerComponent,
-		TxViewerComponent,
-		HomePageComponent,
-	]
+    exports: [
+        ScViewerComponent,
+        TokenViewerComponent,
+        WalletViewerComponent,
+        AddressBookViewerComponent,
+        TxViewerComponent,
+        HomePageComponent,
+        SettingsPageComponent,
+    ]
 })
 export class TabsViewerModule { }
