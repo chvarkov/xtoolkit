@@ -24,7 +24,7 @@ export class ComponentColorPipe implements PipeTransform {
 			case 'group':
 			case 'address_book':
 			case 'home':
-				return '#EDEDED';
+				return 'var(--text-color)';
 		}
 	}
 }
