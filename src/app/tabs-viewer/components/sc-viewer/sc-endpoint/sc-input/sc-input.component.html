@@ -1,4 +1,4 @@
-<div class="input-container" *ngIf="type">
+<div class="input-container" *ngIf="unwrappedType">
 	<div class="name" *ngIf="name">{{name}}</div>
 
 	<div class="input" [ngSwitch]="true">
@@ -7,11 +7,11 @@
 		<app-bytes-input *ngSwitchCase="isBytesType()"
 						 (changed)="writeValue($event)"></app-bytes-input>
 		<app-number-input *ngSwitchCase="isNumericalType()"
-						  [type]="type"
+						  [type]="unwrappedType"
 						  [value]="value"
 						  (changed)="writeValue($event)"></app-number-input>
 		<app-enum-input *ngSwitchCase="isEnum()"
-						[type]="type"
+						[type]="unwrappedType"
 						(changed)="writeValue($event)"></app-enum-input>
 		<app-address-input *ngSwitchCase="isAddress()"
 						   [projectId]="projectId"
@@ -28,16 +28,16 @@
 						  class="struct"
 						  [projectId]="projectId"
 						  [chainId]="chainId"
-						  [name]="type.getName()"
-						  [type]="type"
+						  [name]="unwrappedType.getName()"
+						  [type]="unwrappedType"
 						  (changed)="writeValue($event)"></app-struct-input>
 		<app-array-input *ngSwitchCase="isVariadic()"
 						 [projectId]="projectId"
 						 [chainId]="chainId"
-						 [type]="type"
-						 [name]="type.getName()"></app-array-input>
+						 [type]="unwrappedType"
+						 [name]="unwrappedType.getName()"></app-array-input>
 		<div *ngSwitchDefault class="unsupported-type">
-			Type {{type.getClassName()}} is not supported yet
+			Type {{unwrappedType.getClassName()}} is not supported yet
 		</div>
 	</div>
 
