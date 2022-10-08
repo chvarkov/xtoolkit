@@ -4,7 +4,7 @@ import {
 	AddressType, ArrayVecType,
 	BooleanType,
 	BytesType,
-	EnumType, StructType,
+	EnumType, OptionalType, StructType,
 	TokenIdentifierType, Type, VariadicType
 } from '@elrondnetwork/erdjs/out';
 import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
@@ -46,6 +46,18 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 
 	val: any;
 
+	get unwrappedType(): Type | undefined {
+		if (!this.type) {
+			return undefined;
+		}
+
+		if (!this.isOptional()) {
+			return this.type;
+		}
+
+		return this.type.getFirstTypeParameter();
+	}
+
 	set value(val: any) {
 		this.val = val
 		this.onChange(val)
@@ -69,38 +81,42 @@ export class ScInputComponent implements OnInit, ControlValueAccessor {
 	}
 
 	isBoolType(): boolean {
-		return this.type instanceof BooleanType;
+		return this.unwrappedType instanceof BooleanType;
 	}
 
 	isNumericalType(): boolean {
-		return this.type instanceof NumericalType;
+		return this.unwrappedType instanceof NumericalType;
 	}
 
 	isBytesType(): boolean {
-		return this.type instanceof BytesType;
+		return this.unwrappedType instanceof BytesType;
 	}
 
 	isEnum(): boolean {
-		return this.type instanceof EnumType;
+		return this.unwrappedType instanceof EnumType;
 	}
 
 	isAddress(): boolean {
-		return this.type instanceof AddressType;
+		return this.unwrappedType instanceof AddressType;
 	}
 
 	isTokenIdentifier(): boolean {
-		return this.type instanceof TokenIdentifierType;
+		return this.unwrappedType instanceof TokenIdentifierType;
 	}
 
 	isStruct(): boolean {
-		return this.type instanceof StructType;
+		return this.unwrappedType instanceof StructType;
 	}
 
 	isVariadic(): boolean {
-		return this.type instanceof VariadicType;
+		return this.unwrappedType instanceof VariadicType;
 	}
 
 	isArray(): boolean {
-		return this.type instanceof ArrayVecType;
+		return this.unwrappedType instanceof ArrayVecType;
+	}
+
+	isOptional(): boolean {
+		return this.type instanceof OptionalType;
 	}
 }
