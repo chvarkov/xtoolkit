@@ -32,10 +32,25 @@
 			display: flex;
 			font-size: 1.06em;
 			align-items: center;
+			overflow-x: hidden;
+			position: relative;
+
+			.args-count {
+				right: 0;
+				top: 0;
+				bottom: 0;
+				position: absolute;
+				font-size: 0.88em;
+				background: var(--low-bg);
+				box-shadow: 0px -40px 26px 30px var(--low-bg);
+				padding: 3px;
+			}
 
 			.args {
 				color: var(--static-gray);
 				margin-left: 2px;
+				display: flex;
+				flex-direction: row;
 
 				.arg-name {
 					color: var(--arg-name-color);
@@ -43,6 +58,10 @@
 
 				.arg-type {
 					color: var(--arg-type-color);
+				}
+
+				.space-after {
+					margin-right: 6px;
 				}
 			}
 		}
