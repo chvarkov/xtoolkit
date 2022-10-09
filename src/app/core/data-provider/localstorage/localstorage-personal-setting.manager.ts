@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
-	ProjectExplorerState,
+	getProjectComponentNodeId,
 	LayoutState,
 	OpenedProjectTab,
 	PersonalSettingsManager,
+	ProjectExplorerNode,
+	ProjectExplorerState, reverseTheme,
 	SELF_PROJECT_ID,
-	TabsData, getProjectComponentNodeId, ProjectExplorerNode
+	TabsData,
+	Theme
 } from '../personal-settings.manager';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -233,6 +236,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		}
 
 		const defaultState: LayoutState = {
+			theme: Theme.Dark,
 			leftPanelWidth: 420,
 			rightPanelWidth: 420,
 		};
@@ -253,6 +257,21 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				this.set(this.layoutStateKey, merged);
 
 				return merged;
+			}),
+		);
+	}
+
+	toggleTheme(): Observable<LayoutState> {
+		return this.getLayoutState().pipe(
+			map(state => {
+				const updatedState: LayoutState = {
+					...state,
+					theme: reverseTheme(state.theme),
+				};
+
+				this.set(this.layoutStateKey, updatedState);
+
+				return updatedState;
 			}),
 		);
 	}

@@ -32,6 +32,7 @@ import { FormFieldComponent } from './ui/form-field/form-field.component';
 import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token-identifier-input.component';
 import { ResizeVerticalSplitterComponent } from './ui/resize-vertical-splitter/resize-vertical-splitter.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AppInitializer } from './services/app-initializer';
 
 @NgModule({
 	declarations: [
@@ -58,7 +59,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 		FormFieldComponent,
 		TokenIdentifierInputComponent,
 		TokenIdentifierInputComponent,
-  ResizeVerticalSplitterComponent,
+		ResizeVerticalSplitterComponent,
 	],
 	imports: [
 		CommonModule,
@@ -79,29 +80,30 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 		LocalstorageDataProvider,
 		LocalstoragePersonalSettingManager,
 		ESDTInteractor,
+		AppInitializer,
 	],
-    exports: [
-        ElrondModule,
-        ToolbarComponent,
-        SelectComponent,
-        TabsComponent,
-        TabComponent,
-        ToolbarIconButtonComponent,
-        ModalDialogComponent,
-        OptionComponent,
-        ShortStringPipe,
-        DropdownMenuComponent,
-        DropdownMenuItemComponent,
-        ComponentIconPipe,
-        ComponentColorPipe,
-        AddressComponent,
-        TxHashComponent,
-        AddressInputComponent,
-        DecimalPlacesPipe,
-        TooltipDirective,
-        FormFieldComponent,
-        TokenIdentifierInputComponent,
-        ResizeVerticalSplitterComponent,
-    ],
+	exports: [
+		ElrondModule,
+		ToolbarComponent,
+		SelectComponent,
+		TabsComponent,
+		TabComponent,
+		ToolbarIconButtonComponent,
+		ModalDialogComponent,
+		OptionComponent,
+		ShortStringPipe,
+		DropdownMenuComponent,
+		DropdownMenuItemComponent,
+		ComponentIconPipe,
+		ComponentColorPipe,
+		AddressComponent,
+		TxHashComponent,
+		AddressInputComponent,
+		DecimalPlacesPipe,
+		TooltipDirective,
+		FormFieldComponent,
+		TokenIdentifierInputComponent,
+		ResizeVerticalSplitterComponent,
+	],
 })
 export class CoreModule { }

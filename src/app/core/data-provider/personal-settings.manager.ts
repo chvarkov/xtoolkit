@@ -6,6 +6,11 @@ export const PERSONAL_SETTINGS_MANAGER = 'CORE:PERSONAL_SETTINGS_MANAGER';
 
 export const SELF_PROJECT_ID = 'self';
 
+export enum Theme {
+	Dark = 'dark',
+	Light = 'light',
+}
+
 export interface OpenedProjectTab {
 	index: number;
 	title: string;
@@ -20,6 +25,7 @@ export interface TabsData {
 }
 
 export interface LayoutState {
+	theme: Theme,
 	leftPanelWidth: number;
 	rightPanelWidth: number;
 }
@@ -70,8 +76,14 @@ export interface PersonalSettingsManager {
 							  withChildren: boolean): Observable<ProjectExplorerState>;
 
 	syncProjectExplorerTree(projects: Project[]): Observable<ProjectExplorerState>;
+
+	toggleTheme(): Observable<LayoutState>;
 }
 
 export function getProjectComponentNodeId(projectId: string, type: ProjectComponentType, componentId: string): string {
 	return [projectId, type, componentId].join(':');
+}
+
+export function reverseTheme(theme: Theme): Theme {
+	return theme === Theme.Dark ? Theme.Light : Theme.Dark;
 }

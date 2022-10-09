@@ -11,6 +11,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { LayoutEffect } from './store/layout.effect';
 import { HeaderIconButtonComponent } from './components/header-icon-button/header-icon-button.component';
 import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
+import { ThemeSwitcher } from './services/theme.switcher';
+import { ThemeIconPipe } from './pipes/theme-icon.pipe';
 
 @NgModule({
 	declarations: [
@@ -19,12 +21,16 @@ import { HeaderToolbarComponent } from './components/header-toolbar/header-toolb
 		LoadingScreenComponent,
 		HeaderIconButtonComponent,
 		HeaderToolbarComponent,
+		ThemeIconPipe,
 	],
 	imports: [
 		CommonModule,
 		CoreModule,
 		StoreModule.forFeature(LAYOUT_FEATURE, layoutReducer),
 		EffectsModule.forFeature([LayoutEffect]),
+	],
+	providers: [
+		ThemeSwitcher,
 	],
 	exports: [
 		LayoutComponent,
@@ -34,6 +40,7 @@ import { HeaderToolbarComponent } from './components/header-toolbar/header-toolb
 		LoadingScreenComponent,
 		HeaderIconButtonComponent,
 		HeaderToolbarComponent,
+		ThemeIconPipe,
 	],
 })
 export class LayoutModule { }
