@@ -8,19 +8,19 @@ export class ComponentColorPipe implements PipeTransform {
 	transform(value: ProjectComponentType): string {
 		switch (value) {
 			case 'project':
-				return '#FFF';
+				return 'var(--default-component-color)';
 			case 'abi':
-				return '#f59664';
+				return 'var(--abi-color)';
 			case 'sc':
-				return '#7effbd';
+				return 'var(--sc-color)';
 			case 'token':
-				return '#fddf79';
+				return 'var(--token-color)';
 			case 'wallet':
-				return '#0FF0FF';
+				return 'var(--wallet-color)';
 			case 'nft':
-				return '#e37ef3';
+				return 'var(--nft-color)';
 			case 'tx':
-				return '#73e775';
+				return 'var(--tx-color)';
 			case 'group':
 			case 'address_book':
 			case 'home':

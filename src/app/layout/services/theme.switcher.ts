@@ -12,7 +12,6 @@ export class ThemeSwitcher {
 	}
 
 	async setTheme(theme: Theme): Promise<void> {
-		console.log('setTheme ' + theme);
 		this.renderer.addClass(document.body, this.getThemeClassName(theme));
 		this.renderer.removeClass(document.body, this.getThemeClassName(reverseTheme(theme)));
 	}
