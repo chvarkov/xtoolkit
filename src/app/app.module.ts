@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectTabsModule } from './tabs-viewer/modules/project-tabs/project-tabs.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppInitializer } from './core/services/app-initializer';
 
 @NgModule({
 	declarations: [
@@ -38,7 +39,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ProjectTabsModule,
         BrowserAnimationsModule,
     ],
-	providers: [],
+	providers: [
+		{
+			provide: APP_INITIALIZER,
+			useFactory: (initializer: AppInitializer) => () => initializer.initialize(),
+			deps: [
+				AppInitializer,
+			],
+			multi: true
+		},
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

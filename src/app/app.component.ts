@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NetworkAction } from './network/store/network.action';
 import { Observable } from 'rxjs';
 import { ProjectAbi, ProjectSmartContract } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
-import { OpenedProjectTab, SELF_PROJECT_ID } from './core/data-provider/personal-settings.manager';
+import { OpenedProjectTab, SELF_PROJECT_ID, Theme } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
 import { map } from 'rxjs/operators';
 import { TokenIssueAwaiter } from './project/services/token-issue.awaiter';
@@ -17,7 +17,7 @@ import { LayoutAction } from './layout/store/layout.action';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-	title = 'elrond-sc';
+	theme$: Observable<Theme>;
 
 	openedTabs$: Observable<OpenedProjectTab[]>;
 
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 		this.isVisibleLoadingScreen$ = this.store.select(LayoutSelector.isLoadingScreenVisible);
+		this.theme$ = this.store.select(LayoutSelector.theme);
 	}
 
 	async ngOnInit(): Promise<void> {
@@ -94,5 +95,9 @@ export class AppComponent implements OnInit, OnDestroy {
 			componentType: 'settings',
 			componentId: SELF_PROJECT_ID,
 		}));
+	}
+
+	toggleTheme(): void {
+		this.store.dispatch(LayoutAction.toggleTheme());
 	}
 }

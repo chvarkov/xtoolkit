@@ -1,30 +1,46 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { SplitterSide } from '../../core/ui/resize-vertical-splitter/resize-vertical-splitter.component';
 import { Store } from '@ngrx/store';
-import { Observable, of, zip } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { LayoutSelector } from '../store/layout.selector';
 import { map } from 'rxjs/operators';
 import { LayoutAction } from '../store/layout.action';
+import { Theme } from '../../core/data-provider/personal-settings.manager';
+import { ThemeSwitcher } from '../services/theme.switcher';
 
 @Component({
 	selector: 'app-layout',
 	templateUrl: './layout.component.html',
 	styleUrls: ['./layout.component.scss']
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent implements OnInit, OnDestroy {
 	@ViewChild('layout', {static: true}) layoutRef?: ElementRef
+
+	theme$!: Observable<Theme>;
 
 	gridTemplateColumns$: Observable<string | undefined> = of();
 
+	private readonly sub = new Subscription();
+
 	constructor(private readonly renderer: Renderer2,
-				private readonly store: Store) {
+				private readonly store: Store,
+				private readonly themeSwitcher: ThemeSwitcher) {
 	}
 
 	ngOnInit(): void {
+		this.theme$ = this.store.select(LayoutSelector.theme);
 		this.store.dispatch(LayoutAction.loadLayoutState());
 		this.gridTemplateColumns$ = this.store.select(LayoutSelector.panelsWidth).pipe(
 			map(({left, right}) => `${left}px calc(100vw - ${right + left}px) ${right}px`),
 		);
+
+		this.sub.add(
+			this.theme$.subscribe((theme) => this.themeSwitcher.setTheme(theme)),
+		);
+	}
+
+	ngOnDestroy() {
+		this.sub.unsubscribe();
 	}
 
 	resizePanel(side: SplitterSide, dx: number): void {

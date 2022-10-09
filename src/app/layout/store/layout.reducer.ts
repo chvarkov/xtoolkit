@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { LayoutAction } from './layout.action';
-import { LayoutState } from '../../core/data-provider/personal-settings.manager';
+import { LayoutState, Theme } from '../../core/data-provider/personal-settings.manager';
 
 export interface IAppLayoutState extends LayoutState {
 	isLoadingScreenVisible: boolean;
@@ -8,6 +8,7 @@ export interface IAppLayoutState extends LayoutState {
 
 const initialState: IAppLayoutState = {
 	isLoadingScreenVisible: true,
+	theme: Theme.Dark,
 	rightPanelWidth: 450,
 	leftPanelWidth: 450,
 };
@@ -20,14 +21,21 @@ export const reducer = createReducer(
 			isLoadingScreenVisible: visible,
 		};
 	}),
-	on(LayoutAction.loadLayoutStateSuccess, (state, { leftPanelWidth, rightPanelWidth }) => {
+	on(LayoutAction.loadLayoutStateSuccess, (state, { leftPanelWidth, rightPanelWidth, theme }) => {
 		return {
 			...state,
+			theme,
 			leftPanelWidth,
 			rightPanelWidth,
 		};
 	}),
 	on(LayoutAction.setLayoutState, (state, { layoutState }) => {
+		return {
+			...state,
+			...layoutState,
+		};
+	}),
+	on(LayoutAction.toggleThemeSuccess, (state, { layoutState }) => {
 		return {
 			...state,
 			...layoutState,

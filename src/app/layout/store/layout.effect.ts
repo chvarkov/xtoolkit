@@ -24,6 +24,14 @@ export class LayoutEffect {
 			)),
 		)));
 
+	toggleTheme$ = createEffect(() => this.actions$.pipe(
+		ofType(LayoutAction.toggleTheme),
+		switchMap(() => this.personalSettingsManger.toggleTheme().pipe(
+			map((layoutState) => LayoutAction.toggleThemeSuccess({ layoutState })),
+			catchError(err => of(LayoutAction.toggleThemeError({err})),
+			)),
+		)));
+
 	constructor(private readonly actions$: Actions,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManger: LocalstoragePersonalSettingManager) {
 	}

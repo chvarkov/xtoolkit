@@ -11,4 +11,8 @@ export class LayoutAction {
 	static readonly setLayoutState = createAction(`[${LayoutAction.name}] set layout state [...]`, props<{layoutState: Partial<LayoutState>}>());
 	static readonly setLayoutStateSuccess = createAction(`[${LayoutAction.name}] set layout state [OK]`, props<{ layoutState: LayoutState }>());
 	static readonly setLayoutStateError = createAction(`[${LayoutAction.name}] set layout state [ERR]`, props<{err: Error}>());
+
+	static readonly toggleTheme = createAction(`[${LayoutAction.name}] toggle theme [...]`);
+	static readonly toggleThemeSuccess = createAction(`[${LayoutAction.name}] toggle theme [OK]`, props<{ layoutState: LayoutState }>());
+	static readonly toggleThemeError = createAction(`[${LayoutAction.name}] toggle theme [ERR]`, props<{err: Error}>());
 }

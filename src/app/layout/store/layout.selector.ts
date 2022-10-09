@@ -12,4 +12,9 @@ export class LayoutSelector {
 		(app: Record<string, any>) => app[LAYOUT_FEATURE],
 		(state: IAppLayoutState) => ({left: state.leftPanelWidth, right: state.rightPanelWidth}),
 	);
+
+	static theme = createSelector(
+		(app: Record<string, any>) => app[LAYOUT_FEATURE],
+		(state: IAppLayoutState) => state.theme,
+	);
 }
