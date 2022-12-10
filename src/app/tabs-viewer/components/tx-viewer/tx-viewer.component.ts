@@ -22,7 +22,7 @@ export class TxViewerComponent implements OnInit {
 	tx$?: Observable<IElrondFullTransaction | undefined>;
 
 	getTransferOperations(tx: IElrondFullTransaction): ITxOperation[] {
-		return tx.operations.filter(op => op.action === 'transfer');
+		return tx.operations?.filter(op => op.action === 'transfer') || [];
 	}
 
 	constructor(private readonly store: Store) {
