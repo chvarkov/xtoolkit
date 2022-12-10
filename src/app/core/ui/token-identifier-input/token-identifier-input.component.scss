@@ -42,6 +42,7 @@
 	border: solid 1px var(--border-color);
 	overflow-y: auto;
 	border-radius: 6px;
+	z-index: 2;
 
 	.option {
 		width: 100%;
