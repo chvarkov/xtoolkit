@@ -5,8 +5,6 @@ import { SelectComponent } from './ui/select/select.component';
 import { TabsComponent } from './ui/tabs/tabs.component';
 import { TabComponent } from './ui/tabs/tab/tab.component';
 import { ToolbarIconButtonComponent } from './ui/toolbar/toolbar-icon-button/toolbar-icon-button.component';
-import { ModalDialogComponent } from './ui/dialog/modal-dialog/modal-dialog.component';
-import { ModalDialogFactory } from './ui/dialog/modal-dialog.factory';
 import { ConfirmDialogComponent } from './ui/confirm-dialog/confirm-dialog.component';
 import { OptionComponent } from './ui/select/option/option.component';
 import { DATA_PROVIDER } from './data-provider/data-provider';
@@ -33,6 +31,8 @@ import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token
 import { ResizeVerticalSplitterComponent } from './ui/resize-vertical-splitter/resize-vertical-splitter.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppInitializer } from './services/app-initializer';
+import { MaterialModule } from './ui/material.module';
+import { ModalDialogComponent } from './ui/modal-dialog/modal-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -66,9 +66,9 @@ import { AppInitializer } from './services/app-initializer';
 		ElrondModule,
 		FormsModule,
 		DragDropModule,
+		MaterialModule,
 	],
 	providers: [
-		ModalDialogFactory,
 		{
 			provide: DATA_PROVIDER,
 			useExisting: LocalstorageDataProvider,
@@ -84,6 +84,7 @@ import { AppInitializer } from './services/app-initializer';
 	],
 	exports: [
 		ElrondModule,
+		MaterialModule,
 		ToolbarComponent,
 		SelectComponent,
 		TabsComponent,

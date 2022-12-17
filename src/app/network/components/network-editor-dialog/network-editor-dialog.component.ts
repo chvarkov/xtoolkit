@@ -1,49 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../core/ui/dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
 import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-network-editor-dialog',
 	templateUrl: './network-editor-dialog.component.html',
 	styleUrls: ['./network-editor-dialog.component.scss']
 })
-export class NetworkEditorDialogComponent extends AbstractModalDialog implements OnInit {
+export class NetworkEditorDialogComponent implements OnInit {
 	get title(): string {
-		return this.dialogRef.data ? 'Update network' : 'Create network';
+		return this.data ? 'Update network' : 'Create network';
 	}
 
 	get action(): string {
-		return this.dialogRef.data ? 'Update' : 'Create';
+		return this.data ? 'Update' : 'Create';
 	}
-
-	dialogRef!: DialogRef<INetworkEnvironment | undefined, {chainId: string, network: INetworkEnvironment}>;
 
 	form!: FormGroup;
 
-	constructor(private readonly fb: FormBuilder) {
-		super();
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: INetworkEnvironment,
+				readonly dialogRef: MatDialogRef<NetworkEditorDialogComponent>,
+				private readonly fb: FormBuilder) {
 	}
 
 	ngOnInit(): void {
-		const network = this.dialogRef.data;
-
 		this.form = this.fb.group({
-			name: [network?.name, Validators.required],
-			chainId: [network?.chainId, Validators.required],
-			gatewayUrl: [network?.gatewayUrl, Validators.required],
-			explorerUrl: [network?.explorerUrl, Validators.required],
+			name: [this.data?.name, Validators.required],
+			chainId: [this.data?.chainId, Validators.required],
+			gatewayUrl: [this.data?.gatewayUrl, Validators.required],
+			explorerUrl: [this.data?.explorerUrl, Validators.required],
 		});
-
-		this.dialogRef.options.width = '300px';
-		this.dialogRef.options.height = '340px';
 	}
 
 	submit(): void {
-		this.dialogRef.submit({
+		this.dialogRef.close({
 			network: this.form.value,
-			chainId: this.dialogRef.data?.chainId || this.form.value.chainId,
+			chainId: this.data?.chainId || this.form.value.chainId,
 		});
 	}
 }

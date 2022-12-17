@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
-	ActionHistoryElement,
 	ActionStatus,
 	ActionType,
 	GeneratedWallet,
@@ -18,39 +15,37 @@ import { ProjectSelector } from '../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
 import * as uuid from 'uuid';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-issue-token-dialog',
 	templateUrl: './issue-token-dialog.component.html',
 	styleUrls: ['./issue-token-dialog.component.scss']
 })
-export class IssueTokenDialogComponent extends AbstractModalDialog implements OnInit {
+export class IssueTokenDialogComponent implements OnInit {
 	wallet!: GeneratedWallet;
 
 	project$?: Observable<Project | undefined>;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
-	dialogRef!: DialogRef<{projectId: string}, ActionHistoryElement>;
-
 	tokens$!: Observable<ITokenInfo[]>;
 
 	issueTokenForm!: FormGroup;
 
-	constructor(private readonly store: Store,
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
+				readonly dialogRef: MatDialogRef<IssueTokenDialogComponent>,
+				private readonly store: Store,
 				private readonly estdInteractor: ESDTInteractor,
 				private readonly fb: FormBuilder) {
-		super();
 	}
 
 	ngOnInit(): void {
-		this.dialogRef.options.width = '400px';
-		this.dialogRef.options.height = '320px';
-		this.project$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId));
+		this.project$ = this.store.select(ProjectSelector.projectById(this.data.projectId));
 		this.network$ = this.project$.pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
-		this.tokens$ = this.store.select(ProjectSelector.tokens(this.dialogRef.data.projectId));
+		this.tokens$ = this.store.select(ProjectSelector.tokens(this.data.projectId));
 
 		this.issueTokenForm = this.fb.group({
 			name: ['', Validators.required],
@@ -75,10 +70,10 @@ export class IssueTokenDialogComponent extends AbstractModalDialog implements On
 
 		const txHash = await this.estdInteractor.issueFungibleToken(network, wallet, this.issueTokenForm.value);
 
-		this.dialogRef.submit({
+		this.dialogRef.close({
 			id: uuid.v4(),
 			txHash,
-			projectId: this.dialogRef.data.projectId,
+			projectId: this.data.projectId,
 			type: ActionType.Issue,
 			data: this.issueTokenForm.value,
 			chainId: network.chainId,

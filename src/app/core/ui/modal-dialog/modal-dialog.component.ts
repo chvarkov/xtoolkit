@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DialogRef } from '../dialog-ref';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-modal-dialog',
@@ -11,5 +11,9 @@ export class ModalDialogComponent {
 
 	@Input() showActions = true;
 
-	@Input() dialogRef!: DialogRef;
+	@Input() dialogRef!: MatDialogRef<any>;
+
+	@Input() width: string | number = '300px'
+
+	@Input() height: string | number = '300px'
 }

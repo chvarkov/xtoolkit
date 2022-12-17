@@ -1,11 +1,11 @@
-<app-modal-dialog [title]="dialogRef.data.title" [dialogRef]="dialogRef">
+<app-modal-dialog [title]="data.title" [dialogRef]="dialogRef">
 	<div content class="content">
-		{{dialogRef.data.message}}
+		{{data.message}}
 	</div>
 	<div actions>
 		<div class="actions">
 			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="confirm-button" (click)="dialogRef.submit()">Confirm</button>
+			<button class="confirm-button" (click)="dialogRef.close(true)">Confirm</button>
 		</div>
 	</div>
 </app-modal-dialog>

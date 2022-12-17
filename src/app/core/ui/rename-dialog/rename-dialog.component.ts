@@ -1,27 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../dialog/abstract-modal-dialog';
-import { DialogRef } from '../dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-rename-dialog',
 	templateUrl: './rename-dialog.component.html',
 	styleUrls: ['./rename-dialog.component.scss']
 })
-export class RenameDialogComponent extends AbstractModalDialog implements OnInit {
+export class RenameDialogComponent implements OnInit {
 	name = '';
 
-	dialogRef!: DialogRef<{title: string}, { name: string }>;
-
-	constructor() {
-		super();
+	constructor(@Inject(MAT_DIALOG_DATA) readonly data: {title: string},
+				readonly dialogRef: MatDialogRef<RenameDialogComponent>) {
 	}
 
 	ngOnInit(): void {
-		this.dialogRef.options.width = '300px';
-		this.dialogRef.options.height = '180px';
 	}
 
 	create(): void {
-		this.dialogRef.submit({name: this.name});
+		this.dialogRef.close({name: this.name});
 	}
 }

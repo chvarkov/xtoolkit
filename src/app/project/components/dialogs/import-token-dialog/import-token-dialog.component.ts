@@ -1,38 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITokenInfo } from '../../../../core/elrond/interfaces/token-info';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../store/project.selector';
 import { ProjectAction } from '../../../store/project.action';
-import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-import-token-dialog',
 	templateUrl: './import-token-dialog.component.html',
 	styleUrls: ['./import-token-dialog.component.scss']
 })
-export class ImportTokenDialogComponent extends AbstractModalDialog implements OnInit {
+export class ImportTokenDialogComponent implements OnInit {
 	tokenId = '';
-
-	dialogRef!: DialogRef<{projectId: string}, string>;
 
 	tokens$!: Observable<ITokenInfo[]>;
 
-	constructor(private readonly store: Store) {
-		super();
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
+				readonly dialogRef: MatDialogRef<any>,
+				private readonly store: Store) {
 	}
 
 	ngOnInit(): void {
-		this.dialogRef.options.width = '460px';
-		this.dialogRef.options.height = '420px';
 
-		this.tokens$ = this.store.select(ProjectSelector.tokens(this.dialogRef.data.projectId));
+		this.tokens$ = this.store.select(ProjectSelector.tokens(this.data.projectId));
 		this.loadToken('');
 	}
 
 	submit(): void {
-		this.dialogRef.submit(this.tokenId.trim());
+		this.dialogRef.close(this.tokenId.trim());
 	}
 
 	onChangeSearchInput(e: Event): void {
@@ -43,7 +39,7 @@ export class ImportTokenDialogComponent extends AbstractModalDialog implements O
 
 	private loadToken(search: string): void {
 		this.store.dispatch(ProjectAction.searchTokens({
-			projectId: this.dialogRef.data.projectId,
+			projectId: this.data.projectId,
 			options: {search},
 		}));
 	}
