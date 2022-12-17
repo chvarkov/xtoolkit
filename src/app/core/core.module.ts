@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from './ui/toolbar/toolbar.component';
 import { SelectComponent } from './ui/select/select.component';
 import { TabsComponent } from './ui/tabs/tabs.component';
@@ -32,7 +31,8 @@ import { ResizeVerticalSplitterComponent } from './ui/resize-vertical-splitter/r
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppInitializer } from './services/app-initializer';
 import { MaterialModule } from './ui/material.module';
-import { ModalDialogComponent } from './ui/modal-dialog/modal-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialog-header.component';
 
 @NgModule({
 	declarations: [
@@ -41,7 +41,6 @@ import { ModalDialogComponent } from './ui/modal-dialog/modal-dialog.component';
 		TabsComponent,
 		TabComponent,
 		ToolbarIconButtonComponent,
-		ModalDialogComponent,
 		ConfirmDialogComponent,
 		OptionComponent,
 		ShortStringPipe,
@@ -60,9 +59,10 @@ import { ModalDialogComponent } from './ui/modal-dialog/modal-dialog.component';
 		TokenIdentifierInputComponent,
 		TokenIdentifierInputComponent,
 		ResizeVerticalSplitterComponent,
+		ModalDialogHeaderComponent,
 	],
 	imports: [
-		CommonModule,
+		BrowserAnimationsModule,
 		ElrondModule,
 		FormsModule,
 		DragDropModule,
@@ -90,7 +90,6 @@ import { ModalDialogComponent } from './ui/modal-dialog/modal-dialog.component';
 		TabsComponent,
 		TabComponent,
 		ToolbarIconButtonComponent,
-		ModalDialogComponent,
 		OptionComponent,
 		ShortStringPipe,
 		DropdownMenuComponent,
@@ -105,6 +104,7 @@ import { ModalDialogComponent } from './ui/modal-dialog/modal-dialog.component';
 		FormFieldComponent,
 		TokenIdentifierInputComponent,
 		ResizeVerticalSplitterComponent,
+		ModalDialogHeaderComponent,
 	],
 })
 export class CoreModule { }

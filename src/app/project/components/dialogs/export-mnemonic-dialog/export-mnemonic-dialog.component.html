@@ -1,5 +1,5 @@
-<app-modal-dialog title="Export mnemonic" [dialogRef]="dialogRef" [showActions]="false">
-	<div content class="content" *ngIf="mnemonic as mnemonicKey">
-		<textarea disabled class="mnemonic">{{mnemonicKey}}</textarea>
-	</div>
-</app-modal-dialog>
+<app-modal-dialog-header title="Export mnemonic" [dialogRef]="dialogRef"></app-modal-dialog-header>
+
+<div content class="content" *ngIf="mnemonic as mnemonicKey">
+	<textarea disabled class="mnemonic">{{mnemonicKey}}</textarea>
+</div>

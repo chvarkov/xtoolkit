@@ -1,22 +1,20 @@
-<app-modal-dialog title="Create project" [dialogRef]="dialogRef">
-	<div content class="content">
-		<input class="project-name" [(ngModel)]="projectName" placeholder="Project name">
+<app-modal-dialog-header title="Create project" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
-		<app-select class="network-select"
-                    label="Network"
-					(selectionChange)="onChangeChainId($event)">
-			<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
-				{{network.name}}
-			</app-option>
-		</app-select>
-	</div>
+<div content class="content">
+	<input class="project-name" [(ngModel)]="projectName" placeholder="Project name">
 
-	<div actions>
-		<div class="actions">
-			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button"
-					[disabled]="!projectName || !chainId"
-					(click)="create()">Create</button>
-		</div>
-	</div>
-</app-modal-dialog>
+	<app-select class="network-select"
+				label="Network"
+				(selectionChange)="onChangeChainId($event)">
+		<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
+			{{network.name}}
+		</app-option>
+	</app-select>
+</div>
+
+<div class="actions">
+	<button mat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-button class="create-button"
+			[disabled]="!projectName || !chainId"
+			(click)="create()">Create</button>
+</div>

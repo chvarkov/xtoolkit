@@ -64,6 +64,8 @@ const MAT_MODULES = [
 
 @NgModule({
     imports: MAT_MODULES,
-    exports: MAT_MODULES,
+    exports: [
+        MAT_MODULES,
+    ],
 })
 export class MaterialModule { }

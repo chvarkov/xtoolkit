@@ -1,30 +1,27 @@
-<app-modal-dialog title="Upload ABI" [dialogRef]="dialogRef">
-	<div content class="content">
-		<button class="upload-button" (click)="fileUploader.click()">
-			{{fileName || 'Select ABI'}}
-		</button>
+<app-modal-dialog-header title="Upload ABI" [dialogRef]="dialogRef"></app-modal-dialog-header>
+<div class="content">
+	<button class="upload-button" (click)="fileUploader.click()">
+		{{fileName || 'Select ABI'}}
+	</button>
 
-		<input #fileUploader
-			   hidden
-			   type="file"
-			   accept="application/json"
-			   (change)="onFileSelected($event)">
+	<input #fileUploader
+		   hidden
+		   type="file"
+		   accept="application/json"
+		   (change)="onFileSelected($event)">
 
-		<ng-container *ngIf="fileName">
-			<input class="sc-name"
-				   [(ngModel)]="smartContractName"
-				   placeholder="Smart contract name">
+	<ng-container *ngIf="fileName">
+		<input class="sc-name"
+			   [(ngModel)]="smartContractName"
+			   placeholder="Smart contract name">
 
-			<div class="parsed-result">
-				<div class="row">Types: {{types}}</div>
-				<div class="row">Endpoints: {{endpoints}}</div>
-			</div>
-		</ng-container>
-	</div>
-	<div actions>
-		<div class="actions">
-			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button" [disabled]="!fileName || !smartContractName" (click)="submit()">Upload</button>
+		<div class="parsed-result">
+			<div class="row">Types: {{types}}</div>
+			<div class="row">Endpoints: {{endpoints}}</div>
 		</div>
-	</div>
-</app-modal-dialog>
+	</ng-container>
+</div>
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button class="create-button" [disabled]="!fileName || !smartContractName" (click)="submit()">Upload</button>
+</div>
