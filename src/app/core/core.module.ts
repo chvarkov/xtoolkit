@@ -31,7 +31,6 @@ import { AppInitializer } from './services/app-initializer';
 import { MaterialModule } from './ui/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialog-header.component';
-import { OptionComponent } from './ui/select/option/option.component';
 
 @NgModule({
 	declarations: [
@@ -40,7 +39,6 @@ import { OptionComponent } from './ui/select/option/option.component';
 		TabComponent,
 		ToolbarIconButtonComponent,
 		ConfirmDialogComponent,
-		OptionComponent,
 		ShortStringPipe,
 		DropdownMenuComponent,
 		DropdownMenuItemComponent,
@@ -87,7 +85,6 @@ import { OptionComponent } from './ui/select/option/option.component';
 		TabsComponent,
 		TabComponent,
 		ToolbarIconButtonComponent,
-		OptionComponent,
 		ShortStringPipe,
 		DropdownMenuComponent,
 		DropdownMenuItemComponent,
