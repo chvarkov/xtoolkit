@@ -1,6 +1,6 @@
-<app-select class="enum" label="Select enum value" (selectionChange)="changed.emit($event.value)">
-	<app-option *ngFor="let option of getEnum()"
+<mat-select class="enum" placeholder="Select enum value" (selectionChange)="changed.emit($event.value)" panelClass="select-panel">
+	<mat-option *ngFor="let option of getEnum()"
 				[value]="option.discriminant">
 		{{option.name}} [{{option.discriminant}}]
-	</app-option>
-</app-select>
+	</mat-option>
+</mat-select>
