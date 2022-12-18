@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { SelectElement, SelectSize } from '../select.component';
 
 @Component({
 	selector: 'app-option',
@@ -11,7 +10,7 @@ export class OptionComponent {
 
 	@ViewChild('option') content?: ElementRef;
 
-	@Output() selected: EventEmitter<SelectElement> = new EventEmitter<SelectElement>();
+	@Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
 	onClick(e: Event): void {
 		e.stopPropagation();
