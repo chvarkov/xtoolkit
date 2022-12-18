@@ -266,6 +266,12 @@ button {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.prevent-text-select {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 .mat-dialog-container {
 	background-color: var(--primary-bg) !important;
 	border-radius: 4px;

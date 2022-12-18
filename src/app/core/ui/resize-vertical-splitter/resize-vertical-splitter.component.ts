@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
 
 export type SplitterSide = 'left' | 'right';
 
@@ -14,7 +14,7 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 
 	isMoving = false;
 
-	constructor() {
+	constructor(private readonly renderer2: Renderer2) {
 	}
 
 	ngOnInit(): void {
@@ -22,6 +22,8 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 
 	onMouseDown(): void {
 		this.isMoving = true;
+
+		this.renderer2.addClass(document.body, 'prevent-text-select');
 	}
 
 	@HostListener('document:mousemove', ['$event'])
@@ -34,5 +36,7 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 	@HostListener('document:mouseup', ['$event'])
 	onMouseUp(): void {
 		this.isMoving = false;
+
+		this.renderer2.removeClass(document.body, 'prevent-text-select');
 	}
 }
