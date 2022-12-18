@@ -279,3 +279,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	box-shadow: 0 0 6px 2px var(--border-low-color);
 }
 
+.dropdown-list {
+	background-color: var(--primary-bg) !important;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
