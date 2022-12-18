@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ActionHistoryAction } from './action-history.action';
-import { catchError, exhaustMap, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { DATA_PROVIDER, DataProvider } from '../../core/data-provider/data-provider';
 import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
-import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class ActionHistoryEffect {
@@ -37,10 +37,13 @@ export class ActionHistoryEffect {
 	clearActionHistory$ = createEffect(() => this.actions$.pipe(
 		ofType(ActionHistoryAction.clearActionHistory),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Clear history',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Clear history',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -52,7 +55,7 @@ export class ActionHistoryEffect {
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
-				private readonly modalDialogFactory: ModalDialogFactory,
+				private readonly dialog: MatDialog,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {
 	}
 }

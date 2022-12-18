@@ -1,20 +1,19 @@
-<app-modal-dialog title="Create address" [dialogRef]="dialogRef">
-	<div content class="content">
-		<input class="field project-name" [(ngModel)]="name" placeholder="Address name">
+<app-modal-dialog-header title="Create address" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
-		<app-address-input class="field" [showAddressBook]="false"
-						   [chainId]="(project$ | async)?.chainId || ''"
-						   (changed)="address = $event">
-		</app-address-input>
-	</div>
+<div content class="content">
+	<input class="field project-name" [(ngModel)]="name" placeholder="Address name">
 
-	<div actions>
-		<div class="actions">
-			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button"
-					*ngIf="network$ | async as network"
-					[disabled]="!name || !address"
-					(click)="create(network)">Create</button>
-		</div>
-	</div>
-</app-modal-dialog>
+	<app-address-input class="field" [showAddressBook]="false"
+					   [chainId]="(project$ | async)?.chainId || ''"
+					   (changed)="address = $event">
+	</app-address-input>
+</div>
+
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button
+			class="create-button"
+			*ngIf="network$ | async as network"
+			[disabled]="!name || !address"
+			(click)="create(network)">Create</button>
+</div>

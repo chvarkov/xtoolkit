@@ -5,11 +5,9 @@ import {
 	ActionHistoryElement,
 	DATA_PROVIDER,
 	DataProvider, ProjectAddress,
-	ProjectSmartContract
 } from '../../core/data-provider/data-provider';
-import { catchError, exhaustMap, filter, map, mergeMap, switchMap, take, withLatestFrom } from 'rxjs/operators';
-import { EMPTY, forkJoin, from, of } from 'rxjs';
-import { ModalDialogFactory } from '../../core/ui/dialog/modal-dialog.factory';
+import { catchError, exhaustMap, filter, map, mergeMap, switchMap, take } from 'rxjs/operators';
+import { forkJoin, from, of } from 'rxjs';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
 import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
 import { Store } from '@ngrx/store';
@@ -20,7 +18,7 @@ import {
 	UploadAbiDialogComponent
 } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import {
-	getProjectComponentNodeId, OpenedProjectTab,
+	getProjectComponentNodeId,
 	PERSONAL_SETTINGS_MANAGER,
 	PersonalSettingsManager
 } from '../../core/data-provider/personal-settings.manager';
@@ -38,6 +36,7 @@ import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/updat
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { ProjectSelector } from './project.selector';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class ProjectEffect {
@@ -51,7 +50,8 @@ export class ProjectEffect {
 
 	updateProjectNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectNetwork),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(UpdateProjectNetworkDialogComponent).afterSubmit$().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(UpdateProjectNetworkDialogComponent, {width: '300px'}).afterClosed().pipe(
+			filter(v => !!v),
 			map(chainId => ({projectId, chainId})),
 		)),
 		mergeMap(({projectId, chainId}) => this.dataProvider.updateProjectNetwork(projectId, chainId).pipe(
@@ -62,7 +62,8 @@ export class ProjectEffect {
 
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),
-		exhaustMap(() => this.modalDialogFactory.show(CreateProjectDialogComponent).afterSubmit$()),
+		exhaustMap(() => this.dialog.open(CreateProjectDialogComponent, {width: '300px'}).afterClosed()),
+		filter(v => !!v),
 		mergeMap(({ name, chainId }) => this.dataProvider.createProject(name, chainId).pipe(
 			map((project) => ProjectAction.createProjectSuccess({project})),
 			catchError(err => of(ProjectAction.createProjectError({err})),
@@ -87,9 +88,10 @@ export class ProjectEffect {
 
 	generateWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.generateWallet),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(GenerateWalletDialogComponent)
-			.afterSubmit$()
+		exhaustMap(({projectId}) => this.dialog.open(GenerateWalletDialogComponent)
+			.afterClosed()
 			.pipe(
+				filter(v => !!v),
 				map((wallet) => ProjectAction.addWallet({projectId, wallet}))
 			),
 		),
@@ -97,7 +99,8 @@ export class ProjectEffect {
 
 	uploadAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.uploadAbi),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(UploadAbiDialogComponent, {projectId}).afterSubmit$().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(UploadAbiDialogComponent, {data: {projectId}}).afterClosed().pipe(
+			filter(v => !!v),
 			map((data: IUploadedAbi) => ProjectAction.addAbi({
 				projectId,
 				name: data.name,
@@ -108,7 +111,8 @@ export class ProjectEffect {
 
 	addSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addSmartContract),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(AddSmartContractDialogComponent, {projectId}).afterSubmit$().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(AddSmartContractDialogComponent, {data: {projectId}}).afterClosed().pipe(
+			filter(v => !!v),
 			map(({ name, address, abiId }) => ({
 				projectId,
 				name,
@@ -136,9 +140,12 @@ export class ProjectEffect {
 
 	importToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.importToken),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(ImportTokenDialogComponent, {projectId})
-			.afterSubmit$()
+		exhaustMap(({projectId}) => this.dialog.open(ImportTokenDialogComponent, {
+			data: {projectId},
+		})
+			.afterClosed()
 			.pipe(
+				filter(v => !!v),
 				map((identifier) => ProjectAction.addToken({projectId, identifier})),
 			),
 		),
@@ -154,9 +161,12 @@ export class ProjectEffect {
 
 	issueToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.issueToken),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(IssueTokenDialogComponent, {projectId})
-			.afterSubmit$()
+		exhaustMap(({projectId}) => this.dialog.open(IssueTokenDialogComponent, {
+			data: {projectId},
+		})
+			.afterClosed()
 			.pipe(
+				filter(v => !!v),
 				switchMap((data: ActionHistoryElement) => of(
 					ProjectAction.addTokenIssueTxToWaitList({
 						data: {
@@ -320,15 +330,16 @@ export class ProjectEffect {
 	exportMnemonic$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.exportMnemonic),
 		map(({ wallet }) => {
-			this.modalDialogFactory.show(ExportMnemonicDialogComponent, wallet);
+			this.dialog.open(ExportMnemonicDialogComponent, {data: wallet});
 		}),
 	), {dispatch: false});
 
 	renameProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameProject),
-		exhaustMap(({projectId}) => this.modalDialogFactory.show(RenameDialogComponent, {
-			title: 'Rename project',
-		}).afterSubmit$().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename project'},
+		}).afterClosed().pipe(
+			filter(v => !!v),
 			map(({name}) => ({projectId, name})),
 		)),
 		mergeMap(({projectId, name}) => this.dataProvider.renameProject(projectId, name).pipe(
@@ -339,9 +350,10 @@ export class ProjectEffect {
 
 	renameSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameSmartContract),
-		exhaustMap(({projectId, scId}) => this.modalDialogFactory.show(RenameDialogComponent, {
-			title: 'Rename smart contract',
-		}).afterSubmit$().pipe(
+		exhaustMap(({projectId, scId}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename smart contract'},
+		}).afterClosed().pipe(
+			filter(v => !!v),
 			map(({name}) => ({projectId, scId, name})),
 		)),
 		mergeMap(({projectId, scId, name}) => forkJoin([
@@ -355,9 +367,10 @@ export class ProjectEffect {
 
 	renameAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAbi),
-		exhaustMap(({projectId, abiId}) => this.modalDialogFactory.show(RenameDialogComponent, {
-			title: 'Rename ABI interface',
-		}).afterSubmit$().pipe(
+		exhaustMap(({projectId, abiId}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename ABI interface'},
+		}).afterClosed().pipe(
+			filter(v => !!v),
 			map(({name}) => ({projectId, abiId, name})),
 		)),
 		mergeMap(({projectId, abiId, name}) => forkJoin([
@@ -371,9 +384,10 @@ export class ProjectEffect {
 
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
-		exhaustMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
-			title: 'Rename wallet',
-		}).afterSubmit$().pipe(
+		exhaustMap(({projectId, address}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename wallet'},
+		}).afterClosed().pipe(
+			filter(v => !!v),
 			map(({name}) => ({projectId, address, name})),
 		)),
 		mergeMap(({projectId, address, name}) => forkJoin([
@@ -394,10 +408,13 @@ export class ProjectEffect {
 	deleteProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteProject),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete project',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete project',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -413,10 +430,13 @@ export class ProjectEffect {
 	deleteSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteSmartContract),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete smart contract',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete smart contract',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -432,10 +452,13 @@ export class ProjectEffect {
 	deleteAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteAbi),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete ABI interface',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete ABI interface',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -451,10 +474,13 @@ export class ProjectEffect {
 	deleteToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteToken),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete token',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete token',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -470,10 +496,13 @@ export class ProjectEffect {
 	deleteWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteWallet),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete wallet',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete wallet',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -489,10 +518,13 @@ export class ProjectEffect {
 	addAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAddress),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(AddProjectAddressDialogComponent, {
-				projectId: action.projectId,
-			}).afterSubmit$();
+			return this.dialog.open(AddProjectAddressDialogComponent, {
+				data: {
+					projectId: action.projectId,
+				},
+			}).afterClosed();
 		}),
+		filter(v => !!v),
 		mergeMap((address: ProjectAddress) => this.dataProvider.addProjectAddress(address).pipe(
 			map((project) => ProjectAction.addAddressSuccess({project})),
 			catchError(err => of(ProjectAction.addAddressError({err}))),
@@ -501,9 +533,10 @@ export class ProjectEffect {
 
 	renameAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAddress),
-		exhaustMap(({projectId, address}) => this.modalDialogFactory.show(RenameDialogComponent, {
-			title: 'Rename address',
-		}).afterSubmit$().pipe(
+		exhaustMap(({projectId, address}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename address'},
+		}).afterClosed().pipe(
+			filter(v => !!v),
 			map(({name}) => ({projectId, address, name})),
 		)),
 		mergeMap(({projectId, address, name}) => this.dataProvider.renameProjectAddress(projectId, address, name).pipe(
@@ -515,10 +548,13 @@ export class ProjectEffect {
 	deleteAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteAddress),
 		exhaustMap(action => {
-			return this.modalDialogFactory.show(ConfirmDialogComponent, {
-				title: 'Delete address',
-				message: 'Are you sure? After deletion, it will not be possible to restore.',
-			}).afterSubmit$().pipe(
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete address',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
 				map(() => action),
 			);
 		}),
@@ -613,10 +649,10 @@ export class ProjectEffect {
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
-				private readonly modalDialogFactory: ModalDialogFactory,
 				private readonly elrondDataProvider: ElrondDataProvider,
 				private readonly elrondProxy: ElrondProxyProvider,
 				private readonly txProvider: TransactionProvider,
+				private readonly dialog: MatDialog,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
 	}

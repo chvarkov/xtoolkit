@@ -1,46 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../store/project.selector';
 import { Project, ProjectAbi } from '../../../../core/data-provider/data-provider';
 import { map } from 'rxjs/operators';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-add-smart-contract-dialog',
 	templateUrl: './add-smart-contract-dialog.component.html',
 	styleUrls: ['./add-smart-contract-dialog.component.scss']
 })
-export class AddSmartContractDialogComponent  extends AbstractModalDialog implements OnInit {
+export class AddSmartContractDialogComponent implements OnInit {
 	projectName = '';
 
 	abiId = '';
 
 	address = '';
 
-	dialogRef!: DialogRef<{ projectId: string }, { name: string, address: string, abiId: string }>;
-
 	abiInterfaces$?: Observable<ProjectAbi[]>;
 
 	project$?: Observable<Project | undefined>;
 
-	constructor(private readonly store: Store) {
-		super();
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: { projectId: string },
+				readonly dialogRef: MatDialogRef<AddSmartContractDialogComponent>,
+				private readonly store: Store) {
 	}
 
 	ngOnInit(): void {
-		this.abiInterfaces$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId)).pipe(
+		this.abiInterfaces$ = this.store.select(ProjectSelector.projectById(this.data.projectId)).pipe(
 			map(project => project?.abiInterfaces || []),
 		);
-		this.project$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId));
-
-		this.dialogRef.options.width = '560px';
-		this.dialogRef.options.height = '260px';
+		this.project$ = this.store.select(ProjectSelector.projectById(this.data.projectId));
 	}
 
 	create(): void {
-		this.dialogRef.submit({name: this.projectName, abiId: this.abiId, address: this.address});
+		this.dialogRef.close({name: this.projectName, abiId: this.abiId, address: this.address});
 	}
 
 	onChangeAbiId(abiId: string): void {

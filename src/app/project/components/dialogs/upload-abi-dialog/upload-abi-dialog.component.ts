@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProjectAbi } from '../../../../core/data-provider/data-provider';
 import { AbiJson } from '../../../../core/elrond/builders/sc.builder';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface IUploadedAbi extends Omit<ProjectAbi, 'id'> {
 }
@@ -12,7 +11,7 @@ export interface IUploadedAbi extends Omit<ProjectAbi, 'id'> {
 	templateUrl: './upload-abi-dialog.component.html',
 	styleUrls: ['./upload-abi-dialog.component.scss']
 })
-export class UploadAbiDialogComponent extends AbstractModalDialog implements OnInit {
+export class UploadAbiDialogComponent implements OnInit {
 	smartContractName = '';
 	fileName = '';
 
@@ -25,22 +24,17 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 		endpoints: [],
 	};
 
-	dialogRef!: DialogRef<{ projectId: string }, IUploadedAbi>;
-
-	constructor() {
-		super();
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
+				readonly dialogRef: MatDialogRef<UploadAbiDialogComponent>) {
 	}
 
 	ngOnInit(): void {
-		this.dialogRef.options.width = '300px';
-		this.dialogRef.options.height = '200px';
 	}
 
 	async onFileSelected(event: any) {
 		const file: File = event.target.files[0];
 
 		if (file) {
-			this.dialogRef.options.height = '280px';
 			this.fileName = file.name;
 			const content = await file.text();
 			this.abi = JSON.parse(content);
@@ -52,10 +46,10 @@ export class UploadAbiDialogComponent extends AbstractModalDialog implements OnI
 	}
 
 	submit(): void {
-		this.dialogRef.submit({
+		this.dialogRef.close({
 			name: this.smartContractName,
 			content: this.abi,
-			projectId: this.dialogRef.data.projectId,
+			projectId: this.data.projectId,
 		});
 	}
 }

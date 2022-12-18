@@ -1,15 +1,14 @@
-<app-modal-dialog title="Generate wallet" [dialogRef]="dialogRef">
-	<div content class="content">
-		<input class="project-name" [(ngModel)]="walletName" placeholder="Wallet name">
-	</div>
-	<div actions>
-		<div class="actions">
-			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button"
-					[disabled]="!walletName"
-					(click)="generate()">
-				Generate
-			</button>
-		</div>
-	</div>
-</app-modal-dialog>
+<app-modal-dialog-header title="Generate wallet" [dialogRef]="dialogRef">
+
+</app-modal-dialog-header>
+<div content class="content">
+	<input class="project-name" [(ngModel)]="walletName" placeholder="Wallet name">
+</div>
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button class="create-button"
+			[disabled]="!walletName"
+			(click)="generate()">
+		Generate
+	</button>
+</div>

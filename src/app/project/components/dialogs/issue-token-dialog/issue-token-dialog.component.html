@@ -1,40 +1,44 @@
-<app-modal-dialog title="Issue token" [dialogRef]="dialogRef" *ngIf="project$ | async as project">
-	<div content class="content">
-		<form [formGroup]="issueTokenForm" class="issue-form">
-			<div class="form-control">
-				<div class="label">Token name</div>
-				<input class="field" formControlName="name" placeholder="Token name">
-			</div>
+<app-modal-dialog-header title="Issue token" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
-			<div class="form-control">
-				<div class="label">Token ticker</div>
-				<input formControlName="ticker" placeholder="Token ticker">
-			</div>
-
-			<div class="form-control">
-				<div class="label">Mint value</div>
-				<input formControlName="supply" type="number" min="0" placeholder="Mint value">
-			</div>
-
-			<div class="form-control">
-				<div class="label">Decimals</div>
-				<input formControlName="decimals" type="number" min="0" placeholder="Decimals">
-			</div>
-		</form>
-
-		<app-select class="input-control" label="Token issuer" (selectionChange)="onChangeIssuerWallet($event)">
-			<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
-		</app-select>
-	</div>
-	<div actions>
-		<div class="actions">
-			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button"
-					[disabled]="!issueTokenForm.valid"
-					*ngIf="network$ | async as network"
-					(click)="submit(network, wallet)">
-				Issue
-			</button>
+<div class="content" *ngIf="project$ | async as project">
+	<form [formGroup]="issueTokenForm" class="issue-form">
+		<div class="form-control">
+			<div class="label">Token name</div>
+			<input class="field" formControlName="name" placeholder="Token name">
 		</div>
-	</div>
-</app-modal-dialog>
+
+		<div class="form-control">
+			<div class="label">Token ticker</div>
+			<input formControlName="ticker" placeholder="Token ticker">
+		</div>
+
+		<div class="form-control">
+			<div class="label">Mint value</div>
+			<input formControlName="supply" type="number" min="0" placeholder="Mint value">
+		</div>
+
+		<div class="form-control">
+			<div class="label">Decimals</div>
+			<input formControlName="decimals" type="number" min="0" placeholder="Decimals">
+		</div>
+	</form>
+
+	<mat-form-field class="caller">
+		<mat-select class="input-control"
+					placeholder="Token issuer"
+					panelClass="select-panel"
+					(selectionChange)="onChangeIssuerWallet($event.value)" >
+			<mat-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button
+			class="create-button"
+			[disabled]="!issueTokenForm.valid"
+			*ngIf="network$ | async as network"
+			(click)="submit(network, wallet)">
+		Issue
+	</button>
+</div>

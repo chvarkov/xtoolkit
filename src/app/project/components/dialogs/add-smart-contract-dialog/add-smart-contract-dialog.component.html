@@ -1,27 +1,26 @@
-<app-modal-dialog title="Create smart contract" [dialogRef]="dialogRef">
-	<div content class="content">
-		<input class="field project-name" [(ngModel)]="projectName" placeholder="Smart contract name">
+<app-modal-dialog-header title="Create smart contract" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
-		<app-address-input class="field" [showAddressBook]="false"
-						   [chainId]="(project$ | async)?.chainId || ''"
-						   (changed)="address = $event">
-		</app-address-input>
+<div class="content">
+	<input class="field project-name" [(ngModel)]="projectName" placeholder="Smart contract name">
 
-		<app-select class="network-select"
-                    label="API interface"
-					(selectionChange)="onChangeAbiId($event)">
-			<app-option *ngFor="let abi of (abiInterfaces$ | async) || []" [value]="abi.id">
+	<app-address-input class="field" [showAddressBook]="false"
+					   [chainId]="(project$ | async)?.chainId || ''"
+					   (changed)="address = $event">
+	</app-address-input>
+
+	<mat-form-field>
+		<mat-select	placeholder="API interface" panelClass="select-panel"
+					(selectionChange)="onChangeAbiId($event.value)">
+			<mat-option *ngFor="let abi of (abiInterfaces$ | async) || []" [value]="abi.id">
 				{{abi.name}}
-			</app-option>
-		</app-select>
-	</div>
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
 
-	<div actions>
-		<div class="actions">
-			<button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-			<button class="create-button"
-					[disabled]="!projectName || !abiId || !address"
-					(click)="create()">Create</button>
-		</div>
-	</div>
-</app-modal-dialog>
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button class="create-button"
+			[disabled]="!projectName || !abiId || !address"
+			(click)="create()">Create</button>
+</div>

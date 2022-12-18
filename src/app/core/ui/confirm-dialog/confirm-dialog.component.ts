@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../dialog/abstract-modal-dialog';
-import { DialogRef } from '../dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface ConfirmDialogData {
 	title: string;
@@ -12,15 +11,11 @@ export interface ConfirmDialogData {
 	templateUrl: './confirm-dialog.component.html',
 	styleUrls: ['./confirm-dialog.component.scss']
 })
-export class ConfirmDialogComponent extends AbstractModalDialog<ConfirmDialogData, void> implements OnInit {
-	dialogRef!: DialogRef<ConfirmDialogData, void>;
-
-	constructor() {
-		super();
+export class ConfirmDialogComponent implements OnInit {
+	constructor(@Inject(MAT_DIALOG_DATA) readonly data: ConfirmDialogData,
+				readonly dialogRef: MatDialogRef<ConfirmDialogComponent>) {
 	}
 
 	ngOnInit(): void {
-		this.dialogRef.options.width = '360px';
-		this.dialogRef.options.height = '180px';
 	}
 }

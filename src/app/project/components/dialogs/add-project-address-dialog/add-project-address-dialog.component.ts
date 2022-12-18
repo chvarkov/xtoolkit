@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractModalDialog } from '../../../../core/ui/dialog/abstract-modal-dialog';
-import { DialogRef } from '../../../../core/ui/dialog/dialog-ref';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Project, ProjectAddress } from '../../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
@@ -10,36 +8,33 @@ import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-
 import { Address } from '@elrondnetwork/erdjs/out';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-add-project-address-dialog',
 	templateUrl: './add-project-address-dialog.component.html',
 	styleUrls: ['./add-project-address-dialog.component.scss']
 })
-export class AddProjectAddressDialogComponent extends AbstractModalDialog implements OnInit {
+export class AddProjectAddressDialogComponent implements OnInit {
 	name = '';
 
 	address = '';
 
-	dialogRef!: DialogRef<{ projectId: string }, ProjectAddress>;
-
 	project$?: Observable<Project | undefined>;
 	network$?: Observable<INetworkEnvironment | undefined>;
 
-	constructor(private readonly store: Store,
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
+				readonly dialogRef: MatDialogRef<AddProjectAddressDialogComponent>,
+				private readonly store: Store,
 				private readonly elrondDataProvider: ElrondDataProvider) {
-		super();
 	}
 
 	ngOnInit(): void {
-		this.project$ = this.store.select(ProjectSelector.projectById(this.dialogRef.data.projectId));
+		this.project$ = this.store.select(ProjectSelector.projectById(this.data.projectId));
 
 		this.network$ = this.project$.pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
-
-		this.dialogRef.options.width = '560px';
-		this.dialogRef.options.height = '260px';
 	}
 
 	async create(network: INetworkEnvironment): Promise<void> {
@@ -53,11 +48,11 @@ export class AddProjectAddressDialogComponent extends AbstractModalDialog implem
 		const address: ProjectAddress = {
 			address: this.address,
 			name: this.name,
-			projectId: this.dialogRef.data.projectId,
+			projectId: this.data.projectId,
 			type,
 			savedAt: Date.now(),
 		};
 
-		this.dialogRef.submit(address);
+		this.dialogRef.close(address);
 	}
 }

@@ -24,17 +24,19 @@
 	}
 }
 
+.caller {
+	width: 100%;
+}
+
 .actions {
 	display: flex;
 	flex: 1;
 	flex-direction: row;
 	padding-top: 4px;
+	justify-content: flex-end;
 
 	button {
-		display: flex;
-		padding: 6px;
 		color: var(--text-color);
-		border-radius: 4px;
 		margin: 4px;
 	}
 
