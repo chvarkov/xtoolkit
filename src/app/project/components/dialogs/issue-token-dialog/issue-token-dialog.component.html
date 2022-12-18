@@ -23,9 +23,14 @@
 		</div>
 	</form>
 
-	<app-select class="input-control" label="Token issuer" (selectionChange)="onChangeIssuerWallet($event)">
-		<app-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</app-option>
-	</app-select>
+	<mat-form-field class="caller">
+		<mat-select class="input-control"
+					placeholder="Token issuer"
+					panelClass="select-panel"
+					(selectionChange)="onChangeIssuerWallet($event.value)" >
+			<mat-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</mat-option>
+		</mat-select>
+	</mat-form-field>
 </div>
 <div class="actions">
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>

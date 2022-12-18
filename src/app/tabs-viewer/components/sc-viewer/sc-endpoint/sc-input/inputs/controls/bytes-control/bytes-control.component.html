@@ -3,11 +3,11 @@
 			  (change)="onChangedValue($event)"
 		      [disabled]="disabled">{{value}}</textarea>
 	<div class="encoding-method">
-		<app-select class="encoding-method-select" (selectionChange)="onChangeEncodingMethod($event.value)">
-			<app-option *ngFor="let method of encodingMethods" [value]="method">
+		<mat-select class="encoding-method-select" (selectionChange)="onChangeEncodingMethod($event.value)" panelClass="select-panel">
+			<mat-option *ngFor="let method of encodingMethods" [value]="method">
 				{{method}}
-			</app-option>
-		</app-select>
+			</mat-option>
+		</mat-select>
 	</div>
 </div>
 
