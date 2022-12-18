@@ -61,7 +61,7 @@ export class ProjectEffect {
 
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),
-		exhaustMap(() => this.dialog.open(CreateProjectDialogComponent).afterClosed()),
+		exhaustMap(() => this.dialog.open(CreateProjectDialogComponent, {width: '300px'}).afterClosed()),
 		filter(v => !!v),
 		mergeMap(({ name, chainId }) => this.dataProvider.createProject(name, chainId).pipe(
 			map((project) => ProjectAction.createProjectSuccess({project})),
