@@ -1,12 +1,14 @@
 <app-modal-dialog-header title="Update project network" [dialogRef]="dialogRef"></app-modal-dialog-header>
 <div class="content">
-	<app-select class="network-select"
-				label="Network"
-				(selectionChange)="onChangeNetwork($event)">
-		<app-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
-			{{network.name}}
-		</app-option>
-	</app-select>
+	<mat-form-field>
+		<mat-select placeholder="Network"
+					panelClass="select-panel"
+					(selectionChange)="onChangeNetwork($event.value)">
+			<mat-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
+				{{network.name}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
 </div>
 
 <div class="actions">
