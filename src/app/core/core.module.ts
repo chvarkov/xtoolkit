@@ -8,8 +8,6 @@ import { DATA_PROVIDER } from './data-provider/data-provider';
 import { LocalstorageDataProvider } from './data-provider/localstorage/localstorage.data-provider';
 import { ElrondModule } from './elrond/elrond.module';
 import { ShortStringPipe } from './pipes/short-string.pipe';
-import { DropdownMenuComponent } from './ui/dropdown-menu/dropdown-menu.component';
-import { DropdownMenuItemComponent } from './ui/dropdown-menu/dropdown-menu-item/dropdown-menu-item.component';
 import { ComponentColorPipe } from './pipes/component-color.pipe';
 import { ComponentIconPipe } from './pipes/component-icon.pipe';
 import { LocalstoragePersonalSettingManager } from './data-provider/localstorage/localstorage-personal-setting.manager';
@@ -40,8 +38,6 @@ import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialo
 		ToolbarIconButtonComponent,
 		ConfirmDialogComponent,
 		ShortStringPipe,
-		DropdownMenuComponent,
-		DropdownMenuItemComponent,
 		ComponentColorPipe,
 		ComponentIconPipe,
 		AddressComponent,
@@ -86,8 +82,6 @@ import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialo
 		TabComponent,
 		ToolbarIconButtonComponent,
 		ShortStringPipe,
-		DropdownMenuComponent,
-		DropdownMenuItemComponent,
 		ComponentIconPipe,
 		ComponentColorPipe,
 		AddressComponent,
