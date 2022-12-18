@@ -1,7 +1,0 @@
-<div class="overlay" *ngIf="isOpen" (click)="isOpen = false"></div>
-<div #dropdown class="material-icons menu-button" (click)="switchShowOptions($event)">
-	{{icon || 'more_vert'}}
-	<div class="menu-container" [ngClass]="[horizontal, vertical]" *ngIf="isOpen">
-		<ng-content></ng-content>
-	</div>
-</div>

@@ -19,24 +19,27 @@
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'"
 						 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
 		<ng-container actions>
-			<app-dropdown-menu horizontal="left">
-				<app-dropdown-menu-item icon="bookmark"
-										text="Open address book"
-										(click)="openAddressBook(project)">
-				</app-dropdown-menu-item>
-				<app-dropdown-menu-item icon="drive_file_rename_outline"
-										text="Rename"
-										(click)="renameProject(project.id)">
-				</app-dropdown-menu-item>
-				<app-dropdown-menu-item icon="public"
-										text="Change network"
-										(click)="updateProjectNetwork(project.id)">
-				</app-dropdown-menu-item>
-				<app-dropdown-menu-item icon="delete"
-										text="Delete"
-										(click)="deleteProject(project.id)">
-				</app-dropdown-menu-item>
-			</app-dropdown-menu>
+			<button mat-icon-button [matMenuTriggerFor]="projectMenu">
+				<mat-icon class="dropdown-icon">more_vert</mat-icon>
+			</button>
+			<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
+				<button mat-menu-item (click)="openAddressBook(project)">
+					<mat-icon>bookmark</mat-icon>
+					<span>Open address book</span>
+				</button>
+				<button mat-menu-item (click)="renameProject(project.id)">
+					<mat-icon>drive_file_rename_outline</mat-icon>
+					<span>Rename</span>
+				</button>
+				<button mat-menu-item (click)="updateProjectNetwork(project.id)">
+					<mat-icon>public</mat-icon>
+					<span>Change network</span>
+				</button>
+				<button mat-menu-item (click)="deleteProject(project.id)">
+					<mat-icon>delete</mat-icon>
+					<span>Delete</span>
+				</button>
+			</mat-menu>
 		</ng-container>
 		<div innerElements>
 			<app-project-element [expandable]="true"
@@ -44,11 +47,15 @@
 								 (onExpand)="onExpandElement(project.id, 'group', 'abi', $event)"
 								 name="ABI interfaces">
 				<ng-container actions>
-					<app-dropdown-menu horizontal="left">
-						<app-dropdown-menu-item icon="upload_file"
-												text="Upload ABI"
-												(click)="uploadScAbi(project.id)"></app-dropdown-menu-item>
-					</app-dropdown-menu>
+					<button mat-icon-button [matMenuTriggerFor]="abiGroupMenu">
+						<mat-icon class="dropdown-icon">more_vert</mat-icon>
+					</button>
+					<mat-menu #abiGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+						<button mat-menu-item (click)="uploadScAbi(project.id)">
+							<mat-icon>upload_file</mat-icon>
+							<span>Upload ABI</span>
+						</button>
+					</mat-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element #abiElem
@@ -61,16 +68,19 @@
 						[active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
 						[name]="abi.name || abi.name">
 						<ng-container actions>
-							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="drive_file_rename_outline"
-														text="Rename"
-														(click)="renameAbi(project.id, abi.id)">
-								</app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete"
-														text="Delete"
-														(click)="deleteAbi(project.id, abi.id)">
-								</app-dropdown-menu-item>
-							</app-dropdown-menu>
+							<button mat-icon-button [matMenuTriggerFor]="abiMenu">
+								<mat-icon class="dropdown-icon">more_vert</mat-icon>
+							</button>
+							<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="renameAbi(project.id, abi.id)">
+									<mat-icon>drive_file_rename_outline</mat-icon>
+									<span>Rename</span>
+								</button>
+								<button mat-menu-item (click)="deleteAbi(project.id, abi.id)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
 						</ng-container>
 					</app-project-element>
 				</ng-container>
@@ -80,11 +90,15 @@
 								 (onExpand)="onExpandElement(project.id, 'group', 'sc', $event)"
 								 name="Smart contracts">
 				<ng-container actions>
-					<app-dropdown-menu horizontal="left">
-						<app-dropdown-menu-item icon="add"
-												text="Add smart contract"
-												(click)="addSmartContract(project.id)"></app-dropdown-menu-item>
-					</app-dropdown-menu>
+					<button mat-icon-button [matMenuTriggerFor]="scGroupMenu">
+						<mat-icon class="dropdown-icon">more_vert</mat-icon>
+					</button>
+					<mat-menu #scGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+						<button mat-menu-item (click)="addSmartContract(project.id)">
+							<mat-icon>add</mat-icon>
+							<span>Add smart contract</span>
+						</button>
+					</mat-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element #scElem
@@ -97,16 +111,19 @@
 						(onActivate)="onActivateElement(scElem)"
 						[name]="sc.name || sc.name">
 						<ng-container actions>
-							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="drive_file_rename_outline"
-														text="Rename"
-														(click)="renameSmartContract(project.id, sc.id)">
-								</app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete"
-														text="Delete"
-														(click)="deleteSmartContract(project.id, sc.id)">
-								</app-dropdown-menu-item>
-							</app-dropdown-menu>
+							<button mat-icon-button [matMenuTriggerFor]="scMenu">
+								<mat-icon class="dropdown-icon">more_vert</mat-icon>
+							</button>
+							<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="renameSmartContract(project.id, sc.id)">
+									<mat-icon>drive_file_rename_outline</mat-icon>
+									<span>Rename</span>
+								</button>
+								<button mat-menu-item (click)="deleteSmartContract(project.id, sc.id)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
 						</ng-container>
 					</app-project-element>
 				</ng-container>
@@ -117,14 +134,19 @@
 								 type="group"
 								 name="Tokens">
 				<ng-container actions>
-					<app-dropdown-menu horizontal="left">
-						<app-dropdown-menu-item icon="add_circle"
-												text="Issue token"
-												(click)="issueToken(project.id)"></app-dropdown-menu-item>
-						<app-dropdown-menu-item icon="manage_search"
-												text="Import"
-												(click)="importToken(project.id)"></app-dropdown-menu-item>
-					</app-dropdown-menu>
+					<button mat-icon-button [matMenuTriggerFor]="tokenGroupMenu">
+						<mat-icon class="dropdown-icon">more_vert</mat-icon>
+					</button>
+					<mat-menu #tokenGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+						<button mat-menu-item (click)="issueToken(project.id)">
+							<mat-icon>add_circle</mat-icon>
+							<span>Issue token</span>
+						</button>
+						<button mat-menu-item (click)="importToken(project.id)">
+							<mat-icon>manage_search</mat-icon>
+							<span>Import</span>
+						</button>
+					</mat-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens"
@@ -136,16 +158,19 @@
 										 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
 										 [name]="tokenAddress">
 						<ng-container actions>
-							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="search"
-														text="Explore"
-														(click)="exploreToken(project.id, tokenAddress)">
-								</app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete"
-														text="Delete"
-														(click)="deleteToken(project.id, tokenAddress)">
-								</app-dropdown-menu-item>
-							</app-dropdown-menu>
+							<button mat-icon-button [matMenuTriggerFor]="tokenMenu">
+								<mat-icon class="dropdown-icon">more_vert</mat-icon>
+							</button>
+							<mat-menu #tokenMenu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="exploreToken(project.id, tokenAddress)">
+									<mat-icon>search</mat-icon>
+									<span>Explore</span>
+								</button>
+								<button mat-menu-item (click)="deleteToken(project.id, tokenAddress)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
 						</ng-container>
 					</app-project-element>
 				</ng-container>
@@ -156,8 +181,11 @@
 								 type="group"
 								 name="NFTs (coming soon)">
 				<ng-container actions>
-					<app-dropdown-menu horizontal="left">
-					</app-dropdown-menu>
+					<button mat-icon-button [matMenuTriggerFor]="nftGroupMenu">
+						<mat-icon class="dropdown-icon">more_vert</mat-icon>
+					</button>
+					<mat-menu #nftGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+					</mat-menu>
 				</ng-container>
 			</app-project-element>
 
@@ -167,23 +195,31 @@
 								 type="group"
 								 name="Wallets">
 				<ng-container actions>
-					<app-dropdown-menu horizontal="left">
-						<app-dropdown-menu-item icon="key"
-												text="Add secret key"
-												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
-						<app-dropdown-menu-item icon="article"
-												text="Add mnemonic"
-												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
-						<app-dropdown-menu-item icon="add_task"
-												text="Generate new one"
-												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
-						<app-dropdown-menu-item icon="qr_code_2"
-												text="Connect via Maiar"
-												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
-						<app-dropdown-menu-item icon="public"
-												text="Add web wallet"
-												(click)="generateWallet(project.id)"></app-dropdown-menu-item>
-					</app-dropdown-menu>
+					<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu">
+						<mat-icon class="dropdown-icon">more_vert</mat-icon>
+					</button>
+					<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+						<button mat-menu-item (click)="generateWallet(project.id)">
+							<mat-icon>key</mat-icon>
+							<span>Add secret key</span>
+						</button>
+						<button mat-menu-item (click)="generateWallet(project.id)">
+							<mat-icon>article</mat-icon>
+							<span>Add mnemonic</span>
+						</button>
+						<button mat-menu-item (click)="generateWallet(project.id)">
+							<mat-icon>add_task</mat-icon>
+							<span>Generate new one</span>
+						</button>
+						<button mat-menu-item (click)="generateWallet(project.id)">
+							<mat-icon>qr_code_2</mat-icon>
+							<span>Connect via Maiar</span>
+						</button>
+						<button mat-menu-item (click)="generateWallet(project.id)">
+							<mat-icon>public</mat-icon>
+							<span>Add web wallet</span>
+						</button>
+					</mat-menu>
 				</ng-container>
 				<ng-container innerElements>
 					<app-project-element #walletElem *ngFor="let wallet of project.wallets"
@@ -195,17 +231,19 @@
 										 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
 										 [name]="wallet.name">
 						<ng-container actions>
-							<app-dropdown-menu horizontal="left">
-								<app-dropdown-menu-item icon="drive_file_rename_outline"
-														text="Rename"
-														(click)="renameWallet(project.id, wallet.address)">
-								</app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="key" text="Export keys" ></app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete"
-														text="Delete"
-														(click)="deleteWallet(project.id, wallet.address)">
-								</app-dropdown-menu-item>
-							</app-dropdown-menu>
+							<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu">
+								<mat-icon class="dropdown-icon">more_vert</mat-icon>
+							</button>
+							<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="renameWallet(project.id, wallet.address)">
+									<mat-icon>drive_file_rename_outline</mat-icon>
+									<span>Rename</span>
+								</button>
+								<button mat-menu-item (click)="deleteWallet(project.id, wallet.address)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
 						</ng-container>
 					</app-project-element>
 				</ng-container>

@@ -19,16 +19,19 @@
 							{{network.gatewayUrl}}
 						</td>
 						<td class="options">
-							<app-dropdown-menu horizontal="left" *ngIf="!defaultChainIds.includes(network.chainId)">
-								<app-dropdown-menu-item icon="edit"
-														text="Update"
-														(click)="updateNetwork(network)">
-								</app-dropdown-menu-item>
-								<app-dropdown-menu-item icon="delete"
-														text="Delete"
-														(click)="deleteNetwork(network.chainId)">
-								</app-dropdown-menu-item>
-							</app-dropdown-menu>
+							<button mat-icon-button [matMenuTriggerFor]="menu">
+								<mat-icon>more_vert</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="updateNetwork(network)">
+									<mat-icon>edit</mat-icon>
+									<span>Update</span>
+								</button>
+								<button mat-menu-item (click)="deleteNetwork(network.chainId)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
 						</td>
 					</tr>
 				</table>

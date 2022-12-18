@@ -20,15 +20,18 @@
 		</ng-container>
 	</div>
 	<ng-container *ngIf="(invisibleTabsSubject | async) as invisibleTabs">
-		<app-dropdown-menu class="invisible-list" horizontal="left" icon="expand_more">
-			<app-dropdown-menu-item *ngFor="let invisibleTab of invisibleTabs"
-									[color]="invisibleTab.type | componentColor"
-									[icon]="invisibleTab.type | componentIcon"
-									[text]="invisibleTab.title"
-									[ngStyle]="{color: invisibleTab.type | componentColor}"
-									(click)="pushTabAsFirst(invisibleTab.index)">
-			</app-dropdown-menu-item>
-		</app-dropdown-menu>
+		<button class="invisible-list" [matMenuTriggerFor]="hiddenTabsMenu" style="font-size: 1.2em">
+			<mat-icon class="dropdown-icon">expand_more</mat-icon>
+		</button>
+		<mat-menu #hiddenTabsMenu="matMenu" classList="dropdown-list" xPosition="before">
+			<button mat-menu-item
+					*ngFor="let invisibleTab of invisibleTabs"
+					(click)="pushTabAsFirst(invisibleTab.index)"
+					[ngStyle]="{color: invisibleTab.type | componentColor}">
+				<mat-icon>{{invisibleTab.type | componentIcon}}</mat-icon>
+				<span>{{invisibleTab.title}}</span>
+			</button>
+		</mat-menu>
 	</ng-container>
 
 	<ng-content></ng-content>

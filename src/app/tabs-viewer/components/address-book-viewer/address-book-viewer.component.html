@@ -22,16 +22,19 @@
 						<app-address [address]="elem.address"></app-address>
 					</td>
 					<td class="options">
-						<app-dropdown-menu horizontal="left">
-							<app-dropdown-menu-item icon="drive_file_rename_outline"
-													text="Rename"
-													(click)="renameAddress(elem.address)">
-							</app-dropdown-menu-item>
-							<app-dropdown-menu-item icon="delete"
-													text="Delete"
-													(click)="deleteAddress(elem.address)">
-							</app-dropdown-menu-item>
-						</app-dropdown-menu>
+						<button mat-icon-button [matMenuTriggerFor]="menu">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="renameAddress(elem.address)">
+								<mat-icon>drive_file_rename_outline</mat-icon>
+								<span>Rename</span>
+							</button>
+							<button mat-menu-item (click)="deleteAddress(elem.address)">
+								<mat-icon>delete</mat-icon>
+								<span>Delete</span>
+							</button>
+						</mat-menu>
 					</td>
 				</tr>
 
