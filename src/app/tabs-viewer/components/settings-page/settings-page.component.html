@@ -1,41 +1,39 @@
-<div class="container">
-	<app-tabs navPosition="bottom">
-		<app-tab top title="Networks">
-			<app-toolbar>
-				<div left-side class="title">Networks</div>
-				<app-toolbar-icon-button right-side
-										 appTooltip tooltip="Add network"
-										 (click)="addNetwork()">
-					add
-				</app-toolbar-icon-button>
-			</app-toolbar>
-			<div class="tab-content" *ngIf="networks$ | async as networks">
-				<table class="table" *ngIf="networks.length">
-					<tr *ngFor="let network of networks" class="row">
-						<td class="name">
-							{{network.name}} ({{network.chainId}})
-						</td>
-						<td class="url-cell">
-							{{network.gatewayUrl}}
-						</td>
-						<td class="options">
-							<button mat-icon-button [matMenuTriggerFor]="menu">
-								<mat-icon>more_vert</mat-icon>
+<app-toolbar>
+	<div left-side class="title">Networks</div>
+	<app-toolbar-icon-button right-side
+							 appTooltip tooltip="Add network"
+							 (click)="addNetwork()">
+		add
+	</app-toolbar-icon-button>
+</app-toolbar>
+<mat-tab-group headerPosition="below" [animationDuration]="'0ms'">
+	<mat-tab label="Networks">
+		<div class="page-tab-content" *ngIf="networks$ | async as networks">
+			<table class="table" *ngIf="networks.length">
+				<tr *ngFor="let network of networks" class="row">
+					<td class="name">
+						{{network.name}} ({{network.chainId}})
+					</td>
+					<td class="url-cell">
+						{{network.gatewayUrl}}
+					</td>
+					<td class="options">
+						<button mat-icon-button [matMenuTriggerFor]="menu">
+							<mat-icon>more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="updateNetwork(network)">
+								<mat-icon>edit</mat-icon>
+								<span>Update</span>
 							</button>
-							<mat-menu #menu="matMenu" classList="dropdown-list" xPosition="before">
-								<button mat-menu-item (click)="updateNetwork(network)">
-									<mat-icon>edit</mat-icon>
-									<span>Update</span>
-								</button>
-								<button mat-menu-item (click)="deleteNetwork(network.chainId)">
-									<mat-icon>delete</mat-icon>
-									<span>Delete</span>
-								</button>
-							</mat-menu>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</app-tab>
-	</app-tabs>
-</div>
+							<button mat-menu-item (click)="deleteNetwork(network.chainId)">
+								<mat-icon>delete</mat-icon>
+								<span>Delete</span>
+							</button>
+						</mat-menu>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</mat-tab>
+</mat-tab-group>

@@ -24,18 +24,24 @@
 								 (click)="loadData()">refresh</app-toolbar-icon-button>
 	</app-toolbar>
 
-	<app-tabs navPosition="bottom">
-		<app-tab top title="Tokens">
-			<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
-		</app-tab>
-		<app-tab top title="NFTs">
-			Coming soon
-		</app-tab>
-		<app-tab top title="Transactions">
-			<app-account-transaction *ngFor="let tx of (transactions$ | async)"
-									 [projectId]="projectId"
-									 [tx]="tx"
-									 [chainId]="(chainId$ | async) || ''"></app-account-transaction>
-		</app-tab>
-	</app-tabs>
+	<mat-tab-group headerPosition="below" [animationDuration]="'0ms'">
+		<mat-tab label="Tokens">
+			<div class="page-tab-content">
+				<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
+			</div>
+		</mat-tab>
+		<mat-tab label="NFTs">
+			<div class="page-tab-content">
+				Coming soon
+			</div>
+		</mat-tab>
+		<mat-tab label="Transactions">
+			<div class="page-tab-content">
+				<app-account-transaction *ngFor="let tx of (transactions$ | async)"
+										 [projectId]="projectId"
+										 [tx]="tx"
+										 [chainId]="(chainId$ | async) || ''"></app-account-transaction>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
 </div>

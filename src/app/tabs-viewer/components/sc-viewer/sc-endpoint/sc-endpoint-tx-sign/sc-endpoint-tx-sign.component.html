@@ -1,7 +1,7 @@
 <div class="tx-sign-container">
 	<ng-container *ngIf="endpoint.modifiers.isPayable()">
 		<div class="input-field">
-			<mat-form-field title="Amount" class="amount-input">
+			<mat-form-field title="Amount" class="amount-input call-input">
 				<mat-label>Amount</mat-label>
 				<span matSuffix>{{tokenIdentifier.valueOf() | tokenIdentifierSymbol}}</span>
 				<input matInput
@@ -12,20 +12,20 @@
 		</div>
 
 		<div class="input-field">
-			<app-token-identifier-input class="token-identifier-input"
+			<app-token-identifier-input class="token-identifier-input call-input"
 										[chainId]="network?.chainId || ''"
 										[projectId]="projectId"
 										(changed)="onChangeTokenIdentifier($event)">
 			</app-token-identifier-input>
 		</div>
 	</ng-container>
-	<mat-form-field>
+	<mat-form-field class="call-input">
 		<mat-select placeholder="Caller" (selectionChange)="onSelectedWallet($event.value)" panelClass="select-panel">
 			<mat-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</mat-option>
 		</mat-select>
 	</mat-form-field>
 	<div class="input-field">
-		<mat-form-field>
+		<mat-form-field class="call-input">
 			<mat-label>Fee</mat-label>
 			<input matInput
 				   class="fee-input"

@@ -20,9 +20,9 @@
 			refresh
 		</app-toolbar-icon-button>
 	</app-toolbar>
-	<app-tabs navPosition="bottom">
-		<app-tab top title="Info">
-			<div class="token-info">
+	<mat-tab-group headerPosition="below" [animationDuration]="'0ms'">
+		<mat-tab label="Info">
+			<div class="token-info page-tab-content">
 				<div class="section-label">metrics</div>
 				<div class="token-metrics">
 					<div class="metric">
@@ -115,27 +115,33 @@
 					</div>
 				</div>
 			</div>
-		</app-tab>
-		<app-tab top title="Roles">
-			<div class="token-roles-element" *ngFor="let role of (tokenRoles$ | async) || []">
-				<app-address [address]="role.address" [chainId]="(network$ | async)?.chainId || ''"></app-address>
-				<div class="roles">
-					<span class="role-label" *ngFor="let permission of role.roles">{{permission}}</span>
+		</mat-tab>
+		<mat-tab label="Roles">
+			<div class="page-tab-content">
+				<div class="token-roles-element" *ngFor="let role of (tokenRoles$ | async) || []">
+					<app-address [address]="role.address" [chainId]="(network$ | async)?.chainId || ''"></app-address>
+					<div class="roles">
+						<span class="role-label" *ngFor="let permission of role.roles">{{permission}}</span>
+					</div>
 				</div>
 			</div>
-		</app-tab>
-		<app-tab top title="Holders">
-			<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
-				<app-address [address]="holder.address" [chainId]="(network$ | async)?.chainId || ''"></app-address>
-				<span>{{holder.balance | decimalPlaces: +token.decimals}}</span>
+		</mat-tab>
+		<mat-tab label="Holders">
+			<div class="page-tab-content">
+				<div class="token-holder-element" *ngFor="let holder of (tokenHolders$ | async) || []">
+					<app-address [address]="holder.address" [chainId]="(network$ | async)?.chainId || ''"></app-address>
+					<span>{{holder.balance | decimalPlaces: +token.decimals}}</span>
+				</div>
 			</div>
-		</app-tab>
-		<app-tab top title="Transactions">
-			<app-token-transfer *ngFor="let transfer of (tokenTransfers$ | async) || []"
-								[chainId]="(network$ | async)?.chainId || ''"
-								[ticket]="token.ticker"
-								[transfer]="transfer">
-			</app-token-transfer>
-		</app-tab>
-	</app-tabs>
+		</mat-tab>
+		<mat-tab label="Transactions">
+			<div class="page-tab-content">
+				<app-token-transfer *ngFor="let transfer of (tokenTransfers$ | async) || []"
+									[chainId]="(network$ | async)?.chainId || ''"
+									[ticket]="token.ticker"
+									[transfer]="transfer">
+				</app-token-transfer>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
 </div>
