@@ -19,7 +19,7 @@
 						 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'"
 						 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
 		<ng-container actions>
-			<button mat-icon-button [matMenuTriggerFor]="projectMenu">
+			<button mat-icon-button [matMenuTriggerFor]="projectMenu" (click)="$event.stopImmediatePropagation()">
 				<mat-icon class="dropdown-icon">more_vert</mat-icon>
 			</button>
 			<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -47,7 +47,7 @@
 								 (onExpand)="onExpandElement(project.id, 'group', 'abi', $event)"
 								 name="ABI interfaces">
 				<ng-container actions>
-					<button mat-icon-button [matMenuTriggerFor]="abiGroupMenu">
+					<button mat-icon-button [matMenuTriggerFor]="abiGroupMenu" (click)="$event.stopImmediatePropagation()">
 						<mat-icon class="dropdown-icon">more_vert</mat-icon>
 					</button>
 					<mat-menu #abiGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -68,7 +68,7 @@
 						[active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
 						[name]="abi.name || abi.name">
 						<ng-container actions>
-							<button mat-icon-button [matMenuTriggerFor]="abiMenu">
+							<button mat-icon-button [matMenuTriggerFor]="abiMenu" (click)="$event.stopImmediatePropagation()">
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -90,7 +90,7 @@
 								 (onExpand)="onExpandElement(project.id, 'group', 'sc', $event)"
 								 name="Smart contracts">
 				<ng-container actions>
-					<button mat-icon-button [matMenuTriggerFor]="scGroupMenu">
+					<button mat-icon-button [matMenuTriggerFor]="scGroupMenu" (click)="$event.stopImmediatePropagation()">
 						<mat-icon class="dropdown-icon">more_vert</mat-icon>
 					</button>
 					<mat-menu #scGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -111,7 +111,7 @@
 						(onActivate)="onActivateElement(scElem)"
 						[name]="sc.name || sc.name">
 						<ng-container actions>
-							<button mat-icon-button [matMenuTriggerFor]="scMenu">
+							<button mat-icon-button [matMenuTriggerFor]="scMenu" (click)="$event.stopImmediatePropagation()">
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -134,7 +134,7 @@
 								 type="group"
 								 name="Tokens">
 				<ng-container actions>
-					<button mat-icon-button [matMenuTriggerFor]="tokenGroupMenu">
+					<button mat-icon-button [matMenuTriggerFor]="tokenGroupMenu" (click)="$event.stopImmediatePropagation()">
 						<mat-icon class="dropdown-icon">more_vert</mat-icon>
 					</button>
 					<mat-menu #tokenGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -158,7 +158,7 @@
 										 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
 										 [name]="tokenAddress">
 						<ng-container actions>
-							<button mat-icon-button [matMenuTriggerFor]="tokenMenu">
+							<button mat-icon-button [matMenuTriggerFor]="tokenMenu" (click)="$event.stopImmediatePropagation()">
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #tokenMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -181,7 +181,7 @@
 								 type="group"
 								 name="NFTs (coming soon)">
 				<ng-container actions>
-					<button mat-icon-button [matMenuTriggerFor]="nftGroupMenu">
+					<button mat-icon-button [matMenuTriggerFor]="nftGroupMenu" (click)="$event.stopImmediatePropagation()">
 						<mat-icon class="dropdown-icon">more_vert</mat-icon>
 					</button>
 					<mat-menu #nftGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -195,7 +195,7 @@
 								 type="group"
 								 name="Wallets">
 				<ng-container actions>
-					<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu">
+					<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
 						<mat-icon class="dropdown-icon">more_vert</mat-icon>
 					</button>
 					<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
@@ -231,7 +231,7 @@
 										 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
 										 [name]="wallet.name">
 						<ng-container actions>
-							<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu">
+							<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
