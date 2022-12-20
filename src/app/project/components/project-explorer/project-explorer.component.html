@@ -27,7 +27,7 @@
 					<mat-icon>bookmark</mat-icon>
 					<span>Open address book</span>
 				</button>
-				<button mat-menu-item (click)="renameProject(project.id)">
+				<button mat-menu-item (click)="renameProject(project.id, project.name)">
 					<mat-icon>drive_file_rename_outline</mat-icon>
 					<span>Rename</span>
 				</button>
@@ -72,7 +72,7 @@
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
-								<button mat-menu-item (click)="renameAbi(project.id, abi.id)">
+								<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
 									<mat-icon>drive_file_rename_outline</mat-icon>
 									<span>Rename</span>
 								</button>
@@ -115,7 +115,7 @@
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
-								<button mat-menu-item (click)="renameSmartContract(project.id, sc.id)">
+								<button mat-menu-item (click)="renameSmartContract(project.id, sc.id, sc.name)">
 									<mat-icon>drive_file_rename_outline</mat-icon>
 									<span>Rename</span>
 								</button>
@@ -235,7 +235,7 @@
 								<mat-icon class="dropdown-icon">more_vert</mat-icon>
 							</button>
 							<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-								<button mat-menu-item (click)="renameWallet(project.id, wallet.address)">
+								<button mat-menu-item (click)="renameWallet(project.id, wallet.address, wallet.name)">
 									<mat-icon>drive_file_rename_outline</mat-icon>
 									<span>Rename</span>
 								</button>

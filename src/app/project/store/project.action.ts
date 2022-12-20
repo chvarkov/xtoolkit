@@ -112,19 +112,19 @@ export class ProjectAction {
 
 	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: GeneratedWallet}>());
 
-	static readonly renameProject = createAction(`[${ProjectAction.name}] rename project [...]`, props<{projectId: string}>());
+	static readonly renameProject = createAction(`[${ProjectAction.name}] rename project [...]`, props<{projectId: string, name: string}>());
 	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project}>());
 	static readonly renameProjectError = createAction(`[${ProjectAction.name}] rename project [ERR]`, props<{err: Error}>());
 
-	static readonly renameAbi = createAction(`[${ProjectAction.name}] rename abi [...]`, props<{projectId: string, abiId: string}>());
+	static readonly renameAbi = createAction(`[${ProjectAction.name}] rename abi [...]`, props<{projectId: string, abiId: string, name: string}>());
 	static readonly renameAbiSuccess = createAction(`[${ProjectAction.name}] rename abi [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameAbiError = createAction(`[${ProjectAction.name}] rename abi [ERR]`, props<{err: Error}>());
 
-	static readonly renameSmartContract = createAction(`[${ProjectAction.name}] rename smart contract [...]`, props<{projectId: string, scId: string}>());
+	static readonly renameSmartContract = createAction(`[${ProjectAction.name}] rename smart contract [...]`, props<{projectId: string, scId: string, name: string}>());
 	static readonly renameSmartContractSuccess = createAction(`[${ProjectAction.name}] rename smart contract [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameSmartContractError = createAction(`[${ProjectAction.name}] rename smart contract [ERR]`, props<{err: Error}>());
 
-	static readonly renameWallet = createAction(`[${ProjectAction.name}] rename wallet [...]`, props<{projectId: string, address: string}>());
+	static readonly renameWallet = createAction(`[${ProjectAction.name}] rename wallet [...]`, props<{projectId: string, address: string, name: string}>());
 	static readonly renameWalletSuccess = createAction(`[${ProjectAction.name}] rename wallet [OK]`, props<{project: Project, tabs: OpenedProjectTab[]}>());
 	static readonly renameWalletError = createAction(`[${ProjectAction.name}] rename wallet [ERR]`, props<{err: Error}>());
 
@@ -166,7 +166,7 @@ export class ProjectAction {
 	static readonly addAddressSuccess = createAction(`[${ProjectAction.name}] add project address [OK]`, props<{project: Project}>());
 	static readonly addAddressError = createAction(`[${ProjectAction.name}] add project address [ERR]`, props<{err: Error}>());
 
-	static readonly renameAddress = createAction(`[${ProjectAction.name}] rename project address [...]`, props<{projectId: string, address: string}>());
+	static readonly renameAddress = createAction(`[${ProjectAction.name}] rename project address [...]`, props<{projectId: string, address: string, name: string}>());
 	static readonly renameAddressSuccess = createAction(`[${ProjectAction.name}] rename project address [OK]`, props<{project: Project}>());
 	static readonly renameAddressError = createAction(`[${ProjectAction.name}] rename project address [ERR]`, props<{err: Error}>());
 
