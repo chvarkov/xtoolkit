@@ -8,12 +8,14 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		align-items: center;
 		color: var(--text-color);
 
 		.badge {
 			border-radius: 4px;
-			padding: 1px 6px;
+			padding: 4px 6px;
 			margin-left: 6px;
+			height: 28px;
 		}
 
 		.payable {
@@ -44,7 +46,7 @@
 				font-size: 0.88em;
 				background: var(--low-bg);
 				box-shadow: 0px -40px 26px 30px var(--low-bg);
-				padding: 3px;
+				margin-right: 3px;
 			}
 
 			.args {

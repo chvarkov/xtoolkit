@@ -2,6 +2,10 @@
 
 }
 
+//.mat-tab-body-wrapper {
+//	height: calc(100vh - var(--header-height) - var(--tab-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height)) !important;
+//}
+
 .sc-viewer-container {
 	width: 100%;
 	display: flex;

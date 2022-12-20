@@ -26,13 +26,15 @@
 		</mat-form-field>
 	</div>
 	<div class="input-field">
-		<app-form-field title="Fee">
-			<input class="fee-input"
+		<mat-form-field>
+			<mat-label>Fee</mat-label>
+			<input matInput
+				   class="fee-input"
 				   type="number"
-				   [value]="fee"
+				   [value]="fee.toString()"
 				   placeholder="Fee"
 				   (change)="onChangeFee($event)">
-		</app-form-field>
+		</mat-form-field>
 	</div>
 	<div class="actions">
 		<button class="action-button primary-action call-btn"

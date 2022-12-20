@@ -9,47 +9,55 @@
 				</app-address-input>
 				<app-address *ngIf="sc" [chainId]="chainId" [address]="sc.address || ''"></app-address>
 			</div>
-			<app-toolbar-icon-button right-side
-									 appTooltip
-									 tooltip="Expand all"
-									 (click)="expandAll()">
-				expand_more
-			</app-toolbar-icon-button>
-			<app-toolbar-icon-button right-side
-									 appTooltip
-									 tooltip="Hide all"
-									 (click)="hideAll()">
-				expand_less
-			</app-toolbar-icon-button>
+
+			<ng-container right-side [ngSwitch]="tabs.selectedIndex || TABS.Endpoints">
+				<ng-container *ngSwitchCase="TABS.Endpoints">
+					<app-toolbar-icon-button appTooltip
+											 tooltip="Expand all"
+											 (click)="expandAll()">expand_more</app-toolbar-icon-button>
+					<app-toolbar-icon-button appTooltip
+											 tooltip="Hide all"
+											 (click)="hideAll()">expand_less</app-toolbar-icon-button>
+				</ng-container>
+				<ng-container *ngSwitchCase="TABS.Tokens">
+					<app-toolbar-icon-button appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
+				</ng-container>
+				<ng-container *ngSwitchCase="TABS.NFTs">
+					<app-toolbar-icon-button appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
+				</ng-container>
+				<ng-container *ngSwitchCase="TABS.Code">
+					<app-toolbar-icon-button appTooltip tooltip="Download WASM file">download</app-toolbar-icon-button>
+				</ng-container>
+			</ng-container>
 		</app-toolbar>
-		<app-tabs navPosition="bottom">
-			<app-tab top title="Endpoints">
-				<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
-								 [projectId]="abi.projectId"
-								 [chainId]="chainId"
-								 [endpoint]="endpoint"
-								 [wallets]="(wallets$ | async) || []"
-								 [sc]="smartContract">
-				</app-sc-endpoint>
-			</app-tab>
-			<app-tab  top title="Tokens" *ngIf="sc">
-				<app-toolbar>
-					<app-toolbar-icon-button right-side appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
-				</app-toolbar>
-				<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
-			</app-tab>
-			<app-tab  top title="NFTs" *ngIf="sc">
-				<app-toolbar>
-					<app-toolbar-icon-button right-side appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
-				</app-toolbar>
-				<app-sc-nfts></app-sc-nfts>
-			</app-tab>
-			<app-tab  top title="Code" *ngIf="sc">
-				<app-toolbar>
-					<app-toolbar-icon-button right-side appTooltip tooltip="Download WASM file">download</app-toolbar-icon-button>
-				</app-toolbar>
-				<app-sc-code [code]="(code$ | async) || ''"></app-sc-code>
-			</app-tab>
-		</app-tabs>
+
+		<mat-tab-group #tabs headerPosition="below" [animationDuration]="'0ms'" [contentTabIndex]="TABS.Endpoints">
+			<mat-tab label="Endpoints">
+				<div class="page-tab-content">
+					<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
+									 [projectId]="abi.projectId"
+									 [chainId]="chainId"
+									 [endpoint]="endpoint"
+									 [wallets]="(wallets$ | async) || []"
+									 [sc]="smartContract">
+					</app-sc-endpoint>
+				</div>
+			</mat-tab>
+			<mat-tab label="Tokens" *ngIf="sc">
+				<div class="page-tab-content">
+					<app-sc-tokens [positions]="(tokens$ | async) || []" [native]="(native$ | async) || '0'"></app-sc-tokens>
+				</div>
+			</mat-tab>
+			<mat-tab label="NFTs" *ngIf="sc">
+				<div class="page-tab-content">
+					<app-sc-nfts></app-sc-nfts>
+				</div>
+			</mat-tab>
+			<mat-tab label="Code" *ngIf="sc">
+				<div class="page-tab-content">
+					<app-sc-code [code]="(code$ | async) || ''"></app-sc-code>
+				</div>
+			</mat-tab>
+		</mat-tab-group>
 	</ng-container>
 </div>

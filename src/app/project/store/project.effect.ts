@@ -352,6 +352,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.renameSmartContract),
 		exhaustMap(({projectId, scId}) => this.dialog.open(RenameDialogComponent, {
 			data: {title: 'Rename smart contract'},
+			width: '360px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
 			map(({name}) => ({projectId, scId, name})),
@@ -369,6 +370,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.renameAbi),
 		exhaustMap(({projectId, abiId}) => this.dialog.open(RenameDialogComponent, {
 			data: {title: 'Rename ABI interface'},
+			width: '360px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
 			map(({name}) => ({projectId, abiId, name})),
@@ -386,6 +388,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.renameWallet),
 		exhaustMap(({projectId, address}) => this.dialog.open(RenameDialogComponent, {
 			data: {title: 'Rename wallet'},
+			width: '340px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
 			map(({name}) => ({projectId, address, name})),
@@ -535,6 +538,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.renameAddress),
 		exhaustMap(({projectId, address}) => this.dialog.open(RenameDialogComponent, {
 			data: {title: 'Rename address'},
+			width: '340px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
 			map(({name}) => ({projectId, address, name})),
