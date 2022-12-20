@@ -338,6 +338,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.renameProject),
 		exhaustMap(({projectId, name}) => this.dialog.open(RenameDialogComponent, {
 			data: {title: 'Rename project', name},
+			width: '340px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
 			map(({name}) => ({projectId, name})),
