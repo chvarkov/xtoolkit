@@ -6,7 +6,7 @@ import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { GeneratedWallet } from '../../../core/data-provider/data-provider';
 import { Account, Address } from '@elrondnetwork/erdjs/out';
 
@@ -33,9 +33,9 @@ export class WalletViewerComponent implements OnInit {
 		this.account$ = this.store.select(ProjectSelector.account(this.projectId, this.address)).pipe(
 			map(acc => acc || new Account(new Address(this.address))),
 		);
-		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.projectId, this.address));
-		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.projectId, this.address));
-		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.projectId, this.address));
+		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.projectId, this.address)).pipe(filter(v => !!v));
+		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.projectId, this.address)).pipe(filter(v => !!v));
+		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.projectId, this.address)).pipe(filter(v => !!v));
 		this.chainId$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
 			map((project) => project?.chainId || ''),
 		);
