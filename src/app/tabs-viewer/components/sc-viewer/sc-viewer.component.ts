@@ -7,8 +7,8 @@ import { ProjectSelector } from '../../../project/store/project.selector';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
-import { Event } from '@angular/router';
 import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
+import { TAB } from '@angular/cdk/keycodes';
 
 @Component({
 	selector: 'app-sc-viewer',
@@ -16,6 +16,13 @@ import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
 	styleUrls: ['./sc-viewer.component.scss'],
 })
 export class ScViewerComponent implements OnInit {
+	readonly TABS = {
+		Endpoints: 0,
+		Tokens: 1,
+		NFTs: 2,
+		Code: 3,
+	};
+
 	@Input() projectId: string = '';
 	@Input() chainId: string = '';
 
@@ -33,6 +40,8 @@ export class ScViewerComponent implements OnInit {
 	code$: Observable<string> = of('');
 
 	wallets$: Observable<GeneratedWallet[]> = of([]);
+
+	openedTab = this.TABS.Endpoints;
 
 	constructor(private readonly store: Store) {
 	}
