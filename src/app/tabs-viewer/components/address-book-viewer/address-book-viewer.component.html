@@ -26,7 +26,7 @@
 							<mat-icon>more_vert</mat-icon>
 						</button>
 						<mat-menu #menu="matMenu" classList="dropdown-list" xPosition="before">
-							<button mat-menu-item (click)="renameAddress(elem.address)">
+							<button mat-menu-item (click)="renameAddress(elem.address, elem.name)">
 								<mat-icon>drive_file_rename_outline</mat-icon>
 								<span>Rename</span>
 							</button>

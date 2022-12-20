@@ -29,6 +29,7 @@ import { AppInitializer } from './services/app-initializer';
 import { MaterialModule } from './ui/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialog-header.component';
+import { TokenIdentifierSymbolPipe } from './pipes/token-identifier-symbol.pipe';
 
 @NgModule({
 	declarations: [
@@ -52,6 +53,7 @@ import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialo
 		TokenIdentifierInputComponent,
 		ResizeVerticalSplitterComponent,
 		ModalDialogHeaderComponent,
+		TokenIdentifierSymbolPipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -93,6 +95,7 @@ import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialo
 		TokenIdentifierInputComponent,
 		ResizeVerticalSplitterComponent,
 		ModalDialogHeaderComponent,
+		TokenIdentifierSymbolPipe,
 	],
 })
 export class CoreModule { }

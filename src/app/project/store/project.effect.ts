@@ -50,7 +50,7 @@ export class ProjectEffect {
 
 	updateProjectNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectNetwork),
-		exhaustMap(({projectId}) => this.dialog.open(UpdateProjectNetworkDialogComponent, {width: '300px'}).afterClosed().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(UpdateProjectNetworkDialogComponent, {width: '360px'}).afterClosed().pipe(
 			filter(v => !!v),
 			map(chainId => ({projectId, chainId})),
 		)),
@@ -336,8 +336,8 @@ export class ProjectEffect {
 
 	renameProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameProject),
-		exhaustMap(({projectId}) => this.dialog.open(RenameDialogComponent, {
-			data: {title: 'Rename project'},
+		exhaustMap(({projectId, name}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename project', name},
 		}).afterClosed().pipe(
 			filter(v => !!v),
 			map(({name}) => ({projectId, name})),
@@ -350,8 +350,8 @@ export class ProjectEffect {
 
 	renameSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameSmartContract),
-		exhaustMap(({projectId, scId}) => this.dialog.open(RenameDialogComponent, {
-			data: {title: 'Rename smart contract'},
+		exhaustMap(({projectId, scId, name}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename smart contract', name},
 			width: '360px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
@@ -368,8 +368,8 @@ export class ProjectEffect {
 
 	renameAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAbi),
-		exhaustMap(({projectId, abiId}) => this.dialog.open(RenameDialogComponent, {
-			data: {title: 'Rename ABI interface'},
+		exhaustMap(({projectId, abiId, name}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename ABI interface', name},
 			width: '360px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
@@ -386,8 +386,8 @@ export class ProjectEffect {
 
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
-		exhaustMap(({projectId, address}) => this.dialog.open(RenameDialogComponent, {
-			data: {title: 'Rename wallet'},
+		exhaustMap(({projectId, address, name}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename wallet', name},
 			width: '340px',
 		}).afterClosed().pipe(
 			filter(v => !!v),
@@ -536,8 +536,8 @@ export class ProjectEffect {
 
 	renameAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAddress),
-		exhaustMap(({projectId, address}) => this.dialog.open(RenameDialogComponent, {
-			data: {title: 'Rename address'},
+		exhaustMap(({projectId, address, name}) => this.dialog.open(RenameDialogComponent, {
+			data: {title: 'Rename address', name},
 			width: '340px',
 		}).afterClosed().pipe(
 			filter(v => !!v),

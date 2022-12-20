@@ -122,20 +122,20 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.openProjectComponent(project.id,`${project.name} address book`, 'address_book', project.id);
 	}
 
-	renameProject(projectId: string): void {
-		this.store.dispatch(ProjectAction.renameProject({projectId}));
+	renameProject(projectId: string, name: string): void {
+		this.store.dispatch(ProjectAction.renameProject({projectId, name}));
 	}
 
-	renameSmartContract(projectId: string, scId: string): void {
-		this.store.dispatch(ProjectAction.renameSmartContract({projectId, scId}));
+	renameSmartContract(projectId: string, scId: string, name: string): void {
+		this.store.dispatch(ProjectAction.renameSmartContract({projectId, scId, name}));
 	}
 
-	renameAbi(projectId: string, abiId: string): void {
-		this.store.dispatch(ProjectAction.renameAbi({projectId, abiId}));
+	renameAbi(projectId: string, abiId: string, name: string): void {
+		this.store.dispatch(ProjectAction.renameAbi({projectId, abiId, name}));
 	}
 
-	renameWallet(projectId: string, address: string): void {
-		this.store.dispatch(ProjectAction.renameWallet({projectId, address}));
+	renameWallet(projectId: string, address: string, name: string): void {
+		this.store.dispatch(ProjectAction.renameWallet({projectId, address, name}));
 	}
 
 	exploreToken(projectId: string, identifier: string): void {

@@ -52,8 +52,8 @@ export class WalletViewerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId: this.projectId, address: this.address}));
 	}
 
-	renameWallet(): void {
-		this.store.dispatch(ProjectAction.renameWallet({projectId: this.projectId, address: this.address}));
+	renameWallet(name: string): void {
+		this.store.dispatch(ProjectAction.renameWallet({projectId: this.projectId, address: this.address, name}));
 	}
 
 	exportMnemonic(wallet: GeneratedWallet): void {

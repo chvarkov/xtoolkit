@@ -8,15 +8,17 @@
 								 (click)="deleteWallet(wallet)">
 			delete
 		</app-toolbar-icon-button>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Rename"
-								 (click)="renameWallet()">
-			drive_file_rename_outline
-		</app-toolbar-icon-button>
-		<app-toolbar-icon-button *ngIf="wallet$ | async as wallet"
-								 right-side appTooltip tooltip="Export keys"
-								 (click)="exportMnemonic(wallet)">
-			key
-		</app-toolbar-icon-button>
+		<ng-container right-side *ngIf="wallet$ | async as wallet">
+			<app-toolbar-icon-button  appTooltip tooltip="Rename"
+									 (click)="renameWallet(wallet.name)">
+				drive_file_rename_outline
+			</app-toolbar-icon-button>
+			<app-toolbar-icon-button
+				appTooltip tooltip="Export keys"
+				(click)="exportMnemonic(wallet)">
+				key
+			</app-toolbar-icon-button>
+		</ng-container>
 		<app-toolbar-icon-button right-side appTooltip
 								 tooltip="Refresh"
 								 (click)="loadData()">refresh</app-toolbar-icon-button>

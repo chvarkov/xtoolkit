@@ -27,6 +27,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const MAT_MODULES = [
     MatInputModule,
@@ -60,6 +61,7 @@ const MAT_MODULES = [
     MatBadgeModule,
     MatListModule,
     MatRippleModule,
+	MatAutocompleteModule,
 ];
 
 @NgModule({

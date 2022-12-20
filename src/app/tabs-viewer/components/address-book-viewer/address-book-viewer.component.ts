@@ -26,8 +26,8 @@ export class AddressBookViewerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.addAddress({projectId: this.projectId}));
 	}
 
-	renameAddress(address: string): void {
-		this.store.dispatch(ProjectAction.renameAddress({projectId: this.projectId, address}));
+	renameAddress(address: string, name: string): void {
+		this.store.dispatch(ProjectAction.renameAddress({projectId: this.projectId, address, name}));
 	}
 
 	deleteAddress(address: string): void {
