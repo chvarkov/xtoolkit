@@ -1,30 +1,29 @@
 <div class="tx-sign-container">
 	<ng-container *ngIf="endpoint.modifiers.isPayable()">
 		<div class="input-field">
-			<app-form-field title="Amount">
-				<input class="amount-input"
+			<mat-form-field title="Amount" class="amount-input">
+				<mat-label>Amount</mat-label>
+				<span matSuffix>{{tokenIdentifier.valueOf() | tokenIdentifierSymbol}}</span>
+				<input matInput
 					   type="number"
+					   value="0"
 					   (change)="onChangeTokenAmount($event)">
-			</app-form-field>
+			</mat-form-field>
 		</div>
 
 		<div class="input-field">
-			<app-form-field title="Token identifier">
-				<app-token-identifier-input class="token-identifier-input"
-											[chainId]="network?.chainId || ''"
-											[projectId]="projectId"
-											(changed)="onChangeTokenIdentifier($event)">
-				</app-token-identifier-input>
-			</app-form-field>
+			<app-token-identifier-input class="token-identifier-input"
+										[chainId]="network?.chainId || ''"
+										[projectId]="projectId"
+										(changed)="onChangeTokenIdentifier($event)">
+			</app-token-identifier-input>
 		</div>
 	</ng-container>
-	<div class="wallet">
-		<mat-form-field>
-			<mat-select placeholder="Caller" (selectionChange)="onSelectedWallet($event.value)" panelClass="select-panel">
-				<mat-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</mat-option>
-			</mat-select>
-		</mat-form-field>
-	</div>
+	<mat-form-field>
+		<mat-select placeholder="Caller" (selectionChange)="onSelectedWallet($event.value)" panelClass="select-panel">
+			<mat-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</mat-option>
+		</mat-select>
+	</mat-form-field>
 	<div class="input-field">
 		<mat-form-field>
 			<mat-label>Fee</mat-label>

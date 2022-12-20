@@ -7,6 +7,7 @@ import { NetworkSelector } from '../../../network/store/network.selector';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
 import { TokenIdentifierValue } from '@elrondnetwork/erdjs/out';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
 	selector: 'app-token-identifier-input',
@@ -60,10 +61,8 @@ export class TokenIdentifierInputComponent implements OnInit {
 		return false; // TODO: add validation
 	}
 
-	onChangeTokenIdentifier(event: Event): void {
-		const value = (<HTMLInputElement>(event.target)).value;
-
-		this.setValue(value);
+	onChangeTokenIdentifier(event: MatAutocompleteSelectedEvent): void {
+		this.setValue(event.option.value);
 	}
 
 	onSelectTokenIdentifier(identifier: string): void {

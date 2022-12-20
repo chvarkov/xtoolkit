@@ -1,32 +1,42 @@
 <div class="token-identifier-input">
-	<input #input class="input"
-		   [ngClass]="{invalid: isInvalidIdentifier(input.value)}"
-		   [value]="identifier"
-		   (change)="onChangeTokenIdentifier($event)"
-		   (blur)="onBlur()"
-		   (focus)="onFocus()">
-	<div class="icons">
-		<ng-container *ngIf="!isInvalidIdentifier(input.value)">
-				<span class="material-icons action"
-					  appTooltip tooltip="Copy"
-					  (click)="clipboard.copy(identifier)">
-					content_copy
-				</span>
-			<span class="material-icons action"
-				  appTooltip tooltip="Explore"
-				  *ngIf="network$ | async as network"
-				  (click)="explore(network.explorerUrl)">
-					search
-				</span>
-		</ng-container>
-		<span class="material-icons invalid-icon" *ngIf="isInvalidIdentifier(input.value)">cancel</span>
-	</div>
+	<mat-form-field>
+		<mat-label>Token identifier</mat-label>
+		<input type="text" matInput [matAutocomplete]="auto">
+		<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeTokenIdentifier($event)">
+			<mat-option *ngFor="let option of (tokenIdentifiers$ | async) || []" [value]="option">
+				{{option}}
+			</mat-option>
+		</mat-autocomplete>
+	</mat-form-field>
 
-	<div class="identifiers-container" *ngIf="showIdentifiers && isOptionsVisible">
-		<div class="option"
-			 *ngFor="let option of (tokenIdentifiers$ | async) || []"
-			 (click)="onSelectTokenIdentifier(option)">
-			{{option}}
-		</div>
-	</div>
+<!--	<input #input class="input"-->
+<!--		   [ngClass]="{invalid: isInvalidIdentifier(input.value)}"-->
+<!--		   [value]="identifier"-->
+<!--		   (change)="onChangeTokenIdentifier($event)"-->
+<!--		   (blur)="onBlur()"-->
+<!--		   (focus)="onFocus()">-->
+<!--	<div class="icons">-->
+<!--		<ng-container *ngIf="!isInvalidIdentifier(input.value)">-->
+<!--				<span class="material-icons action"-->
+<!--					  appTooltip tooltip="Copy"-->
+<!--					  (click)="clipboard.copy(identifier)">-->
+<!--					content_copy-->
+<!--				</span>-->
+<!--			<span class="material-icons action"-->
+<!--				  appTooltip tooltip="Explore"-->
+<!--				  *ngIf="network$ | async as network"-->
+<!--				  (click)="explore(network.explorerUrl)">-->
+<!--					search-->
+<!--				</span>-->
+<!--		</ng-container>-->
+<!--		<span class="material-icons invalid-icon" *ngIf="isInvalidIdentifier(input.value)">cancel</span>-->
+<!--	</div>-->
+
+<!--	<div class="identifiers-container" *ngIf="showIdentifiers && isOptionsVisible">-->
+<!--		<div class="option"-->
+<!--			 *ngFor="let option of (tokenIdentifiers$ | async) || []"-->
+<!--			 (click)="onSelectTokenIdentifier(option)">-->
+<!--			{{option}}-->
+<!--		</div>-->
+<!--	</div>-->
 </div>
