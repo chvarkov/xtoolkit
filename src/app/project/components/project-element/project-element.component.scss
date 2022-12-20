@@ -9,6 +9,7 @@
 	flex-direction: row;
 	align-items: center;
 	cursor: pointer;
+	height: 28px;
 
 	&:hover {
 		background: var(--high-bg);
@@ -17,11 +18,13 @@
 	.icon {
 		padding: 2px;
 		color: var(--text-color);
+		font-size: 1.3em;
 	}
 
 	.expand {
 		cursor: pointer;
 		padding-right: 4px;
+		font-size: 1.3em;
 	}
 
 	.name {
