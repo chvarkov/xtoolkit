@@ -224,17 +224,22 @@ body {
 	box-sizing: border-box;
 }
 
-input, textarea {
-	background: var(--low-bg);
+.sc-argument-input {
+	background: var(--primary-darken-bg);
 	color: var(--text-color);
-	//border: solid 1px var(--border-low-color);
-	//border-radius: 4px;
-	//padding: 2px 4px;
+	border: solid 1px var(--border-low-color);
+	border-radius: 4px;
+	padding: 4px 6px;
 }
 
-input:focus, input:active, textarea:focus, textarea:active {
-	//border: solid 1px var(--border-accent-color);
-	//outline: none;
+.sc-argument-input:focus, .sc-argument-input:active {
+	border: solid 1px var(--border-accent-color);
+	//box-shadow: 3px 3px 3px var(--border-accent-color);
+	outline: none;
+}
+
+input {
+	background: var(--primary-bg);
 }
 
 input::-webkit-outer-spin-button,
@@ -308,4 +313,12 @@ button {
 
 .mat-tab-header {
 	box-sizing: border-box !important;
+}
+
+.argument-input {
+	font-size: 0.88em;
+}
+
+.call-input {
+	font-size: 0.94em;
 }
