@@ -50,7 +50,7 @@ export class ProjectEffect {
 
 	updateProjectNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectNetwork),
-		exhaustMap(({projectId}) => this.dialog.open(UpdateProjectNetworkDialogComponent, {width: '300px'}).afterClosed().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(UpdateProjectNetworkDialogComponent, {width: '360px'}).afterClosed().pipe(
 			filter(v => !!v),
 			map(chainId => ({projectId, chainId})),
 		)),
