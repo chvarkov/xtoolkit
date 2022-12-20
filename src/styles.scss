@@ -238,8 +238,9 @@ body {
 	outline: none;
 }
 
-input {
+input, textarea {
 	background: var(--primary-bg);
+	color: var(--text-color);
 }
 
 input::-webkit-outer-spin-button,
