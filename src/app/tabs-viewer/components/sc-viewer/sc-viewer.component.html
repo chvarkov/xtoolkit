@@ -10,7 +10,7 @@
 				<app-address *ngIf="sc" [chainId]="chainId" [address]="sc.address || ''"></app-address>
 			</div>
 
-			<ng-container right-side [ngSwitch]="tabs.selectedIndex">
+			<ng-container right-side [ngSwitch]="tabs.selectedIndex || TABS.Endpoints">
 				<ng-container *ngSwitchCase="TABS.Endpoints">
 					<app-toolbar-icon-button appTooltip
 											 tooltip="Expand all"
