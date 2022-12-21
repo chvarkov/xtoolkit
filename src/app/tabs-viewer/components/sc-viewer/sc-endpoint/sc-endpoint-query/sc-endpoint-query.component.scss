@@ -9,9 +9,6 @@
 	padding-top: 6px;
 	padding-right: 30px;
 
-	.caller {
-	}
-
 	.actions {
 		display: flex;
 		flex-direction: row;
@@ -21,6 +18,11 @@
 	}
 }
 
+.caller {
+	width: 200px;
+}
+
 .query-btn {
 	width: var(--endpoint-action-button-width);
+	height: 46px;
 }

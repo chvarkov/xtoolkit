@@ -1,13 +1,15 @@
 .field {
 	display: flex;
 	flex-direction: column;
+}
 
-	.title {
-		font-size: 0.76em;
-		color: var(--field-label-color);
-	}
+.label {
+	font-size: 0.76em;
+	color: var(--field-label-color);
+	margin-bottom: 4px;
+	margin-left: 2px;
+}
 
-	.errors {
-		font-size: 0.76em;
-	}
+.errors {
+	font-size: 0.76em;
 }

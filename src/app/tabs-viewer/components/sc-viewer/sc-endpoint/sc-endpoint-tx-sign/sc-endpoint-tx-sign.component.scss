@@ -15,10 +15,15 @@
 }
 
 .token-identifier-input {
+	width: 160px;
 }
 
 .amount-input {
-	width: 150px;
+	width: 100px;
+}
+
+.caller {
+	width: 180px;
 }
 
 .input-field {
@@ -39,4 +44,5 @@
 
 .call-btn {
 	width: var(--endpoint-action-button-width);
+	height: 46px;
 }

@@ -1,0 +1,60 @@
+@import "colors";
+@import "constants";
+@import "controls";
+@import "material";
+@import "material-overrides";
+@import "typography";
+
+body {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	background: var(--primary-bg);
+	color: var(--text-color);
+	font-family: Poppins !important;
+	overflow: hidden;
+}
+
+* {
+	font-size: 1em;
+	box-sizing: border-box;
+}
+
+.action-button {
+	padding: 10px 12px
+}
+
+.primary-action {
+	background: var(--submit-button-bg);
+}
+
+.prevent-text-select {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.page-tab-content {
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height) - 1px);
+	overflow-y: auto;
+}
+
+.select-panel {
+	background-color: var(--primary-bg) !important;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
+
+.dropdown-list {
+	background-color: var(--primary-bg) !important;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
+
+.argument-input {
+	font-size: 0.88em;
+}
+
+.call-input {
+	font-size: 0.94em;
+}
