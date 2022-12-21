@@ -1,14 +1,12 @@
 <div class="tx-sign-container">
 	<ng-container *ngIf="endpoint.modifiers.isPayable()">
 		<div class="input-field">
-			<mat-form-field title="Amount" class="amount-input call-input">
-				<mat-label>Amount</mat-label>
-				<span matSuffix>{{tokenIdentifier.valueOf() | tokenIdentifierSymbol}}</span>
-				<input matInput
+			<app-form-field title="Amount" class="call-input">
+				<input matInput class="amount-input"
 					   type="number"
 					   value="0"
 					   (change)="onChangeTokenAmount($event)">
-			</mat-form-field>
+			</app-form-field>
 		</div>
 
 		<div class="input-field">
@@ -19,24 +17,22 @@
 			</app-token-identifier-input>
 		</div>
 	</ng-container>
-	<mat-form-field class="call-input">
-		<mat-select placeholder="Caller" (selectionChange)="onSelectedWallet($event.value)" panelClass="select-panel">
+	<app-form-field title="Caller" class="call-input caller">
+		<mat-select placeholder="No caller" (selectionChange)="onSelectedWallet($event.value)" panelClass="select-panel">
 			<mat-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</mat-option>
 		</mat-select>
-	</mat-form-field>
+	</app-form-field>
 	<div class="input-field">
-		<mat-form-field class="call-input">
-			<mat-label>Fee</mat-label>
-			<input matInput
-				   class="fee-input"
+		<app-form-field title="fee" class="call-input">
+			<input class="input fee-input sc-argument-input"
 				   type="number"
 				   [value]="fee.toString()"
 				   placeholder="Fee"
 				   (change)="onChangeFee($event)">
-		</mat-form-field>
+		</app-form-field>
 	</div>
 	<div class="actions">
-		<button class="action-button primary-action call-btn"
+		<button mat-raised-button class="action-button primary-action call-btn"
 				[disabled]="!wallet"
 				(click)="submit()">
 			Call

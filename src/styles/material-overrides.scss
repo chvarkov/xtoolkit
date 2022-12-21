@@ -1,0 +1,50 @@
+.mat-dialog-container {
+	background-color: var(--primary-bg) !important;
+	border-radius: 4px;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
+
+.mat-tab-label-container, .mat-autocomplete-panel {
+	background: var(--primary-bg);
+}
+
+.mat-tab-label {
+	background: var(--primary-bg) !important;
+	height: var(--tab-height) !important;
+}
+
+.mat-tab-label-active {
+	background: var(--low-bg) !important;
+}
+
+mat-select, mat-autocomplete {
+	background: var(--primary-darken-bg);
+	color: var(--text-color);
+	border: solid 1px var(--border-low-color);
+	border-radius: 4px;
+	padding: 4px 6px;
+	font-size: 0.88em;
+	height: 27px;
+}
+
+.mat-option {
+	line-height: 30px !important;
+	height: 30px !important;
+	font-size: 16px !important;
+}
+
+.mat-menu-item {
+	line-height: 32px !important;
+	height: 32px !important;
+	font-size: 0.9em;
+
+	mat-icon {
+		font-size: 1.4em;
+		margin-right: 8px !important;
+	}
+}
+
+.mat-tab-header {
+	box-sizing: border-box !important;
+}

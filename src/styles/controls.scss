@@ -28,6 +28,19 @@ input::-webkit-inner-spin-button {
 	margin: 0;
 }
 
+input {
+	background: var(--primary-darken-bg);
+	color: var(--text-color);
+	border: solid 1px var(--border-low-color);
+	border-radius: 4px;
+	padding: 4px 6px;
+}
+
+input:focus, input:active {
+	border: solid 1px var(--border-accent-color);
+	outline: none;
+}
+
 input[type=number] {
 	-moz-appearance: textfield;
 }

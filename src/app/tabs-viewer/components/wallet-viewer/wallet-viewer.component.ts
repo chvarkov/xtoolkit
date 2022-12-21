@@ -48,6 +48,7 @@ export class WalletViewerComponent implements OnInit {
 	}
 
 	loadData(): void {
+		console.log('emit load data : ' + this.address);
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId: this.projectId, address: this.address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId: this.projectId, address: this.address}));
 	}
