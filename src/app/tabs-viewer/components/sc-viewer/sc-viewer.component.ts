@@ -9,6 +9,7 @@ import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-trans
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
 import { TAB } from '@angular/cdk/keycodes';
+import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-sc-viewer',
@@ -54,7 +55,7 @@ export class ScViewerComponent implements OnInit {
 		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(projectId, address));
 		this.tokens$ = this.store.select(ProjectSelector.accountTokens(projectId, address));
 		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(projectId, address));
-		this.code$ = this.store.select(ProjectSelector.smartContractCode(projectId, address));
+		this.code$ = this.store.select(ProjectSelector.smartContractCode(projectId, address)).pipe(filter(v => !!v));
 
 		this.wallets$ = this.store.select(ProjectSelector.walletsByProjectId(projectId));
 
