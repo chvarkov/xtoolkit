@@ -1,4 +1,9 @@
 <div class="sc-viewer-container" *ngIf="abi">
+	<ng-container *ngIf="!(code$ | async)">
+		<div class="no-code-warning">
+			No smart contract code, maybe network was reset or address is wrong.
+		</div>
+	</ng-container>
 	<ng-container *ngIf="(abi.content | sc:sc?.address || '') as smartContract">
 		<app-toolbar>
 			<div left-side class="toolbar-left-side">
