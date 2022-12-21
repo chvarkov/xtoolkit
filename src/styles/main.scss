@@ -1,0 +1,106 @@
+@import "colors";
+@import "constants";
+@import "controls";
+@import "material";
+@import "typography";
+
+body {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	background: var(--primary-bg);
+	color: var(--text-color);
+	font-family: Poppins !important;
+	overflow: hidden;
+}
+
+* {
+	font-size: 1em;
+	box-sizing: border-box;
+}
+
+.sc-argument-input {
+	background: var(--primary-darken-bg);
+	color: var(--text-color);
+	border: solid 1px var(--border-low-color);
+	border-radius: 4px;
+	padding: 4px 6px;
+}
+
+.sc-argument-input:focus, .sc-argument-input:active {
+	border: solid 1px var(--border-accent-color);
+	//box-shadow: 3px 3px 3px var(--border-accent-color);
+	outline: none;
+}
+
+
+.action-button {
+	padding: 10px 12px
+}
+
+.primary-action {
+	background: var(--submit-button-bg);
+}
+
+.prevent-text-select {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.mat-dialog-container {
+	background-color: var(--primary-bg) !important;
+	border-radius: 4px;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
+
+.mat-tab-label {
+	background: var(--primary-bg) !important;
+	height: var(--tab-height) !important;
+}
+
+.mat-tab-label-active {
+	background: var(--low-bg) !important;
+}
+
+.page-tab-content {
+	height: calc(100vh - var(--header-height) - var(--toolbar-height) - var(--toolbar-height) - var(--tab-height) - var(--footer-height) - 1px);
+	overflow-y: auto;
+}
+
+.mat-tab-label-container, .mat-autocomplete-panel {
+	background: var(--primary-bg);
+}
+
+.select-panel {
+	background-color: var(--primary-bg) !important;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
+
+.dropdown-list {
+	background-color: var(--primary-bg) !important;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
+
+.mat-tab-header {
+	box-sizing: border-box !important;
+}
+
+.argument-input {
+	font-size: 0.88em;
+}
+
+.call-input {
+	font-size: 0.94em;
+}
+
+mat-select {
+	background: var(--primary-darken-bg);
+	color: var(--text-color);
+	border: solid 1px var(--border-low-color);
+	border-radius: 4px;
+	padding: 4px 6px;
+}

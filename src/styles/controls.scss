@@ -1,0 +1,41 @@
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 1px var(--high-bg);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--scroll-color);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--scroll-hover-color);
+}
+
+input, textarea {
+	background: var(--primary-bg);
+	color: var(--text-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+button {
+	background: none;
+	border: solid 1px transparent;
+	color: var(--text-color);
+	cursor: pointer;
+	border-radius: 4px;
+}
