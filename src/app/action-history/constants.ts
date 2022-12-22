@@ -1,1 +1,1 @@
-export const TRANSACTION_FEATURE = 'transactions';
+export const ACTION_HISTORY_FEATURE = 'actionHistory';
