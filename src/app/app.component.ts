@@ -48,6 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		}, 2600);
 	}
 
+	trackByTab = (index: number, item: OpenedProjectTab) => `${item.projectId}:${item.componentType}:${item.componentId}`;
+
 	ngOnDestroy() {
 		this.tokenIssueAwaiter.disable();
 	}
