@@ -1,0 +1,5 @@
+<mat-icon *ngIf="status"
+		  [ngClass]="status.toLowerCase()"
+		  appTooltip [tooltip]="status | titlecase">
+	{{status | actionStatusIcon}}
+</mat-icon>

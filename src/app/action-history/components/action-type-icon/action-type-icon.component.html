@@ -1,0 +1,5 @@
+<mat-icon *ngIf="type"
+		  class="icon"
+		  appTooltip [tooltip]="type | titlecase">
+	{{type | actionTypeIcon}}
+</mat-icon>

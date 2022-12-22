@@ -17,10 +17,20 @@
 
 	.tech-details {
 		justify-content: space-between;
+		font-size: 0.9em;
 	}
 
 	.primary-info {
 		justify-content: space-between;
 		align-items: center;
+	}
+}
+
+.title {
+	display: flex;
+	flex-direction: row;
+
+	app-action-type-icon {
+		margin-right: 8px;
 	}
 }
