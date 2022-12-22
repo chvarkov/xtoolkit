@@ -28,6 +28,10 @@ mat-select, mat-autocomplete {
 	height: 27px;
 }
 
+.mat-menu-panel {
+	min-height: auto !important;
+}
+
 .mat-option {
 	line-height: 30px !important;
 	height: 30px !important;

@@ -7,7 +7,7 @@
 		(move)="moveTab($event.prevIndex, $event.currentIndex)"
 		(close)="closeTab($event)"
 		(selectedTab)="selectTab($event)">
-		<app-project-tab *ngFor="let tab of openedTabs$ | async; let i = index"
+		<app-project-tab *ngFor="let tab of openedTabs$ | async; let i = index; trackBy: trackByTab"
 						 [index]="tab.index"
 						 [active]="i === (currentTabIndex$ | async)"
 						 [title]="tab.title"
