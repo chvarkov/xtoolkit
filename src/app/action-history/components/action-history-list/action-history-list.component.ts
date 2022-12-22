@@ -44,4 +44,8 @@ export class ActionHistoryListComponent implements OnInit {
 			title: txTabName(elem.txHash),
 		}));
 	}
+
+	trackBy(_: number, element: ActionHistoryElement): string {
+		return element.id;
+	}
 }

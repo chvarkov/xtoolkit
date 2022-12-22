@@ -11,7 +11,7 @@
 </app-toolbar>
 <div class="transaction-list-container">
 	<ng-container *ngIf="(actionHistory$ | async)?.length; else emptyState">
-		<app-action *ngFor="let item of actionHistory$ | async" [data]="item"></app-action>
+		<app-action *ngFor="let item of actionHistory$ | async; trackBy: trackBy" [data]="item"></app-action>
 	</ng-container>
 </div>
 
