@@ -43,7 +43,10 @@ export class ProjectEffect {
 	openProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.openProject),
 		mergeMap(({id}) => this.dataProvider.openProject(id).pipe(
-			map((project) => ProjectAction.openProjectSuccess({project})),
+			switchMap((project) => [
+				ProjectAction.openProjectSuccess({project}),
+				ProjectAction.loadProjectTabs(),
+			]),
 			catchError(err => of(ProjectAction.openProjectError({err})))
 		)),
 	));
@@ -201,7 +204,7 @@ export class ProjectEffect {
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectTabs),
-		mergeMap(() => this.personalSettingsManager.getOpenedTabs().pipe(
+		mergeMap(() => this.personalSettingsManager.getActiveProjectOpenedTabs().pipe(
 			map((tabsData) => ProjectAction.loadProjectTabsSuccess({tabsData})),
 			catchError(err => of(ProjectAction.loadProjectTabsError({err})))),
 		),

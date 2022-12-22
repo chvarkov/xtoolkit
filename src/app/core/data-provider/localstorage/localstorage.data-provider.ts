@@ -90,6 +90,10 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
+	getActiveProjectId(): Observable<string | undefined> {
+		return of(this.get(this.activeProjectKey));
+	}
+
 	openProject(projectId: string): Observable<Project> {
 		return this.getProject(projectId).pipe(
 			map(project => {

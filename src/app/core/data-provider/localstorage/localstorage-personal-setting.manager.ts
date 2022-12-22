@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
 	getProjectComponentNodeId,
 	LayoutState,
@@ -10,11 +10,11 @@ import {
 	TabsData,
 	Theme
 } from '../personal-settings.manager';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Project } from '../data-provider';
+import { DATA_PROVIDER, DataProvider, Project } from '../data-provider';
 
 @Injectable({providedIn: 'root'})
 export class LocalstoragePersonalSettingManager implements PersonalSettingsManager {
@@ -26,18 +26,23 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 
 	private readonly projectComponentGroups: ProjectComponentType[] = ['abi', 'sc', 'token', 'nft', 'wallet'];
 
-	getOpenedTabs(): Observable<TabsData> {
-		return of({
-			tabs: this.getOpenedTabList(),
-			selectedIndex: this.getCurrentTabIndex(),
-		});
+	constructor(@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {
+	}
+
+	getActiveProjectOpenedTabs(): Observable<TabsData> {
+		return this.dataProvider.getActiveProjectId().pipe(
+			map(projectId => ({
+				tabs: this.getActiveProjectOpenedTabList(projectId),
+				selectedIndex: this.getCurrentTabIndex(projectId),
+			})),
+		);
 	}
 
 	openTab(projectId: string,
 			title: string,
 			componentType: ProjectComponentType,
 			componentId: string): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
+		return this.getActiveProjectOpenedTabs().pipe(
 			map(({ tabs, selectedIndex }) => {
 				tabs = tabs || [];
 
@@ -52,8 +57,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 					...tabs.map((item, index) => ({...item, index: index + 1}))
 				]
 
-				this.set(this.openedTabsKey, updatedList);
-				this.set(this.currentTabIndexKey, 0);
+				this.set(this.getOpenedTabsKey(projectId), updatedList);
+				this.set(this.getCurrentTabKey(projectId), 0);
 
 				return { tabs: updatedList, selectedIndex: 0 };
 			}),
@@ -61,8 +66,15 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	pushTabAsFirst(index: number): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
-			map(({ tabs, selectedIndex }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs, selectedIndex }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				tabs = tabs || [];
 
 				const current = tabs[index];
@@ -83,8 +95,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 						})),
 				];
 
-				this.set(this.openedTabsKey, updatedList);
-				this.set(this.currentTabIndexKey, 0);
+				this.set(this.getOpenedTabsKey(projectId), updatedList);
+				this.set(this.getCurrentTabKey(projectId), 0);
 
 				return { tabs: updatedList, selectedIndex: 0 };
 			}),
@@ -95,8 +107,15 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		   componentType: ProjectComponentType,
 		   componentId: string,
 		   newName: string): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
-			map(({ tabs, selectedIndex }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs, selectedIndex }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				tabs = tabs || [];
 
 				const tab = tabs.find(t => t.projectId === projectId && t.componentType === componentType && componentId === componentId);
@@ -104,7 +123,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				if (tab) {
 					tab.title = newName;
 
-					this.set(this.openedTabsKey, tabs);
+					this.set(this.getOpenedTabsKey(projectId), tabs);
 				}
 
 				return { tabs, selectedIndex };
@@ -113,8 +132,15 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	deleteComponent(projectId: string, componentType: ProjectComponentType, componentId: string): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
-			map(({ tabs, selectedIndex }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs, selectedIndex }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				if (!tabs?.length) {
 					return { tabs: [] };
 				}
@@ -145,8 +171,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 					index = 0;
 				}
 
-				this.set(this.openedTabsKey, tabs);
-				this.set(this.currentTabIndexKey, index);
+				this.set(this.getOpenedTabsKey(projectId), tabs);
+				this.set(this.getCurrentTabKey(projectId), index);
 
 				return { tabs, selectedIndex: index };
 			}),
@@ -154,8 +180,15 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	closeTab(index: number): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
-			map(({ tabs }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				if (!tabs?.length) {
 					return { tabs: [] };
 				}
@@ -178,8 +211,15 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	moveTab(prevIndex: number, currentIndex: number): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
-			map(({ tabs, selectedIndex }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs, selectedIndex }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				if (!tabs?.length) {
 					return {tabs: []};
 				}
@@ -196,10 +236,10 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 					selectedIndex = currentIndex;
 					// console.log(`currentIndex: ${selectedIndex}`);
 
-					this.set(this.currentTabIndexKey, selectedIndex || 0);
+					this.set(this.getCurrentTabKey(projectId), selectedIndex || 0);
 				}
 
-				this.set(this.openedTabsKey, tabs);
+				this.set(this.getOpenedTabsKey(projectId), tabs);
 
 				return { tabs, selectedIndex };
 			}),
@@ -207,8 +247,15 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	}
 
 	selectTab(index: number): Observable<TabsData> {
-		return this.getOpenedTabs().pipe(
-			map(({ tabs, selectedIndex }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs, selectedIndex }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				if (!tabs?.length) {
 					return { tabs: [] };
 				}
@@ -221,7 +268,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 					throw new Error('Selected invalid tab');
 				}
 
-				this.set(this.currentTabIndexKey, index);
+				this.set(this.getCurrentTabKey(projectId), index);
 
 				return { tabs, selectedIndex: index };
 			}),
@@ -414,8 +461,11 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		}
 	};
 
-	private getOpenedTabList(): OpenedProjectTab[] {
-		return this.pushHomeIfListIsEmpty(this.get(this.openedTabsKey) || []);
+	private getActiveProjectOpenedTabList(projectId?: string): OpenedProjectTab[] {
+		if (!projectId) {
+			return [];
+		}
+		return this.pushHomeIfListIsEmpty(this.get(this.getOpenedTabsKey(projectId)) || []);
 	}
 
 	private pushHomeIfListIsEmpty(list: OpenedProjectTab[]): OpenedProjectTab[] {
@@ -426,8 +476,19 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		return list;
 	}
 
-	private getCurrentTabIndex(): number {
-		const index = +this.get<string>(this.currentTabIndexKey);
+	private getOpenedTabsKey(projectId: string): string {
+		return `${this.openedTabsKey}.${projectId}`;
+	}
+
+	private getCurrentTabKey(projectId: string): string {
+		return `${this.currentTabIndexKey}.${projectId}`;
+	}
+
+	private getCurrentTabIndex(projectId?: string): number {
+		if (!projectId) {
+			return 0;
+		}
+		const index = +this.get<string>(this.getCurrentTabKey(projectId));
 		return !isNaN(index) ? index : 0;
 	}
 

@@ -89,6 +89,8 @@ export interface DataProvider {
 
 	deleteNetwork(chainId: string): Observable<INetworkEnvironment[]>;
 
+	getActiveProjectId(): Observable<string | undefined>;
+
 	getProject(id: string): Observable<Project>;
 
 	getProjectList(): Observable<ProjectInfo[]>;
