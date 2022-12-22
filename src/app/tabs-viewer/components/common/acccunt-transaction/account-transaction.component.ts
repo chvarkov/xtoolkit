@@ -27,7 +27,6 @@ export class AccountTransactionComponent implements OnInit {
 		}
 
 		this.store.dispatch(ProjectAction.openProjectTab({
-			projectId: this.projectId,
 			componentId: this.tx.txHash,
 			title: txTabName(this.tx.txHash),
 			componentType: 'tx',

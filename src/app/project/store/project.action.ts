@@ -73,7 +73,7 @@ export class ProjectAction {
 
 	static readonly openProjectTab = createAction(
 		`[${ProjectAction.name}] open project tab [...]`,
-		props<{projectId: string, title: string, componentType: ProjectComponentType, componentId: string}>(),
+		props<{title: string, componentType: ProjectComponentType, componentId: string}>(),
 	);
 	static readonly openProjectTabSuccess = createAction(`[${ProjectAction.name}] open project tab [OK]`, props<{tabsData: TabsData}>());
 	static readonly openProjectTabError = createAction(`[${ProjectAction.name}] open project tab [ERR]`, props<{err: Error}>());

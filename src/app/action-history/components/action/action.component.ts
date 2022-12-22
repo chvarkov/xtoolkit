@@ -76,7 +76,6 @@ export class ActionComponent implements OnInit {
 			return;
 		}
 		this.store.dispatch(ProjectAction.openProjectTab({
-			projectId: this.data.projectId,
 			componentId: this.data.txHash,
 			componentType: 'tx',
 			title: txTabName(this.data.txHash),

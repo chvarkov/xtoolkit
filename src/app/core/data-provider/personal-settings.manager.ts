@@ -44,8 +44,7 @@ export interface ProjectExplorerState {
 export interface PersonalSettingsManager {
 	getActiveProjectOpenedTabs(): Observable<TabsData>;
 
-	openTab(projectId: string,
-			title: string,
+	openTab(title: string,
 			componentType: ProjectComponentType,
 			componentId: string): Observable<TabsData>;
 

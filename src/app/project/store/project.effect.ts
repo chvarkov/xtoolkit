@@ -212,7 +212,7 @@ export class ProjectEffect {
 
 	openProjectTab$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.openProjectTab),
-		mergeMap(({projectId, title, componentType, componentId}) => this.personalSettingsManager.openTab(projectId, title, componentType, componentId).pipe(
+		mergeMap(({title, componentType, componentId}) => this.personalSettingsManager.openTab(title, componentType, componentId).pipe(
 			map((tabsData) => ProjectAction.openProjectTabSuccess({tabsData})),
 			catchError(err => of(ProjectAction.openProjectTabError({err})))),
 		),

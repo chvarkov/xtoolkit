@@ -85,7 +85,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	onLogoClick(): void {
 		this.store.dispatch(ProjectAction.openProjectTab({
-			projectId: SELF_PROJECT_ID,
 			title: 'Home',
 			componentType: 'home',
 			componentId: SELF_PROJECT_ID,
@@ -94,7 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	openSettings(): void {
 		this.store.dispatch(ProjectAction.openProjectTab({
-			projectId: SELF_PROJECT_ID,
 			title: 'Settings',
 			componentType: 'settings',
 			componentId: SELF_PROJECT_ID,
