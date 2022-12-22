@@ -57,7 +57,7 @@ export class ScViewerComponent implements OnInit {
 		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(projectId, address));
 		this.code$ = this.store.select(ProjectSelector.smartContractCode(projectId, address)).pipe(filter(v => !!v));
 
-		this.wallets$ = this.store.select(ProjectSelector.walletsByProjectId(projectId));
+		this.wallets$ = this.store.select(ProjectSelector.wallets());
 
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId, address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId, address}));

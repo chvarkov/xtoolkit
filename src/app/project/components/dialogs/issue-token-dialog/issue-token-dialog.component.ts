@@ -41,7 +41,7 @@ export class IssueTokenDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.project$ = this.store.select(ProjectSelector.projectById(this.data.projectId));
+		this.project$ = this.store.select(ProjectSelector.activeProject());
 		this.network$ = this.project$.pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);

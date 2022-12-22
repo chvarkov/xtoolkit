@@ -36,11 +36,11 @@ export class WalletViewerComponent implements OnInit {
 		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.projectId, this.address)).pipe(filter(v => !!v));
 		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.projectId, this.address)).pipe(filter(v => !!v));
 		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.projectId, this.address)).pipe(filter(v => !!v));
-		this.chainId$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+		this.chainId$ = this.store.select(ProjectSelector.activeProject()).pipe(
 			map((project) => project?.chainId || ''),
 		);
 
-		this.wallet$ = this.store.select(ProjectSelector.walletsByProjectId(this.projectId)).pipe(
+		this.wallet$ = this.store.select(ProjectSelector.wallets()).pipe(
 			map(wallets => wallets.find(w => w.address === w.address)),
 		);
 

@@ -1,44 +1,36 @@
 import { createSelector } from '@ngrx/store';
 import { PROJECT_FEATURE } from '../constants';
 import { IProjectState } from './project.reducer';
-import { Project, ProjectAddress } from '../../core/data-provider/data-provider';
 
 export class ProjectSelector {
-	static projects = createSelector(
+	static projectList = createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects,
+		(state: IProjectState) => state.projectList,
 	);
 
-	static networkById = (id: string) => createSelector(
-		(state: Record<string, any>) => ProjectSelector.projects(state),
-		(state: Project[]) => (state || []).find(i => i.id === id),
+	static activeProject = () => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.activeProject,
 	);
 
-	static projectById = (projectId: string) => createSelector(
+	static smartContracts = () => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId),
+		(state: IProjectState) => state.activeProject?.smartContracts || [],
 	);
 
-	static smartContractsByProjectId = (projectId: string) => createSelector(
+	static smartContractsById = (scId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.smartContracts || [],
+		(state: IProjectState) => (state.activeProject?.smartContracts || []).find(sc => sc.id === scId),
 	);
 
-	static smartContractsById = (projectId: string, scId: string) => createSelector(
+	static abiById = (abiId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => (state.projects.find(p => p.id === projectId)?.smartContracts || [])
-			.find(sc => sc.id === scId),
+		(state: IProjectState) => (state.activeProject?.abiInterfaces || []).find(abi => abi.id === abiId),
 	);
 
-	static abiById = (projectId: string, abiId: string) => createSelector(
+	static wallets = () => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => (state.projects.find(p => p.id === projectId)?.abiInterfaces || [])
-			.find(abi => abi.id === abiId),
-	);
-
-	static walletsByProjectId = (projectId: string) => createSelector(
-		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.wallets || [],
+		(state: IProjectState) => state.activeProject?.wallets || [],
 	);
 
 	static getNativeBalance = (projectId: string, address: string) => createSelector(
@@ -121,7 +113,7 @@ export class ProjectSelector {
 	static projectAddresses = (projectId: string, type?: 'sc' | 'wallet') => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => {
-			const list = state.projects.find(p => p.id === projectId)?.addressBook || [];
+			const list = state.activeProject?.addressBook || [];
 
 			return !type ? list : list.filter(i => i.type === type);
 		},

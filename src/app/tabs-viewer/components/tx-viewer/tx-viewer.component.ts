@@ -29,7 +29,7 @@ export class TxViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.network$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+		this.network$ = this.store.select(ProjectSelector.activeProject()).pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
 

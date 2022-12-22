@@ -12,7 +12,7 @@ export type JoinedNetworkValue<A> = [A, Project, INetworkEnvironment];
 
 export function joinNetwork<A extends ActionProjectIdAware>(store: Store): OperatorFunction<A, JoinedNetworkValue<A>> {
 	return source => source.pipe(
-		switchMap((action: A) => store.select(ProjectSelector.projectById(action.projectId)).pipe(
+		switchMap((action: A) => store.select(ProjectSelector.activeProject()).pipe(
 			take(1),
 			filter(v => !!v),
 			switchMap((project) => store.select(NetworkSelector.networkByChainId(project?.chainId || '')).pipe(

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GeneratedWallet, PendingTokenIssue, Project } from '../../core/data-provider/data-provider';
+import { GeneratedWallet, PendingTokenIssue, Project, ProjectInfo } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
 import { OpenedProjectTab, ProjectExplorerState, TabsData } from '../../core/data-provider/personal-settings.manager';
@@ -13,9 +13,17 @@ import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
 
 export class ProjectAction {
-	static readonly loadProjects = createAction(`[${ProjectAction.name}] load projects [...]`);
-	static readonly loadProjectsSuccess = createAction(`[${ProjectAction.name}] load projects [OK]`, props<{data: Project[]}>());
-	static readonly loadProjectsError = createAction(`[${ProjectAction.name}] load projects [ERR]`, props<{err: Error}>());
+	static readonly openProject = createAction(`[${ProjectAction.name}] open project [...]`, props<{id: string}>());
+	static readonly openProjectSuccess = createAction(`[${ProjectAction.name}] open project [OK]`, props<{project: Project}>());
+	static readonly openProjectError = createAction(`[${ProjectAction.name}] open project [ERR]`, props<{err: Error}>());
+
+	static readonly loadProjectList = createAction(`[${ProjectAction.name}] load project list [...]`);
+	static readonly loadProjectListSuccess = createAction(`[${ProjectAction.name}] load project list [OK]`, props<{data: ProjectInfo[]}>());
+	static readonly loadProjectListError = createAction(`[${ProjectAction.name}] load project list [ERR]`, props<{err: Error}>());
+
+	static readonly loadActiveProject = createAction(`[${ProjectAction.name}] load active project [...]`);
+	static readonly loadActiveProjectSuccess = createAction(`[${ProjectAction.name}] load active project [OK]`, props<{data?: Project}>());
+	static readonly loadActiveProjectError = createAction(`[${ProjectAction.name}] load active project [ERR]`, props<{err: Error}>());
 
 	static readonly updateProjectNetwork = createAction(`[${ProjectAction.name}] update project network [...]`, props<{projectId: string}>());
 	static readonly updateProjectNetworkSuccess = createAction(`[${ProjectAction.name}] update project network [OK]`, props<{project: Project}>());
@@ -193,7 +201,8 @@ export class ProjectAction {
 	static readonly showCurrentTabInExplorer = createAction(`[${ProjectAction.name}] show current tab in explorer`);
 
 	static readonly errorActions = [
-		ProjectAction.loadProjectsError,
+		ProjectAction.loadProjectListError,
+		ProjectAction.loadActiveProjectError,
 		ProjectAction.updateProjectNetworkError,
 		ProjectAction.createProjectError,
 		ProjectAction.addAbiError,

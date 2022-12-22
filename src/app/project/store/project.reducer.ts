@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { ProjectAction } from './project.action';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectExplorerState, TabsData } from '../../core/data-provider/personal-settings.manager';
-import { PendingTokenIssue, Project } from '../../core/data-provider/data-provider';
+import { PendingTokenIssue, Project, ProjectInfo } from '../../core/data-provider/data-provider';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondFullTransaction, IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
 import { ITokenInfo } from '../../core/elrond/interfaces/token-info';
@@ -29,13 +29,15 @@ export interface ILoadedProjectDataState {
 }
 
 export interface IProjectState extends TabsData, ProjectExplorerState {
-	projects: Project[];
+	activeProject?: Project;
+	projectList: ProjectInfo[];
 	loadedDataMap: {[projectId: string]: ILoadedProjectDataState}
 	issueTokenWaitList: PendingTokenIssue[];
 }
 
 const initialState: IProjectState = {
-	projects: [],
+	activeProject: undefined,
+	projectList: [],
 	loadedDataMap: {},
 	tabs: [],
 	issueTokenWaitList: [],
@@ -44,27 +46,38 @@ const initialState: IProjectState = {
 
 export const reducer = createReducer(
 	initialState,
-	on(ProjectAction.loadProjectsSuccess, (state, { data }) => {
+	on(ProjectAction.loadProjectListSuccess, (state, { data }) => {
 		return {
 			...state,
-			projects: data,
-		}
+			projectList: data,
+		};
 	}),
+	on(ProjectAction.loadActiveProjectSuccess, (state, { data }) => {
+		return {
+			...state,
+			activeProject: data,
+		};
+	}),
+	on(ProjectAction.openProjectSuccess, (state, { project }) => ({
+		...state,
+		activeProject: project,
+	})),
 	on(ProjectAction.createProjectSuccess, (state, { project }) => ({
 		...state,
-		projects: [...state.projects, project],
+		projectList: [...state.projectList, { id: project.id, name: project.name, chainId: project.chainId }],
 	})),
 	on(ProjectAction.addAbiSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.addWalletSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.addTokenSuccess, (state, { projectId, identifier }) => ({
 		...state,
-		projects: state.projects.map(p => p.id !== projectId ? p : {...p, tokens: [...p.tokens, identifier]}),
+		// projects: state.projects.map(p => p.id !== projectId ? p : {...p, tokens: [...p.tokens, identifier]}),
+		activeProject: { ...state.activeProject, tokens: [...state.activeProject?.tokens || [], identifier] } as Project,
 	})),
 	on(ProjectAction.loadProjectTabsSuccess,
 		ProjectAction.openProjectTabSuccess,
@@ -78,7 +91,7 @@ export const reducer = createReducer(
 		})),
 	on(ProjectAction.setScAddressSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.loadAccountAndPositionsSuccess, (state, { projectId, native, account, tokens }) => ({
 		...state,
@@ -175,37 +188,37 @@ export const reducer = createReducer(
 	})),
 	on(ProjectAction.renameProjectSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.renameSmartContractSuccess, (state, { project, tabs }) => ({
 		...state,
 		tabs,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.renameWalletSuccess, (state, { project, tabs}) => ({
 		...state,
 		tabs,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.deleteProjectSuccess, (state, { projectId, tabsData }) => ({
 		...state,
 		...tabsData,
-		projects: state.projects.filter(p => p.id !== projectId),
+		activeProject: undefined,
 	})),
 	on(ProjectAction.deleteSmartContractSuccess, (state, { project, tabsData }) => ({
 		...state,
 		...tabsData,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.deleteTokenSuccess, (state, { project, tabsData }) => ({
 		...state,
 		...tabsData,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.deleteWalletSuccess, (state, { project, tabsData }) => ({
 		...state,
 		...tabsData,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.loadTokenIssueWaitListSuccess, (state, {waitList}) => ({
 		...state,
@@ -221,32 +234,32 @@ export const reducer = createReducer(
 	})),
 	on(ProjectAction.updateProjectNetworkSuccess, (state, {project}) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.addSmartContractSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.deleteAbiSuccess, (state, { project, tabsData }) => ({
 		...state,
 		...tabsData,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.renameAbiSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.addAddressSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.renameAddressSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.deleteAddressSuccess, (state, { project }) => ({
 		...state,
-		projects: state.projects.map(p => p.id === project.id ? project : p),
+		activeProject: project,
 	})),
 	on(ProjectAction.loadTransactionSuccess, (state, { projectId, tx }) => ({
 		...state,

@@ -38,7 +38,7 @@ export class TokenIdentifierInputComponent implements OnInit {
 	ngOnInit(): void {
 		if (this.showIdentifiers) {
 			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
-			this.tokenIdentifiers$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+			this.tokenIdentifiers$ = this.store.select(ProjectSelector.activeProject()).pipe(
 				map(project => project?.tokens || []),
 				map(tokens => [TokenIdentifierValue.egld().toString(), ...tokens]),
 			);
