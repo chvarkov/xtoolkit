@@ -30,11 +30,11 @@ export class TokenViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.token$ = this.store.select(ProjectSelector.token(this.projectId, this.identifier)).pipe(filter(v => !!v));
-		this.tokenHolders$ = this.store.select(ProjectSelector.tokenHolders(this.projectId, this.identifier)).pipe(filter(v => !!v));
-		this.tokenRoles$ = this.store.select(ProjectSelector.tokenRoles(this.projectId, this.identifier)).pipe(filter(v => !!v));
-		this.tokenTransfers$ = this.store.select(ProjectSelector.tokenTransfers(this.projectId, this.identifier)).pipe(filter(v => !!v));
-		this.network$ = this.store.select(ProjectSelector.projectById(this.projectId)).pipe(
+		this.token$ = this.store.select(ProjectSelector.token(this.identifier)).pipe(filter(v => !!v));
+		this.tokenHolders$ = this.store.select(ProjectSelector.tokenHolders(this.identifier)).pipe(filter(v => !!v));
+		this.tokenRoles$ = this.store.select(ProjectSelector.tokenRoles(this.identifier)).pipe(filter(v => !!v));
+		this.tokenTransfers$ = this.store.select(ProjectSelector.tokenTransfers(this.identifier)).pipe(filter(v => !!v));
+		this.network$ = this.store.select(ProjectSelector.activeProject()).pipe(
 			map(project => project?.chainId || ''),
 			switchMap((chainId) => this.store.select(NetworkSelector.networkByChainId(chainId))),
 		);

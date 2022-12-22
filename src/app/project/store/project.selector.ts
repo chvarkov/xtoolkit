@@ -1,49 +1,41 @@
 import { createSelector } from '@ngrx/store';
 import { PROJECT_FEATURE } from '../constants';
 import { IProjectState } from './project.reducer';
-import { Project, ProjectAddress } from '../../core/data-provider/data-provider';
 
 export class ProjectSelector {
-	static projects = createSelector(
+	static projectList = createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects,
+		(state: IProjectState) => state.projectList,
 	);
 
-	static networkById = (id: string) => createSelector(
-		(state: Record<string, any>) => ProjectSelector.projects(state),
-		(state: Project[]) => (state || []).find(i => i.id === id),
+	static activeProject = () => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.activeProject,
 	);
 
-	static projectById = (projectId: string) => createSelector(
+	static smartContracts = () => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId),
+		(state: IProjectState) => state.activeProject?.smartContracts || [],
 	);
 
-	static smartContractsByProjectId = (projectId: string) => createSelector(
+	static smartContractsById = (scId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.smartContracts || [],
+		(state: IProjectState) => (state.activeProject?.smartContracts || []).find(sc => sc.id === scId),
 	);
 
-	static smartContractsById = (projectId: string, scId: string) => createSelector(
+	static abiById = (abiId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => (state.projects.find(p => p.id === projectId)?.smartContracts || [])
-			.find(sc => sc.id === scId),
+		(state: IProjectState) => (state.activeProject?.abiInterfaces || []).find(abi => abi.id === abiId),
 	);
 
-	static abiById = (projectId: string, abiId: string) => createSelector(
+	static wallets = () => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => (state.projects.find(p => p.id === projectId)?.abiInterfaces || [])
-			.find(abi => abi.id === abiId),
+		(state: IProjectState) => state.activeProject?.wallets || [],
 	);
 
-	static walletsByProjectId = (projectId: string) => createSelector(
+	static getNativeBalance = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.projects.find(p => p.id === projectId)?.wallets || [],
-	);
-
-	static getNativeBalance = (projectId: string, address: string) => createSelector(
-		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.native || '0',
+		(state: IProjectState) => state.loadedDataMap.positionsMap?.[address]?.native || '0',
 	);
 
 	static openedTabs = createSelector(
@@ -63,54 +55,54 @@ export class ProjectSelector {
 		(state: IProjectState) => state.selectedIndex,
 	);
 
-	static smartContractCode = (projectId: string, address: string) => createSelector(
+	static smartContractCode = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.accountsMap?.[address]?.code,
+		(state: IProjectState) => state.loadedDataMap.accountsMap?.[address]?.code,
 	);
 
-	static account = (projectId: string, address: string) => createSelector(
+	static account = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.accountsMap?.[address],
+		(state: IProjectState) => state.loadedDataMap.accountsMap?.[address],
 	);
 
-	static accountTransactions = (projectId: string, address: string) => createSelector(
+	static accountTransactions = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.accountTransactionsMap?.[address] || [],
+		(state: IProjectState) => state.loadedDataMap.accountTransactionsMap?.[address] || [],
 	);
 
-	static accountNativeAmount = (projectId: string, address: string) => createSelector(
+	static accountNativeAmount = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.native || '0',
+		(state: IProjectState) => state.loadedDataMap.positionsMap?.[address]?.native || '0',
 	);
 
-	static accountTokens = (projectId: string, address: string) => createSelector(
+	static accountTokens = (address: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.positionsMap?.[address]?.tokens || [],
+		(state: IProjectState) => state.loadedDataMap.positionsMap?.[address]?.tokens || [],
 	);
 
-	static token = (projectId: string, identifier: string) => createSelector(
+	static token = (identifier: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.tokensMap?.[identifier],
+		(state: IProjectState) => state.loadedDataMap.tokensMap?.[identifier],
 	);
 
-	static tokenHolders = (projectId: string, identifier: string) => createSelector(
+	static tokenHolders = (identifier: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.tokenHoldersMap?.[identifier],
+		(state: IProjectState) => state.loadedDataMap.tokenHoldersMap?.[identifier],
 	);
 
-	static tokenRoles = (projectId: string, identifier: string) => createSelector(
+	static tokenRoles = (identifier: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.tokenRolesMap?.[identifier],
+		(state: IProjectState) => state.loadedDataMap.tokenRolesMap?.[identifier],
 	);
 
-	static tokenTransfers = (projectId: string, identifier: string) => createSelector(
+	static tokenTransfers = (identifier: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.tokenTransfersMap?.[identifier],
+		(state: IProjectState) => state.loadedDataMap.tokenTransfersMap?.[identifier],
 	);
 
-	static tokens = (projectId: string) => createSelector(
+	static tokens = () => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.tokens || [],
+		(state: IProjectState) => state.loadedDataMap.tokens || [],
 	);
 
 	static issueTokenWaitList = createSelector(
@@ -118,18 +110,18 @@ export class ProjectSelector {
 		(state: IProjectState) => state.issueTokenWaitList || [],
 	);
 
-	static projectAddresses = (projectId: string, type?: 'sc' | 'wallet') => createSelector(
+	static projectAddresses = (type?: 'sc' | 'wallet') => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => {
-			const list = state.projects.find(p => p.id === projectId)?.addressBook || [];
+			const list = state.activeProject?.addressBook || [];
 
 			return !type ? list : list.filter(i => i.type === type);
 		},
 	);
 
-	static tx = (projectId: string, txHash: string) => createSelector(
+	static tx = (txHash: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
-		(state: IProjectState) => state.loadedDataMap[projectId]?.transactionsMap?.[txHash],
+		(state: IProjectState) => state.loadedDataMap.transactionsMap?.[txHash],
 	);
 
 	static projectExplorerNodeMap = createSelector(

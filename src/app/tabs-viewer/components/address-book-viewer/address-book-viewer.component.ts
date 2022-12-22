@@ -19,7 +19,7 @@ export class AddressBookViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.projectId));
+		this.addressBook$ = this.store.select(ProjectSelector.projectAddresses());
 	}
 
 	addAddress(): void {

@@ -41,6 +41,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this.tokenIssueAwaiter.enable();
 
+		this.store.dispatch(ProjectAction.loadActiveProject());
+
 		this.store.dispatch(ProjectAction.loadTokenIssueWaitList());
 
 		setTimeout(() => {
@@ -67,15 +69,15 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	getScById$(projectId: string, scId: string): Observable<ProjectSmartContract | undefined> {
-		return this.store.select(ProjectSelector.smartContractsById(projectId, scId));
+		return this.store.select(ProjectSelector.smartContractsById(scId));
 	}
 
 	getAbiById$(projectId: string, abiId: string): Observable<ProjectAbi | undefined> {
-		return this.store.select(ProjectSelector.abiById(projectId, abiId));
+		return this.store.select(ProjectSelector.abiById(abiId));
 	}
 
 	getProjectChainId$(projectId: string): Observable<string> {
-		return this.store.select(ProjectSelector.projectById(projectId))
+		return this.store.select(ProjectSelector.activeProject())
 			.pipe(
 				map(proj => proj?.chainId || '')
 			);

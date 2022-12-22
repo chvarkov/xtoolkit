@@ -40,13 +40,32 @@ import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class ProjectEffect {
-	loadProjects$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.loadProjects),
-		mergeMap(() => this.dataProvider.getProjects().pipe(
-			map((data) => ProjectAction.loadProjectsSuccess({data})),
-			catchError(err => of(ProjectAction.loadProjectsError({err})),
+	openProject$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.openProject),
+		mergeMap(({id}) => this.dataProvider.openProject(id).pipe(
+			switchMap((project) => [
+				ProjectAction.openProjectSuccess({project}),
+				ProjectAction.loadProjectTabs(),
+			]),
+			catchError(err => of(ProjectAction.openProjectError({err})))
 		)),
-	)));
+	));
+
+	loadActiveProject$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadActiveProject),
+		mergeMap(() => this.dataProvider.getActiveProject().pipe(
+			map((data) => ProjectAction.loadActiveProjectSuccess({data})),
+			catchError(err => of(ProjectAction.loadActiveProjectError({err})))
+		)),
+	));
+
+	loadProjectList$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadProjectList),
+		mergeMap(() => this.dataProvider.getProjectList().pipe(
+			map((data) => ProjectAction.loadProjectListSuccess({data})),
+			catchError(err => of(ProjectAction.loadProjectListError({err}))),
+		)),
+	));
 
 	updateProjectNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectNetwork),
@@ -185,7 +204,7 @@ export class ProjectEffect {
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectTabs),
-		mergeMap(() => this.personalSettingsManager.getOpenedTabs().pipe(
+		mergeMap(() => this.personalSettingsManager.getActiveProjectOpenedTabs().pipe(
 			map((tabsData) => ProjectAction.loadProjectTabsSuccess({tabsData})),
 			catchError(err => of(ProjectAction.loadProjectTabsError({err})))),
 		),

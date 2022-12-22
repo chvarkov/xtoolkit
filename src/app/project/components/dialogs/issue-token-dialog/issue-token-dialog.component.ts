@@ -41,11 +41,11 @@ export class IssueTokenDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.project$ = this.store.select(ProjectSelector.projectById(this.data.projectId));
+		this.project$ = this.store.select(ProjectSelector.activeProject());
 		this.network$ = this.project$.pipe(
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
-		this.tokens$ = this.store.select(ProjectSelector.tokens(this.data.projectId));
+		this.tokens$ = this.store.select(ProjectSelector.tokens());
 
 		this.issueTokenForm = this.fb.group({
 			name: ['', Validators.required],

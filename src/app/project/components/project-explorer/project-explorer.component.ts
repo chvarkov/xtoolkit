@@ -1,6 +1,6 @@
-import { Component, ElementRef, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Project } from '../../../core/data-provider/data-provider';
+import { Project, ProjectInfo } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
@@ -21,7 +21,8 @@ import { Actions, ofType } from '@ngrx/effects';
 	styleUrls: ['./project-explorer.component.scss']
 })
 export class ProjectExplorerComponent implements OnInit, OnDestroy {
-	projects$: Observable<Project[]>;
+	projectsList$: Observable<ProjectInfo[]>;
+	activeProject$: Observable<Project | undefined>;
 	projectExplorerState$: Observable<{ [id: string]: ProjectExplorerNode }>;
 
 	activeElementRef?: ProjectElementComponent;
@@ -33,18 +34,19 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 	constructor(private readonly store: Store,
 				private readonly actions$: Actions,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly ps: PersonalSettingsManager) {
-		this.projects$ = this.store.select(ProjectSelector.projects);
+		this.projectsList$ = this.store.select(ProjectSelector.projectList);
+		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
 		this.projectExplorerState$ = this.store.select(ProjectSelector.projectExplorerNodeMap);
 
-		this.sub.add(
-			this.projects$.pipe(
-				filter(list => !!list.length),
-			).subscribe(async (projects) => {
-				if (projects) {
-					await this.ps.syncProjectExplorerTree(projects).toPromise();
-				}
-			}),
-		);
+		// this.sub.add( // TODO: Refactor it
+		// 	this.projects$.pipe(
+		// 		filter(list => !!list.length),
+		// 	).subscribe(async (projects) => {
+		// 		if (projects) {
+		// 			await this.ps.syncProjectExplorerTree(projects).toPromise();
+		// 		}
+		// 	}),
+		// );
 
 		this.sub.add(
 			this.actions$.pipe(
@@ -83,6 +85,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		}))
 	}
 
+	openProject(id: string): void {
+		this.store.dispatch(ProjectAction.openProject({id}));
+	}
+
 	createProject(): void {
 		this.store.dispatch(ProjectAction.createProject());
 	}
@@ -96,7 +102,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 	}
 
 	loadProjects(): void {
-		this.store.dispatch(ProjectAction.loadProjects());
+		this.store.dispatch(ProjectAction.loadProjectList());
 	}
 
 	importToken(projectId: string): void {

@@ -1,12 +1,25 @@
 <div class="container">
-	<h1>Elrond SC</h1>
-	<p>Features:</p>
-	<ul>
-		<li>Smart contract deployment (coming soon)</li>
-		<li>Smart contract interaction</li>
-		<li>Token minting</li>
-		<li>Token management (coming soon)</li>
-		<li>NFT management (coming soon)</li>
-		<li>NFT minting (coming soon)</li>
-	</ul>
+	<div class="app-info">
+		<div class="header">Elrond SC</div>
+		<div>
+			<span>Features:</span>
+			<ul>
+				<li>Smart contract deployment (coming soon)</li>
+				<li>Smart contract interaction</li>
+				<li>Token minting</li>
+				<li>Token management (coming soon)</li>
+				<li>NFT management (coming soon)</li>
+				<li>NFT minting (coming soon)</li>
+			</ul>
+		</div>
+	</div>
+	<div class="projects">
+		<div class="header">Projects</div>
+		<div *ngFor="let project of projectList$ | async"
+			 class="project-item"
+			 mat-ripple (click)="openProject(project.id)">
+			<span>{{project.name}}</span>
+			<span>{{project.chainId | networkName | async}}</span>
+		</div>
+	</div>
 </div>

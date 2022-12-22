@@ -3,10 +3,10 @@ import {
 	ActionStatus,
 	DataProvider,
 	GeneratedWallet, PendingTokenIssue,
-	Project, ProjectAbi, ProjectAddress,
+	Project, ProjectAbi, ProjectAddress, ProjectInfo,
 	ProjectSmartContract
 } from '../data-provider';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
@@ -18,7 +18,10 @@ import { AbiJson } from '../../elrond/builders/sc.builder';
 export class LocalstorageDataProvider implements DataProvider {
 	private readonly globalPrefix = 'elrond-sc';
 	private readonly networksKey = `${this.globalPrefix}.networks`;
+	private readonly activeProjectKey = `${this.globalPrefix}.active-project`;
 	private readonly projectsKey = `${this.globalPrefix}.projects`;
+	private readonly projectListKey = `${this.globalPrefix}.project-list`;
+	private readonly projectKey = `${this.globalPrefix}.project`;
 	private readonly actionHistoryKey = `${this.globalPrefix}.action-history`;
 	private readonly tokenIssueWaitListKey = `${this.globalPrefix}.token-issue-wait-list`;
 
@@ -87,6 +90,58 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
+	getActiveProjectId(): Observable<string | undefined> {
+		return of(this.get(this.activeProjectKey));
+	}
+
+	openProject(projectId: string): Observable<Project> {
+		return this.getProject(projectId).pipe(
+			map(project => {
+				if (!project) {
+					throw new Error('Project not found');
+				}
+
+				this.set(this.activeProjectKey, project.id);
+
+				return project;
+			}),
+		);
+	}
+
+	getActiveProject(): Observable<Project | undefined> {
+		const activeProjectId: string | undefined = this.get(this.activeProjectKey);
+
+		if (!activeProjectId) {
+			return of();
+		}
+
+		return this.getProject(activeProjectId);
+	}
+
+	getProject(id: string): Observable<Project> {
+		const key = `${this.projectKey}.${id}`;
+
+		const project: Project | undefined = this.get(key);
+
+		if (!project) {
+			return throwError(new Error(`Project "${id}" not found.`));
+		}
+
+		return of(project);
+	}
+
+	getProjectList(): Observable<ProjectInfo[]> {
+		const list: ProjectInfo[] | undefined = this.get(this.projectListKey);
+
+		if (!list) {
+			this.set(this.projectListKey, []);
+
+			return of([]);
+		}
+
+		return of(list);
+	}
+
 	getProjects(): Observable<Project[]> {
 		const projects: Project[] | undefined = this.get(this.projectsKey);
 
@@ -100,18 +155,12 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	updateProjectNetwork(projectId: string, chainId: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map((project => {
 					project.chainId = chainId;
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
 				})),
@@ -119,35 +168,18 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	deleteProject(projectId: string): Observable<void> {
-		return this.getProjects()
-			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
-					projects = projects.filter(p => p.id !== projectId);
-
-					this.set(this.projectsKey, projects);
-				})),
-			);
+		localStorage.removeItem(this.getProjectKey(projectId));
+		return of();
 	}
 
 	renameProject(projectId: string, name: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
+				map((project => {
 
 					project.name = name;
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
 				})),
@@ -155,33 +187,38 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	createProject(name: string, chainId: string): Observable<Project> {
-		return this.getProjects()
-			.pipe(
-				map((projects => {
-					const project: Project = {
-						id: uuid.v4(),
-						name,
-						chainId,
-						abiInterfaces: [],
-						smartContracts: [],
-						wallets: [],
-						tokens: [],
-						addressBook: [],
-					};
+		const project: Project = {
+			id: uuid.v4(),
+			name,
+			chainId,
+			abiInterfaces: [],
+			smartContracts: [],
+			wallets: [],
+			tokens: [],
+			addressBook: [],
+		};
 
-					projects.push(project);
+		this.saveProject(project);
 
-					this.set(this.projectsKey, projects);
+		return this.getProjectList().pipe(
+			map(list => {
+				list.push({
+					id: project.id,
+					name: project.name,
+					chainId: project.chainId,
+				});
 
-					return project;
-				})),
-			);
+				this.set(this.projectListKey, list);
+
+				return project;
+			}),
+		);
 	}
 
 	addAbi(projectId: string, content: AbiJson, name: string = content.name): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
+				map((project => {
 					const abi: ProjectAbi = {
 						id: uuid.v4(),
 						projectId,
@@ -189,15 +226,9 @@ export class LocalstorageDataProvider implements DataProvider {
 						content,
 					};
 
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
 					project.abiInterfaces.push(abi);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
 				})),
@@ -205,15 +236,9 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	renameAbi(projectId: string, abiId: string, name: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map((project => {
 					const abi = project.abiInterfaces.find(sc => sc.id === abiId);
 
 					if (!abi) {
@@ -222,7 +247,7 @@ export class LocalstorageDataProvider implements DataProvider {
 
 					abi.name = name;
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
 				})),
@@ -230,29 +255,23 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	deleteAbi(projectId: string, abiId: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					project.abiInterfaces = project.abiInterfaces.filter(abi => abi.id !== abiId);
 					project.smartContracts = project.smartContracts.filter(sc => sc.abiId !== abiId);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	createSmartContract(projectId: string, abiId: string, name: string, address: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
+				map((project => {
 					const sc: ProjectSmartContract = {
 						id: uuid.v4(),
 						name,
@@ -261,15 +280,9 @@ export class LocalstorageDataProvider implements DataProvider {
 						address,
 					};
 
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
 					project.smartContracts.push(sc);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
 				})),
@@ -277,15 +290,9 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	renameSmartContract(projectId: string, scId: string, name: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map((project => {
 					const sc = project.smartContracts.find(sc => sc.id === scId);
 
 					if (!sc) {
@@ -294,7 +301,7 @@ export class LocalstorageDataProvider implements DataProvider {
 
 					sc.name = name;
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
 				})),
@@ -302,34 +309,22 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	deleteSmartContract(projectId: string, scId: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					project.smartContracts = project.smartContracts.filter(sc => sc.id !== scId);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	setScAddress(projectId: string, scId: string, address: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					const sc = project.smartContracts.find(sc => sc.id === scId);
 
 					if (!sc) {
@@ -338,23 +333,17 @@ export class LocalstorageDataProvider implements DataProvider {
 
 					sc.address = address;
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	addToken(projectId: string, tokenAddress: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					const duplicate = project.tokens.find(id => id === tokenAddress);
 
 					if (duplicate) {
@@ -363,61 +352,43 @@ export class LocalstorageDataProvider implements DataProvider {
 
 					project.tokens.push(tokenAddress);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	deleteToken(projectId: string, identifier: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					project.tokens = project.tokens.filter(token => token !== identifier);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					project.wallets.push(wallet);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	renameWallet(projectId: string, address: string, name: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(p => p.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					const wallet = project.wallets.find(w => w.address === address);
 
 					if (!wallet) {
@@ -426,29 +397,23 @@ export class LocalstorageDataProvider implements DataProvider {
 
 					wallet.name = name;
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
 	deleteWallet(projectId: string, address: string): Observable<Project> {
-		return this.getProjects()
+		return this.getProject(projectId)
 			.pipe(
-				map((projects => {
-					const project = projects.find(i => i.id === projectId);
-
-					if (!project) {
-						throw new Error('Project not found');
-					}
-
+				map(project => {
 					project.wallets = project.wallets.filter(w => w.address !== address);
 
-					this.set(this.projectsKey, projects);
+					this.saveProject(project);
 
 					return project;
-				})),
+				}),
 			);
 	}
 
@@ -550,14 +515,8 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	addProjectAddress(data: ProjectAddress): Observable<Project> {
-		return this.getProjects().pipe(
-			map(projects => {
-				const project = projects.find(p => p.id === data.projectId);
-
-				if (!project) {
-					throw new Error('Project not found');
-				}
-
+		return this.getProject(data.projectId).pipe(
+			map(project => {
 				const existingAddress = project.addressBook.find(a => a.address === data.address);
 
 				if (existingAddress) {
@@ -566,7 +525,7 @@ export class LocalstorageDataProvider implements DataProvider {
 
 				project.addressBook.push(data);
 
-				this.set(this.projectsKey, projects);
+				this.saveProject(project);
 
 				return project;
 			}),
@@ -574,14 +533,8 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	renameProjectAddress(projectId: string, address: string, name: string): Observable<Project> {
-		return this.getProjects().pipe(
-			map(projects => {
-				const project = projects.find(p => p.id === projectId);
-
-				if (!project) {
-					throw new Error('Project not found');
-				}
-
+		return this.getProject(projectId).pipe(
+			map(project => {
 				const addressElem = project.addressBook.find(a => a.address === address);
 
 				if (!addressElem) {
@@ -590,7 +543,7 @@ export class LocalstorageDataProvider implements DataProvider {
 
 				addressElem.name = name;
 
-				this.set(this.projectsKey, projects);
+				this.saveProject(project);
 
 				return project;
 			}),
@@ -598,21 +551,23 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	deleteProjectAddress(projectId: string, address: string): Observable<Project> {
-		return this.getProjects().pipe(
-			map(projects => {
-				const project = projects.find(p => p.id === projectId);
-
-				if (!project) {
-					throw new Error('Project not found');
-				}
-
+		return this.getProject(projectId).pipe(
+			map(project => {
 				project.addressBook = project.addressBook.filter(a => a.address !== address);
 
-				this.set(this.projectsKey, projects);
+				this.saveProject(project);
 
 				return project;
 			}),
 		);
+	}
+
+	private saveProject(project: Project): void {
+		this.set(this.getProjectKey(project.id), project);
+	}
+
+	private getProjectKey(id: string): string {
+		return `${this.projectKey}.${id}`;
 	}
 
 	private set<T>(key: string, value: T): void {

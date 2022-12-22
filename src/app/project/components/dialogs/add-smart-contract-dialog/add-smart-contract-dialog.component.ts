@@ -28,10 +28,10 @@ export class AddSmartContractDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.abiInterfaces$ = this.store.select(ProjectSelector.projectById(this.data.projectId)).pipe(
+		this.abiInterfaces$ = this.store.select(ProjectSelector.activeProject()).pipe(
 			map(project => project?.abiInterfaces || []),
 		);
-		this.project$ = this.store.select(ProjectSelector.projectById(this.data.projectId));
+		this.project$ = this.store.select(ProjectSelector.activeProject());
 	}
 
 	create(): void {

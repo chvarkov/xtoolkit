@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../elrond/interfaces/network-environment';
 import { AbiJson } from '../elrond/builders/sc.builder';
+import { map } from 'rxjs/operators';
 
 export const DATA_PROVIDER = 'CORE:DATA_PROVIDER';
 
@@ -18,15 +19,18 @@ export interface ProjectSmartContract {
 	address: string;
 }
 
-export interface Project {
-	id: string;
-	chainId: string;
-	name: string;
+export interface Project extends ProjectInfo {
 	abiInterfaces: ProjectAbi[];
 	smartContracts: ProjectSmartContract[];
 	wallets: GeneratedWallet[];
 	tokens: string[];
 	addressBook: ProjectAddress[];
+}
+
+export interface ProjectInfo {
+	id: string;
+	chainId: string;
+	name: string;
 }
 
 export interface ProjectAbi {
@@ -84,6 +88,16 @@ export interface DataProvider {
 	updateNetwork(chainId: string, network: INetworkEnvironment): Observable<INetworkEnvironment[]>;
 
 	deleteNetwork(chainId: string): Observable<INetworkEnvironment[]>;
+
+	getActiveProjectId(): Observable<string | undefined>;
+
+	getProject(id: string): Observable<Project>;
+
+	getProjectList(): Observable<ProjectInfo[]>;
+
+	openProject(projectId: string): Observable<Project>;
+
+	getActiveProject(): Observable<Project | undefined>;
 
 	getProjects(): Observable<Project[]>;
 
