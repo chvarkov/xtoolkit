@@ -30,12 +30,12 @@ export class WalletViewerComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.account$ = this.store.select(ProjectSelector.account(this.projectId, this.address)).pipe(
+		this.account$ = this.store.select(ProjectSelector.account(this.address)).pipe(
 			map(acc => acc || new Account(new Address(this.address))),
 		);
-		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.projectId, this.address)).pipe(filter(v => !!v));
-		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.projectId, this.address)).pipe(filter(v => !!v));
-		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.projectId, this.address)).pipe(filter(v => !!v));
+		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.address)).pipe(filter(v => !!v));
+		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.address)).pipe(filter(v => !!v));
+		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.address)).pipe(filter(v => !!v));
 		this.chainId$ = this.store.select(ProjectSelector.activeProject()).pipe(
 			map((project) => project?.chainId || ''),
 		);

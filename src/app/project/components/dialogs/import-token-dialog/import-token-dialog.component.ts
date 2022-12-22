@@ -23,7 +23,7 @@ export class ImportTokenDialogComponent implements OnInit {
 
 	ngOnInit(): void {
 
-		this.tokens$ = this.store.select(ProjectSelector.tokens(this.data.projectId));
+		this.tokens$ = this.store.select(ProjectSelector.tokens());
 		this.loadToken('');
 	}
 

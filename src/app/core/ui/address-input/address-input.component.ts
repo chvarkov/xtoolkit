@@ -37,7 +37,7 @@ export class AddressInputComponent implements OnInit {
 	ngOnInit(): void {
 		if (this.showAddressBook) {
 			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
-			this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.projectId, this.type));
+			this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.type));
 		}
 	}
 

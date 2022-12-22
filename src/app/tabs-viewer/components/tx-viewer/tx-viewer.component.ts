@@ -33,7 +33,7 @@ export class TxViewerComponent implements OnInit {
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
 
-		this.tx$ = this.store.select(ProjectSelector.tx(this.projectId, this.txHash)).pipe(filter(v => !!v));
+		this.tx$ = this.store.select(ProjectSelector.tx(this.txHash)).pipe(filter(v => !!v));
 
 		this.store.dispatch(ProjectAction.loadTransaction({projectId: this.projectId, txHash: this.txHash}));
 	}

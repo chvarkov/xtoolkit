@@ -31,14 +31,24 @@ export interface ILoadedProjectDataState {
 export interface IProjectState extends TabsData, ProjectExplorerState {
 	activeProject?: Project;
 	projectList: ProjectInfo[];
-	loadedDataMap: {[projectId: string]: ILoadedProjectDataState}
+	loadedDataMap: ILoadedProjectDataState;
 	issueTokenWaitList: PendingTokenIssue[];
 }
 
 const initialState: IProjectState = {
 	activeProject: undefined,
 	projectList: [],
-	loadedDataMap: {},
+	loadedDataMap: {
+		transactionsMap: {},
+		accountsMap: {},
+		accountTransactionsMap: {},
+		positionsMap: {},
+		tokenHoldersMap: {},
+		tokenRolesMap: {},
+		tokenTransfersMap: {},
+		tokensMap: {},
+		tokens: [],
+	},
 	tabs: [],
 	issueTokenWaitList: [],
 	explorerNodeMap: {},
@@ -60,6 +70,17 @@ export const reducer = createReducer(
 	}),
 	on(ProjectAction.openProjectSuccess, (state, { project }) => ({
 		...state,
+		loadedDataMap: {
+			transactionsMap: {},
+			accountsMap: {},
+			accountTransactionsMap: {},
+			positionsMap: {},
+			tokenHoldersMap: {},
+			tokenRolesMap: {},
+			tokenTransfersMap: {},
+			tokensMap: {},
+			tokens: [],
+		},
 		activeProject: project,
 	})),
 	on(ProjectAction.createProjectSuccess, (state, { project }) => ({
@@ -96,31 +117,27 @@ export const reducer = createReducer(
 	on(ProjectAction.loadAccountAndPositionsSuccess, (state, { projectId, native, account, tokens }) => ({
 		...state,
 		loadedDataMap: {
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				positionsMap: {
-					...state.loadedDataMap[projectId]?.positionsMap,
-					[account.address.bech32()]: {
-						native,
-						tokens,
-					},
+			...state.loadedDataMap,
+			positionsMap: {
+				...state.loadedDataMap?.positionsMap,
+				[account.address.bech32()]: {
+					native,
+					tokens,
 				},
-				accountsMap: {
-					...state.loadedDataMap[projectId]?.accountsMap,
-					[account.address.bech32()]: account,
-				},
+			},
+			accountsMap: {
+				...state.loadedDataMap?.accountsMap,
+				[account.address.bech32()]: account,
 			},
 		},
 	})),
 	on(ProjectAction.loadAccountTransactionsSuccess, (state, { projectId, address, list }) => ({
 		...state,
 		loadedDataMap: {
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				accountTransactionsMap: {
-					...state.loadedDataMap[projectId]?.accountTransactionsMap,
-					[address]: list,
-				},
+			...state.loadedDataMap,
+			accountTransactionsMap: {
+				...state.loadedDataMap?.accountTransactionsMap,
+				[address]: list,
 			},
 		},
 	})),
@@ -128,12 +145,10 @@ export const reducer = createReducer(
 	on(ProjectAction.loadTokenSuccess, (state, { projectId, identifier, data }) => ({
 		...state,
 		loadedDataMap: {
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				tokensMap: {
-					...state.loadedDataMap[projectId]?.tokensMap,
-					[identifier]: data,
-				},
+			...state.loadedDataMap,
+			tokensMap: {
+				...state.loadedDataMap?.tokensMap,
+				[identifier]: data,
 			},
 		},
 	})),
@@ -141,12 +156,10 @@ export const reducer = createReducer(
 	on(ProjectAction.loadTokenHoldersSuccess, (state, { projectId, identifier, data }) => ({
 		...state,
 		loadedDataMap: {
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				tokenHoldersMap: {
-					...state.loadedDataMap[projectId]?.tokenHoldersMap,
-					[identifier]: data,
-				},
+			...state.loadedDataMap,
+			tokenHoldersMap: {
+				...state.loadedDataMap?.tokenHoldersMap,
+				[identifier]: data,
 			},
 		},
 	})),
@@ -154,12 +167,10 @@ export const reducer = createReducer(
 	on(ProjectAction.loadTokenRolesSuccess, (state, { projectId, identifier, data }) => ({
 		...state,
 		loadedDataMap: {
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				tokenRolesMap: {
-					...state.loadedDataMap[projectId]?.tokenRolesMap,
-					[identifier]: data,
-				},
+			...state.loadedDataMap,
+			tokenRolesMap: {
+				...state.loadedDataMap?.tokenRolesMap,
+				[identifier]: data,
 			},
 		},
 	})),
@@ -167,12 +178,10 @@ export const reducer = createReducer(
 	on(ProjectAction.loadTokenTransfersSuccess, (state, { projectId, identifier, data }) => ({
 		...state,
 		loadedDataMap: {
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				tokenTransfersMap: {
-					...state.loadedDataMap[projectId]?.tokenTransfersMap,
-					[identifier]: data,
-				},
+			...state.loadedDataMap,
+			tokenTransfersMap: {
+				...state.loadedDataMap?.tokenTransfersMap,
+				[identifier]: data,
 			},
 		},
 	})),
@@ -180,10 +189,7 @@ export const reducer = createReducer(
 		...state,
 		loadedDataMap: {
 			...state.loadedDataMap,
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				tokens,
-			},
+			tokens,
 		},
 	})),
 	on(ProjectAction.renameProjectSuccess, (state, { project }) => ({
@@ -265,12 +271,9 @@ export const reducer = createReducer(
 		...state,
 		loadedDataMap: {
 			...state.loadedDataMap,
-			[projectId]: {
-				...state.loadedDataMap[projectId],
-				transactionsMap: {
-					...state.loadedDataMap[projectId]?.transactionsMap,
-					[tx.txHash]: tx,
-				},
+			transactionsMap: {
+				...state.loadedDataMap?.transactionsMap,
+				[tx.txHash]: tx,
 			},
 		},
 	})),

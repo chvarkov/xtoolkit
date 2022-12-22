@@ -51,11 +51,11 @@ export class ScViewerComponent implements OnInit {
 		const projectId = this.abi?.projectId || '';
 		const address = this.sc?.address || '';
 
-		this.account$ = this.store.select(ProjectSelector.account(projectId, address));
-		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(projectId, address));
-		this.tokens$ = this.store.select(ProjectSelector.accountTokens(projectId, address));
-		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(projectId, address));
-		this.code$ = this.store.select(ProjectSelector.smartContractCode(projectId, address)).pipe(filter(v => !!v));
+		this.account$ = this.store.select(ProjectSelector.account(address));
+		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(address));
+		this.tokens$ = this.store.select(ProjectSelector.accountTokens(address));
+		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(address));
+		this.code$ = this.store.select(ProjectSelector.smartContractCode(address)).pipe(filter(v => !!v));
 
 		this.wallets$ = this.store.select(ProjectSelector.wallets());
 
