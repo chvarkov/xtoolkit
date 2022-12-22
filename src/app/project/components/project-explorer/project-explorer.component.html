@@ -1,5 +1,19 @@
 <app-resize-vertical-splitter side="left" (dx)="resize.emit($event)"></app-resize-vertical-splitter>
 <app-toolbar title="Projects">
+	<ng-container left-side *ngIf="projects$ | async as projects">
+		<ng-container *ngIf="projects.length">
+			<mat-icon [matMenuTriggerFor]="projectMenu"
+					  appTooltip tooltip="Show projects"
+					  class="project-list-icon">arrow_drop_down</mat-icon>
+			<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
+				<button mat-menu-item *ngFor="let project of projects">
+					<mat-icon>folder</mat-icon>
+					<span>{{project.name}}</span>
+				</button>
+			</mat-menu>
+		</ng-container>
+	</ng-container>
+
 	<app-toolbar-icon-button right-side appTooltip tooltip="Select opened element" (click)="showCurrentTab()">
 		my_location
 	</app-toolbar-icon-button>
