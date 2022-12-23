@@ -40,9 +40,12 @@ export class ActionHistoryListComponent implements OnInit {
 
 		this.store.dispatch(ProjectAction.openProjectTab({
 			componentType: 'tx',
-			projectId: elem.projectId,
 			componentId: elem.txHash,
 			title: txTabName(elem.txHash),
 		}));
+	}
+
+	trackBy(_: number, element: ActionHistoryElement): string {
+		return element.id;
 	}
 }

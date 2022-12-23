@@ -38,12 +38,18 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		);
 	}
 
-	openTab(projectId: string,
-			title: string,
+	openTab(title: string,
 			componentType: ProjectComponentType,
 			componentId: string): Observable<TabsData> {
-		return this.getActiveProjectOpenedTabs().pipe(
-			map(({ tabs, selectedIndex }) => {
+		return forkJoin([
+			this.dataProvider.getActiveProjectId(),
+			this.getActiveProjectOpenedTabs(),
+		]).pipe(
+			map(([projectId, { tabs, selectedIndex }]) => {
+				if (!projectId) {
+					throw new Error('Active project not found.');
+				}
+
 				tabs = tabs || [];
 
 				const openedElem = tabs.find(i => i.componentType === componentType && i.componentId === componentId);
@@ -202,8 +208,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 
 				this.pushHomeIfListIsEmpty(tabs);
 
-				this.set(this.openedTabsKey, tabs);
-				this.set(this.currentTabIndexKey, 0);
+				this.set(this.getOpenedTabsKey(projectId), tabs);
+				this.set(this.getCurrentTabKey(projectId), 0);
 
 				return { tabs, selectedIndex: 0 };
 			}),

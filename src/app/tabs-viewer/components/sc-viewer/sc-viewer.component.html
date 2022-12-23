@@ -34,7 +34,7 @@
 		<mat-tab-group #tabs headerPosition="below" [animationDuration]="'0ms'" [contentTabIndex]="TABS.Endpoints">
 			<mat-tab label="Endpoints">
 				<div class="page-tab-content">
-					<ng-container *ngIf="!(code$ | async)">
+					<ng-container *ngIf="!!sc && !(code$ | async)">
 						<div class="no-code-warning">
 							No smart contract code, maybe network was reset or address is wrong.
 						</div>

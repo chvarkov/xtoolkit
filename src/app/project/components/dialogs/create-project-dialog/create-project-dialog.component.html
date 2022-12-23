@@ -1,17 +1,16 @@
 <app-modal-dialog-header title="Create project" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
 <div class="content">
-	<mat-form-field>
-		<mat-label>Project name</mat-label>
+	<app-form-field title="Project name">
 		<input matInput [(ngModel)]="projectName">
-	</mat-form-field>
-	<mat-form-field>
+	</app-form-field>
+	<app-form-field title="Network">
 		<mat-select placeholder="Network" (selectionChange)="onChangeChainId($event.value)" panelClass="select-panel">
 			<mat-option *ngFor="let network of (networks$ | async) || []" [value]="network.chainId">
 				{{network.name}}
 			</mat-option>
 		</mat-select>
-	</mat-form-field>
+	</app-form-field>
 </div>
 
 <div class="actions">

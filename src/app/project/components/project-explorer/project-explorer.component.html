@@ -73,7 +73,7 @@
 					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #abiElem
-											 (click)="openProjectComponent(project.id, abi.name, 'abi', abi.id)"
+											 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
 											 *ngFor="let abi of project.abiInterfaces"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'abi': abi.id) | async)"
 											 (onExpand)="onExpandElement(project.id, 'abi', abi.id, $event)"
@@ -116,7 +116,7 @@
 					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #scElem
-											 (click)="openProjectComponent(project.id, sc.name || sc.name, 'sc', sc.id)"
+											 (click)="openProjectComponent(sc.name, 'sc', sc.id)"
 											 *ngFor="let sc of project.smartContracts"
 											 type="sc"
 											 [active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
@@ -164,7 +164,7 @@
 					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens"
-											 (click)="openProjectComponent(project.id, tokenAddress, 'token', tokenAddress)"
+											 (click)="openProjectComponent(tokenAddress, 'token', tokenAddress)"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'token': tokenAddress) | async)"
 											 (onExpand)="onExpandElement(project.id, 'token', tokenAddress, $event)"
 											 (onActivate)="onActivateElement(tokenElem)"
@@ -237,7 +237,7 @@
 					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #walletElem *ngFor="let wallet of project.wallets"
-											 (click)="openProjectComponent(project.id, wallet.name, 'wallet', wallet.address)"
+											 (click)="openProjectComponent(wallet.name, 'wallet', wallet.address)"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'wallet': wallet.address) | async)"
 											 (onExpand)="onExpandElement(project.id, 'wallet', wallet.address, $event)"
 											 (onActivate)="onActivateElement(walletElem)"

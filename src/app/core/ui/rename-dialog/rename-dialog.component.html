@@ -1,9 +1,8 @@
 <app-modal-dialog-header title="{{data.title || 'Rename'}}" [dialogRef]="dialogRef"></app-modal-dialog-header>
 <div content class="content">
-	<mat-form-field>
-		<mat-label>New name</mat-label>
+	<app-form-field title="New name">
 		<input matInput [(ngModel)]="name" placeholder="New name">
-	</mat-form-field>
+	</app-form-field>
 </div>
 
 <div class="actions">

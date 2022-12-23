@@ -66,7 +66,7 @@ export class ActionComponent implements OnInit {
 
 	isPendingTx(): boolean {
 		return !!(this.data
-			&& this.data.type === ActionType.Transaction
+			&& this.data.type === ActionType.ScCall
 			&& this.data.status === ActionStatus.Pending
 			&& !!this.data.txHash);
 	}
@@ -76,7 +76,6 @@ export class ActionComponent implements OnInit {
 			return;
 		}
 		this.store.dispatch(ProjectAction.openProjectTab({
-			projectId: this.data.projectId,
 			componentId: this.data.txHash,
 			componentType: 'tx',
 			title: txTabName(this.data.txHash),
