@@ -20,7 +20,7 @@ export class NetworkEffect {
 
 	addNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.addNetwork),
-		exhaustMap(() => this.dialog.open(NetworkEditorDialogComponent).afterClosed()),
+		exhaustMap(() => this.dialog.open(NetworkEditorDialogComponent, {width: '320px'}).afterClosed()),
 		filter(v => !!v),
 		mergeMap(({network}) => this.dataProvider.addNetwork(network).pipe(
 			map((list) => NetworkAction.addNetworkSuccess({list})),
@@ -31,7 +31,7 @@ export class NetworkEffect {
 	updateNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.updateNetwork),
 		exhaustMap((action) => {
-			return this.dialog.open(NetworkEditorDialogComponent, {data: action.network}).afterClosed();
+			return this.dialog.open(NetworkEditorDialogComponent, {data: action.network, width: '320px'}).afterClosed();
 		}),
 		filter(v => !!v),
 		mergeMap(({chainId, network}) => this.dataProvider.updateNetwork(chainId, network).pipe(
