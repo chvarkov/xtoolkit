@@ -42,6 +42,13 @@ export class TokenViewerComponent implements OnInit {
 		this.loadData();
 	}
 
+	mint(): void {
+		this.store.dispatch(ProjectAction.mintToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	explore(network: INetworkEnvironment): void {
 		window.open(`${network.explorerUrl}/tokens/${this.identifier}`, '_blank');
 	}

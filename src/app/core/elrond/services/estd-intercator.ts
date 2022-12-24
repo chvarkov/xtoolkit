@@ -7,7 +7,7 @@ import {
 	AbiRegistry,
 	BytesValue,
 	U32Value,
-	BigUIntValue,
+	BigUIntValue, AddressValue,
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
@@ -29,6 +29,12 @@ export interface IIssueTokenOptions {
 	canChangeOwner?: boolean;
 	canUpgrade?: boolean;
 	canAddSpecialRoles?: boolean;
+}
+
+export interface IMintTokenOptions {
+	identifier: string;
+	supply: BigNumber.Value;
+	mintedTokensOwner: string;
 }
 
 @Injectable({providedIn: 'root'})
@@ -83,6 +89,33 @@ export class ESDTInteractor {
 		return this.txRunner.signAndSendTx(tx, {
 			network,
 			gasLimit: 60000000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	async mint(network: INetworkEnvironment,
+			   wallet: GeneratedWallet,
+			   options: IMintTokenOptions): Promise<string> {
+		console.log('options', options);
+		const args: any[] = [
+			BytesValue.fromUTF8(options.identifier),
+			new BigUIntValue(new BigNumber(options.supply)),
+			new AddressValue(new Address(options.mintedTokensOwner)),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.mint(args)
+			.withValue(TokenPayment.egldFromAmount(this.issuePriceInEgld))
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 3_000_000,
 			caller: wallet.address,
 			credentials: {
 				mnemonic: wallet.mnemonic,

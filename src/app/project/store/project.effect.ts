@@ -30,13 +30,14 @@ import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnem
 import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
 import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
 import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
-import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dialog/issue-token-dialog.component';
+import { IssueTokenDialogComponent } from '../components/dialogs/estd/issue-token-dialog/issue-token-dialog.component';
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
+import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -203,7 +204,22 @@ export class ProjectEffect {
 				)),
 			),
 		),
-		catchError(err => of(ProjectAction.addTokenError({err}))),
+		catchError(err => of(ProjectAction.issueTokenError({err}))),
+	));
+
+	mintToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.mintToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
+				data: {projectId, identifier},
+				width: '320px',
+			})
+				.afterClosed()
+				.pipe(
+					filter(v => !!v),
+					map((data: ActionHistoryElement) => ActionHistoryAction.logAction({ data })),
+				),
+		),
+		catchError(err => of(ProjectAction.mintTokenError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

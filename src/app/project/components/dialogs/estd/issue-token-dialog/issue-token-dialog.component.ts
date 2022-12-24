@@ -4,16 +4,16 @@ import {
 	ActionType,
 	GeneratedWallet,
 	Project
-} from '../../../../core/data-provider/data-provider';
+} from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
-import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
-import { ITokenInfo } from '../../../../core/elrond/interfaces/token-info';
+import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
+import { ITokenInfo } from '../../../../../core/elrond/interfaces/token-info';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ESDTInteractor } from '../../../../core/elrond/services/estd-intercator';
-import { ProjectSelector } from '../../../store/project.selector';
+import { ESDTInteractor } from '../../../../../core/elrond/services/estd-intercator';
+import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
-import { NetworkSelector } from '../../../../network/store/network.selector';
+import { NetworkSelector } from '../../../../../network/store/network.selector';
 import * as uuid from 'uuid';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 

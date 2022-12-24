@@ -67,6 +67,10 @@ export class ProjectAction {
 	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`, props<{project: Project}>());
 	static readonly issueTokenError = createAction(`[${ProjectAction.name}] issue token [ERR]`, props<{err: Error}>());
 
+	static readonly mintToken = createAction(`[${ProjectAction.name}] mint token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly mintTokenSuccess = createAction(`[${ProjectAction.name}] mint token [OK]`);
+	static readonly mintTokenError = createAction(`[${ProjectAction.name}] mint token [ERR]`, props<{err: Error}>());
+
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
 	static readonly loadProjectTabsError = createAction(`[${ProjectAction.name}] load project tabs [ERR]`, props<{err: Error}>());
