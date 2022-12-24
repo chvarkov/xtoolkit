@@ -9,7 +9,6 @@ import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@elr
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { ProjectAction } from '../store/project.action';
-import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
 
 @Injectable({providedIn: 'root'})
 export class TokenIssueAwaiter {
@@ -18,8 +17,7 @@ export class TokenIssueAwaiter {
 	private readonly sub = new Subscription();
 
 	constructor(private readonly store: Store,
-				private readonly proxyProvider: ElrondProxyProvider,
-				private readonly elrondDataProvider: ElrondDataProvider) {
+				private readonly proxyProvider: ElrondProxyProvider) {
 		this.waitList$ = this.store.select(ProjectSelector.issueTokenWaitList);
 	}
 
@@ -54,7 +52,7 @@ export class TokenIssueAwaiter {
 					getTransaction(txHash: string): Promise<ITransactionOnNetwork> {
 						return proxy.getTransaction(txHash);
 					},
-				}, 3000);
+				}, 3000, 180_000);
 
 				watcher.awaitOnCondition({
 					...tx,
@@ -62,16 +60,21 @@ export class TokenIssueAwaiter {
 						return new TransactionHash(tx.hash);
 					},
 				}, (tx) => {
-					return tx.status.isFailed() || tx.status.isExecuted() || tx.status.isInvalid();
+					return tx.status.isFailed() ||
+						tx.status.isInvalid() ||
+						(tx.status.isExecuted() && !!this.parseIssuedTokenIdentifier(tx));
 				})
 					.then(async (tx) => {
+						console.log('awaited tx', tx);
 						const status = tx.status.isExecuted() ? ActionStatus.Success : ActionStatus.Fail;
 
 						switch (status) {
 							case ActionStatus.Success:
-								const identifier = await this.elrondDataProvider.getTransaction(network, tx.hash)
-									.toPromise()
-									.then((res: any) => res.operations[0].identifier);
+								const identifier = this.parseIssuedTokenIdentifier(tx);
+
+								if (!identifier) {
+									return;
+								}
 
 								this.store.dispatch(ProjectAction.addToken({
 									projectId: data.projectId,
@@ -111,5 +114,21 @@ export class TokenIssueAwaiter {
 
 	disable(): void {
 		this.sub.unsubscribe();
+	}
+
+	private parseIssuedTokenIdentifier(tx: ITransactionOnNetwork): string | undefined {
+		const event = tx.logs.findFirstOrNoneEvent('issue');
+
+		if (!event) {
+			return;
+		}
+
+		const firstTopic = event.topics[0];
+
+		if (!firstTopic) {
+			return;
+		}
+
+		return Buffer.from(firstTopic.hex(), 'hex').toString('utf8');
 	}
 }
