@@ -49,6 +49,20 @@ export class TokenViewerComponent implements OnInit {
 		}))
 	}
 
+	pause(): void {
+		this.store.dispatch(ProjectAction.pauseToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	unpause(): void {
+		this.store.dispatch(ProjectAction.unPauseToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	explore(network: INetworkEnvironment): void {
 		window.open(`${network.explorerUrl}/tokens/${this.identifier}`, '_blank');
 	}

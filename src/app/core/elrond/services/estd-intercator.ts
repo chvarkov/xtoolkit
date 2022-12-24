@@ -107,7 +107,6 @@ export class ESDTInteractor {
 
 		const interaction = <Interaction>this.contract.methodsExplicit
 			.mint(args)
-			.withValue(TokenPayment.egldFromAmount(this.issuePriceInEgld))
 			.withChainID(network.chainId);
 
 		const tx = interaction.buildTransaction();
@@ -115,6 +114,52 @@ export class ESDTInteractor {
 		return this.txRunner.signAndSendTx(tx, {
 			network,
 			gasLimit: 3_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	async pause(network: INetworkEnvironment,
+				wallet: GeneratedWallet,
+				identifier: string): Promise<string> {
+		const args: TypedValue[] = [
+			BytesValue.fromUTF8(identifier),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.pause(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 55_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	async unPause(network: INetworkEnvironment,
+				  wallet: GeneratedWallet,
+				  identifier: string): Promise<string> {
+		const args: TypedValue[] = [
+			BytesValue.fromUTF8(identifier),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.unPause(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 55_000_000,
 			caller: wallet.address,
 			credentials: {
 				mnemonic: wallet.mnemonic,

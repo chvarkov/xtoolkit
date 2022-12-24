@@ -23,6 +23,7 @@ import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-
 import { AddProjectAddressDialogComponent } from './components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
 import { MintTokenDialogComponent } from './components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -40,6 +41,7 @@ import { MintTokenDialogComponent } from './components/dialogs/estd/mint-token-d
 		AddProjectAddressDialogComponent,
 		IsExpandedExplorerNodePipe,
   MintTokenDialogComponent,
+  PauseTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

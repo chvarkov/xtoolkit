@@ -39,6 +39,7 @@ import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
 import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
 import { EstdService } from '../services/estd.service';
+import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -211,17 +212,28 @@ export class ProjectEffect {
 
 	pauseToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.pauseToken),
-		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
-				data: {projectId, identifier},
-				width: '320px',
-			})
-				.afterClosed()
-				.pipe(
-					filter(v => !!v),
-					map((data: ActionHistoryElement) => ActionHistoryAction.logAction({ data })),
-				),
-		),
-		catchError(err => of(ProjectAction.mintTokenError({err}))),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(PauseTokenDialogComponent, {
+			data: {projectId, identifier, isPause: true},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.pause(projectId, network, wallet, options.identifier).pipe(
+			map(() => ProjectAction.pauseTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.pauseTokenError({err}))),
+	));
+
+	unpauseToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.unPauseToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(PauseTokenDialogComponent, {
+			data: {projectId, identifier, isPause: true},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.unPause(projectId, network, wallet, options.identifier).pipe(
+			map(() => ProjectAction.unPauseTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.unPauseTokenError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

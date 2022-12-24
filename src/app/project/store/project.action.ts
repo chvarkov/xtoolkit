@@ -71,6 +71,14 @@ export class ProjectAction {
 	static readonly mintTokenSuccess = createAction(`[${ProjectAction.name}] mint token [OK]`);
 	static readonly mintTokenError = createAction(`[${ProjectAction.name}] mint token [ERR]`, props<{err: Error}>());
 
+	static readonly pauseToken = createAction(`[${ProjectAction.name}] pause token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly pauseTokenSuccess = createAction(`[${ProjectAction.name}] pause token [OK]`);
+	static readonly pauseTokenError = createAction(`[${ProjectAction.name}] pause token [ERR]`, props<{err: Error}>());
+
+	static readonly unPauseToken = createAction(`[${ProjectAction.name}] unpause token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly unPauseTokenSuccess = createAction(`[${ProjectAction.name}] unpause token [OK]`);
+	static readonly unPauseTokenError = createAction(`[${ProjectAction.name}] unpause token [ERR]`, props<{err: Error}>());
+
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
 	static readonly loadProjectTabsError = createAction(`[${ProjectAction.name}] load project tabs [ERR]`, props<{err: Error}>());
