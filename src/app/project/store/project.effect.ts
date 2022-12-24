@@ -30,13 +30,16 @@ import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnem
 import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
 import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
 import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
-import { IssueTokenDialogComponent } from '../components/dialogs/issue-token-dialog/issue-token-dialog.component';
+import { IssueTokenDialogComponent } from '../components/dialogs/estd/issue-token-dialog/issue-token-dialog.component';
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
+import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { EstdService } from '../services/estd.service';
+import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -186,24 +189,51 @@ export class ProjectEffect {
 		exhaustMap(({projectId}) => this.dialog.open(IssueTokenDialogComponent, {
 			data: {projectId},
 			width: '480px',
-		})
-			.afterClosed()
-			.pipe(
-				filter(v => !!v),
-				switchMap((data: ActionHistoryElement) => of(
-					ProjectAction.addTokenIssueTxToWaitList({
-						data: {
-							projectId: data.projectId,
-							txHash: data.txHash || '',
-							actionId: data.id,
-							chainId: data.chainId,
-						},
-					}),
-					ActionHistoryAction.logAction({ data }),
-				)),
-			),
-		),
-		catchError(err => of(ProjectAction.addTokenError({err}))),
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.issueFungibleToken(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.issueTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.issueTokenError({err}))),
+	));
+
+	mintToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.mintToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
+			data: {projectId, identifier},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.mint(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.mintTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.mintTokenError({err}))),
+	));
+
+	pauseToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.pauseToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(PauseTokenDialogComponent, {
+			data: {projectId, identifier, isPause: true},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.pause(projectId, network, wallet, options.identifier).pipe(
+			map(() => ProjectAction.pauseTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.pauseTokenError({err}))),
+	));
+
+	unpauseToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.unPauseToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(PauseTokenDialogComponent, {
+			data: {projectId, identifier, isPause: true},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.unPause(projectId, network, wallet, options.identifier).pipe(
+			map(() => ProjectAction.unPauseTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.unPauseTokenError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(
@@ -681,6 +711,7 @@ export class ProjectEffect {
 				private readonly elrondProxy: ElrondProxyProvider,
 				private readonly txProvider: TransactionProvider,
 				private readonly dialog: MatDialog,
+				private readonly estdService: EstdService,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
 	}

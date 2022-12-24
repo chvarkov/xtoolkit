@@ -12,7 +12,7 @@ export class ActionTypeIconPipe implements PipeTransform {
 				return 'token';
 			case ActionType.Query:
 				return 'switch_access_shortcut';
-			case ActionType.ScCall:
+			case ActionType.Tx:
 				return 'code';
 		}
 	}

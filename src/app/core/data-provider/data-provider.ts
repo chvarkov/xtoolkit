@@ -63,7 +63,7 @@ export enum ActionStatus {
 
 export enum ActionType {
 	Issue = 'issue',
-	ScCall = 'tx',
+	Tx = 'tx',
 	Query = 'query',
 }
 

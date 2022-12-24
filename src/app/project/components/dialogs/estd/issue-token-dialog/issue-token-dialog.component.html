@@ -69,7 +69,7 @@
 			class="create-button"
 			[disabled]="!issueTokenForm.valid"
 			*ngIf="network$ | async as network"
-			(click)="submit(network, wallet)">
+			(click)="submit(network)">
 		Issue
 	</button>
 </div>

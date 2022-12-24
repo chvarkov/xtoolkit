@@ -1,0 +1,25 @@
+<app-modal-dialog-header [title]="title" [dialogRef]="dialogRef"></app-modal-dialog-header>
+
+<form [formGroup]="form" class="content" *ngIf="project$ | async as project">
+	<app-form-field title="Identifier">
+		<input formControlName="identifier">
+	</app-form-field>
+
+	<app-form-field class="caller" title="Caller">
+		<mat-select class="input-control"
+					panelClass="select-panel"
+					(selectionChange)="onChangeSignerWallet($event.value)" >
+			<mat-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</mat-option>
+		</mat-select>
+	</app-form-field>
+</form>
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button
+			class="create-button"
+			[disabled]="!wallet"
+			*ngIf="network$ | async as network"
+			(click)="submit(network)">
+		{{actionName}}
+	</button>
+</div>

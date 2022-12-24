@@ -29,7 +29,7 @@
 						*ngFor="let invisibleTab of invisibleTabs"
 						(click)="pushTabAsFirst(invisibleTab.index)"
 						[ngStyle]="{color: invisibleTab.type | componentColor}">
-					<mat-icon>{{invisibleTab.type | componentIcon}}</mat-icon>
+					<mat-icon [ngStyle]="{color: invisibleTab.type | componentColor}">{{invisibleTab.type | componentIcon}}</mat-icon>
 					<span>{{invisibleTab.title}}</span>
 				</button>
 			</mat-menu>

@@ -86,6 +86,14 @@
 		padding: 4px;
 	}
 
+	.actions {
+		padding: 10px 0;
+
+		button {
+			margin-left: 6px;
+		}
+	}
+
 	.properties {
 		display: grid;
 		grid-template-columns: 200px 1fr;

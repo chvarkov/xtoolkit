@@ -14,7 +14,7 @@ import { ProjectExplorerComponent } from './components/project-explorer/project-
 import { ProjectElementComponent } from './components/project-element/project-element.component';
 import { NetworkModule } from '../network/network.module';
 import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
-import { IssueTokenDialogComponent } from './components/dialogs/issue-token-dialog/issue-token-dialog.component';
+import { IssueTokenDialogComponent } from './components/dialogs/estd/issue-token-dialog/issue-token-dialog.component';
 import { ImportTokenDialogComponent } from './components/dialogs/import-token-dialog/import-token-dialog.component';
 import { IsActiveProjectElementPipe } from './pipes/is-active-project-element.pipe';
 import { TokenIssueAwaiter } from './services/token-issue.awaiter';
@@ -22,6 +22,8 @@ import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update
 import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from './components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
+import { MintTokenDialogComponent } from './components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -38,6 +40,8 @@ import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pi
 		AddSmartContractDialogComponent,
 		AddProjectAddressDialogComponent,
 		IsExpandedExplorerNodePipe,
+  MintTokenDialogComponent,
+  PauseTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

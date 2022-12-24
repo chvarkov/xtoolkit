@@ -64,8 +64,20 @@ export class ProjectAction {
 	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
 
 	static readonly issueToken = createAction(`[${ProjectAction.name}] issue token [...]`, props<{projectId: string}>());
-	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`, props<{project: Project}>());
+	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`);
 	static readonly issueTokenError = createAction(`[${ProjectAction.name}] issue token [ERR]`, props<{err: Error}>());
+
+	static readonly mintToken = createAction(`[${ProjectAction.name}] mint token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly mintTokenSuccess = createAction(`[${ProjectAction.name}] mint token [OK]`);
+	static readonly mintTokenError = createAction(`[${ProjectAction.name}] mint token [ERR]`, props<{err: Error}>());
+
+	static readonly pauseToken = createAction(`[${ProjectAction.name}] pause token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly pauseTokenSuccess = createAction(`[${ProjectAction.name}] pause token [OK]`);
+	static readonly pauseTokenError = createAction(`[${ProjectAction.name}] pause token [ERR]`, props<{err: Error}>());
+
+	static readonly unPauseToken = createAction(`[${ProjectAction.name}] unpause token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly unPauseTokenSuccess = createAction(`[${ProjectAction.name}] unpause token [OK]`);
+	static readonly unPauseTokenError = createAction(`[${ProjectAction.name}] unpause token [ERR]`, props<{err: Error}>());
 
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
