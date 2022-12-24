@@ -1,10 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-	ActionStatus,
-	ActionType,
-	GeneratedWallet,
-	Project
-} from '../../../../../core/data-provider/data-provider';
+import { GeneratedWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { ITokenInfo } from '../../../../../core/elrond/interfaces/token-info';
@@ -14,7 +9,6 @@ import { ESDTInteractor } from '../../../../../core/elrond/services/estd-interca
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
-import * as uuid from 'uuid';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -67,7 +61,7 @@ export class IssueTokenDialogComponent implements OnInit {
 		this.wallet = wallet;
 	}
 
-	async submit(network: INetworkEnvironment, wallet: GeneratedWallet): Promise<void> {
+	async submit(network: INetworkEnvironment): Promise<void> {
 		if (!this.issueTokenForm.valid) {
 			return;
 		}
@@ -76,19 +70,11 @@ export class IssueTokenDialogComponent implements OnInit {
 			return;
 		}
 
-		const txHash = await this.estdInteractor.issueFungibleToken(network, wallet, this.issueTokenForm.value);
-
-		this.dialogRef.close({
-			id: uuid.v4(),
-			txHash,
-			projectId: this.data.projectId,
-			type: ActionType.Issue,
-			data: this.issueTokenForm.value,
-			chainId: network.chainId,
-			title: 'Issue token',
-			status: ActionStatus.Pending,
-			caller: wallet.address,
-			timestamp: Date.now(),
-		});
+		this.dialogRef.close([
+			this.data.projectId,
+			network,
+			this.wallet,
+			this.issueTokenForm.value
+		]);
 	}
 }

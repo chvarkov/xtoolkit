@@ -7,7 +7,7 @@ import {
 	AbiRegistry,
 	BytesValue,
 	U32Value,
-	BigUIntValue, AddressValue,
+	BigUIntValue, AddressValue, TypedValue,
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
@@ -64,16 +64,16 @@ export class ESDTInteractor {
 
 	async issueFungibleToken(network: INetworkEnvironment,
 							 wallet: GeneratedWallet,
-							 token: IIssueTokenOptions): Promise<string> {
+							 options: IIssueTokenOptions): Promise<string> {
 		const args: any[] = [
-			BytesValue.fromUTF8(token.name),
-			BytesValue.fromUTF8(token.ticker),
-			new BigUIntValue(token.supply),
-			new U32Value(token.decimals),
+			BytesValue.fromUTF8(options.name),
+			BytesValue.fromUTF8(options.ticker),
+			new BigUIntValue(options.supply),
+			new U32Value(options.decimals),
 		];
 
 		for (const prop of this.esdtTokenProperties) {
-			const propertyEnabled = !!(token as any)[prop];
+			const propertyEnabled = !!(options as any)[prop];
 
 			args.push(BytesValue.fromUTF8(prop));
 			args.push(BytesValue.fromUTF8(propertyEnabled.toString()));
@@ -99,7 +99,6 @@ export class ESDTInteractor {
 	async mint(network: INetworkEnvironment,
 			   wallet: GeneratedWallet,
 			   options: IMintTokenOptions): Promise<string> {
-		console.log('options', options);
 		const args: any[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new BigUIntValue(new BigNumber(options.supply)),

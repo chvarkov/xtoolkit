@@ -38,6 +38,7 @@ import { AddProjectAddressDialogComponent } from '../components/dialogs/add-proj
 import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
 import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { EstdService } from '../services/estd.service';
 
 @Injectable()
 export class ProjectEffect {
@@ -187,28 +188,29 @@ export class ProjectEffect {
 		exhaustMap(({projectId}) => this.dialog.open(IssueTokenDialogComponent, {
 			data: {projectId},
 			width: '480px',
-		})
-			.afterClosed()
-			.pipe(
-				filter(v => !!v),
-				switchMap((data: ActionHistoryElement) => of(
-					ProjectAction.addTokenIssueTxToWaitList({
-						data: {
-							projectId: data.projectId,
-							txHash: data.txHash || '',
-							actionId: data.id,
-							chainId: data.chainId,
-						},
-					}),
-					ActionHistoryAction.logAction({ data }),
-				)),
-			),
-		),
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.issueFungibleToken(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.issueTokenSuccess()),
+		)),
 		catchError(err => of(ProjectAction.issueTokenError({err}))),
 	));
 
 	mintToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.mintToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
+			data: {projectId, identifier},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.mint(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.mintTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.mintTokenError({err}))),
+	));
+
+	pauseToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.pauseToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
 				data: {projectId, identifier},
 				width: '320px',
@@ -697,6 +699,7 @@ export class ProjectEffect {
 				private readonly elrondProxy: ElrondProxyProvider,
 				private readonly txProvider: TransactionProvider,
 				private readonly dialog: MatDialog,
+				private readonly estdService: EstdService,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
 	}

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActionStatus, ActionType, GeneratedWallet, Project } from '../../../../../core/data-provider/data-provider';
+import { GeneratedWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import * as uuid from 'uuid';
 import { ESDTInteractor } from '../../../../../core/elrond/services/estd-intercator';
 
 @Component({
@@ -47,7 +46,7 @@ export class MintTokenDialogComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
-	async submit(network: INetworkEnvironment): Promise<void> {
+	submit(network: INetworkEnvironment): void {
 		if (!this.mintTokenForm.valid) {
 			return;
 		}
@@ -56,23 +55,15 @@ export class MintTokenDialogComponent implements OnInit {
 			return;
 		}
 
-		const txHash = await this.estdInteractor.mint(network, this.wallet, {
-			...this.mintTokenForm.getRawValue(),
-			mintedTokensOwner: this.wallet.address,
-		});
-
-		this.dialogRef.close({
-			id: uuid.v4(),
-			txHash,
-			projectId: this.data.projectId,
-			type: ActionType.Tx,
-			data: this.mintTokenForm.getRawValue(),
-			chainId: network.chainId,
-			title: `Mint token ${this.data.identifier}`,
-			status: ActionStatus.Pending,
-			caller: this.wallet.address,
-			timestamp: Date.now(),
-		});
+		this.dialogRef.close([
+			this.data.projectId,
+			network,
+			this.wallet,
+			{
+				...this.mintTokenForm.getRawValue(),
+				mintedTokensOwner: this.wallet.address,
+			},
+		]);
 	}
 
 	onChangeIssuerWallet(wallet: GeneratedWallet): void {

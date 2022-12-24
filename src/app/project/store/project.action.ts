@@ -64,7 +64,7 @@ export class ProjectAction {
 	static readonly addTokenError = createAction(`[${ProjectAction.name}] add token [ERR]`, props<{err: Error}>());
 
 	static readonly issueToken = createAction(`[${ProjectAction.name}] issue token [...]`, props<{projectId: string}>());
-	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`, props<{project: Project}>());
+	static readonly issueTokenSuccess = createAction(`[${ProjectAction.name}] issue token [OK]`);
 	static readonly issueTokenError = createAction(`[${ProjectAction.name}] issue token [ERR]`, props<{err: Error}>());
 
 	static readonly mintToken = createAction(`[${ProjectAction.name}] mint token [...]`, props<{projectId: string, identifier: string}>());
