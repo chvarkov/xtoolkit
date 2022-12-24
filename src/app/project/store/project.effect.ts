@@ -37,7 +37,7 @@ import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
-import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { MintBurnTokenDialogComponent } from '../components/dialogs/estd/mint-burn-token-dialog/mint-burn-token-dialog.component';
 import { EstdService } from '../services/estd.service';
 import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
@@ -200,8 +200,8 @@ export class ProjectEffect {
 
 	mintToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.mintToken),
-		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
-			data: {projectId, identifier},
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintBurnTokenDialogComponent, {
+			data: {projectId, identifier, isMint: true},
 			width: '320px',
 		}).afterClosed()),
 		filter(v => !!v),
@@ -209,6 +209,19 @@ export class ProjectEffect {
 			map(() => ProjectAction.mintTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.mintTokenError({err}))),
+	));
+
+	burnToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.burnToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintBurnTokenDialogComponent, {
+			data: {projectId, identifier, isMint: false},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.burn(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.burnTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.burnTokenError({err}))),
 	));
 
 	pauseToken$ = createEffect(() => this.actions$.pipe(

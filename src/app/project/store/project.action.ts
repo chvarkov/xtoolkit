@@ -71,6 +71,10 @@ export class ProjectAction {
 	static readonly mintTokenSuccess = createAction(`[${ProjectAction.name}] mint token [OK]`);
 	static readonly mintTokenError = createAction(`[${ProjectAction.name}] mint token [ERR]`, props<{err: Error}>());
 
+	static readonly burnToken = createAction(`[${ProjectAction.name}] burn token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly burnTokenSuccess = createAction(`[${ProjectAction.name}] burn token [OK]`);
+	static readonly burnTokenError = createAction(`[${ProjectAction.name}] burn token [ERR]`, props<{err: Error}>());
+
 	static readonly pauseToken = createAction(`[${ProjectAction.name}] pause token [...]`, props<{projectId: string, identifier: string}>());
 	static readonly pauseTokenSuccess = createAction(`[${ProjectAction.name}] pause token [OK]`);
 	static readonly pauseTokenError = createAction(`[${ProjectAction.name}] pause token [ERR]`, props<{err: Error}>());

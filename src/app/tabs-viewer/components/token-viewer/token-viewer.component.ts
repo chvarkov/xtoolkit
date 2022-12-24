@@ -49,6 +49,13 @@ export class TokenViewerComponent implements OnInit {
 		}))
 	}
 
+	burn(): void {
+		this.store.dispatch(ProjectAction.burnToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	pause(): void {
 		this.store.dispatch(ProjectAction.pauseToken({
 			projectId: this.projectId,

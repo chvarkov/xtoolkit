@@ -3,7 +3,7 @@ import {
 	ESDTInteractor,
 	IFreezeUnFreezeOptions,
 	IIssueTokenOptions,
-	IMintTokenOptions
+	IMintBurnTokenOptions
 } from '../../core/elrond/services/estd-intercator';
 import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import {
@@ -63,7 +63,7 @@ export class EstdService {
 	mint(projectId: string,
 		 network: INetworkEnvironment,
 		 wallet: GeneratedWallet,
-		 options: IMintTokenOptions): Observable<void> {
+		 options: IMintBurnTokenOptions): Observable<void> {
 		const txHash$ = this.estdInteractor.mint(network, wallet, options);
 
 		return from(txHash$).pipe(
@@ -76,6 +76,32 @@ export class EstdService {
 					data: options,
 					chainId: network.chainId,
 					title: `Mint token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	burn(projectId: string,
+		 network: INetworkEnvironment,
+		 wallet: GeneratedWallet,
+		 options: IMintBurnTokenOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.burn(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options,
+					chainId: network.chainId,
+					title: `Burn token ${options.identifier}`,
 					status: ActionStatus.Pending,
 					caller: wallet.address,
 					timestamp: Date.now(),

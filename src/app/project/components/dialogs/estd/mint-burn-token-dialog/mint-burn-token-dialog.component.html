@@ -1,4 +1,4 @@
-<app-modal-dialog-header title="Mint token" [dialogRef]="dialogRef"></app-modal-dialog-header>
+<app-modal-dialog-header [title]="title" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
 <form [formGroup]="mintTokenForm" class="content" *ngIf="project$ | async as project">
 	<app-form-field title="Identifier">
@@ -24,6 +24,6 @@
 			[disabled]="!mintTokenForm.valid"
 			*ngIf="network$ | async as network"
 			(click)="submit(network)">
-		Mint
+		{{actionName}}
 	</button>
 </div>

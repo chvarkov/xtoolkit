@@ -12,10 +12,10 @@ import { ESDTInteractor } from '../../../../../core/elrond/services/estd-interca
 
 @Component({
 	selector: 'app-mint-token-dialog',
-	templateUrl: './mint-token-dialog.component.html',
-	styleUrls: ['./mint-token-dialog.component.scss']
+	templateUrl: './mint-burn-token-dialog.component.html',
+	styleUrls: ['./mint-burn-token-dialog.component.scss']
 })
-export class MintTokenDialogComponent implements OnInit {
+export class MintBurnTokenDialogComponent implements OnInit {
 	wallet?: GeneratedWallet;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
@@ -24,8 +24,16 @@ export class MintTokenDialogComponent implements OnInit {
 
 	mintTokenForm!: FormGroup;
 
-	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string},
-				readonly dialogRef: MatDialogRef<MintTokenDialogComponent>,
+	get actionName(): string {
+		return this.data.isMint ? 'Mint' : 'Burn';
+	}
+
+	get title(): string {
+		return this.data.isMint ? 'Mint token' : 'Burn token';
+	}
+
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string, isMint: boolean},
+				readonly dialogRef: MatDialogRef<MintBurnTokenDialogComponent>,
 				private readonly estdInteractor: ESDTInteractor,
 				private readonly fb: FormBuilder,
 				private readonly store: Store) {

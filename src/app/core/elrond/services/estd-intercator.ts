@@ -31,10 +31,10 @@ export interface IIssueTokenOptions {
 	canAddSpecialRoles?: boolean;
 }
 
-export interface IMintTokenOptions {
+export interface IMintBurnTokenOptions {
 	identifier: string;
 	supply: BigNumber.Value;
-	mintedTokensOwner: string;
+	mintedTokensOwner?: string;
 }
 
 export interface IFreezeUnFreezeOptions {
@@ -101,9 +101,9 @@ export class ESDTInteractor {
 		});
 	}
 
-	async mint(network: INetworkEnvironment,
-			   wallet: GeneratedWallet,
-			   options: IMintTokenOptions): Promise<string> {
+	mint(network: INetworkEnvironment,
+		 wallet: GeneratedWallet,
+		 options: IMintBurnTokenOptions): Promise<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new BigUIntValue(new BigNumber(options.supply)),
@@ -126,9 +126,33 @@ export class ESDTInteractor {
 		});
 	}
 
-	async pause(network: INetworkEnvironment,
-				wallet: GeneratedWallet,
-				identifier: string): Promise<string> {
+	burn(network: INetworkEnvironment,
+		 wallet: GeneratedWallet,
+		 options: IMintBurnTokenOptions): Promise<string> {
+		const args: any[] = [
+			BytesValue.fromUTF8(options.identifier),
+			new BigUIntValue(new BigNumber(options.supply)),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.ESDTBurn(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 3_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	pause(network: INetworkEnvironment,
+		  wallet: GeneratedWallet,
+		  identifier: string): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(identifier),
 		];
