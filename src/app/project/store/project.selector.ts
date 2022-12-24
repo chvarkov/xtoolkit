@@ -13,6 +13,11 @@ export class ProjectSelector {
 		(state: IProjectState) => state.activeProject,
 	);
 
+	static activeProjectId = createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.activeProject?.id,
+	);
+
 	static smartContracts = () => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.activeProject?.smartContracts || [],

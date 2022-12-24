@@ -79,6 +79,7 @@ export class TokenIssueAwaiter {
 								}));
 
 								this.store.dispatch(ActionHistoryAction.updateActionStatus({
+									projectId: data.projectId,
 									id: data.actionId,
 									status,
 								}));
@@ -87,6 +88,7 @@ export class TokenIssueAwaiter {
 
 							case ActionStatus.Fail:
 								this.store.dispatch(ActionHistoryAction.updateActionStatus({
+									projectId: data.projectId,
 									id: data.actionId,
 									status,
 								}));

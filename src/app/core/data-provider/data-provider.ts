@@ -135,11 +135,11 @@ export interface DataProvider {
 
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]>;
 
-	getActionHistory(): Observable<ActionHistoryElement[]>;
+	getActionHistory(projectId: string): Observable<ActionHistoryElement[]>;
 
-	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
+	updateActionStatus(projectId: string, id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
 
-	clearActionHistory(): Observable<void>;
+	clearActionHistory(projectId: string): Observable<void>;
 
 	addTokenIssueTransaction(data: PendingTokenIssue): Observable<PendingTokenIssue[]>;
 

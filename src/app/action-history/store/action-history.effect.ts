@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ActionHistoryEffect {
 	loadActionHistory$ = createEffect(() => this.actions$.pipe(
 		ofType(ActionHistoryAction.loadActionHistory),
-		switchMap(() => this.dataProvider.getActionHistory().pipe(
+		switchMap(({projectId}) => this.dataProvider.getActionHistory(projectId).pipe(
 			map((list) => ActionHistoryAction.loadActionHistorySuccess({list})),
 			catchError(err => of(ActionHistoryAction.loadActionHistoryError({err})),
 		)),
@@ -28,7 +28,7 @@ export class ActionHistoryEffect {
 
 	updateActionStatus$ = createEffect(() => this.actions$.pipe(
 		ofType(ActionHistoryAction.updateActionStatus),
-		switchMap(({id, status}) => this.dataProvider.updateActionStatus(id, status).pipe(
+		switchMap(({projectId, id, status}) => this.dataProvider.updateActionStatus(projectId, id, status).pipe(
 			map((list) => ActionHistoryAction.updateActionStatusSuccess({list})),
 			catchError(err => of(ActionHistoryAction.updateActionStatusError({err})),
 			)),
@@ -47,7 +47,7 @@ export class ActionHistoryEffect {
 				map(() => action),
 			);
 		}),
-		mergeMap(() => this.dataProvider.clearActionHistory().pipe(
+		mergeMap(({projectId}) => this.dataProvider.clearActionHistory(projectId).pipe(
 			map((list) => ActionHistoryAction.clearActionHistorySuccess()),
 			catchError(err => of(ActionHistoryAction.clearActionHistoryError({err})),
 			)),

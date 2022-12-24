@@ -55,6 +55,7 @@ export class ActionComponent implements OnInit {
 							const status = tx.status.isExecuted() ? ActionStatus.Success : ActionStatus.Fail;
 
 							this.store.dispatch(ActionHistoryAction.updateActionStatus({
+								projectId: this.data?.projectId || '',
 								id: this.data?.id || '',
 								status,
 							}));
