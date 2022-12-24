@@ -37,6 +37,11 @@ export interface IMintTokenOptions {
 	mintedTokensOwner: string;
 }
 
+export interface IFreezeUnFreezeOptions {
+	identifier: string;
+	address: string;
+}
+
 @Injectable({providedIn: 'root'})
 export class ESDTInteractor {
 	private readonly estdContractAddress = new Address('erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u');
@@ -153,6 +158,54 @@ export class ESDTInteractor {
 
 		const interaction = <Interaction>this.contract.methodsExplicit
 			.unPause(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 55_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	freeze(network: INetworkEnvironment,
+		   wallet: GeneratedWallet,
+		   options: IFreezeUnFreezeOptions): Promise<string> {
+		const args: TypedValue[] = [
+			BytesValue.fromUTF8(options.identifier),
+			new AddressValue(new Address(options.address)),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.freeze(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 55_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	unFreeze(network: INetworkEnvironment,
+			 wallet: GeneratedWallet,
+			 options: IFreezeUnFreezeOptions): Promise<string> {
+		const args: TypedValue[] = [
+			BytesValue.fromUTF8(options.identifier),
+			new AddressValue(new Address(options.address)),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.unFreeze(args)
 			.withChainID(network.chainId);
 
 		const tx = interaction.buildTransaction();

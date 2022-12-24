@@ -63,6 +63,20 @@ export class TokenViewerComponent implements OnInit {
 		}))
 	}
 
+	freeze(): void {
+		this.store.dispatch(ProjectAction.freezeToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	unfreeze(): void {
+		this.store.dispatch(ProjectAction.unFreezeToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	explore(network: INetworkEnvironment): void {
 		window.open(`${network.explorerUrl}/tokens/${this.identifier}`, '_blank');
 	}

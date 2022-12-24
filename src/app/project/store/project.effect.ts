@@ -40,6 +40,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
 import { EstdService } from '../services/estd.service';
 import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
+import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -226,14 +227,40 @@ export class ProjectEffect {
 	unpauseToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.unPauseToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(PauseTokenDialogComponent, {
-			data: {projectId, identifier, isPause: true},
-			width: '320px',
+			data: {projectId, identifier, isPause: false},
+			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.estdService.unPause(projectId, network, wallet, options.identifier).pipe(
 			map(() => ProjectAction.unPauseTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.unPauseTokenError({err}))),
+	));
+
+	freezeToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.freezeToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
+			data: {projectId, identifier, isFreeze: true},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.freeze(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.freezeTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.freezeTokenError({err}))),
+	));
+
+	unFreezeToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.unFreezeToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
+			data: {projectId, identifier, isFreeze: false},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.unFreeze(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.unFreezeTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.unFreezeTokenError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

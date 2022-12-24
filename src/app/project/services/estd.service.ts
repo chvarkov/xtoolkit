@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ESDTInteractor, IIssueTokenOptions, IMintTokenOptions } from '../../core/elrond/services/estd-intercator';
+import {
+	ESDTInteractor,
+	IFreezeUnFreezeOptions,
+	IIssueTokenOptions,
+	IMintTokenOptions
+} from '../../core/elrond/services/estd-intercator';
 import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import {
 	ActionHistoryElement,
@@ -123,6 +128,58 @@ export class EstdService {
 					data: { identifier },
 					chainId: network.chainId,
 					title: `Unpause token ${identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	freeze(projectId: string,
+		   network: INetworkEnvironment,
+		   wallet: GeneratedWallet,
+		   options: IFreezeUnFreezeOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.freeze(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Freeze token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	unFreeze(projectId: string,
+			 network: INetworkEnvironment,
+			 wallet: GeneratedWallet,
+			 options: IFreezeUnFreezeOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.unFreeze(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Unfreeze token ${options.identifier}`,
 					status: ActionStatus.Pending,
 					caller: wallet.address,
 					timestamp: Date.now(),

@@ -24,6 +24,7 @@ import { AddProjectAddressDialogComponent } from './components/dialogs/add-proje
 import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
 import { MintTokenDialogComponent } from './components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
 import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
+import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -42,6 +43,7 @@ import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token
 		IsExpandedExplorerNodePipe,
   MintTokenDialogComponent,
   PauseTokenDialogComponent,
+  FreezeUnFreezeTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,
