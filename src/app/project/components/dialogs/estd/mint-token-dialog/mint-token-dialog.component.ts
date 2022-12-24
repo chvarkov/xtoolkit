@@ -65,7 +65,7 @@ export class MintTokenDialogComponent implements OnInit {
 			id: uuid.v4(),
 			txHash,
 			projectId: this.data.projectId,
-			type: ActionType.Issue,
+			type: ActionType.Tx,
 			data: this.mintTokenForm.getRawValue(),
 			chainId: network.chainId,
 			title: `Mint token ${this.data.identifier}`,

@@ -67,7 +67,7 @@ export class ActionComponent implements OnInit {
 
 	isPendingTx(): boolean {
 		return !!(this.data
-			&& this.data.type === ActionType.ScCall
+			&& this.data.type === ActionType.Tx
 			&& this.data.status === ActionStatus.Pending
 			&& !!this.data.txHash);
 	}
