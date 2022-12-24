@@ -6,6 +6,8 @@ import { ActionHistoryAction } from '../../store/action-history.action';
 import { ActionHistoryElement } from '../../../core/data-provider/data-provider';
 import { ProjectAction } from '../../../project/store/project.action';
 import { txTabName } from '../../../core/helpers/tx-tab-name';
+import { filter } from 'rxjs/operators';
+import { ProjectSelector } from '../../../project/store/project.selector';
 
 @Component({
 	selector: 'app-action-list',
@@ -14,23 +16,32 @@ import { txTabName } from '../../../core/helpers/tx-tab-name';
 })
 export class ActionHistoryListComponent implements OnInit {
 	actionHistory$: Observable<ActionHistoryElement[]>;
+	activeProjectId$: Observable<string | undefined>;
 
 	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
 	constructor(private readonly store: Store) {
 		this.actionHistory$ = this.store.select(ActionHistorySelector.list);
+		this.activeProjectId$ = this.store.select(ProjectSelector.activeProjectId);
 	}
 
 	ngOnInit(): void {
-		this.loadActionHistory();
+		this.activeProjectId$.pipe(filter(v => !!v)).subscribe(projectId => this.loadActionHistory(projectId));
+
 	}
 
-	loadActionHistory(): void {
-		this.store.dispatch(ActionHistoryAction.loadActionHistory());
+	loadActionHistory(projectId?: string): void {
+		if (!projectId) {
+			return;
+		}
+		this.store.dispatch(ActionHistoryAction.loadActionHistory({projectId}));
 	}
 
-	clearActionHistory(): void {
-		this.store.dispatch(ActionHistoryAction.clearActionHistory());
+	clearActionHistory(projectId?: string): void {
+		if (!projectId) {
+			return;
+		}
+		this.store.dispatch(ActionHistoryAction.clearActionHistory({ projectId }));
 	}
 
 	openTx(elem: ActionHistoryElement): void {

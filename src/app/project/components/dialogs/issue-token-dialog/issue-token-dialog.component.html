@@ -2,35 +2,66 @@
 
 <div class="content" *ngIf="project$ | async as project">
 	<form [formGroup]="issueTokenForm" class="issue-form">
-		<div class="form-control">
-			<div class="label">Token name</div>
-			<input class="field" formControlName="name" placeholder="Token name">
-		</div>
+		<div class="form-section">
+			<app-form-field title="Token name">
+				<input class="input" formControlName="name">
+			</app-form-field>
 
-		<div class="form-control">
-			<div class="label">Token ticker</div>
-			<input formControlName="ticker" placeholder="Token ticker">
-		</div>
+			<app-form-field title="Token ticker">
+				<input class="input" formControlName="ticker">
+			</app-form-field>
 
-		<div class="form-control">
-			<div class="label">Mint value</div>
-			<input formControlName="supply" type="number" min="0" placeholder="Mint value">
-		</div>
+			<app-form-field title="Mint value">
+				<input class="input" formControlName="supply" type="number" min="0">
+			</app-form-field>
 
-		<div class="form-control">
-			<div class="label">Decimals</div>
-			<input formControlName="decimals" type="number" min="0" placeholder="Decimals">
+			<app-form-field title="Decimals">
+				<input class="input" formControlName="supply" type="number" min="0">
+			</app-form-field>
+		</div>
+		<div class="from-section">
+			<div class="checkbox-field">
+				<div class="label">Can freeze</div>
+				<mat-checkbox formControlName="canFreeze"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can wipe</div>
+				<mat-checkbox formControlName="canWipe"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can pause</div>
+				<mat-checkbox formControlName="canPause"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can mint</div>
+				<mat-checkbox formControlName="canMint"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can burn</div>
+				<mat-checkbox formControlName="canBurn"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can change owner</div>
+				<mat-checkbox formControlName="canChangeOwner"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can upgrade</div>
+				<mat-checkbox formControlName="canUpgrade"></mat-checkbox>
+			</div>
+			<div class="checkbox-field">
+				<div class="label">Can add special roles</div>
+				<mat-checkbox formControlName="canAddSpecialRoles"></mat-checkbox>
+			</div>
 		</div>
 	</form>
 
-	<mat-form-field class="caller">
+	<app-form-field class="caller" title="Token issuer">
 		<mat-select class="input-control"
-					placeholder="Token issuer"
 					panelClass="select-panel"
 					(selectionChange)="onChangeIssuerWallet($event.value)" >
 			<mat-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</mat-option>
 		</mat-select>
-	</mat-form-field>
+	</app-form-field>
 </div>
 <div class="actions">
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>

@@ -418,7 +418,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	logAction(action: ActionHistoryElement): Observable<ActionHistoryElement[]> {
-		return this.getActionHistory()
+		return this.getActionHistory(action.projectId)
 			.pipe(
 				map(list => {
 					list = [
@@ -426,18 +426,18 @@ export class LocalstorageDataProvider implements DataProvider {
 						...list,
 					];
 
-					this.set(this.actionHistoryKey, list);
+					this.set(this.getActionHistoryKey(action.projectId), list);
 
 					return list;
 				}),
 			);
 	}
 
-	getActionHistory(): Observable<ActionHistoryElement[]> {
-		const history: ActionHistoryElement[] | undefined = this.get(this.actionHistoryKey);
+	getActionHistory(projectId: string): Observable<ActionHistoryElement[]> {
+		const history: ActionHistoryElement[] | undefined = this.get(this.getActionHistoryKey(projectId));
 
 		if (!history) {
-			this.set(this.actionHistoryKey, []);
+			this.set(this.getActionHistoryKey(projectId), []);
 
 			return of([]);
 		}
@@ -445,14 +445,14 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(history);
 	}
 
-	clearActionHistory(): Observable<void> {
-		this.set(this.actionHistoryKey, []);
+	clearActionHistory(projectId: string): Observable<void> {
+		this.set(this.getActionHistoryKey(projectId), []);
 
 		return of();
 	}
 
-	updateActionStatus(id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {
-		return this.getActionHistory()
+	updateActionStatus(projectId: string, id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {
+		return this.getActionHistory(projectId)
 			.pipe(
 				map(list => {
 					const item = list.find(i => i.id === id);
@@ -463,7 +463,7 @@ export class LocalstorageDataProvider implements DataProvider {
 
 					item.status = status;
 
-					this.set(this.actionHistoryKey, list);
+					this.set(this.getActionHistoryKey(projectId), list);
 
 					return list;
 				}),
@@ -564,6 +564,10 @@ export class LocalstorageDataProvider implements DataProvider {
 
 	private saveProject(project: Project): void {
 		this.set(this.getProjectKey(project.id), project);
+	}
+
+	private getActionHistoryKey(id: string): string {
+		return `${this.actionHistoryKey}.${id}`;
 	}
 
 	private getProjectKey(id: string): string {

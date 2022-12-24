@@ -1,26 +1,54 @@
 .content {
 	width: 100%;
+	padding-top: 10px;
 }
 
 .issue-form {
-	padding: 8px;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
+.input {
+	width: 190px;
+}
+
+.from-section {
 	display: flex;
 	flex-direction: column;
+	flex: 1;
+}
 
-	.form-control {
+.form-control {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	padding: 4px 0;
+
+	.field {
 		display: flex;
-		flex-direction: row;
-		width: 100%;
-		padding: 4px 0;
+		flex: 1;
+	}
+}
 
-		.label {
-			width: 160px;
-		}
+app-form-field {
+	margin-top: 6px;
+}
 
-		.field {
-			display: flex;
-			flex: 1;
-		}
+.checkbox-field {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 1;
+	padding: 4px 0;
+
+	.label {
+		font-size: 13px;
+		color: var(--text-color);
+	}
+
+	mat-checkbox {
+		margin-right: 10px;
 	}
 }
 
