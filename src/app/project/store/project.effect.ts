@@ -185,6 +185,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.issueToken),
 		exhaustMap(({projectId}) => this.dialog.open(IssueTokenDialogComponent, {
 			data: {projectId},
+			width: '480px',
 		})
 			.afterClosed()
 			.pipe(

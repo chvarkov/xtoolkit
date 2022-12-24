@@ -52,6 +52,14 @@ export class IssueTokenDialogComponent implements OnInit {
 			ticker: ['', Validators.required],
 			supply: [0, Validators.required],
 			decimals: [0, Validators.required],
+			canFreeze: [false],
+			canWipe: [false],
+			canPause: [false],
+			canMint: [false],
+			canBurn: [false],
+			canChangeOwner: [false],
+			canUpgrade: [false],
+			canAddSpecialRoles: [false],
 		});
 	}
 

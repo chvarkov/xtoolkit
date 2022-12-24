@@ -1,6 +1,13 @@
 import {
 	Interaction,
-	SmartContract, TokenPayment, Transaction, Account, Address, SmartContractAbi, AbiRegistry,
+	SmartContract,
+	TokenPayment,
+	Address,
+	SmartContractAbi,
+	AbiRegistry,
+	BytesValue,
+	U32Value,
+	BigUIntValue,
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
@@ -13,7 +20,15 @@ export interface IIssueTokenOptions {
 	name: string,
 	ticker: string,
 	supply: BigNumber.Value,
-	decimals: number
+	decimals: number;
+	canFreeze?: boolean;
+	canWipe?: boolean;
+	canPause?: boolean;
+	canMint?: boolean;
+	canBurn?: boolean;
+	canChangeOwner?: boolean;
+	canUpgrade?: boolean;
+	canAddSpecialRoles?: boolean;
 }
 
 @Injectable({providedIn: 'root'})
@@ -21,6 +36,17 @@ export class ESDTInteractor {
 	private readonly estdContractAddress = new Address('erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u');
 	private readonly issuePriceInEgld = new BigNumber(0.05);
 	private readonly contract: SmartContract;
+
+	private readonly esdtTokenProperties = [
+		'canFreeze',
+		'canWipe',
+		'canPause',
+		'canMint',
+		'canBurn',
+		'canChangeOwner',
+		'canUpgrade',
+		'canAddSpecialRoles',
+	];
 
 	constructor(private readonly txRunner: ScTransactionRunner) {
 		const abi = (estdAbi as any).default;
@@ -33,13 +59,22 @@ export class ESDTInteractor {
 	async issueFungibleToken(network: INetworkEnvironment,
 							 wallet: GeneratedWallet,
 							 token: IIssueTokenOptions): Promise<string> {
-		const interaction = <Interaction>this.contract.methods
-			.issue([
-				token.name,
-				token.ticker,
-				token.supply,
-				token.decimals
-			])
+		const args: any[] = [
+			BytesValue.fromUTF8(token.name),
+			BytesValue.fromUTF8(token.ticker),
+			new BigUIntValue(token.supply),
+			new U32Value(token.decimals),
+		];
+
+		for (const prop of this.esdtTokenProperties) {
+			const propertyEnabled = !!(token as any)[prop];
+
+			args.push(BytesValue.fromUTF8(prop));
+			args.push(BytesValue.fromUTF8(propertyEnabled.toString()));
+		}
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.issue(args)
 			.withValue(TokenPayment.egldFromAmount(this.issuePriceInEgld))
 			.withChainID(network.chainId);
 
