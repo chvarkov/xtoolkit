@@ -8,6 +8,8 @@ import { take } from 'rxjs/operators';
 import { ActionHistoryAction } from '../../store/action-history.action';
 import { ProjectAction } from '../../../project/store/project.action';
 import { txTabName } from '../../../core/helpers/tx-tab-name';
+import { parseTxStatus } from '../../../core/elrond/helpers/parse-tx-status';
+import { TransactionStatus } from '../../../core/elrond/enums/transaction-status';
 
 @Component({
 	selector: 'app-action',
@@ -49,10 +51,15 @@ export class ActionComponent implements OnInit {
 							return new TransactionHash(tx.hash);
 						},
 					}, (tx) => {
-						return tx.status.isFailed() || tx.status.isExecuted() || tx.status.isInvalid();
+						console.log('parsed tx = ' + parseTxStatus(tx));
+						return parseTxStatus(tx) !== TransactionStatus.Pending;
 					})
 						.then((tx) => {
-							const status = tx.status.isExecuted() ? ActionStatus.Success : ActionStatus.Fail;
+							console.log('tx', tx);
+							console.log('finish - parsed tx = ' + parseTxStatus(tx), parseTxStatus(tx) === TransactionStatus.Success);
+							const status = parseTxStatus(tx) === TransactionStatus.Success
+								? ActionStatus.Success
+								: ActionStatus.Fail;
 
 							this.store.dispatch(ActionHistoryAction.updateActionStatus({
 								projectId: this.data?.projectId || '',

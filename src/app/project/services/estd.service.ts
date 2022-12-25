@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ESDTInteractor, IIssueTokenOptions, IMintTokenOptions } from '../../core/elrond/services/estd-intercator';
+import {
+	ESDTInteractor,
+	IFreezeUnFreezeOptions,
+	IIssueTokenOptions,
+	IMintBurnTokenOptions, ISetSpecialRolesOptions, ITransferOwnershipOptions, IWipeOptions
+} from '../../core/elrond/services/estd-intercator';
 import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import {
 	ActionHistoryElement,
@@ -58,7 +63,7 @@ export class EstdService {
 	mint(projectId: string,
 		 network: INetworkEnvironment,
 		 wallet: GeneratedWallet,
-		 options: IMintTokenOptions): Observable<void> {
+		 options: IMintBurnTokenOptions): Observable<void> {
 		const txHash$ = this.estdInteractor.mint(network, wallet, options);
 
 		return from(txHash$).pipe(
@@ -71,6 +76,32 @@ export class EstdService {
 					data: options,
 					chainId: network.chainId,
 					title: `Mint token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	burn(projectId: string,
+		 network: INetworkEnvironment,
+		 wallet: GeneratedWallet,
+		 options: IMintBurnTokenOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.burn(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options,
+					chainId: network.chainId,
+					title: `Burn token ${options.identifier}`,
 					status: ActionStatus.Pending,
 					caller: wallet.address,
 					timestamp: Date.now(),
@@ -123,6 +154,136 @@ export class EstdService {
 					data: { identifier },
 					chainId: network.chainId,
 					title: `Unpause token ${identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	freeze(projectId: string,
+		   network: INetworkEnvironment,
+		   wallet: GeneratedWallet,
+		   options: IFreezeUnFreezeOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.freeze(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Freeze token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	unFreeze(projectId: string,
+			 network: INetworkEnvironment,
+			 wallet: GeneratedWallet,
+			 options: IFreezeUnFreezeOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.unFreeze(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Unfreeze token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	wipe(projectId: string,
+		 network: INetworkEnvironment,
+		 wallet: GeneratedWallet,
+		 options: IWipeOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.wipe(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Wipe token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	setSpecialRoles(projectId: string,
+		 			network: INetworkEnvironment,
+		 			wallet: GeneratedWallet,
+		 			options: ISetSpecialRolesOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.setSpecialRoles(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Set token special role ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	transferOwnership(projectId: string,
+					  network: INetworkEnvironment,
+					  wallet: GeneratedWallet,
+					  options: ITransferOwnershipOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.transferOwnership(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Transfer ownership ${options.identifier}`,
 					status: ActionStatus.Pending,
 					caller: wallet.address,
 					timestamp: Date.now(),

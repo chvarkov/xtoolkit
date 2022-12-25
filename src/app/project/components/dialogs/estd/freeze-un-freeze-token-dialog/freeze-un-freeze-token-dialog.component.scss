@@ -1,0 +1,22 @@
+.actions {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	padding-top: 4px;
+	justify-content: flex-end;
+
+	button {
+		color: var(--text-color);
+		margin: 4px;
+	}
+
+	.create-button {
+		background: var(--static-green);
+		border: solid 1px var(--static-green);
+	}
+
+	.cancel-button {
+		background: none;
+		border: solid 1px var(--border-color);
+	}
+}

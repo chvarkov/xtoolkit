@@ -22,8 +22,12 @@ import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update
 import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from './components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
-import { MintTokenDialogComponent } from './components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { MintBurnTokenDialogComponent } from './components/dialogs/estd/mint-burn-token-dialog/mint-burn-token-dialog.component';
 import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
+import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
+import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
+import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
+import { TransferOwnershipDialogComponent } from './components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -40,8 +44,12 @@ import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token
 		AddSmartContractDialogComponent,
 		AddProjectAddressDialogComponent,
 		IsExpandedExplorerNodePipe,
-  MintTokenDialogComponent,
+  MintBurnTokenDialogComponent,
   PauseTokenDialogComponent,
+  FreezeUnFreezeTokenDialogComponent,
+  WipeTokenDialogComponent,
+  SpecialRolesTokenDialogComponent,
+  TransferOwnershipDialogComponent,
 	],
 	imports: [
 		CommonModule,

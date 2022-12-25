@@ -71,6 +71,10 @@ export class ProjectAction {
 	static readonly mintTokenSuccess = createAction(`[${ProjectAction.name}] mint token [OK]`);
 	static readonly mintTokenError = createAction(`[${ProjectAction.name}] mint token [ERR]`, props<{err: Error}>());
 
+	static readonly burnToken = createAction(`[${ProjectAction.name}] burn token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly burnTokenSuccess = createAction(`[${ProjectAction.name}] burn token [OK]`);
+	static readonly burnTokenError = createAction(`[${ProjectAction.name}] burn token [ERR]`, props<{err: Error}>());
+
 	static readonly pauseToken = createAction(`[${ProjectAction.name}] pause token [...]`, props<{projectId: string, identifier: string}>());
 	static readonly pauseTokenSuccess = createAction(`[${ProjectAction.name}] pause token [OK]`);
 	static readonly pauseTokenError = createAction(`[${ProjectAction.name}] pause token [ERR]`, props<{err: Error}>());
@@ -78,6 +82,26 @@ export class ProjectAction {
 	static readonly unPauseToken = createAction(`[${ProjectAction.name}] unpause token [...]`, props<{projectId: string, identifier: string}>());
 	static readonly unPauseTokenSuccess = createAction(`[${ProjectAction.name}] unpause token [OK]`);
 	static readonly unPauseTokenError = createAction(`[${ProjectAction.name}] unpause token [ERR]`, props<{err: Error}>());
+
+	static readonly freezeToken = createAction(`[${ProjectAction.name}] freeze token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly freezeTokenSuccess = createAction(`[${ProjectAction.name}] freeze token [OK]`);
+	static readonly freezeTokenError = createAction(`[${ProjectAction.name}] freeze token [ERR]`, props<{err: Error}>());
+
+	static readonly unFreezeToken = createAction(`[${ProjectAction.name}] unfreeze token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly unFreezeTokenSuccess = createAction(`[${ProjectAction.name}] unfreeze token [OK]`);
+	static readonly unFreezeTokenError = createAction(`[${ProjectAction.name}] unfreeze token [ERR]`, props<{err: Error}>());
+
+	static readonly wipeToken = createAction(`[${ProjectAction.name}] wipe token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly wipeTokenSuccess = createAction(`[${ProjectAction.name}] wipe token [OK]`);
+	static readonly wipeTokenError = createAction(`[${ProjectAction.name}] wipe token [ERR]`, props<{err: Error}>());
+
+	static readonly setTokenSpecialRole = createAction(`[${ProjectAction.name}] set token special role [...]`, props<{projectId: string, identifier: string}>());
+	static readonly setTokenSpecialRoleSuccess = createAction(`[${ProjectAction.name}] set token special role [OK]`);
+	static readonly setTokenSpecialRoleError = createAction(`[${ProjectAction.name}] set token special role [ERR]`, props<{err: Error}>());
+
+	static readonly transferTokenOwnership = createAction(`[${ProjectAction.name}] transfer token ownership [...]`, props<{projectId: string, identifier: string}>());
+	static readonly transferTokenOwnershipSuccess = createAction(`[${ProjectAction.name}] transfer token ownership [OK]`);
+	static readonly transferTokenOwnershipError = createAction(`[${ProjectAction.name}] transfer token ownership [ERR]`, props<{err: Error}>());
 
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());

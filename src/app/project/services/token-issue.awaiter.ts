@@ -9,6 +9,8 @@ import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@elr
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { ProjectAction } from '../store/project.action';
+import { parseTxStatus } from '../../core/elrond/helpers/parse-tx-status';
+import { TransactionStatus } from '../../core/elrond/enums/transaction-status';
 
 @Injectable({providedIn: 'root'})
 export class TokenIssueAwaiter {
@@ -60,9 +62,7 @@ export class TokenIssueAwaiter {
 						return new TransactionHash(tx.hash);
 					},
 				}, (tx) => {
-					return tx.status.isFailed() ||
-						tx.status.isInvalid() ||
-						(tx.status.isExecuted() && !!this.parseIssuedTokenIdentifier(tx));
+					return parseTxStatus(tx) !== TransactionStatus.Pending;
 				})
 					.then(async (tx) => {
 						console.log('awaited tx', tx);

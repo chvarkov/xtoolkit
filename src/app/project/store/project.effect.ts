@@ -37,9 +37,13 @@ import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
-import { MintTokenDialogComponent } from '../components/dialogs/estd/mint-token-dialog/mint-token-dialog.component';
+import { MintBurnTokenDialogComponent } from '../components/dialogs/estd/mint-burn-token-dialog/mint-burn-token-dialog.component';
 import { EstdService } from '../services/estd.service';
 import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
+import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
+import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
+import { SpecialRolesTokenDialogComponent } from '../components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
+import { TransferOwnershipDialogComponent } from '../components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -199,8 +203,8 @@ export class ProjectEffect {
 
 	mintToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.mintToken),
-		exhaustMap(({projectId, identifier}) => this.dialog.open(MintTokenDialogComponent, {
-			data: {projectId, identifier},
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintBurnTokenDialogComponent, {
+			data: {projectId, identifier, isMint: true},
 			width: '320px',
 		}).afterClosed()),
 		filter(v => !!v),
@@ -208,6 +212,19 @@ export class ProjectEffect {
 			map(() => ProjectAction.mintTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.mintTokenError({err}))),
+	));
+
+	burnToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.burnToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(MintBurnTokenDialogComponent, {
+			data: {projectId, identifier, isMint: false},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.burn(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.burnTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.burnTokenError({err}))),
 	));
 
 	pauseToken$ = createEffect(() => this.actions$.pipe(
@@ -226,14 +243,79 @@ export class ProjectEffect {
 	unpauseToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.unPauseToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(PauseTokenDialogComponent, {
-			data: {projectId, identifier, isPause: true},
-			width: '320px',
+			data: {projectId, identifier, isPause: false},
+			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.estdService.unPause(projectId, network, wallet, options.identifier).pipe(
 			map(() => ProjectAction.unPauseTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.unPauseTokenError({err}))),
+	));
+
+	freezeToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.freezeToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
+			data: {projectId, identifier, isFreeze: true},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.freeze(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.freezeTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.freezeTokenError({err}))),
+	));
+
+	unFreezeToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.unFreezeToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
+			data: {projectId, identifier, isFreeze: false},
+			width: '320px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.unFreeze(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.unFreezeTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.unFreezeTokenError({err}))),
+	));
+
+	wipeToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.wipeToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(WipeTokenDialogComponent, {
+			data: {projectId, identifier, isFreeze: false},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.wipe(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.wipeTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.wipeTokenError({err}))),
+	));
+
+	setTokenSpecialRole$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.setTokenSpecialRole),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(SpecialRolesTokenDialogComponent, {
+			data: {projectId, identifier},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.setSpecialRoles(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.setTokenSpecialRoleSuccess()),
+		)),
+		catchError(err => of(ProjectAction.setTokenSpecialRoleError({err}))),
+	));
+
+	transferTokenOwnership$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.transferTokenOwnership),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(TransferOwnershipDialogComponent, {
+			data: {projectId, identifier},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.transferOwnership(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.transferTokenOwnershipSuccess()),
+		)),
+		catchError(err => of(ProjectAction.transferTokenOwnershipError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

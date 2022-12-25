@@ -49,6 +49,13 @@ export class TokenViewerComponent implements OnInit {
 		}))
 	}
 
+	burn(): void {
+		this.store.dispatch(ProjectAction.burnToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	pause(): void {
 		this.store.dispatch(ProjectAction.pauseToken({
 			projectId: this.projectId,
@@ -58,6 +65,41 @@ export class TokenViewerComponent implements OnInit {
 
 	unpause(): void {
 		this.store.dispatch(ProjectAction.unPauseToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	freeze(): void {
+		this.store.dispatch(ProjectAction.freezeToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	unfreeze(): void {
+		this.store.dispatch(ProjectAction.unFreezeToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	wipe(): void {
+		this.store.dispatch(ProjectAction.wipeToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	setSpecialRole(): void {
+		this.store.dispatch(ProjectAction.setTokenSpecialRole({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
+	transferOwnership(): void {
+		this.store.dispatch(ProjectAction.transferTokenOwnership({
 			projectId: this.projectId,
 			identifier: this.identifier,
 		}))
