@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialog-header.component';
 import { TokenIdentifierSymbolPipe } from './pipes/token-identifier-symbol.pipe';
 import { IsNotMainnetNetworkPipe } from './pipes/is-not-mainnet-network.pipe';
+import { NftTypePipe } from './pipes/nft-type.pipe';
 
 @NgModule({
 	declarations: [
@@ -56,6 +57,7 @@ import { IsNotMainnetNetworkPipe } from './pipes/is-not-mainnet-network.pipe';
 		ModalDialogHeaderComponent,
 		TokenIdentifierSymbolPipe,
   IsNotMainnetNetworkPipe,
+  NftTypePipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -99,6 +101,7 @@ import { IsNotMainnetNetworkPipe } from './pipes/is-not-mainnet-network.pipe';
 		ModalDialogHeaderComponent,
 		TokenIdentifierSymbolPipe,
 		IsNotMainnetNetworkPipe,
+		NftTypePipe,
 	],
 })
 export class CoreModule { }

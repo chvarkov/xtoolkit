@@ -18,11 +18,38 @@ import { ActionHistoryAction } from '../../action-history/store/action-history.a
 import * as uuid from 'uuid';
 import { from, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ITokenTransferOptions, WalletManager } from '../../core/elrond/services/wallet.manager';
 
 @Injectable({ providedIn: 'root' })
 export class EstdService {
 	constructor(private readonly estdInteractor: ESDTInteractor,
+				private readonly walletManager: WalletManager,
 				private readonly store: Store) {
+	}
+
+	transferFunds(projectId: string,
+				  network: INetworkEnvironment,
+				  options: ITokenTransferOptions): Observable<void> {
+		const txHash$ = from(this.walletManager.transferFunds(network, options.wallet, options));
+
+		return txHash$.pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId,
+					type: ActionType.Tx,
+					data: options,
+					chainId: network.chainId,
+					title: `Transfer ${options.amount.toString()} ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: options.sender,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
 	}
 
 	issueFungibleToken(projectId: string,

@@ -11,6 +11,7 @@ import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
+import { INft } from '../../core/elrond/services/nft';
 
 export class ProjectAction {
 	static readonly openProject = createAction(`[${ProjectAction.name}] open project [...]`, props<{id: string}>());
@@ -157,7 +158,7 @@ export class ProjectAction {
 	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: GeneratedWallet}>());
 
 	static readonly renameProject = createAction(`[${ProjectAction.name}] rename project [...]`, props<{projectId: string, name: string}>());
-	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project}>());
+	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project, list: ProjectInfo[]}>());
 	static readonly renameProjectError = createAction(`[${ProjectAction.name}] rename project [ERR]`, props<{err: Error}>());
 
 	static readonly renameAbi = createAction(`[${ProjectAction.name}] rename abi [...]`, props<{projectId: string, abiId: string, name: string}>());
@@ -235,6 +236,14 @@ export class ProjectAction {
 	static readonly updateProjectExplorerTreeError = createAction(`[${ProjectAction.name}] update project explorer tree [ERR]`, props<{err: Error}>());
 
 	static readonly showCurrentTabInExplorer = createAction(`[${ProjectAction.name}] show current tab in explorer`);
+
+	static readonly loadAccountNfts = createAction(`[${ProjectAction.name}] load account nfts [...]`, props<{projectId: string, address: string}>());
+	static readonly loadAccountNftsSuccess = createAction(`[${ProjectAction.name}] load account nfts [OK]`, props<{address: string, data: INft[]}>());
+	static readonly loadAccountNftsError = createAction(`[${ProjectAction.name}] load account nfts [ERR]`, props<{err: Error}>());
+
+	static readonly transferTokens = createAction(`[${ProjectAction.name}] transfer tokens [...]`, props<{projectId: string, chainId: string, sender?: string, identifier?: string}>());
+	static readonly transferTokensSuccess = createAction(`[${ProjectAction.name}] transfer tokens  [OK]`);
+	static readonly transferTokensError = createAction(`[${ProjectAction.name}] transfer tokens  [ERR]`, props<{err: Error}>());
 
 	static readonly errorActions = [
 		ProjectAction.loadProjectListError,

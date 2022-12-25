@@ -6,7 +6,7 @@ import {
 	Project, ProjectAbi, ProjectAddress, ProjectInfo,
 	ProjectSmartContract
 } from '../data-provider';
-import { Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
@@ -172,18 +172,27 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of();
 	}
 
-	renameProject(projectId: string, name: string): Observable<Project> {
-		return this.getProject(projectId)
-			.pipe(
-				map((project => {
+	renameProject(projectId: string, name: string): Observable<[Project, ProjectInfo[]]> {
+		return forkJoin([
+			this.getProject(projectId),
+			this.getProjectList(),
+		]).pipe(
+			map(([project, list]) => {
 
-					project.name = name;
+				project.name = name;
 
-					this.saveProject(project);
+				const projectElem = list.find(p => p.id === projectId);
 
-					return project;
-				})),
-			);
+				if (projectElem) {
+					projectElem.name = name;
+				}
+
+				this.set(this.projectListKey, list);
+				this.saveProject(project);
+
+				return [project, list];
+			}),
+		);
 	}
 
 	createProject(name: string, chainId: string): Observable<Project> {

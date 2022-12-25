@@ -44,6 +44,7 @@ import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/f
 import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
 import { SpecialRolesTokenDialogComponent } from '../components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
 import { TransferOwnershipDialogComponent } from '../components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
+import { TransferTokenDialogComponent } from '../../tabs-viewer/components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -479,7 +480,7 @@ export class ProjectEffect {
 			map(({name}) => ({projectId, name})),
 		)),
 		mergeMap(({projectId, name}) => this.dataProvider.renameProject(projectId, name).pipe(
-			map((project) => ProjectAction.renameProjectSuccess({project})),
+			map(([project, list]) => ProjectAction.renameProjectSuccess({project, list})),
 			catchError(err => of(ProjectAction.renameProjectError({err})))
 		))),
 	);
@@ -784,6 +785,36 @@ export class ProjectEffect {
 					isShowActiveTab: true,
 				});
 			}),
+		)),
+	));
+
+	loadAccountNfts$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadAccountNfts),
+		joinNetwork(this.store),
+		mergeMap(([{address}, project, network]) => this.elrondDataProvider.getAccountNfts(network, address).pipe(
+			map((data) => ProjectAction.loadAccountNftsSuccess({data, address})),
+			catchError(err => of(ProjectAction.loadAccountNftsError({err})))
+		)),
+	));
+
+	transferTokens$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.transferTokens),
+		joinNetwork(this.store),
+		exhaustMap(([action, project, network]) => {
+			return this.dialog.open(TransferTokenDialogComponent, {
+				data: {
+					projectId: action.projectId,
+					chainId: action.chainId,
+				},
+				width: '660px',
+			}).afterClosed().pipe(
+				filter(v => !!v),
+				map((options) => [action.projectId, network, options]),
+			);
+		}),
+		mergeMap(([projectId, network, options]) => this.estdService.transferFunds(projectId, network, options).pipe(
+			map(() => ProjectAction.transferTokensSuccess()),
+			catchError(err => of(ProjectAction.transferTokensError({err})))
 		)),
 	));
 

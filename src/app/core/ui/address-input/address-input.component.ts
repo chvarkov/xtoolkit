@@ -7,6 +7,7 @@ import { NetworkSelector } from '../../../network/store/network.selector';
 import { isValidAddress } from '../../validators/address-validator';
 import { ProjectAddress } from '../../data-provider/data-provider';
 import { ProjectSelector } from '../../../project/store/project.selector';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-address-input',
@@ -18,6 +19,7 @@ export class AddressInputComponent implements OnInit {
 	@Input() chainId: string = ''
 	@Input() address: string = '';
 	@Input() type?: 'sc' | 'wallet';
+	@Input() options: ProjectAddress[] = [];
 	@Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
 	@Input() showAddressBook = true;
@@ -37,7 +39,8 @@ export class AddressInputComponent implements OnInit {
 	ngOnInit(): void {
 		if (this.showAddressBook) {
 			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
-			this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.type));
+			this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.type))
+				.pipe(map(list => this.options.concat(list)));
 		}
 	}
 

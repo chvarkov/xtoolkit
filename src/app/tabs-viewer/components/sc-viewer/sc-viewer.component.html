@@ -55,7 +55,7 @@
 			</mat-tab>
 			<mat-tab label="NFTs" *ngIf="sc">
 				<div class="page-tab-content">
-					<app-sc-nfts></app-sc-nfts>
+					<app-nft-list [list]="(nfts$ | async) || []"></app-nft-list>
 				</div>
 			</mat-tab>
 			<mat-tab label="Code" *ngIf="sc">

@@ -8,8 +8,8 @@ import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
-import { TAB } from '@angular/cdk/keycodes';
 import { filter } from 'rxjs/operators';
+import { INft } from '../../../core/elrond/services/nft';
 
 @Component({
 	selector: 'app-sc-viewer',
@@ -36,6 +36,7 @@ export class ScViewerComponent implements OnInit {
 	account$?: Observable<AccountOnNetwork>;
 	transactions$?: Observable<IElrondTransaction[]>;
 	tokens$?: Observable<ITokenPosition[]>;
+	nfts$?: Observable<INft[]>;
 	native$?: Observable<string>;
 
 	code$: Observable<string> = of('');
@@ -51,16 +52,20 @@ export class ScViewerComponent implements OnInit {
 		const projectId = this.abi?.projectId || '';
 		const address = this.sc?.address || '';
 
-		this.account$ = this.store.select(ProjectSelector.account(address));
-		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(address));
-		this.tokens$ = this.store.select(ProjectSelector.accountTokens(address));
-		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(address));
-		this.code$ = this.store.select(ProjectSelector.smartContractCode(address)).pipe(filter(v => !!v));
+		if (address) {
+			this.account$ = this.store.select(ProjectSelector.account(address));
+			this.transactions$ = this.store.select(ProjectSelector.accountTransactions(address));
+			this.tokens$ = this.store.select(ProjectSelector.accountTokens(address));
+			this.native$ = this.store.select(ProjectSelector.accountNativeAmount(address));
+			this.nfts$ = this.store.select(ProjectSelector.accountNfts(address));
+			this.code$ = this.store.select(ProjectSelector.smartContractCode(address)).pipe(filter(v => !!v));
+
+			this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId, address}));
+			this.store.dispatch(ProjectAction.loadAccountTransactions({projectId, address}));
+			this.store.dispatch(ProjectAction.loadAccountNfts({projectId, address}));
+		}
 
 		this.wallets$ = this.store.select(ProjectSelector.wallets());
-
-		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId, address}));
-		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId, address}));
 	}
 
 	expandAll(): void {

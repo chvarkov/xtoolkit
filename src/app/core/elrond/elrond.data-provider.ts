@@ -3,10 +3,7 @@ import { from, Observable, of } from 'rxjs';
 import { INetworkEnvironment } from './interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {
-	AccountOnNetwork,
-	ProxyNetworkProvider
-} from '@elrondnetwork/erdjs-network-providers/out';
+import { AccountOnNetwork, ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
 import { Address, Transaction } from '@elrondnetwork/erdjs/out';
 import { ITokenInfo } from './interfaces/token-info';
 import { ITokenHolder } from './interfaces/token-holder';
@@ -17,6 +14,7 @@ import { catchError, map } from 'rxjs/operators';
 import { IEstimateTxData } from './interfaces/estimate-tx-data';
 import { ITokenSearchOptions } from './interfaces/token-search-options';
 import { IElrondFullTransaction } from './interfaces/elrond-transaction';
+import { INft, NftType } from './services/nft';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -92,6 +90,19 @@ export class ElrondDataProvider {
 	getTokenRoles(network: INetworkEnvironment,
 				  identifier: string): Observable<ITokenRole[]> {
 		return this.http.get<ITokenRole[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/roles`).pipe(
+			catchError((err) => of([])),
+		);
+	}
+
+	getAccountNfts(network: INetworkEnvironment,
+				   address: string,
+				   types = [NftType.SemiFungibleESDT, NftType.NonFungibleESDT]): Observable<INft[]> {
+		return this.http.get<INft[]>(`${network.gatewayUrl}/accounts/${address}/nfts`, {
+			params: this.createParams({
+				includeFlagged: true,
+				type: types.join(','),
+			})
+		}).pipe(
 			catchError((err) => of([])),
 		);
 	}

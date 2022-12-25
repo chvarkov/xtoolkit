@@ -10,6 +10,7 @@ import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ReducerTypes } from '@ngrx/store/src/reducer_creator';
+import { INft } from '../../core/elrond/services/nft';
 
 export interface IPositionsState {
 	native: string;
@@ -25,6 +26,7 @@ export interface ILoadedProjectDataState {
 	tokenHoldersMap: {[identifier: string]: ITokenHolder[]};
 	tokenRolesMap: {[identifier: string]: ITokenRole[]};
 	tokenTransfersMap: {[identifier: string]: ITokenTransfer[]};
+	accountNftsMap: {[identifier: string]: INft[]};
 	tokens: ITokenInfo[];
 }
 
@@ -48,6 +50,7 @@ const initialState: IProjectState = {
 		tokenTransfersMap: {},
 		tokensMap: {},
 		tokens: [],
+		accountNftsMap: {},
 	},
 	tabs: [],
 	issueTokenWaitList: [],
@@ -80,6 +83,7 @@ export const reducer = createReducer(
 			tokenTransfersMap: {},
 			tokensMap: {},
 			tokens: [],
+			accountNftsMap: {},
 		},
 		activeProject: project,
 	})),
@@ -192,8 +196,9 @@ export const reducer = createReducer(
 			tokens,
 		},
 	})),
-	on(ProjectAction.renameProjectSuccess, (state, { project }) => ({
+	on(ProjectAction.renameProjectSuccess, (state, { project, list }) => ({
 		...state,
+		projectList: list,
 		activeProject: project,
 	})),
 	on(ProjectAction.renameSmartContractSuccess, (state, { project, tabs }) => ({
@@ -288,6 +293,15 @@ export const reducer = createReducer(
 	on(ProjectAction.updateProjectExplorerTreeSuccess, (state, {explorerState}) => ({
 		...state,
 		...explorerState,
+	})),
+	on(ProjectAction.loadAccountNftsSuccess, (state, {address, data}) => ({
+		...state,
+		loadedDataMap: {
+			...state.loadedDataMap,
+			accountNftsMap: {
+				[address]: data,
+			},
+		},
 	})),
 
 
