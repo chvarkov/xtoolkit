@@ -26,6 +26,7 @@ import { MintBurnTokenDialogComponent } from './components/dialogs/estd/mint-bur
 import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
 import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
+import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -46,6 +47,7 @@ import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-d
   PauseTokenDialogComponent,
   FreezeUnFreezeTokenDialogComponent,
   WipeTokenDialogComponent,
+  SpecialRolesTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

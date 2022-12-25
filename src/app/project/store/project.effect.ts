@@ -42,6 +42,7 @@ import { EstdService } from '../services/estd.service';
 import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
 import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
+import { SpecialRolesTokenDialogComponent } from '../components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -288,6 +289,19 @@ export class ProjectEffect {
 			map(() => ProjectAction.wipeTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.wipeTokenError({err}))),
+	));
+
+	setTokenSpecialRole$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.setTokenSpecialRole),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(SpecialRolesTokenDialogComponent, {
+			data: {projectId, identifier},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.setSpecialRoles(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.setTokenSpecialRoleSuccess()),
+		)),
+		catchError(err => of(ProjectAction.setTokenSpecialRoleError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

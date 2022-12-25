@@ -47,6 +47,13 @@ export interface IWipeOptions {
 	address: string;
 }
 
+export interface ISetSpecialRoles extends Record<string, any> {
+	identifier: string;
+	address: string;
+	ESDTRoleLocalBurn?: boolean;
+	ESDTRoleLocalMint?: boolean;
+}
+
 @Injectable({providedIn: 'root'})
 export class ESDTInteractor {
 	private readonly estdContractAddress = new Address('erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u');
@@ -62,6 +69,11 @@ export class ESDTInteractor {
 		'canChangeOwner',
 		'canUpgrade',
 		'canAddSpecialRoles',
+	];
+
+	private readonly estdSpecialRoles = [
+		'ESDTRoleLocalBurn',
+		'ESDTRoleLocalMint',
 	];
 
 	constructor(private readonly txRunner: ScTransactionRunner) {
@@ -259,6 +271,38 @@ export class ESDTInteractor {
 
 		const interaction = <Interaction>this.contract.methodsExplicit
 			.wipe(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 55_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	setSpecialRoles(network: INetworkEnvironment,
+		 			wallet: GeneratedWallet,
+		 			options: ISetSpecialRoles): Promise<string> {
+		const args: TypedValue[] = [
+			BytesValue.fromUTF8(options.identifier),
+			new AddressValue(new Address(options.address)),
+		];
+
+		for (const role of this.estdSpecialRoles) {
+			const roleEnabled = !!options[role];
+
+			if (roleEnabled) {
+				args.push(BytesValue.fromUTF8(role));
+			}
+		}
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.setSpecialRole(args)
 			.withChainID(network.chainId);
 
 		const tx = interaction.buildTransaction();

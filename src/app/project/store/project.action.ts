@@ -95,6 +95,10 @@ export class ProjectAction {
 	static readonly wipeTokenSuccess = createAction(`[${ProjectAction.name}] wipe token [OK]`);
 	static readonly wipeTokenError = createAction(`[${ProjectAction.name}] wipe token [ERR]`, props<{err: Error}>());
 
+	static readonly setTokenSpecialRole = createAction(`[${ProjectAction.name}] set token special role [...]`, props<{projectId: string, identifier: string}>());
+	static readonly setTokenSpecialRoleSuccess = createAction(`[${ProjectAction.name}] set token special role [OK]`);
+	static readonly setTokenSpecialRoleError = createAction(`[${ProjectAction.name}] set token special role [ERR]`, props<{err: Error}>());
+
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
 	static readonly loadProjectTabsError = createAction(`[${ProjectAction.name}] load project tabs [ERR]`, props<{err: Error}>());
