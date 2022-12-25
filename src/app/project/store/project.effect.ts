@@ -479,7 +479,7 @@ export class ProjectEffect {
 			map(({name}) => ({projectId, name})),
 		)),
 		mergeMap(({projectId, name}) => this.dataProvider.renameProject(projectId, name).pipe(
-			map((project) => ProjectAction.renameProjectSuccess({project})),
+			map(([project, list]) => ProjectAction.renameProjectSuccess({project, list})),
 			catchError(err => of(ProjectAction.renameProjectError({err})))
 		))),
 	);

@@ -196,8 +196,9 @@ export const reducer = createReducer(
 			tokens,
 		},
 	})),
-	on(ProjectAction.renameProjectSuccess, (state, { project }) => ({
+	on(ProjectAction.renameProjectSuccess, (state, { project, list }) => ({
 		...state,
+		projectList: list,
 		activeProject: project,
 	})),
 	on(ProjectAction.renameSmartContractSuccess, (state, { project, tabs }) => ({

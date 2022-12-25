@@ -158,7 +158,7 @@ export class ProjectAction {
 	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: GeneratedWallet}>());
 
 	static readonly renameProject = createAction(`[${ProjectAction.name}] rename project [...]`, props<{projectId: string, name: string}>());
-	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project}>());
+	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project, list: ProjectInfo[]}>());
 	static readonly renameProjectError = createAction(`[${ProjectAction.name}] rename project [ERR]`, props<{err: Error}>());
 
 	static readonly renameAbi = createAction(`[${ProjectAction.name}] rename abi [...]`, props<{projectId: string, abiId: string, name: string}>());
