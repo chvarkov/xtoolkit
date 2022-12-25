@@ -787,6 +787,15 @@ export class ProjectEffect {
 		)),
 	));
 
+	loadAccountNfts$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadAccountNfts),
+		joinNetwork(this.store),
+		mergeMap(([{address}, project, network]) => this.elrondDataProvider.getAccountNfts(network, address).pipe(
+			map((data) => ProjectAction.loadAccountNftsSuccess({data, address})),
+			catchError(err => of(ProjectAction.loadAccountNftsError({err})))
+		)),
+	));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly elrondDataProvider: ElrondDataProvider,

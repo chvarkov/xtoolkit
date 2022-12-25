@@ -1,0 +1,11 @@
+<div class="content" [ngStyle]="{background: background}">
+	<div class="preview">
+		<div class="title">
+			<div class="type">{{nft.type | nftType}}</div>
+			<span class="identifier">{{nft.identifier}}</span>
+		</div>
+
+		<div class="owned">Owned: {{nft.balance || 1}}</div>
+	</div>
+</div>
+

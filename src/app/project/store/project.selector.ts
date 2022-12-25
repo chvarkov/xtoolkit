@@ -85,6 +85,11 @@ export class ProjectSelector {
 		(state: IProjectState) => state.loadedDataMap.positionsMap?.[address]?.tokens || [],
 	);
 
+	static accountNfts = (address: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.loadedDataMap.accountNftsMap[address] || [],
+	);
+
 	static token = (identifier: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => state.loadedDataMap.tokensMap?.[identifier],

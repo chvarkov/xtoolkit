@@ -10,6 +10,7 @@ import { filter, map } from 'rxjs/operators';
 import { GeneratedWallet } from '../../../core/data-provider/data-provider';
 import { Account, Address } from '@elrondnetwork/erdjs/out';
 import { FaucetService } from '../../../core/services/faucet.service';
+import { INft } from '../../../core/elrond/services/nft';
 
 @Component({
 	selector: 'app-wallet-viewer',
@@ -23,6 +24,7 @@ export class WalletViewerComponent implements OnInit {
 	account$?: Observable<AccountOnNetwork>;
 	transactions$?: Observable<IElrondTransaction[]>;
 	tokens$?: Observable<ITokenPosition[]>;
+	nfts$?: Observable<INft[]>;
 	native$?: Observable<string>;
 	chainId$?: Observable<string>;
 	wallet$?: Observable<GeneratedWallet | undefined>;
@@ -37,6 +39,7 @@ export class WalletViewerComponent implements OnInit {
 		);
 		this.transactions$ = this.store.select(ProjectSelector.accountTransactions(this.address)).pipe(filter(v => !!v));
 		this.tokens$ = this.store.select(ProjectSelector.accountTokens(this.address)).pipe(filter(v => !!v));
+		this.nfts$ = this.store.select(ProjectSelector.accountNfts(this.address)).pipe(filter(v => !!v));
 		this.native$ = this.store.select(ProjectSelector.accountNativeAmount(this.address)).pipe(filter(v => !!v));
 		this.chainId$ = this.store.select(ProjectSelector.activeProject()).pipe(
 			map((project) => project?.chainId || ''),
@@ -53,6 +56,7 @@ export class WalletViewerComponent implements OnInit {
 		console.log('emit load data : ' + this.address);
 		this.store.dispatch(ProjectAction.loadAccountAndPositions({projectId: this.projectId, address: this.address}));
 		this.store.dispatch(ProjectAction.loadAccountTransactions({projectId: this.projectId, address: this.address}));
+		this.store.dispatch(ProjectAction.loadAccountNfts({projectId: this.projectId, address: this.address}));
 	}
 
 	renameWallet(name: string): void {

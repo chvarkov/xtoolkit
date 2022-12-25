@@ -37,7 +37,7 @@
 		</mat-tab>
 		<mat-tab label="NFTs">
 			<div class="page-tab-content">
-				Coming soon
+				<app-nft-list [list]="(nfts$ | async) || []"></app-nft-list>
 			</div>
 		</mat-tab>
 		<mat-tab label="Transactions">
