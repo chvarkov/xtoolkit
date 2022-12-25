@@ -241,6 +241,10 @@ export class ProjectAction {
 	static readonly loadAccountNftsSuccess = createAction(`[${ProjectAction.name}] load account nfts [OK]`, props<{address: string, data: INft[]}>());
 	static readonly loadAccountNftsError = createAction(`[${ProjectAction.name}] load account nfts [ERR]`, props<{err: Error}>());
 
+	static readonly transferTokens = createAction(`[${ProjectAction.name}] transfer tokens [...]`, props<{projectId: string, chainId: string, sender?: string, identifier?: string}>());
+	static readonly transferTokensSuccess = createAction(`[${ProjectAction.name}] transfer tokens  [OK]`);
+	static readonly transferTokensError = createAction(`[${ProjectAction.name}] transfer tokens  [ERR]`, props<{err: Error}>());
+
 	static readonly errorActions = [
 		ProjectAction.loadProjectListError,
 		ProjectAction.loadActiveProjectError,

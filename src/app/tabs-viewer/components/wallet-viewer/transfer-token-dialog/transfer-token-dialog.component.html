@@ -1,0 +1,45 @@
+<app-modal-dialog-header [dialogRef]="dialogRef" title="Transfer funds"></app-modal-dialog-header>
+<div class="content">
+	<div class="section">
+		<app-form-field title="Sender">
+			<mat-select panelClass="select-panel" (selectionChange)="onChangeSender($event.value)">
+				<mat-option *ngFor="let wallet of (wallets$ | async) || []" [value]="wallet">
+					{{wallet.name}} - {{wallet.address | shortString: 20}}
+				</mat-option>
+			</mat-select>
+		</app-form-field>
+	</div>
+
+	<div class="amount-section">
+		<app-token-identifier-input class="send-input" (changed)="onChangeIdentifier($event)"></app-token-identifier-input>
+		<app-form-field title="Amount">
+			<input class="send-input" type="number" [value]="amount" (change)="onChangeAmount($event)">
+		</app-form-field>
+	</div>
+
+	<div class="section">
+		<app-form-field title="Receiver">
+			<app-address-input type="wallet"
+							   (changed)="onChangeReceiver($event)"
+							   [options]="(addressOptions$ | async) || []"
+							   [projectId]="data.projectId"
+							   [chainId]="data.chainId"
+							   [showAddressBook]="true"></app-address-input>
+		</app-form-field>
+	</div>
+
+	<div class="section">
+		<app-form-field title="Data">
+			<textarea cols="3" [disabled]="isDisabledData" (change)="onChangeData($event)">{{txData}}</textarea>
+		</app-form-field>
+	</div>
+
+	<div class="section">
+		Gas limit: {{gasLimit}}
+	</div>
+
+	<div class="actions">
+		<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+		<button mat-flat-button class="submit-button" [disabled]="!isValid" (click)="submit()">Send</button>
+	</div>
+</div>

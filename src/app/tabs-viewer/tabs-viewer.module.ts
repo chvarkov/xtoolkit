@@ -35,6 +35,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 import { NftListComponent } from './components/common/nft-list/nft-list.component';
 import { NtfElementComponent } from './components/common/nft-list/ntf-element/ntf-element.component';
+import { TransferTokenDialogComponent } from './components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -69,6 +70,7 @@ import { NtfElementComponent } from './components/common/nft-list/ntf-element/nt
 		SettingsPageComponent,
   NftListComponent,
   NtfElementComponent,
+  TransferTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

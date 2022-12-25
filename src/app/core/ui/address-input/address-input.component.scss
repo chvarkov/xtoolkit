@@ -44,48 +44,48 @@
 	overflow-y: auto;
 	border-radius: 6px;
 	z-index: 1000;
+}
 
-	.option {
-		width: 100%;
-		padding: 8px;
+.option {
+	width: 100%;
+	padding: 8px;
+	display: flex;
+	flex-direction: row;
+	cursor: pointer;
+	border-bottom: solid 1px var(--border-low-color);
+
+	&:hover {
+		background: var(--low-bg);
+	}
+
+	.icon {
 		display: flex;
-		flex-direction: row;
-		cursor: pointer;
-		border-bottom: solid 1px var(--border-low-color);
+		justify-content: center;
+		align-items: center;
+		margin-right: 10px;
+	}
 
-		&:hover {
-			background: var(--low-bg);
-		}
+	.content {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
 
-		.icon {
+		.title {
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-right: 10px;
-		}
+			justify-content: space-between;
+			font-size: 0.8em;
 
-		.content {
-			display: flex;
-			flex-direction: column;
-			flex: 1;
-
-			.title {
-				display: flex;
-				justify-content: space-between;
-				font-size: 0.8em;
-
-				.name {
-					//color: var(--arg-type-color);
-				}
-
-				.date {
-					color: var(--border-color);
-				}
+			.name {
+				//color: var(--arg-type-color);
 			}
 
-			.address {
-				font-size: 0.8em;
+			.date {
+				color: var(--border-color);
 			}
+		}
+
+		.address {
+			font-size: 0.8em;
 		}
 	}
 }

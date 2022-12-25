@@ -70,4 +70,8 @@ export class WalletViewerComponent implements OnInit {
 	deleteWallet(wallet: GeneratedWallet): void {
 		this.store.dispatch(ProjectAction.deleteWallet({projectId: this.projectId, address: wallet.address}));
 	}
+
+	transferTokens(chainId: string): void {
+		this.store.dispatch(ProjectAction.transferTokens({projectId: this.projectId, chainId}))
+	}
 }

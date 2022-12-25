@@ -19,6 +19,8 @@ export class TokenIdentifierInputComponent implements OnInit {
 	@Input() chainId: string = ''
 	@Input() identifier: string = '';
 
+	@Input() identifierOptions: string[] = [];
+
 	@Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
 	@Input() showIdentifiers = true;
@@ -40,7 +42,7 @@ export class TokenIdentifierInputComponent implements OnInit {
 			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
 			this.tokenIdentifiers$ = this.store.select(ProjectSelector.activeProject()).pipe(
 				map(project => project?.tokens || []),
-				map(tokens => [TokenIdentifierValue.egld().toString(), ...tokens]),
+				map(tokens => [TokenIdentifierValue.egld().toString(), ...tokens, ...this.identifierOptions]),
 			);
 		}
 	}
