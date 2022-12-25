@@ -6,6 +6,7 @@
 				 [src]="token.assets?.svgUrl || '/assets/images/token-icon.svg'">
 			<span>{{token.ticker}}</span>
 		</div>
+		<div left-side *ngIf="token.isPaused" class="paused-label">PAUSED</div>
 
 		<ng-container right-side *ngIf="token.canMint || token.canBurn">
 			<app-toolbar-icon-button *ngIf="token.canMint" appTooltip tooltip="Mint" (click)="mint()">
