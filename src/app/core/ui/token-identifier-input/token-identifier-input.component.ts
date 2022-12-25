@@ -1,40 +1,72 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
 import { TokenIdentifierValue } from '@elrondnetwork/erdjs/out';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
 	selector: 'app-token-identifier-input',
 	templateUrl: './token-identifier-input.component.html',
-	styleUrls: ['./token-identifier-input.component.scss']
+	styleUrls: ['./token-identifier-input.component.scss'],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => TokenIdentifierInputComponent),
+			multi: true
+		}
+	]
 })
-export class TokenIdentifierInputComponent implements OnInit {
+export class TokenIdentifierInputComponent implements OnInit, ControlValueAccessor {
 	@Input() projectId: string = '';
 	@Input() chainId: string = ''
-	@Input() identifier: string = '';
-
+	@Input() identifier: string = ''; // TODO: [ScInputValueAccessor] Delete it.
 	@Input() identifierOptions: string[] = [];
 
 	@Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
 	@Input() showIdentifiers = true;
 
-	isOptionsVisible = false;
-
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	tokenIdentifiers$?: Observable<string[]>;
 
+	isDisabled = false;
+
 	private prevValue?: string;
 
-	constructor(readonly clipboard: Clipboard,
-				private readonly store: Store) {
+	onChange: any = () => {}
+	onTouch: any = () => {}
+
+	private val= '';
+
+	constructor(private readonly store: Store) {
+	}
+
+	set value(val: string) {
+		this.val = val
+		this.onChange(val)
+		this.onTouch(val)
+	}
+
+	writeValue(value: any){
+		this.value = value
+	}
+
+	registerOnChange(fn: any){
+		this.onChange = fn
+	}
+
+	registerOnTouched(fn: any){
+		this.onTouch = fn
+	}
+
+	setDisabledState(isDisabled: boolean) {
+		this.isDisabled = isDisabled;
 	}
 
 	ngOnInit(): void {
@@ -47,16 +79,8 @@ export class TokenIdentifierInputComponent implements OnInit {
 		}
 	}
 
-	onFocus(): void {
-		this.isOptionsVisible = true;
-	}
-
-	onBlur(): void {
-		setTimeout(() => this.isOptionsVisible = false, 200);
-	}
-
 	explore(url: string): void {
-		window.open(`${url}/tokens/${this.identifier}`, '_blank');
+		window.open(`${url}/tokens/${this.val}`, '_blank');
 	}
 
 	isInvalidIdentifier(identifier: string): boolean {
@@ -67,17 +91,11 @@ export class TokenIdentifierInputComponent implements OnInit {
 		this.setValue(event.option.value);
 	}
 
-	onSelectTokenIdentifier(identifier: string): void {
-		this.setValue(identifier);
-
-		this.identifier = identifier;
-
-		this.isOptionsVisible = false;
-	}
-
 	setValue(value: string): void {
+		this.onChange(value);
+		this.onTouch();
+
 		if (this.prevValue !== value) {
-			this.prevValue = value;
 			this.changed.next(value);
 		}
 	}

@@ -1,7 +1,14 @@
 <app-form-field title="Token identifier">
-	<input class="token-id-input" type="text" matInput [matAutocomplete]="auto">
-	<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onChangeTokenIdentifier($event)">
-		<mat-option *ngFor="let option of (tokenIdentifiers$ | async) || []" [value]="option">
+	<input class="token-id-input"
+		   type="text"
+		   matInput
+		   [matAutocomplete]="auto"
+		   [disabled]="isDisabled">
+	<mat-autocomplete autoActiveFirstOption
+					  #auto="matAutocomplete"
+					  (optionSelected)="onChangeTokenIdentifier($event)">
+		<mat-option *ngFor="let option of (tokenIdentifiers$ | async) || []"
+					[value]="option">
 			{{option}}
 		</mat-option>
 	</mat-autocomplete>
