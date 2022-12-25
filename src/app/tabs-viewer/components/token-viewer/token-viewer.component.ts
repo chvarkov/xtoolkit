@@ -98,6 +98,13 @@ export class TokenViewerComponent implements OnInit {
 		}))
 	}
 
+	transferOwnership(): void {
+		this.store.dispatch(ProjectAction.transferTokenOwnership({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	explore(network: INetworkEnvironment): void {
 		window.open(`${network.explorerUrl}/tokens/${this.identifier}`, '_blank');
 	}

@@ -43,6 +43,7 @@ import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-toke
 import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
 import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
 import { SpecialRolesTokenDialogComponent } from '../components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
+import { TransferOwnershipDialogComponent } from '../components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -302,6 +303,19 @@ export class ProjectEffect {
 			map(() => ProjectAction.setTokenSpecialRoleSuccess()),
 		)),
 		catchError(err => of(ProjectAction.setTokenSpecialRoleError({err}))),
+	));
+
+	transferTokenOwnership$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.transferTokenOwnership),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(TransferOwnershipDialogComponent, {
+			data: {projectId, identifier},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.transferOwnership(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.transferTokenOwnershipSuccess()),
+		)),
+		catchError(err => of(ProjectAction.transferTokenOwnershipError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

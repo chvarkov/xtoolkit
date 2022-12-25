@@ -27,6 +27,7 @@ import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token
 import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
 import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
 import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
+import { TransferOwnershipDialogComponent } from './components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -48,6 +49,7 @@ import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/spec
   FreezeUnFreezeTokenDialogComponent,
   WipeTokenDialogComponent,
   SpecialRolesTokenDialogComponent,
+  TransferOwnershipDialogComponent,
 	],
 	imports: [
 		CommonModule,

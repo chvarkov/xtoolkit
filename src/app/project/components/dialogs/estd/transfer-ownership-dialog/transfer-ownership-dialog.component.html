@@ -1,22 +1,13 @@
-<app-modal-dialog-header title="Set special role" [dialogRef]="dialogRef"></app-modal-dialog-header>
+<app-modal-dialog-header title="Transfer ownership" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
 <form [formGroup]="form" class="content" *ngIf="project$ | async as project">
 	<app-form-field title="Identifier">
 		<input formControlName="identifier">
 	</app-form-field>
 
-	<div class="roles">
-		<mat-checkbox formControlName="ESDTRoleLocalMint">
-			<span class="role-label">ESDTRoleLocalMint</span>
-		</mat-checkbox>
-
-		<mat-checkbox formControlName="ESDTRoleLocalBurn">
-			<span class="role-label">ESDTRoleLocalBurn</span>
-		</mat-checkbox>
-	</div>
-
 	<app-form-field title="Address">
-		<app-address-input [chainId]="project.chainId"
+		<app-address-input type="wallet"
+						   [chainId]="project.chainId"
 						   [projectId]="project.id"
 						   [showAddressBook]="true"
 						   (changed)="onChangeAddress($event)"></app-address-input>
@@ -38,6 +29,6 @@
 			[disabled]="!wallet"
 			*ngIf="network$ | async as network"
 			(click)="submit(network)">
-		Set role
+		Transfer
 	</button>
 </div>

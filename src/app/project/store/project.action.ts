@@ -99,6 +99,10 @@ export class ProjectAction {
 	static readonly setTokenSpecialRoleSuccess = createAction(`[${ProjectAction.name}] set token special role [OK]`);
 	static readonly setTokenSpecialRoleError = createAction(`[${ProjectAction.name}] set token special role [ERR]`, props<{err: Error}>());
 
+	static readonly transferTokenOwnership = createAction(`[${ProjectAction.name}] transfer token ownership [...]`, props<{projectId: string, identifier: string}>());
+	static readonly transferTokenOwnershipSuccess = createAction(`[${ProjectAction.name}] transfer token ownership [OK]`);
+	static readonly transferTokenOwnershipError = createAction(`[${ProjectAction.name}] transfer token ownership [ERR]`, props<{err: Error}>());
+
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
 	static readonly loadProjectTabsError = createAction(`[${ProjectAction.name}] load project tabs [ERR]`, props<{err: Error}>());

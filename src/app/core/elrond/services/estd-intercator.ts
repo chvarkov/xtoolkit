@@ -47,11 +47,16 @@ export interface IWipeOptions {
 	address: string;
 }
 
-export interface ISetSpecialRoles extends Record<string, any> {
+export interface ISetSpecialRolesOptions extends Record<string, any> {
 	identifier: string;
 	address: string;
 	ESDTRoleLocalBurn?: boolean;
 	ESDTRoleLocalMint?: boolean;
+}
+
+export interface ITransferOwnershipOptions {
+	identifier: string;
+	address: string;
 }
 
 @Injectable({providedIn: 'root'})
@@ -287,7 +292,7 @@ export class ESDTInteractor {
 
 	setSpecialRoles(network: INetworkEnvironment,
 		 			wallet: GeneratedWallet,
-		 			options: ISetSpecialRoles): Promise<string> {
+		 			options: ISetSpecialRolesOptions): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new AddressValue(new Address(options.address)),
@@ -303,6 +308,30 @@ export class ESDTInteractor {
 
 		const interaction = <Interaction>this.contract.methodsExplicit
 			.setSpecialRole(args)
+			.withChainID(network.chainId);
+
+		const tx = interaction.buildTransaction();
+
+		return this.txRunner.signAndSendTx(tx, {
+			network,
+			gasLimit: 55_000_000,
+			caller: wallet.address,
+			credentials: {
+				mnemonic: wallet.mnemonic,
+			},
+		});
+	}
+
+	transferOwnership(network: INetworkEnvironment,
+					  wallet: GeneratedWallet,
+					  options: ITransferOwnershipOptions): Promise<string> {
+		const args: TypedValue[] = [
+			BytesValue.fromUTF8(options.identifier),
+			new AddressValue(new Address(options.address)),
+		];
+
+		const interaction = <Interaction>this.contract.methodsExplicit
+			.transferOwnership(args)
 			.withChainID(network.chainId);
 
 		const tx = interaction.buildTransaction();
