@@ -86,14 +86,6 @@
 		padding: 4px;
 	}
 
-	.actions {
-		padding: 10px 0;
-
-		button {
-			margin-left: 6px;
-		}
-	}
-
 	.properties {
 		display: grid;
 		grid-template-columns: 200px 1fr;
@@ -157,4 +149,13 @@
 			text-transform: uppercase;
 		}
 	}
+}
+
+.toolbar-splitter {
+	width: 6px;
+	margin-bottom: 8px;
+	margin-top: 8px;
+	margin-right: 6px;
+	border-right: solid 1px var(--border-low-color);
+	height: calc(var(--toolbar-height) - 16px);
 }
