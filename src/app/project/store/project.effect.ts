@@ -41,6 +41,7 @@ import { MintBurnTokenDialogComponent } from '../components/dialogs/estd/mint-bu
 import { EstdService } from '../services/estd.service';
 import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
+import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -274,6 +275,19 @@ export class ProjectEffect {
 			map(() => ProjectAction.unFreezeTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.unFreezeTokenError({err}))),
+	));
+
+	wipeToken$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.wipeToken),
+		exhaustMap(({projectId, identifier}) => this.dialog.open(WipeTokenDialogComponent, {
+			data: {projectId, identifier, isFreeze: false},
+			width: '500px',
+		}).afterClosed()),
+		filter(v => !!v),
+		switchMap(([projectId, network, wallet, options]) => this.estdService.wipe(projectId, network, wallet, options).pipe(
+			map(() => ProjectAction.wipeTokenSuccess()),
+		)),
+		catchError(err => of(ProjectAction.wipeTokenError({err}))),
 	));
 
 	loadProjectTabs$ = createEffect(() => this.actions$.pipe(

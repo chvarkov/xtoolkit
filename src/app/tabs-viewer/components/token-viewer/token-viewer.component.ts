@@ -84,6 +84,13 @@ export class TokenViewerComponent implements OnInit {
 		}))
 	}
 
+	wipe(): void {
+		this.store.dispatch(ProjectAction.wipeToken({
+			projectId: this.projectId,
+			identifier: this.identifier,
+		}))
+	}
+
 	explore(network: INetworkEnvironment): void {
 		window.open(`${network.explorerUrl}/tokens/${this.identifier}`, '_blank');
 	}

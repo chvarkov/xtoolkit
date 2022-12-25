@@ -3,7 +3,7 @@ import {
 	ESDTInteractor,
 	IFreezeUnFreezeOptions,
 	IIssueTokenOptions,
-	IMintBurnTokenOptions
+	IMintBurnTokenOptions, IWipeOptions
 } from '../../core/elrond/services/estd-intercator';
 import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
 import {
@@ -206,6 +206,32 @@ export class EstdService {
 					data: options ,
 					chainId: network.chainId,
 					title: `Unfreeze token ${options.identifier}`,
+					status: ActionStatus.Pending,
+					caller: wallet.address,
+					timestamp: Date.now(),
+				};
+
+				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+			}),
+		);
+	}
+
+	wipe(projectId: string,
+		 network: INetworkEnvironment,
+		 wallet: GeneratedWallet,
+		 options: IWipeOptions): Observable<void> {
+		const txHash$ = this.estdInteractor.wipe(network, wallet, options);
+
+		return from(txHash$).pipe(
+			map((txHash) => {
+				const log: ActionHistoryElement = {
+					id: uuid.v4(),
+					txHash,
+					projectId: projectId,
+					type: ActionType.Tx,
+					data: options ,
+					chainId: network.chainId,
+					title: `Wipe token ${options.identifier}`,
 					status: ActionStatus.Pending,
 					caller: wallet.address,
 					timestamp: Date.now(),

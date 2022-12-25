@@ -25,6 +25,7 @@ import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pi
 import { MintBurnTokenDialogComponent } from './components/dialogs/estd/mint-burn-token-dialog/mint-burn-token-dialog.component';
 import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
 import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
+import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -44,6 +45,7 @@ import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/fr
   MintBurnTokenDialogComponent,
   PauseTokenDialogComponent,
   FreezeUnFreezeTokenDialogComponent,
+  WipeTokenDialogComponent,
 	],
 	imports: [
 		CommonModule,

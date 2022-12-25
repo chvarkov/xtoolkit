@@ -91,6 +91,10 @@ export class ProjectAction {
 	static readonly unFreezeTokenSuccess = createAction(`[${ProjectAction.name}] unfreeze token [OK]`);
 	static readonly unFreezeTokenError = createAction(`[${ProjectAction.name}] unfreeze token [ERR]`, props<{err: Error}>());
 
+	static readonly wipeToken = createAction(`[${ProjectAction.name}] wipe token [...]`, props<{projectId: string, identifier: string}>());
+	static readonly wipeTokenSuccess = createAction(`[${ProjectAction.name}] wipe token [OK]`);
+	static readonly wipeTokenError = createAction(`[${ProjectAction.name}] wipe token [ERR]`, props<{err: Error}>());
+
 	static readonly loadProjectTabs = createAction(`[${ProjectAction.name}] load project tabs [...]`);
 	static readonly loadProjectTabsSuccess = createAction(`[${ProjectAction.name}] load project tabs [OK]`, props<{tabsData: TabsData}>());
 	static readonly loadProjectTabsError = createAction(`[${ProjectAction.name}] load project tabs [ERR]`, props<{err: Error}>());
