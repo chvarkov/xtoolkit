@@ -69,8 +69,10 @@
 			.role-label {
 				margin-right: 6px;
 				padding: 4px 10px;
-				background: var(--static-green);
+				color: var(--static-green);
+				border: solid 1px var(--static-green);
 				border-radius: 18px;
+				font-size: 14px;
 			}
 		}
 	}
