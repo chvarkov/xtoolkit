@@ -20,3 +20,5 @@ export const DEFAULT_NETWORKS: INetworkEnvironment[] = [
 		chainId: '1',
 	},
 ];
+
+export const NOT_MAINNET_CHAIN_IDS = ['D', 'T'];

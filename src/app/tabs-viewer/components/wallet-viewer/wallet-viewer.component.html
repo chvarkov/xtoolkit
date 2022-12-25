@@ -3,6 +3,11 @@
 		<div left-side class="toolbar-left-side">
 			<app-address [chainId]="(chainId$ | async) || ''" [address]="address"></app-address>
 		</div>
+		<app-toolbar-icon-button *ngIf="(chainId$ | async) || '' | isNotMainnetNetwork"
+								 right-side appTooltip tooltip="Open faucet"
+								 (click)="faucet.gotoFaucet()">
+			monetization_on
+		</app-toolbar-icon-button>
 		<app-toolbar-icon-button *ngIf="wallet$ | async as wallet"
 								 right-side appTooltip tooltip="Delete wallet"
 								 (click)="deleteWallet(wallet)">

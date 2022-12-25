@@ -9,6 +9,7 @@ import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 import { filter, map } from 'rxjs/operators';
 import { GeneratedWallet } from '../../../core/data-provider/data-provider';
 import { Account, Address } from '@elrondnetwork/erdjs/out';
+import { FaucetService } from '../../../core/services/faucet.service';
 
 @Component({
 	selector: 'app-wallet-viewer',
@@ -26,7 +27,8 @@ export class WalletViewerComponent implements OnInit {
 	chainId$?: Observable<string>;
 	wallet$?: Observable<GeneratedWallet | undefined>;
 
-	constructor(private readonly store: Store) {
+	constructor(private readonly store: Store,
+				public readonly faucet: FaucetService) {
 	}
 
 	ngOnInit(): void {

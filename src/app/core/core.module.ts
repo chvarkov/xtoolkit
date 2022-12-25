@@ -30,6 +30,7 @@ import { MaterialModule } from './ui/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialog-header.component';
 import { TokenIdentifierSymbolPipe } from './pipes/token-identifier-symbol.pipe';
+import { IsNotMainnetNetworkPipe } from './pipes/is-not-mainnet-network.pipe';
 
 @NgModule({
 	declarations: [
@@ -54,6 +55,7 @@ import { TokenIdentifierSymbolPipe } from './pipes/token-identifier-symbol.pipe'
 		ResizeVerticalSplitterComponent,
 		ModalDialogHeaderComponent,
 		TokenIdentifierSymbolPipe,
+  IsNotMainnetNetworkPipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -96,6 +98,7 @@ import { TokenIdentifierSymbolPipe } from './pipes/token-identifier-symbol.pipe'
 		ResizeVerticalSplitterComponent,
 		ModalDialogHeaderComponent,
 		TokenIdentifierSymbolPipe,
+		IsNotMainnetNetworkPipe,
 	],
 })
 export class CoreModule { }
