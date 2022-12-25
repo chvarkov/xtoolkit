@@ -3,7 +3,7 @@
 
 	<div class="input" [ngSwitch]="true">
 		<app-bool-input *ngSwitchCase="isBoolType()"
-						(onChange)="writeValue($event)"></app-bool-input>
+						(changed)="writeValue($event)"></app-bool-input>
 		<app-bytes-input *ngSwitchCase="isBytesType()"
 						 (changed)="writeValue($event)"></app-bytes-input>
 		<app-number-input *ngSwitchCase="isNumericalType()"
