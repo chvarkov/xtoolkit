@@ -14,9 +14,11 @@
 		</ng-container>
 	</ng-container>
 
-	<app-toolbar-icon-button right-side appTooltip tooltip="Select opened element" (click)="showCurrentTab()">
-		my_location
-	</app-toolbar-icon-button>
+	<ng-container right-side *ngIf="activeProject$ | async as project">
+		<app-toolbar-icon-button  appTooltip tooltip="Select opened element" (click)="showCurrentTab(project.id)">
+			my_location
+		</app-toolbar-icon-button>
+	</ng-container>
 	<app-toolbar-icon-button right-side appTooltip tooltip="Create" (click)="createProject()">
 		add
 	</app-toolbar-icon-button>
@@ -74,7 +76,7 @@
 					<ng-container innerElements>
 						<app-project-element #abiElem
 											 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
-											 *ngFor="let abi of project.abiInterfaces"
+											 *ngFor="let abi of project.abiInterfaces; trackBy: abiTrackBy"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'abi': abi.id) | async)"
 											 (onExpand)="onExpandElement(project.id, 'abi', abi.id, $event)"
 											 (onActivate)="onActivateElement(abiElem)"
@@ -117,7 +119,7 @@
 					<ng-container innerElements>
 						<app-project-element #scElem
 											 (click)="openProjectComponent(sc.name, 'sc', sc.id)"
-											 *ngFor="let sc of project.smartContracts"
+											 *ngFor="let sc of project.smartContracts; trackBy: scTrackBy"
 											 type="sc"
 											 [active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'sc': sc.id) | async)"
@@ -163,7 +165,7 @@
 						</mat-menu>
 					</ng-container>
 					<ng-container innerElements>
-						<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens"
+						<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens; trackBy: tokenTrackBy"
 											 (click)="openProjectComponent(tokenAddress, 'token', tokenAddress)"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'token': tokenAddress) | async)"
 											 (onExpand)="onExpandElement(project.id, 'token', tokenAddress, $event)"
@@ -236,7 +238,7 @@
 						</mat-menu>
 					</ng-container>
 					<ng-container innerElements>
-						<app-project-element #walletElem *ngFor="let wallet of project.wallets"
+						<app-project-element #walletElem *ngFor="let wallet of project.wallets; trackBy: walletTrackBy"
 											 (click)="openProjectComponent(wallet.name, 'wallet', wallet.address)"
 											 [isExpanded]="((project.id | isExpandedExplorerNode:'wallet': wallet.address) | async)"
 											 (onExpand)="onExpandElement(project.id, 'wallet', wallet.address, $event)"

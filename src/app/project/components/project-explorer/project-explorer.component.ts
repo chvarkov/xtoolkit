@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Project, ProjectInfo } from '../../../core/data-provider/data-provider';
+import {
+	GeneratedWallet,
+	Project,
+	ProjectAbi,
+	ProjectInfo,
+	ProjectSmartContract
+} from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
@@ -11,7 +17,7 @@ import {
 	PersonalSettingsManager,
 	ProjectExplorerNode,
 } from '../../../core/data-provider/personal-settings.manager';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ProjectElementComponent } from '../project-element/project-element.component';
 import { Actions, ofType } from '@ngrx/effects';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -42,16 +48,6 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
 		this.projectExplorerState$ = this.store.select(ProjectSelector.projectExplorerNodeMap);
 
-		// this.sub.add( // TODO: Refactor it
-		// 	this.projects$.pipe(
-		// 		filter(list => !!list.length),
-		// 	).subscribe(async (projects) => {
-		// 		if (projects) {
-		// 			await this.ps.syncProjectExplorerTree(projects).toPromise();
-		// 		}
-		// 	}),
-		// );
-
 		this.sub.add(
 			this.actions$.pipe(
 				ofType(ProjectAction.updateProjectExplorerTreeSuccess),
@@ -60,11 +56,22 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 				this.activeElementRef?.containerRef?.nativeElement?.scrollIntoView({behavior: 'smooth'});
 			}),
 		);
+
+		this.sub.add(
+			this.activeProject$.subscribe(async project => {
+				if (project) {
+					await this.ps.syncProjectExplorerTree(project).toPromise();
+
+					this.store.dispatch(ProjectAction.loadProjectExplorerState({
+						projectId: project.id,
+					}));
+				}
+			}),
+		);
 	}
 
 	ngOnInit(): void {
 		this.loadProjects();
-		this.store.dispatch(ProjectAction.loadProjectExplorerState());
 	}
 
 	ngOnDestroy(): void {
@@ -75,12 +82,13 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.activeElementRef = element;
 	}
 
-	showCurrentTab(): void {
-		this.store.dispatch(ProjectAction.showCurrentTabInExplorer());
+	showCurrentTab(projectId: string): void {
+		this.store.dispatch(ProjectAction.showCurrentTabInExplorer({projectId}));
 	}
 
 	onExpandElement(projectId: string, type: ProjectComponentType, componentId: string, isExpanded: boolean): void {
 		this.store.dispatch(ProjectAction.updateProjectExplorerTree({
+			projectId,
 			nodeId: getProjectComponentNodeId(projectId, type, componentId),
 			withChildren: false,
 			withParents: false,
@@ -177,5 +185,21 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	deleteWallet(projectId: string, address: string): void {
 		this.store.dispatch(ProjectAction.deleteWallet({projectId, address}));
+	}
+
+	abiTrackBy(i: number, abi: ProjectAbi) {
+		return abi.id;
+	}
+
+	scTrackBy(i: number, sc: ProjectSmartContract) {
+		return sc.id;
+	}
+
+	tokenTrackBy(i: number, tokenId: string) {
+		return tokenId;
+	}
+
+	walletTrackBy(i: number, wallet: GeneratedWallet) {
+		return wallet.address;
 	}
 }

@@ -329,8 +329,8 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		);
 	}
 
-	getProjectExplorerState(): Observable<ProjectExplorerState> {
-		const state: ProjectExplorerState = this.get(this.projectExplorerStateKey);
+	getProjectExplorerState(projectId: string): Observable<ProjectExplorerState> {
+		const state: ProjectExplorerState = this.get(this.getProjectStateKey(projectId));
 
 		if (state) {
 			return of(state);
@@ -340,82 +340,81 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			explorerNodeMap: {},
 		};
 
-		this.set(this.projectExplorerStateKey, defaultState);
+		this.set(this.getProjectStateKey(projectId), defaultState);
 
 		return of(defaultState);
 	}
 
-	updateProjectExplorerTree(id: string,
+	updateProjectExplorerTree(projectId: string,
+							  nodeId: string,
 							  isExpanded: boolean,
 							  withParents: boolean,
 							  withChildren: boolean): Observable<ProjectExplorerState> {
-		return this.getProjectExplorerState().pipe(
+		return this.getProjectExplorerState(projectId).pipe(
 			map((state) => {
-				this.updateProjectStateTree(state, isExpanded, [id], withParents, withChildren);
+				this.updateProjectStateTree(state, isExpanded, [nodeId], withParents, withChildren);
 
-				this.set(this.projectExplorerStateKey, state);
+				this.set(this.getProjectStateKey(projectId), state);
 
 				return state;
 			}),
 		);
 	}
 
-	syncProjectExplorerTree(projects: Project[]): Observable<ProjectExplorerState> {
-		return this.getProjectExplorerState().pipe(
+	syncProjectExplorerTree(project: Project): Observable<ProjectExplorerState> {
+		return this.getProjectExplorerState(project.id).pipe(
 			map((state) => {
-				for (const project of projects) {
-					const projectNodeId = getProjectComponentNodeId(project.id, 'project', project.id);
+				const projectNodeId = getProjectComponentNodeId(project.id, 'project', project.id);
 
-					if (!state.explorerNodeMap[projectNodeId]) {
-						state.explorerNodeMap[projectNodeId] = {
-							id: projectNodeId,
-							isExpanded: true,
-							childrenIds: [],
-						};
-					}
-
-					const projectNode = state.explorerNodeMap[projectNodeId];
-
-					for (const groupType of this.projectComponentGroups) {
-						const group = getProjectComponentNodeId(project.id, 'group', groupType);
-
-						this.syncProjectExplorerNode(state, projectNode, group);
-					}
-
-					const abiFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'abi');
-
-					for (const abi of project.abiInterfaces) {
-						const nodeId = getProjectComponentNodeId(project.id, 'abi', abi.id);
-						this.syncProjectExplorerNode(state, state.explorerNodeMap[abiFolderNodeId], nodeId);
-					}
-
-					const scFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'sc');
-
-					for (const sc of project.smartContracts) {
-						const nodeId = getProjectComponentNodeId(project.id, 'sc', sc.id);
-						this.syncProjectExplorerNode(state, state.explorerNodeMap[scFolderNodeId], nodeId);
-					}
-
-					const tokenFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'token');
-
-					for (const token of project.tokens) {
-						const nodeId = getProjectComponentNodeId(project.id, 'token', token);
-						this.syncProjectExplorerNode(state, state.explorerNodeMap[tokenFolderNodeId], nodeId);
-					}
-
-					const nftFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'nft');
-
-					// TODO: SYNC NFT TREE
-
-					const walletFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'wallet');
-
-					for (const wallet of project.wallets) {
-						const nodeId = getProjectComponentNodeId(project.id, 'wallet', wallet.address);
-						this.syncProjectExplorerNode(state, state.explorerNodeMap[walletFolderNodeId], nodeId);
-					}
+				if (!state.explorerNodeMap[projectNodeId]) {
+					state.explorerNodeMap[projectNodeId] = {
+						id: projectNodeId,
+						isExpanded: true,
+						childrenIds: [],
+					};
 				}
 
-				this.set(this.projectExplorerStateKey, state);
+				const projectNode = state.explorerNodeMap[projectNodeId];
+
+				for (const groupType of this.projectComponentGroups) {
+					const group = getProjectComponentNodeId(project.id, 'group', groupType);
+
+					this.syncProjectExplorerNode(state, projectNode, group);
+				}
+
+				const abiFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'abi');
+
+				for (const abi of project.abiInterfaces) {
+					const nodeId = getProjectComponentNodeId(project.id, 'abi', abi.id);
+					this.syncProjectExplorerNode(state, state.explorerNodeMap[abiFolderNodeId], nodeId);
+				}
+
+				const scFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'sc');
+
+				for (const sc of project.smartContracts) {
+					const nodeId = getProjectComponentNodeId(project.id, 'sc', sc.id);
+					this.syncProjectExplorerNode(state, state.explorerNodeMap[scFolderNodeId], nodeId);
+				}
+
+				const tokenFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'token');
+
+				for (const token of project.tokens) {
+					const nodeId = getProjectComponentNodeId(project.id, 'token', token);
+					this.syncProjectExplorerNode(state, state.explorerNodeMap[tokenFolderNodeId], nodeId);
+				}
+
+				const nftFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'nft');
+
+				// TODO: SYNC NFT TREE
+
+				const walletFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'wallet');
+
+				for (const wallet of project.wallets) {
+					const nodeId = getProjectComponentNodeId(project.id, 'wallet', wallet.address);
+					this.syncProjectExplorerNode(state, state.explorerNodeMap[walletFolderNodeId], nodeId);
+				}
+
+				this.set(this.getProjectStateKey(project.id), state);
 
 				return state;
 			}),
@@ -480,6 +479,10 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		}
 
 		return list;
+	}
+
+	private getProjectStateKey(projectId: string): string {
+		return `${this.projectExplorerStateKey}.${projectId}`;
 	}
 
 	private getOpenedTabsKey(projectId: string): string {
