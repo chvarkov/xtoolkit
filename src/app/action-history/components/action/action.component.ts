@@ -45,18 +45,13 @@ export class ActionComponent implements OnInit {
 						},
 					}, 3000);
 
-					this.transactionWatcher.awaitOnCondition({
+					this.transactionWatcher.awaitCompleted({
 						...tx,
 						getHash(): TransactionHash {
 							return new TransactionHash(tx.hash);
 						},
-					}, (tx) => {
-						console.log('parsed tx = ' + parseTxStatus(tx));
-						return parseTxStatus(tx) !== TransactionStatus.Pending;
 					})
 						.then((tx) => {
-							console.log('tx', tx);
-							console.log('finish - parsed tx = ' + parseTxStatus(tx), parseTxStatus(tx) === TransactionStatus.Success);
 							const status = parseTxStatus(tx) === TransactionStatus.Success
 								? ActionStatus.Success
 								: ActionStatus.Fail;

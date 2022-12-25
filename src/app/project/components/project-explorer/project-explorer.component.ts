@@ -14,6 +14,8 @@ import {
 import { filter } from 'rxjs/operators';
 import { ProjectElementComponent } from '../project-element/project-element.component';
 import { Actions, ofType } from '@ngrx/effects';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { FaucetService } from '../../../core/services/faucet.service';
 
 @Component({
 	selector: 'app-project-explorer',
@@ -33,6 +35,8 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	constructor(private readonly store: Store,
 				private readonly actions$: Actions,
+				private readonly clipboard: Clipboard,
+				public readonly faucet: FaucetService,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly ps: PersonalSettingsManager) {
 		this.projectsList$ = this.store.select(ProjectSelector.projectList);
 		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
@@ -141,6 +145,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	renameWallet(projectId: string, address: string, name: string): void {
 		this.store.dispatch(ProjectAction.renameWallet({projectId, address, name}));
+	}
+
+	copyWalletAddress(address: string): void {
+		this.clipboard.copy(address);
 	}
 
 	exploreToken(projectId: string, identifier: string): void {

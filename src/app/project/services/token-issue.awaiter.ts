@@ -56,17 +56,16 @@ export class TokenIssueAwaiter {
 					},
 				}, 3000, 180_000);
 
-				watcher.awaitOnCondition({
+				watcher.awaitCompleted({
 					...tx,
 					getHash(): TransactionHash {
 						return new TransactionHash(tx.hash);
 					},
-				}, (tx) => {
-					return parseTxStatus(tx) !== TransactionStatus.Pending;
 				})
 					.then(async (tx) => {
-						console.log('awaited tx', tx);
-						const status = tx.status.isExecuted() ? ActionStatus.Success : ActionStatus.Fail;
+						const status = parseTxStatus(tx) === TransactionStatus.Success
+							? ActionStatus.Success
+							: ActionStatus.Fail;
 
 						switch (status) {
 							case ActionStatus.Success:

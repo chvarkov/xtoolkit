@@ -31,7 +31,7 @@ export class FreezeUnFreezeTokenDialogComponent implements OnInit {
 	}
 
 	get title() {
-		return this.data.isFreeze ? 'Freeze token' : 'Unfreeze token';
+		return this.data.isFreeze ? 'Freeze account' : 'Unfreeze account';
 	}
 
 	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string, isFreeze: boolean},

@@ -15,7 +15,7 @@ export interface ITokenInfo {
 	decimals: string;
 	identifier: string;
 	initialMinted: string;
-	isPaused: string;
+	isPaused: boolean;
 	minted: string;
 	name: string;
 	owner: string;

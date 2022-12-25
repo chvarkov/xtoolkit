@@ -6,6 +6,66 @@
 				 [src]="token.assets?.svgUrl || '/assets/images/token-icon.svg'">
 			<span>{{token.ticker}}</span>
 		</div>
+		<div left-side *ngIf="token.isPaused" class="paused-label">PAUSED</div>
+
+		<ng-container right-side *ngIf="token.canMint || token.canBurn">
+			<app-toolbar-icon-button *ngIf="token.canMint" appTooltip tooltip="Mint" (click)="mint()">
+				data_saver_on
+			</app-toolbar-icon-button>
+
+			<app-toolbar-icon-button *ngIf="token.canBurn" appTooltip tooltip="Burn" (click)="burn()">
+				local_fire_department
+			</app-toolbar-icon-button>
+
+			<div class="toolbar-splitter"></div>
+		</ng-container>
+
+		<ng-container right-side *ngIf="token.canPause">
+			<app-toolbar-icon-button *ngIf="token.isPaused" appTooltip tooltip="Un pause"
+									 (click)="unpause()">
+				play_arrow
+			</app-toolbar-icon-button>
+
+			<app-toolbar-icon-button *ngIf="!token.isPaused" appTooltip tooltip="Pause"
+									 (click)="pause()">
+				pause
+			</app-toolbar-icon-button>
+
+			<div class="toolbar-splitter"></div>
+		</ng-container>
+
+		<ng-container right-side>
+			<app-toolbar-icon-button *ngIf="token.canChangeOwner"
+									 appTooltip tooltip="Transfer ownership"
+									 (click)="transferOwnership()">
+				admin_panel_settings
+			</app-toolbar-icon-button>
+
+			<app-toolbar-icon-button appTooltip tooltip="Set special role" (click)="setSpecialRole()">
+				group_add
+			</app-toolbar-icon-button>
+
+			<div class="toolbar-splitter"></div>
+		</ng-container>
+
+		<ng-container right-side *ngIf="token.canWipe || token.canFreeze">
+			<app-toolbar-icon-button *ngIf="token.canWipe" appTooltip tooltip="Wipe" (click)="wipe()">
+				cleaning_services
+			</app-toolbar-icon-button>
+
+			<ng-container *ngIf="token.canFreeze">
+				<app-toolbar-icon-button appTooltip tooltip="Freeze account" (click)="freeze()">
+					mood_bad
+				</app-toolbar-icon-button>
+
+				<app-toolbar-icon-button appTooltip tooltip="Un freeze account" (click)="unfreeze()">
+					mood
+				</app-toolbar-icon-button>
+			</ng-container>
+
+			<div class="toolbar-splitter"></div>
+		</ng-container>
+
 		<app-toolbar-icon-button right-side appTooltip tooltip="Delete token"
 								 (click)="delete()">
 			delete
@@ -50,19 +110,6 @@
 						<div class="label">transactions</div>
 					</div>
 
-				</div>
-
-				<div class="section-label">actions</div>
-				<div class="actions">
-					<button mat-flat-button class="primary-action" (click)="mint()">Mint</button>
-					<button mat-flat-button class="primary-action" (click)="burn()">Burn</button>
-					<button mat-flat-button class="primary-action" (click)="pause()">Pause</button>
-					<button mat-flat-button class="primary-action" (click)="unpause()">Unpause</button>
-					<button mat-flat-button class="primary-action" (click)="freeze()">Freeze</button>
-					<button mat-flat-button class="primary-action" (click)="unfreeze()">Unfreeze</button>
-					<button mat-flat-button class="primary-action" (click)="wipe()">Wipe</button>
-					<button mat-flat-button class="primary-action" (click)="setSpecialRole()">Set special role</button>
-					<button mat-flat-button class="primary-action" (click)="transferOwnership()">Transfer ownership</button>
 				</div>
 
 				<div class="section-label">properties</div>

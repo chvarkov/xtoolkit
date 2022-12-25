@@ -249,6 +249,16 @@
 									<mat-icon class="dropdown-icon">more_vert</mat-icon>
 								</button>
 								<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+									<button *ngIf="project.chainId | isNotMainnetNetwork"
+											mat-menu-item
+											(click)="faucet.gotoFaucet()">
+										<mat-icon>monetization_on</mat-icon>
+										<span>Open faucet</span>
+									</button>
+									<button mat-menu-item (click)="copyWalletAddress(wallet.address)">
+										<mat-icon>content_copy</mat-icon>
+										<span>Copy address</span>
+									</button>
 									<button mat-menu-item (click)="renameWallet(project.id, wallet.address, wallet.name)">
 										<mat-icon>drive_file_rename_outline</mat-icon>
 										<span>Rename</span>
