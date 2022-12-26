@@ -1,4 +1,9 @@
-<mat-select class="enum argument-input" placeholder="Select enum value" (selectionChange)="changed.emit($event.value)" panelClass="select-panel">
+<mat-select class="enum argument-input"
+			placeholder="Select enum value"
+			[disabled]="isDisabled"
+			[value]="val"
+			(selectionChange)="onChangeValue($event.value)"
+			panelClass="select-panel">
 	<mat-option *ngFor="let option of getEnum()"
 				[value]="option.discriminant">
 		{{option.name}} [{{option.discriminant}}]

@@ -4,11 +4,13 @@ import { Address, Transaction, TransactionPayload } from '@elrondnetwork/erdjs/o
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { ScTransactionRunner } from './sc-transaction-runner';
 import { GeneratedWallet } from '../../data-provider/data-provider';
+import { DecimalPlacesHelper } from '../helpers/decimal-places.helper';
 
 export interface ITokenTransferOptions {
 	sender: string;
 	receiver: string;
 	identifier: string;
+	decimals: number;
 	amount: BigNumber.Value;
 	data?: string;
 	gasLimit: number;
@@ -23,14 +25,14 @@ export class WalletManager {
 	async transferFunds(network: INetworkEnvironment,
 						wallet: GeneratedWallet,
 						options: ITokenTransferOptions): Promise<string> {
-
+		const amount = DecimalPlacesHelper.toRaw(options.decimals, options.amount);
 
 		const tx = new Transaction({
 			data: new TransactionPayload(options.data || ''),
 			gasLimit: options.gasLimit,
 			sender: new Address(options.sender),
 			receiver: new Address(options.receiver),
-			value: options.amount,
+			value: amount.toString(),
 			chainID: network.chainId,
 		});
 

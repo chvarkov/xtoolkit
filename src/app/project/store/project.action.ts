@@ -223,19 +223,19 @@ export class ProjectAction {
 	static readonly loadTransactionSuccess = createAction(`[${ProjectAction.name}] load transaction [OK]`, props<{projectId: string, tx: IElrondFullTransaction}>());
 	static readonly loadTransactionError = createAction(`[${ProjectAction.name}] load transaction [ERR]`, props<{err: Error}>());
 
-	static readonly loadProjectExplorerState = createAction(`[${ProjectAction.name}] load project explorer state [...]`);
+	static readonly loadProjectExplorerState = createAction(`[${ProjectAction.name}] load project explorer state [...]`, props<{projectId: string}>());
 	static readonly loadProjectExplorerStateSuccess = createAction(`[${ProjectAction.name}] load project explorer state [OK]`, props<{explorerState: ProjectExplorerState}>());
 	static readonly loadProjectExplorerStateError = createAction(`[${ProjectAction.name}] load project explorer state [ERR]`, props<{err: Error}>());
 
-	static readonly syncProjectExplorerTree = createAction(`[${ProjectAction.name}] sync project explorer tree [...]`, props<{projects: Project[]}>());
+	static readonly syncProjectExplorerTree = createAction(`[${ProjectAction.name}] sync project explorer tree [...]`, props<{project: Project}>());
 	static readonly syncProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] sync project explorer tree [OK]`, props<{explorerState: ProjectExplorerState}>());
 	static readonly syncProjectExplorerTreeError = createAction(`[${ProjectAction.name}] load transaction explorer [ERR]`, props<{err: Error}>());
 
-	static readonly updateProjectExplorerTree = createAction(`[${ProjectAction.name}] update project explorer tree [...]`, props<{isShowActiveTab: boolean, nodeId: string, isExpanded: boolean, withParents: boolean, withChildren: boolean}>());
+	static readonly updateProjectExplorerTree = createAction(`[${ProjectAction.name}] update project explorer tree [...]`, props<{projectId: string, isShowActiveTab: boolean, nodeId: string, isExpanded: boolean, withParents: boolean, withChildren: boolean}>());
 	static readonly updateProjectExplorerTreeSuccess = createAction(`[${ProjectAction.name}] update project explorer tree [OK]`, props<{isShowActiveTab: boolean, explorerState: ProjectExplorerState}>());
 	static readonly updateProjectExplorerTreeError = createAction(`[${ProjectAction.name}] update project explorer tree [ERR]`, props<{err: Error}>());
 
-	static readonly showCurrentTabInExplorer = createAction(`[${ProjectAction.name}] show current tab in explorer`);
+	static readonly showCurrentTabInExplorer = createAction(`[${ProjectAction.name}] show current tab in explorer`, props<{projectId: string}>());
 
 	static readonly loadAccountNfts = createAction(`[${ProjectAction.name}] load account nfts [...]`, props<{projectId: string, address: string}>());
 	static readonly loadAccountNftsSuccess = createAction(`[${ProjectAction.name}] load account nfts [OK]`, props<{address: string, data: INft[]}>());

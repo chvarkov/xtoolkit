@@ -740,7 +740,7 @@ export class ProjectEffect {
 
 	loadProjectExplorerState$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadProjectExplorerState),
-		mergeMap(() => this.personalSettingsManager.getProjectExplorerState().pipe(
+		mergeMap(({projectId}) => this.personalSettingsManager.getProjectExplorerState(projectId).pipe(
 			map((explorerState) => ProjectAction.loadProjectExplorerStateSuccess({explorerState})),
 			catchError(err => of(ProjectAction.loadProjectExplorerStateError({err})))
 		))),
@@ -748,7 +748,8 @@ export class ProjectEffect {
 
 	updateProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectExplorerTree),
-		mergeMap(({nodeId, isExpanded, withParents, withChildren, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(
+		mergeMap(({projectId, nodeId, isExpanded, withParents, withChildren, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(
+			projectId,
 			nodeId,
 			isExpanded,
 			withParents,
@@ -761,7 +762,7 @@ export class ProjectEffect {
 
 	syncProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.syncProjectExplorerTree),
-		mergeMap(() => this.personalSettingsManager.getProjectExplorerState().pipe(
+		mergeMap(({project}) => this.personalSettingsManager.getProjectExplorerState(project.id).pipe(
 			map((explorerState) => ProjectAction.syncProjectExplorerTreeSuccess({explorerState})),
 			catchError(err => of(ProjectAction.syncProjectExplorerTreeError({err})))
 		))),
@@ -769,7 +770,7 @@ export class ProjectEffect {
 
 	showCurrentTabInExplorer$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.showCurrentTabInExplorer),
-		switchMap((args) => this.store.select(ProjectSelector.activeTab).pipe(
+		switchMap(({projectId}) => this.store.select(ProjectSelector.activeTab).pipe(
 			take(1),
 			map(opened => {
 				if (!opened) {
@@ -778,6 +779,7 @@ export class ProjectEffect {
 
 				const nodeId = getProjectComponentNodeId(opened.projectId, opened.componentType, opened.componentId);
 				return ProjectAction.updateProjectExplorerTree({
+					projectId,
 					nodeId,
 					withChildren: false,
 					withParents: true,

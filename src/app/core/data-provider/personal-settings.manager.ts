@@ -67,14 +67,15 @@ export interface PersonalSettingsManager {
 
 	setLayoutState(partialState: Partial<LayoutState>): Observable<LayoutState>;
 
-	getProjectExplorerState(): Observable<ProjectExplorerState>;
+	getProjectExplorerState(projectId: string): Observable<ProjectExplorerState>;
 
-	updateProjectExplorerTree(id: string,
+	updateProjectExplorerTree(projectId: string,
+							  nodeId: string,
 							  isExpanded: boolean,
 							  withParents: boolean,
 							  withChildren: boolean): Observable<ProjectExplorerState>;
 
-	syncProjectExplorerTree(projects: Project[]): Observable<ProjectExplorerState>;
+	syncProjectExplorerTree(project: Project): Observable<ProjectExplorerState>;
 
 	toggleTheme(): Observable<LayoutState>;
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import {
 	BigIntType,
 	BigUIntType,
@@ -10,21 +10,45 @@ import {
 	U16Type,
 	U32Type,
 	U64Type,
-	U8Type
+	U8Type,
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
 	selector: 'app-number-input',
 	templateUrl: './number-input.component.html',
-	styleUrls: ['./number-input.component.scss']
+	styleUrls: ['./number-input.component.scss'],
+	providers: [
+		{
+			provide: NG_VALUE_ACCESSOR,
+			useExisting: forwardRef(() => NumberInputComponent),
+			multi: true,
+		},
+	],
 })
-export class NumberInputComponent implements OnInit {
+export class NumberInputComponent implements OnInit, ControlValueAccessor {
 	readonly maxLength = 39;
 
-	@Input() value: BigNumber = new BigNumber(0);
+	@Input() set value(val: BigNumber) {
+		this.onChange(val);
+		this.onTouch(val);
+		this.val = val;
+	}
+
+	get value(): BigNumber {
+		return this.val;
+	}
+
+	private val: BigNumber = new BigNumber(0);
+
 	@Input() type?: Type;
 	@Output() changed: EventEmitter<BigNumber> = new EventEmitter<BigNumber>();
+
+	onChange: any = () => {};
+	onTouch: any = () => {};
+
+	isDisabled = false;
 
 	constructor() {
 	}
@@ -90,11 +114,30 @@ export class NumberInputComponent implements OnInit {
 		}
 	}
 
-	onChange(e: Event): void {
+	onChangeEvent(e: Event): void {
 		const value = (<HTMLInputElement>e.target).value;
 
-		this.value = new BigNumber(value);
+		this.val = new BigNumber(value);
 
-		this.changed.emit(this.value);
+		this.changed.emit(this.val);
+		this.onChange(this.val);
+		this.onTouch();
+	}
+
+
+	writeValue(value: any){
+		this.value = value
+	}
+
+	registerOnChange(fn: any){
+		this.onChange = fn
+	}
+
+	registerOnTouched(fn: any){
+		this.onTouch = fn
+	}
+
+	setDisabledState(isDisabled: boolean) {
+		this.isDisabled = isDisabled;
 	}
 }

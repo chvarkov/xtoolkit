@@ -1,7 +1,9 @@
 <mat-select class="bool argument-input"
 			[placeholder]="placeholder"
             panelClass="select-panel"
-			(selectionChange)="onChange.emit($event.value)">
+			[disabled]="isDisabled"
+			[value]="val"
+			(selectionChange)="onChangeValue($event.value)">
 	<mat-option *ngIf="nullable" [value]="null">null</mat-option>
 	<mat-option [value]="true">true</mat-option>
 	<mat-option [value]="false">false</mat-option>

@@ -65,6 +65,8 @@ export class TransferTokenDialogComponent implements OnInit {
 			identifier: this.identifier,
 			gasLimit: this.gasLimit,
 			wallet: this.sender,
+			decimals: 18, // todo: fix hardcode
+			data: this.txData,
 		};
 
 		this.dialogRef.close(data);
