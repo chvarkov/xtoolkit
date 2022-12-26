@@ -23,7 +23,7 @@ export class BoolInputComponent implements OnInit, ControlValueAccessor {
 
 	isDisabled = false;
 
-	private val= '';
+	val: boolean | null = false;
 
 	constructor() {
 	}
@@ -31,7 +31,7 @@ export class BoolInputComponent implements OnInit, ControlValueAccessor {
 	ngOnInit(): void {
 	}
 
-	set value(val: string) {
+	set value(val: boolean | null) {
 		this.val = val
 		this.onChange(val)
 		this.onTouch(val)

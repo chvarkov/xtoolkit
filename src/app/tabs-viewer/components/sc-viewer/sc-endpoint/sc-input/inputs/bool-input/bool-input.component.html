@@ -2,6 +2,7 @@
 			[placeholder]="placeholder"
             panelClass="select-panel"
 			[disabled]="isDisabled"
+			[value]="val"
 			(selectionChange)="onChangeValue($event.value)">
 	<mat-option *ngIf="nullable" [value]="null">null</mat-option>
 	<mat-option [value]="true">true</mat-option>

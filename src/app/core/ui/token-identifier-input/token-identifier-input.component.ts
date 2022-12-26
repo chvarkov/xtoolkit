@@ -42,7 +42,7 @@ export class TokenIdentifierInputComponent implements OnInit, ControlValueAccess
 	onChange: any = () => {}
 	onTouch: any = () => {}
 
-	private val= '';
+	val= '';
 
 	constructor(private readonly store: Store) {
 	}

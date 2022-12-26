@@ -23,7 +23,7 @@ export class EnumInputComponent implements OnInit, ControlValueAccessor {
 
 	isDisabled = false;
 
-	private val= 0;
+	val = 0;
 
 	constructor() {
 	}
