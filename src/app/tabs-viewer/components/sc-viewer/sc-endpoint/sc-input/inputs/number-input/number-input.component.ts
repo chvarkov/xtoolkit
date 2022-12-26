@@ -13,7 +13,7 @@ import {
 	U8Type,
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
 	selector: 'app-number-input',
@@ -27,7 +27,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 		},
 	],
 })
-export class NumberInputComponent implements OnInit {
+export class NumberInputComponent implements OnInit, ControlValueAccessor {
 	readonly maxLength = 39;
 
 	@Input() set value(val: BigNumber) {
