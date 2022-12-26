@@ -3,14 +3,17 @@
 
 	<div class="input" [ngSwitch]="true">
 		<app-bool-input *ngSwitchCase="isBoolType()"
+						[value]="value"
 						(changed)="writeValue($event)"></app-bool-input>
 		<app-bytes-input *ngSwitchCase="isBytesType()"
+						 [value]="value"
 						 (changed)="writeValue($event)"></app-bytes-input>
 		<app-number-input *ngSwitchCase="isNumericalType()"
 						  [type]="unwrappedType"
 						  [value]="value"
 						  (changed)="writeValue($event)"></app-number-input>
 		<app-enum-input *ngSwitchCase="isEnum()"
+						[value]="value"
 						[type]="unwrappedType"
 						(changed)="writeValue($event)"></app-enum-input>
 		<app-address-input *ngSwitchCase="isAddress()"
@@ -26,6 +29,7 @@
 									(changed)="writeValue($event)"></app-token-identifier-input>
 		<app-struct-input *ngSwitchCase="isStruct()"
 						  class="struct"
+						  [value]="value"
 						  [projectId]="projectId"
 						  [chainId]="chainId"
 						  [name]="unwrappedType.getName()"

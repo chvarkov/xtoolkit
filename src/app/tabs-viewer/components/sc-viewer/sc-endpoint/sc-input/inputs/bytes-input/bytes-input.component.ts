@@ -22,6 +22,12 @@ export class BytesInputComponent implements OnInit, ControlValueAccessor {
 	@Input() encodingMethods: ByteEncodingType[] = ['utf-8', 'hex', 'base64'];
 	@Input() disabled = false;
 
+	@Input() set value(val: Buffer) {
+		this.val = val;
+		this.onChange(val);
+		this.onTouch();
+	}
+
 	method: ByteEncodingType = 'utf-8';
 
 	private onChange: Function = () => null;
@@ -36,6 +42,10 @@ export class BytesInputComponent implements OnInit, ControlValueAccessor {
 	ngOnInit() {
 	}
 
+	debug(): void {
+		console.log('DEBUG', this.val.toString(this.method));
+	}
+
 	setDisabledState(isDisabled: boolean): void {
 		this.disabled = isDisabled;
 	}
@@ -47,13 +57,8 @@ export class BytesInputComponent implements OnInit, ControlValueAccessor {
 		this.onTouch();
 	}
 
-	set value(val: Buffer) {
-		this.val = val;
-		this.onChange(val);
-		this.onTouch();
-	}
-
 	writeValue(value: Buffer) {
+		console.log(`writeValue<BUTES> ${value.toString('utf-8')}`, value);
 		this.val = value;
 	}
 

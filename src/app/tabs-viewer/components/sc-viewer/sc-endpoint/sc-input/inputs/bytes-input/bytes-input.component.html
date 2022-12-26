@@ -2,6 +2,7 @@
 	<div class="row">
 		<div class="bytes-control-container">
 		<textarea class="textarea"
+				  (click)="debug()"
 				  [value]="val.toString(method)"
 				  (change)="onChangedValue($event)"
 				  [disabled]="disabled"></textarea>

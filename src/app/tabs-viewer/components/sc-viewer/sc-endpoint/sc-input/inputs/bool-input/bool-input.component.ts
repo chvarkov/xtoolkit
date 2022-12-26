@@ -18,6 +18,12 @@ export class BoolInputComponent implements OnInit, ControlValueAccessor {
 	@Input() placeholder = 'bool';
 	@Output() changed: EventEmitter<boolean | null> = new EventEmitter<boolean | null>();
 
+	@Input() set value(val: boolean | null) {
+		this.val = val
+		this.onChange(val)
+		this.onTouch(val)
+	}
+
 	onChange: any = () => {}
 	onTouch: any = () => {}
 
@@ -29,12 +35,6 @@ export class BoolInputComponent implements OnInit, ControlValueAccessor {
 	}
 
 	ngOnInit(): void {
-	}
-
-	set value(val: boolean | null) {
-		this.val = val
-		this.onChange(val)
-		this.onTouch(val)
 	}
 
 	writeValue(value: any){
