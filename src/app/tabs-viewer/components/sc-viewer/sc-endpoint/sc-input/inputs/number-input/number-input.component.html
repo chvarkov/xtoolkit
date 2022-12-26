@@ -1,5 +1,6 @@
 <div class="number-input-container">
 	<input class="input sc-argument-input"
+		   [disabled]="isDisabled"
 		   type="number"
 		   [value]="value?.toString()"
 		   [min]="getMin().toString()"
