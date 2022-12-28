@@ -18,3 +18,26 @@
 		padding-bottom: 8px;
 	}
 }
+
+.bytes-control-container {
+	display: flex;
+	position: relative;
+
+	.encoding-method {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+
+		.encoding-method-select {
+			width: 80px;
+		}
+	}
+
+	.textarea {
+		background: var(--low-bg);
+		width: 100%;
+		height: 62px;
+		color: var(--text-color);
+	}
+}
+

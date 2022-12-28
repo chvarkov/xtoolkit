@@ -29,8 +29,8 @@
 			</div>
 			<div class="input">
 				<app-sc-input [projectId]="projectId"
-							  [formControl]="getControl(i)"
-							  [type]="type.getFirstTypeParameter()"
+							  [formControlName]="i"
+							  [type]="unwrappedType"
 							  [chainId]="chainId">
 				</app-sc-input>
 			</div>

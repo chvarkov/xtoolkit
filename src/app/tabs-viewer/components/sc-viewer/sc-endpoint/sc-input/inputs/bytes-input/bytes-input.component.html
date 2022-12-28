@@ -1,5 +1,21 @@
 <div class="bytes-input-container">
 	<div class="row">
-		<app-bytes-control (changed)="changed.emit($event)"></app-bytes-control>
+		<div class="bytes-control-container">
+		<textarea class="textarea"
+				  (click)="debug()"
+				  [value]="val.toString(method)"
+				  (change)="onChangedValue($event)"
+				  [disabled]="disabled"></textarea>
+			<div class="encoding-method">
+				<mat-select class="encoding-method-select"
+							[value]="method"
+							(selectionChange)="onChangeEncodingMethod($event.value)"
+							panelClass="select-panel">
+					<mat-option *ngFor="let method of encodingMethods" [value]="method">
+						{{method}}
+					</mat-option>
+				</mat-select>
+			</div>
+		</div>
 	</div>
 </div>

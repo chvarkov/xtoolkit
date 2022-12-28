@@ -8,7 +8,6 @@ import { BoolInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/
 import { ScInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/sc-input.component';
 import { ScEndpointComponent } from './components/sc-viewer/sc-endpoint/sc-endpoint.component';
 import { BytesInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/bytes-input/bytes-input.component';
-import { BytesControlComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/controls/bytes-control/bytes-control.component';
 import { NumberInputComponent } from './components/sc-viewer/sc-endpoint/sc-input/inputs/number-input/number-input.component';
 import { ScCodeComponent } from './components/sc-viewer/sc-code/sc-code.component';
 import { ScTokensComponent } from './components/common/sc-tokens/sc-tokens.component';
@@ -44,7 +43,6 @@ import { TransferTokenDialogComponent } from './components/wallet-viewer/transfe
 		ScInputComponent,
 		ScEndpointComponent,
 		BytesInputComponent,
-		BytesControlComponent,
 		NumberInputComponent,
 		ScViewerHeaderComponent,
 		ScCodeComponent,

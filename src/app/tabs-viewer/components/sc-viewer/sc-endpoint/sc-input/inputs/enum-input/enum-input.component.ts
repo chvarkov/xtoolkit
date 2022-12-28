@@ -18,6 +18,12 @@ export class EnumInputComponent implements OnInit, ControlValueAccessor {
 	@Input() type?: Type;
 	@Output() changed: EventEmitter<number | null> = new EventEmitter<number | null>();
 
+	@Input() set value(val: number) {
+		this.val = val
+		this.onChange(val)
+		this.onTouch(val)
+	}
+
 	onChange: any = () => {}
 	onTouch: any = () => {}
 
@@ -38,12 +44,6 @@ export class EnumInputComponent implements OnInit, ControlValueAccessor {
 		}
 
 		return this.type.variants;
-	}
-
-	set value(val: number) {
-		this.val = val
-		this.onChange(val)
-		this.onTouch(val)
 	}
 
 	writeValue(value: any){
