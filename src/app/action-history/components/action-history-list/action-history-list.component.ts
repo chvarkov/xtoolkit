@@ -20,6 +20,14 @@ export class ActionHistoryListComponent implements OnInit {
 
 	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
+	get minResizeMovingX(): number {
+		return window.innerWidth - 480;
+	}
+
+	get maxResizeMoving(): number {
+		return window.innerWidth - 360;
+	}
+
 	constructor(private readonly store: Store) {
 		this.actionHistory$ = this.store.select(ActionHistorySelector.list);
 		this.activeProjectId$ = this.store.select(ProjectSelector.activeProjectId);

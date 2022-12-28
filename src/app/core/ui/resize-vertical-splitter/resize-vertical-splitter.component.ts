@@ -9,6 +9,8 @@ export type SplitterSide = 'left' | 'right';
 })
 export class ResizeVerticalSplitterComponent implements OnInit {
 	@Input() side: SplitterSide = 'left';
+	@Input() minX!: number;
+	@Input() maxX!: number;
 
 	@Output() dx: EventEmitter<number> = new EventEmitter<number>();
 
@@ -29,7 +31,9 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 	@HostListener('document:mousemove', ['$event'])
 	onMouseMove(e: MouseEvent): void {
 		if (this.isMoving) {
-			this.dx.emit(e.movementX);
+			if ((this.minX && this.maxX && this.maxX > this.minX) && (e.clientX >= this.minX) && ( e.clientX <= this.maxX)) {
+				this.dx.emit(e.movementX);
+			}
 		}
 	}
 
