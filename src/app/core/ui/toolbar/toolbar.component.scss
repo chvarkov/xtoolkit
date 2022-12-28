@@ -38,3 +38,11 @@
 		}
 	}
 }
+
+.right-border {
+	border-right: solid 1px var(--border-low-color);
+}
+
+.left-border {
+	border-left: solid 1px var(--border-low-color);
+}

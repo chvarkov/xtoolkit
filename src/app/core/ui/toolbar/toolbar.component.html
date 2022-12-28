@@ -1,4 +1,4 @@
-<div class="toolbar-container">
+<div class="toolbar-container" [ngClass]="{'left-border': borderLeft, 'right-border': borderRight}">
 	<div class="left-side">
 		<span *ngIf="title" class="toolbar-title" [ngClass]="'title-' + titleSize">{{title}}</span>
 		<ng-content select="[left-side]"></ng-content>

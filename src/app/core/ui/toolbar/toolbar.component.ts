@@ -10,6 +10,8 @@ export type ToolBarTitleSize = 'big' | 'medium' | 'small';
 export class ToolbarComponent implements OnInit {
 	@Input() titleSize: ToolBarTitleSize = 'big';
 	@Input() title?: string
+	@Input() borderRight: boolean = false;
+	@Input() borderLeft: boolean = false;
 
 	constructor() {
 	}
