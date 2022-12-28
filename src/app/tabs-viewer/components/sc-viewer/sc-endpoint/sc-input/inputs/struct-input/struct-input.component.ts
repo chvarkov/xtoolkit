@@ -24,7 +24,7 @@ export class StructInputComponent implements OnInit, OnDestroy, ControlValueAcce
 	@Input() type?: Type;
 
 	@Input() set value(val: Record<string, any>) {
-		this.form.setValue(val);
+		this.form?.setValue(val);
 		this.onChange(val)
 		this.onTouch(val)
 	}
@@ -43,7 +43,7 @@ export class StructInputComponent implements OnInit, OnDestroy, ControlValueAcce
 
 	getFields(): FieldDefinition[] {
 		if (!(this.type instanceof StructType)) {
-			throw new Error('Type is not struct');
+			throw new Error(`Type "${this.type?.getClassName() || ''}" is not struct`);
 		}
 
 		return this.type.getFieldsDefinitions();
@@ -57,8 +57,6 @@ export class StructInputComponent implements OnInit, OnDestroy, ControlValueAcce
 		);
 
 		this.sub.add(this.form.valueChanges.subscribe(data => {
-			console.log('form_value', data);
-
 			this.onChangeForm(data);
 		}));
 	}

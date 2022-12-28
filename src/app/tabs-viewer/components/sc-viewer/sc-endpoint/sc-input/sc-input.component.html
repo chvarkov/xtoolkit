@@ -39,7 +39,8 @@
 						 [projectId]="projectId"
 						 [chainId]="chainId"
 						 [type]="unwrappedType"
-						 [name]="unwrappedType.getName()"></app-array-input>
+						 [name]="unwrappedType.getName()"
+						 (changed)="writeValue($event)"></app-array-input>
 		<div *ngSwitchDefault class="unsupported-type">
 			Type {{unwrappedType.getClassName()}} is not supported yet
 		</div>
