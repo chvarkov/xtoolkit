@@ -1,0 +1,43 @@
+.placeholder {
+	width: 100%;
+	height: calc(100vh - var(--header-height) - var(--footer-height) - var(--tab-height));
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--text-accent-color)
+}
+
+.description {
+	color: var(--text-color)
+}
+
+.section {
+	padding: 10px 0;
+}
+
+.reasons-sub-title {
+	font-weight: 600;
+	padding: 6px 0;
+	font-size: 16px;
+}
+
+.reason {
+	padding: 4px 0;
+	font-size: 14px;
+}
+
+.reload-btn {
+	border: solid 1px var(--border-low-color);
+	background: none;
+
+	&:hover {
+		border: solid 1px var(--border-color);
+	}
+}
