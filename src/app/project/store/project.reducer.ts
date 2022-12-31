@@ -87,6 +87,22 @@ export const reducer = createReducer(
 		},
 		activeProject: project,
 	})),
+	on(ProjectAction.closeProjectSuccess, (state) => ({
+		...state,
+		loadedDataMap: {
+			transactionsMap: {},
+			accountsMap: {},
+			accountTransactionsMap: {},
+			positionsMap: {},
+			tokenHoldersMap: {},
+			tokenRolesMap: {},
+			tokenTransfersMap: {},
+			tokensMap: {},
+			tokens: [],
+			accountNftsMap: {},
+		},
+		activeProject: undefined,
+	})),
 	on(ProjectAction.createProjectSuccess, (state, { project }) => ({
 		...state,
 		projectList: [...state.projectList, { id: project.id, name: project.name, chainId: project.chainId }],

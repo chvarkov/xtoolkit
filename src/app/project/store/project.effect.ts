@@ -59,6 +59,17 @@ export class ProjectEffect {
 		)),
 	));
 
+	closeProject$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.closeProject),
+		mergeMap(() => this.dataProvider.closeProject().pipe(
+			switchMap(() => [
+				ProjectAction.closeProjectSuccess(),
+				ProjectAction.loadProjectTabs(),
+			]),
+			catchError(err => of(ProjectAction.closeProjectError({err})))
+		)),
+	));
+
 	loadActiveProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadActiveProject),
 		mergeMap(() => this.dataProvider.getActiveProject().pipe(

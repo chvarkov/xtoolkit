@@ -94,6 +94,12 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(this.get(this.activeProjectKey));
 	}
 
+	closeProject(): Observable<void> {
+		return of(null).pipe(
+			map(() => this.del(this.activeProjectKey)),
+		);
+	}
+
 	openProject(projectId: string): Observable<Project> {
 		return this.getProject(projectId).pipe(
 			map(project => {
@@ -581,6 +587,10 @@ export class LocalstorageDataProvider implements DataProvider {
 
 	private getProjectKey(id: string): string {
 		return `${this.projectKey}.${id}`;
+	}
+
+	private del(key: string): void {
+		return localStorage.removeItem(key);
 	}
 
 	private set<T>(key: string, value: T): void {

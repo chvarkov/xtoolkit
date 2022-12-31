@@ -95,6 +95,8 @@ export interface DataProvider {
 
 	getProjectList(): Observable<ProjectInfo[]>;
 
+	closeProject(): Observable<void>;
+
 	openProject(projectId: string): Observable<Project>;
 
 	getActiveProject(): Observable<Project | undefined>;

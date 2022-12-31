@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { ActionHistorySelector } from '../../store/action-history.selector';
 import { ActionHistoryAction } from '../../store/action-history.action';
 import { ActionHistoryElement } from '../../../core/data-provider/data-provider';
@@ -14,9 +14,11 @@ import { ProjectSelector } from '../../../project/store/project.selector';
 	templateUrl: './action-history-list.component.html',
 	styleUrls: ['./action-history-list.component.scss']
 })
-export class ActionHistoryListComponent implements OnInit {
+export class ActionHistoryListComponent implements OnInit, OnDestroy {
 	actionHistory$: Observable<ActionHistoryElement[]>;
 	activeProjectId$: Observable<string | undefined>;
+
+	sub = new Subscription();
 
 	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
@@ -34,8 +36,13 @@ export class ActionHistoryListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.activeProjectId$.pipe(filter(v => !!v)).subscribe(projectId => this.loadActionHistory(projectId));
+		this.sub.add(
+			this.activeProjectId$.subscribe(projectId => this.loadActionHistory(projectId)),
+		);
+	}
 
+	ngOnDestroy(): void {
+		this.sub.unsubscribe();
 	}
 
 	loadActionHistory(projectId?: string): void {
