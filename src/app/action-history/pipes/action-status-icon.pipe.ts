@@ -11,7 +11,7 @@ export class ActionStatusIconPipe implements PipeTransform {
 			case ActionStatus.Success:
 				return 'check_circle_outline';
 			case ActionStatus.Pending:
-				return 'schedule';
+				return 'cached';
 			case ActionStatus.Fail:
 				return 'error_outline';
 		}
