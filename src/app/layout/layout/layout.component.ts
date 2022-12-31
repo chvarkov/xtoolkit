@@ -31,6 +31,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
 		this.theme$ = this.store.select(LayoutSelector.theme);
 		this.store.dispatch(LayoutAction.loadLayoutState());
 		this.gridTemplateColumns$ = this.store.select(LayoutSelector.panelsWidth).pipe(
+			map(({left, right}) => ({
+				left: Math.max(250, left),
+				right: Math.min(window.innerWidth - 250, right),
+			})),
 			map(({left, right}) => `${left}px calc(100vw - ${right + left}px) ${right}px`),
 		);
 

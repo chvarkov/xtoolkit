@@ -1,4 +1,4 @@
-<div class="token-container" *ngIf="(token$ | async) as token">
+<div class="token-container" *ngIf="(token$ | async) as token; else noToken">
 	<app-toolbar>
 		<div left-side class="toolbar-left-side">
 			<img class="token-img"
@@ -206,3 +206,7 @@
 		</mat-tab>
 	</mat-tab-group>
 </div>
+
+<ng-template #noToken>
+	<app-no-token-placeholder [identifier]="identifier" [network]="(network$ | async) || undefined"></app-no-token-placeholder>
+</ng-template>

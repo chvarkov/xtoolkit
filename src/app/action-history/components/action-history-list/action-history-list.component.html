@@ -1,5 +1,8 @@
-<app-resize-vertical-splitter (dx)="resize.emit($event)" side="right"></app-resize-vertical-splitter>
-<app-toolbar title="Action history">
+<app-resize-vertical-splitter (dx)="resize.emit($event)"
+							  side="right"
+							  [minX]="minResizeMovingX"
+							  [maxX]="maxResizeMoving"></app-resize-vertical-splitter>
+<app-toolbar title="Action history" [borderLeft]="true">
 	<ng-container right-side *ngIf="activeProjectId$ | async as projectId">
 		<app-toolbar-icon-button *ngIf="(actionHistory$ | async)?.length"
 								 appTooltip tooltip="Clear"

@@ -7,6 +7,8 @@ import { ActionStatus } from '../../../core/data-provider/data-provider';
 	styleUrls: ['./action-status-icon.component.scss']
 })
 export class ActionStatusIconComponent implements OnInit {
+	ActionStatus = ActionStatus;
+
 	@Input() status?: ActionStatus;
 
 	constructor() {

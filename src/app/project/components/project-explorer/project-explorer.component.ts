@@ -39,6 +39,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
 
+	get maxResizeMovingX(): number {
+		return window.innerWidth * 0.3;
+	}
+
 	constructor(private readonly store: Store,
 				private readonly actions$: Actions,
 				private readonly clipboard: Clipboard,

@@ -35,6 +35,7 @@ import { SettingsPageComponent } from './components/settings-page/settings-page.
 import { NftListComponent } from './components/common/nft-list/nft-list.component';
 import { NtfElementComponent } from './components/common/nft-list/ntf-element/ntf-element.component';
 import { TransferTokenDialogComponent } from './components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
+import { NoTokenPlaceholderComponent } from './components/token-viewer/no-token-placeholder/no-token-placeholder.component';
 
 @NgModule({
 	declarations: [
@@ -69,6 +70,7 @@ import { TransferTokenDialogComponent } from './components/wallet-viewer/transfe
   NftListComponent,
   NtfElementComponent,
   TransferTokenDialogComponent,
+  NoTokenPlaceholderComponent,
 	],
 	imports: [
 		CommonModule,

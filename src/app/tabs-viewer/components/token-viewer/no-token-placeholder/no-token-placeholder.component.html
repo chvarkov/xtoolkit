@@ -1,0 +1,15 @@
+<div class="placeholder">
+	<span class="section title">No {{identifier}} token</span>
+	<div class="section description">
+		<div class="reasons-sub-title">Potential reasons:</div>
+		<div class="reason">If you have just created a token, please wait a minute and click "Reload".</div>
+		<ng-container *ngIf="network && (network.chainId | isNotMainnetNetwork)">
+			<div class="reason">If network was reset then create token again.</div>
+		</ng-container>
+		<div class="reason">If you updated project network but token was created on another one.</div>
+	</div>
+
+	<div class="section">
+		<button class="reload-btn" mat-flat-button (click)="reload.emit()">Reload</button>
+	</div>
+</div>

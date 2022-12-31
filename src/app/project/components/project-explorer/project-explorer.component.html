@@ -1,5 +1,9 @@
-<app-resize-vertical-splitter side="left" (dx)="resize.emit($event)"></app-resize-vertical-splitter>
-<app-toolbar title="Projects">
+<app-resize-vertical-splitter side="left"
+							  (dx)="resize.emit($event)"
+							  [minX]="250"
+							  [maxX]="maxResizeMovingX">
+</app-resize-vertical-splitter>
+<app-toolbar title="Projects" [borderRight]="true">
 	<ng-container left-side *ngIf="projectsList$ | async as projects">
 		<ng-container *ngIf="projects.length">
 			<mat-icon [matMenuTriggerFor]="projectMenu"
