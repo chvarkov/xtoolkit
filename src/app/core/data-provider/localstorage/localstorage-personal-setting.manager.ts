@@ -46,9 +46,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs, selectedIndex }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				tabs = tabs || [];
 
@@ -77,9 +75,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs, selectedIndex }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				tabs = tabs || [];
 
@@ -118,9 +114,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs, selectedIndex }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				tabs = tabs || [];
 
@@ -143,9 +137,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs, selectedIndex }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				if (!tabs?.length) {
 					return { tabs: [] };
@@ -191,9 +183,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				if (!tabs?.length) {
 					return { tabs: [] };
@@ -222,9 +212,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs, selectedIndex }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				if (!tabs?.length) {
 					return {tabs: []};
@@ -258,9 +246,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
 			map(([projectId, { tabs, selectedIndex }]) => {
-				if (!projectId) {
-					throw new Error('Active project not found.');
-				}
+				projectId = projectId || SELF_PROJECT_ID;
 
 				if (!tabs?.length) {
 					return { tabs: [] };
