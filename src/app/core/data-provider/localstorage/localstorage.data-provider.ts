@@ -13,6 +13,7 @@ import { INetworkEnvironment } from '../../elrond/interfaces/network-environment
 import { map } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { AbiJson } from '../../elrond/builders/sc.builder';
+import { SELF_PROJECT_ID } from '../personal-settings.manager';
 
 @Injectable({providedIn: 'root'})
 export class LocalstorageDataProvider implements DataProvider {
@@ -90,8 +91,14 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	getActiveProjectId(): Observable<string | undefined> {
-		return of(this.get(this.activeProjectKey));
+	getActiveProjectId(): Observable<string> {
+		return of(this.get(this.activeProjectKey) || SELF_PROJECT_ID);
+	}
+
+	closeProject(): Observable<void> {
+		return of(null).pipe(
+			map(() => this.set(this.activeProjectKey, SELF_PROJECT_ID)),
+		);
 	}
 
 	openProject(projectId: string): Observable<Project> {

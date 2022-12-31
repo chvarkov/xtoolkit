@@ -1,0 +1,42 @@
+.container {
+	width: 100%;
+}
+
+.item {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14px;
+	padding: 12px 12px 12px 6px;
+	border-bottom: solid 1px var(--border-low-color);
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--high-bg);
+	}
+}
+
+.name {
+	color: var(--text-accent-color);
+}
+
+.network {
+	color: var(--low-text);
+}
+
+.create-wrapper {
+	width: 100%;
+	padding: 16px;
+	box-sizing: border-box;
+}
+
+.create-btn {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+
+	border: solid 1px var(--border-color);
+	color: var(--text-color);
+	background: none;
+}

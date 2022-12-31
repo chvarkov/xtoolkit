@@ -4,35 +4,33 @@
 							  [maxX]="maxResizeMovingX">
 </app-resize-vertical-splitter>
 <app-toolbar title="Projects" [borderRight]="true">
-	<ng-container left-side *ngIf="projectsList$ | async as projects">
-		<ng-container *ngIf="projects.length">
-			<mat-icon [matMenuTriggerFor]="projectMenu"
-					  appTooltip tooltip="Show projects"
-					  class="project-list-icon">arrow_drop_down</mat-icon>
-			<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
-				<button mat-menu-item *ngFor="let project of projects" (click)="openProject(project.id)">
-					<mat-icon>folder</mat-icon>
-					<span>{{project.name}} [{{project.chainId | networkName | async}}]</span>
-				</button>
-			</mat-menu>
-		</ng-container>
+	<ng-container left-side *ngIf="activeProject$ | async as project">
+		<mat-icon [matMenuTriggerFor]="projectMenu"
+				  appTooltip tooltip="Show projects"
+				  class="project-list-icon">arrow_drop_down</mat-icon>
+		<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
+			<button mat-menu-item *ngFor="let project of (projectsList$ | async) || []" (click)="openProject(project.id)">
+				<mat-icon>folder</mat-icon>
+				<span>{{project.name}} [{{project.chainId | networkName | async}}]</span>
+			</button>
+		</mat-menu>
 	</ng-container>
 
 	<ng-container right-side *ngIf="activeProject$ | async as project">
 		<app-toolbar-icon-button  appTooltip tooltip="Select opened element" (click)="showCurrentTab(project.id)">
 			my_location
 		</app-toolbar-icon-button>
+		<app-toolbar-icon-button appTooltip tooltip="Create" (click)="createProject()">
+			add
+		</app-toolbar-icon-button>
+		<app-toolbar-icon-button appTooltip tooltip="Refresh" (click)="loadProjects()">
+			refresh
+		</app-toolbar-icon-button>
 	</ng-container>
-	<app-toolbar-icon-button right-side appTooltip tooltip="Create" (click)="createProject()">
-		add
-	</app-toolbar-icon-button>
-	<app-toolbar-icon-button right-side appTooltip tooltip="Refresh" (click)="loadProjects()">
-		refresh
-	</app-toolbar-icon-button>
 </app-toolbar>
 
 <div class="project-explorer">
-	<ng-container *ngIf="activeProject$ | async as project">
+	<ng-container *ngIf="activeProject$ | async as project; else projectSelectList">
 		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
 							 [bold]="true"
 							 [expandable]="true"
@@ -54,6 +52,10 @@
 					<button mat-menu-item (click)="updateProjectNetwork(project.id)">
 						<mat-icon>public</mat-icon>
 						<span>Change network</span>
+					</button>
+					<button mat-menu-item (click)="closeProject()">
+						<mat-icon>close</mat-icon>
+						<span>Close</span>
 					</button>
 					<button mat-menu-item (click)="deleteProject(project.id)">
 						<mat-icon>delete</mat-icon>
@@ -282,3 +284,9 @@
 		</app-project-element>
 	</ng-container>
 </div>
+
+<ng-template #projectSelectList>
+	<app-project-list [projects]="(projectsList$ | async) || []"
+					  (create)="createProject()"
+					  (open)="openProject($event)"></app-project-list>
+</ng-template>

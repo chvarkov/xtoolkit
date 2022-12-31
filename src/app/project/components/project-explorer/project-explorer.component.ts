@@ -171,6 +171,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.updateProjectNetwork({projectId}));
 	}
 
+	closeProject(): void {
+		this.store.dispatch(ProjectAction.closeProject());
+	}
+
 	deleteProject(projectId: string): void {
 		this.store.dispatch(ProjectAction.deleteProject({projectId}));
 	}

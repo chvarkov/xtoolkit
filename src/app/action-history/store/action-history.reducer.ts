@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ActionHistoryAction } from './action-history.action';
 import { ActionHistoryElement } from '../../core/data-provider/data-provider';
+import { ProjectAction } from '../../project/store/project.action';
 
 export interface ITransactionState {
 	list: ActionHistoryElement[];
@@ -19,7 +20,7 @@ export const reducer = createReducer(
 		...state,
 		list,
 	})),
-	on(ActionHistoryAction.clearActionHistory, (state) => ({
+	on(ActionHistoryAction.clearActionHistory, ProjectAction.closeProjectSuccess, (state) => ({
 		...state,
 		list: [],
 	})),

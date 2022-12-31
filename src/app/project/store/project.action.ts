@@ -18,6 +18,10 @@ export class ProjectAction {
 	static readonly openProjectSuccess = createAction(`[${ProjectAction.name}] open project [OK]`, props<{project: Project}>());
 	static readonly openProjectError = createAction(`[${ProjectAction.name}] open project [ERR]`, props<{err: Error}>());
 
+	static readonly closeProject = createAction(`[${ProjectAction.name}] close project [...]`);
+	static readonly closeProjectSuccess = createAction(`[${ProjectAction.name}] close project [OK]`);
+	static readonly closeProjectError = createAction(`[${ProjectAction.name}] close project [ERR]`, props<{err: Error}>());
+
 	static readonly loadProjectList = createAction(`[${ProjectAction.name}] load project list [...]`);
 	static readonly loadProjectListSuccess = createAction(`[${ProjectAction.name}] load project list [OK]`, props<{data: ProjectInfo[]}>());
 	static readonly loadProjectListError = createAction(`[${ProjectAction.name}] load project list [ERR]`, props<{err: Error}>());
