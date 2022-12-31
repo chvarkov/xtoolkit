@@ -1,6 +1,6 @@
 .placeholder {
 	width: 100%;
-	height: calc(100vh - var(--header-height) - var(--footer-height) - var(--tab-height));
+	height: calc(100vh - var(--header-height) - var(--footer-height) - var(--toolbar-height));
 	display: flex;
 	flex: 1;
 	flex-direction: column;
