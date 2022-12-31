@@ -1,0 +1,14 @@
+<div class="container">
+	<div mat-ripple class="item" *ngFor="let proj of projects" (click)="open.emit(proj.id)">
+		<div class="name">
+			{{proj.name}}
+		</div>
+		<div class="network">
+			{{proj.chainId | networkName | async}}
+		</div>
+	</div>
+
+	<div class="create-wrapper">
+		<button mat-raised-button class="create-btn" (click)="create.emit()"> CREATE PROJECT</button>
+	</div>
+</div>

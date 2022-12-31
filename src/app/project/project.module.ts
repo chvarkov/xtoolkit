@@ -28,6 +28,7 @@ import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/fr
 import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
 import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
 import { TransferOwnershipDialogComponent } from './components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
+import { ProjectListComponent } from './components/project-list/project-list.component';
 
 @NgModule({
 	declarations: [
@@ -44,12 +45,13 @@ import { TransferOwnershipDialogComponent } from './components/dialogs/estd/tran
 		AddSmartContractDialogComponent,
 		AddProjectAddressDialogComponent,
 		IsExpandedExplorerNodePipe,
-  MintBurnTokenDialogComponent,
-  PauseTokenDialogComponent,
-  FreezeUnFreezeTokenDialogComponent,
-  WipeTokenDialogComponent,
-  SpecialRolesTokenDialogComponent,
-  TransferOwnershipDialogComponent,
+		MintBurnTokenDialogComponent,
+		PauseTokenDialogComponent,
+		FreezeUnFreezeTokenDialogComponent,
+		WipeTokenDialogComponent,
+		SpecialRolesTokenDialogComponent,
+		TransferOwnershipDialogComponent,
+		ProjectListComponent,
 	],
 	imports: [
 		CommonModule,

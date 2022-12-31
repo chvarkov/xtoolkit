@@ -32,7 +32,7 @@
 </app-toolbar>
 
 <div class="project-explorer">
-	<ng-container *ngIf="activeProject$ | async as project">
+	<ng-container *ngIf="activeProject$ | async as project; else projectSelectList">
 		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
 							 [bold]="true"
 							 [expandable]="true"
@@ -286,3 +286,9 @@
 		</app-project-element>
 	</ng-container>
 </div>
+
+<ng-template #projectSelectList>
+	<app-project-list [projects]="(projectsList$ | async) || []"
+					  (create)="createProject()"
+					  (open)="openProject($event)"></app-project-list>
+</ng-template>
