@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProjectTabsModule } from './tabs-viewer/modules/project-tabs/project-tabs.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppInitializer } from './core/services/app-initializer';
+import { SecurityModule } from './security/security.module';
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { AppInitializer } from './core/services/app-initializer';
         AppRoutingModule,
         ProjectModule,
         CoreModule,
+		SecurityModule,
         StoreModule.forRoot({}),
         EffectsModule.forRoot(),
         StoreDevtoolsModule.instrument({

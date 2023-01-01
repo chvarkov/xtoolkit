@@ -1,0 +1,33 @@
+.title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 8px;
+}
+
+.table {
+	width: 100%;
+	padding: 6px;
+	border-spacing: 0;
+	font-size: 0.9em;
+
+	tr {
+		height: 40px;
+	}
+
+	.row {
+		border-bottom: solid 1px var(--border-low-color);
+	}
+}
+
+.name {
+	width: 200px;
+}
+
+.url-cell {
+	flex: 1
+}
+
+.options {
+	width: 40px;
+}

@@ -208,5 +208,8 @@
 </div>
 
 <ng-template #noToken>
-	<app-no-token-placeholder [identifier]="identifier" [network]="(network$ | async) || undefined"></app-no-token-placeholder>
+	<app-no-token-placeholder [identifier]="identifier"
+							  [network]="(network$ | async) || undefined"
+							  (reload)="loadData()">
+	</app-no-token-placeholder>
 </ng-template>

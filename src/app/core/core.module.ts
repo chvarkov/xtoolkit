@@ -16,7 +16,7 @@ import { AddressComponent } from './ui/address/address.component';
 import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 import { AddressInputComponent } from './ui/address-input/address-input.component';
 import { ESDTInteractor } from './elrond/services/estd-intercator';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.component';
 import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
 import { TooltipComponent } from './ui/tooltip/tooltip.component';
@@ -32,6 +32,8 @@ import { ModalDialogHeaderComponent } from './ui/modal-dialog-header/modal-dialo
 import { TokenIdentifierSymbolPipe } from './pipes/token-identifier-symbol.pipe';
 import { IsNotMainnetNetworkPipe } from './pipes/is-not-mainnet-network.pipe';
 import { NftTypePipe } from './pipes/nft-type.pipe';
+import { LocalstorageSecretManager } from './data-provider/localstorage/localstorage-secret.manager';
+import { SECRET_MANAGER } from './data-provider/secret.manager';
 
 @NgModule({
 	declarations: [
@@ -56,13 +58,14 @@ import { NftTypePipe } from './pipes/nft-type.pipe';
 		ResizeVerticalSplitterComponent,
 		ModalDialogHeaderComponent,
 		TokenIdentifierSymbolPipe,
-  IsNotMainnetNetworkPipe,
-  NftTypePipe,
+		IsNotMainnetNetworkPipe,
+		NftTypePipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
 		ElrondModule,
 		FormsModule,
+		ReactiveFormsModule,
 		DragDropModule,
 		MaterialModule,
 	],
@@ -75,14 +78,20 @@ import { NftTypePipe } from './pipes/nft-type.pipe';
 			provide: PERSONAL_SETTINGS_MANAGER,
 			useExisting: LocalstoragePersonalSettingManager,
 		},
+		{
+			provide: SECRET_MANAGER,
+			useExisting: LocalstorageSecretManager,
+		},
 		LocalstorageDataProvider,
 		LocalstoragePersonalSettingManager,
+		LocalstorageSecretManager,
 		ESDTInteractor,
 		AppInitializer,
 	],
 	exports: [
 		ElrondModule,
 		MaterialModule,
+		ReactiveFormsModule,
 		ToolbarComponent,
 		TabsComponent,
 		TabComponent,
