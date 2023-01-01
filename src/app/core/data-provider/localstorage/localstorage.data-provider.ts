@@ -14,17 +14,17 @@ import { map } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { AbiJson } from '../../elrond/builders/sc.builder';
 import { SELF_PROJECT_ID } from '../personal-settings.manager';
+import { GLOBAL_PREFIX } from './constants';
 
 @Injectable({providedIn: 'root'})
 export class LocalstorageDataProvider implements DataProvider {
-	private readonly globalPrefix = 'elrond-sc';
-	private readonly networksKey = `${this.globalPrefix}.networks`;
-	private readonly activeProjectKey = `${this.globalPrefix}.active-project`;
-	private readonly projectsKey = `${this.globalPrefix}.projects`;
-	private readonly projectListKey = `${this.globalPrefix}.project-list`;
-	private readonly projectKey = `${this.globalPrefix}.project`;
-	private readonly actionHistoryKey = `${this.globalPrefix}.action-history`;
-	private readonly tokenIssueWaitListKey = `${this.globalPrefix}.token-issue-wait-list`;
+	private readonly networksKey = `${GLOBAL_PREFIX}.networks`;
+	private readonly activeProjectKey = `${GLOBAL_PREFIX}.active-project`;
+	private readonly projectsKey = `${GLOBAL_PREFIX}.projects`;
+	private readonly projectListKey = `${GLOBAL_PREFIX}.project-list`;
+	private readonly projectKey = `${GLOBAL_PREFIX}.project`;
+	private readonly actionHistoryKey = `${GLOBAL_PREFIX}.action-history`;
+	private readonly tokenIssueWaitListKey = `${GLOBAL_PREFIX}.token-issue-wait-list`;
 
 	getNetworks(): Observable<INetworkEnvironment[]> {
 		const networks: INetworkEnvironment[] | null = this.get(this.networksKey);

@@ -15,14 +15,14 @@ import { map } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { DATA_PROVIDER, DataProvider, Project } from '../data-provider';
+import { GLOBAL_PREFIX } from './constants';
 
 @Injectable({providedIn: 'root'})
 export class LocalstoragePersonalSettingManager implements PersonalSettingsManager {
-	private readonly globalPrefix = 'elrond-sc';
-	private readonly openedTabsKey = `${this.globalPrefix}.opened_tabs`;
-	private readonly currentTabIndexKey = `${this.globalPrefix}.current_tab_index`;
-	private readonly layoutStateKey = `${this.globalPrefix}.layout_state`;
-	private readonly projectExplorerStateKey = `${this.globalPrefix}.project_explorer_state`;
+	private readonly openedTabsKey = `${GLOBAL_PREFIX}.opened_tabs`;
+	private readonly currentTabIndexKey = `${GLOBAL_PREFIX}.current_tab_index`;
+	private readonly layoutStateKey = `${GLOBAL_PREFIX}.layout_state`;
+	private readonly projectExplorerStateKey = `${GLOBAL_PREFIX}.project_explorer_state`;
 
 	private readonly projectComponentGroups: ProjectComponentType[] = ['abi', 'sc', 'token', 'nft', 'wallet'];
 
