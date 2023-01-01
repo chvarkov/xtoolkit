@@ -36,6 +36,10 @@ import { NftListComponent } from './components/common/nft-list/nft-list.componen
 import { NtfElementComponent } from './components/common/nft-list/ntf-element/ntf-element.component';
 import { TransferTokenDialogComponent } from './components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
 import { NoTokenPlaceholderComponent } from './components/token-viewer/no-token-placeholder/no-token-placeholder.component';
+import { SettingsNetworksTabComponent } from './components/settings-page/components/settings-networks-tab/settings-networks-tab.component';
+import { SettingsSecurityTabComponent } from './components/settings-page/components/settings-security-tab/settings-security-tab.component';
+import { SecretsLockedStatusInfoPipe } from './components/settings-page/pipes/secrets-locked-status-info.pipe';
+import { PasswordStatusInfoPipe } from './components/settings-page/pipes/password-status-info.pipe';
 
 @NgModule({
 	declarations: [
@@ -71,6 +75,10 @@ import { NoTokenPlaceholderComponent } from './components/token-viewer/no-token-
   NtfElementComponent,
   TransferTokenDialogComponent,
   NoTokenPlaceholderComponent,
+  SettingsNetworksTabComponent,
+  SettingsSecurityTabComponent,
+  SecretsLockedStatusInfoPipe,
+  PasswordStatusInfoPipe,
 	],
 	imports: [
 		CommonModule,

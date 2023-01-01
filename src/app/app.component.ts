@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 import { TokenIssueAwaiter } from './project/services/token-issue.awaiter';
 import { LayoutSelector } from './layout/store/layout.selector';
 import { LayoutAction } from './layout/store/layout.action';
+import { SecurityAction } from './security/store/security.action';
+import { SecuritySelector } from './security/store/security.selector';
 
 @Component({
 	selector: 'app-root',
@@ -18,6 +20,10 @@ import { LayoutAction } from './layout/store/layout.action';
 })
 export class AppComponent implements OnInit, OnDestroy {
 	theme$: Observable<Theme>;
+
+	isPasswordSet$: Observable<boolean>;
+
+	isUnlockedWalletAccess$: Observable<boolean>;
 
 	openedTabs$: Observable<OpenedProjectTab[]>;
 
@@ -30,6 +36,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 		this.isVisibleLoadingScreen$ = this.store.select(LayoutSelector.isLoadingScreenVisible);
+		this.isPasswordSet$ = this.store.select(SecuritySelector.isPasswordSet);
+		this.isUnlockedWalletAccess$ = this.store.select(SecuritySelector.isSecretsUnlocked);
 		this.theme$ = this.store.select(LayoutSelector.theme);
 	}
 
@@ -41,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this.tokenIssueAwaiter.enable();
 
+		this.store.dispatch(SecurityAction.loadSecurityState());
 		this.store.dispatch(ProjectAction.loadActiveProject());
 
 		this.store.dispatch(ProjectAction.loadTokenIssueWaitList());
@@ -97,6 +106,14 @@ export class AppComponent implements OnInit, OnDestroy {
 			componentType: 'settings',
 			componentId: SELF_PROJECT_ID,
 		}));
+	}
+
+	putPassword(): void {
+		this.store.dispatch(SecurityAction.putPassword());
+	}
+
+	lockWalletAccess(): void {
+		this.store.dispatch(SecurityAction.clearPasswordHash());
 	}
 
 	toggleTheme(): void {

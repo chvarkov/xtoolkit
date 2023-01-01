@@ -1,0 +1,74 @@
+.container {
+	padding: 8px;
+	display: flex;
+	flex-direction: row;
+}
+
+.section {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+.title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 8px;
+}
+
+.form {
+	width: 350px
+}
+
+.section-name {
+	font-size: 14px;
+	padding: 6px 0;
+	border-bottom: solid 1px var(--border-low-color);
+}
+
+.submit-button {
+	border: solid 1px var(--border-color);
+	background: none;
+}
+
+.actions {
+	padding: 8px 0;
+}
+
+.status-label {
+	margin: 6px;
+	border: solid 2px var(--static-white);
+	font-weight: 600;
+	font-size: 13px;
+	padding: 1px 8px;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	mat-icon {
+		font-size: 15px;
+		margin-top: 8px;
+	}
+
+	.text {
+		display: flex;
+		margin-top: -2px;
+	}
+}
+
+.status-good {
+	color: var(--static-green);
+	border-color: var(--static-green);
+}
+
+.status-warn {
+	color: var(--static-yellow);
+	border-color: var(--static-yellow);
+}
+
+.status-bad {
+	color: var(--static-red);
+	border-color: var(--static-red);
+}

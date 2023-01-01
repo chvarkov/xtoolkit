@@ -1,0 +1,66 @@
+<app-toolbar>
+	<div left-side class="title">Security</div>
+	<ng-container right-side>
+		<div class="status-label"
+			 *ngIf="(isSecretsLocked$ | async) | secretsLockedStatusInfo as info"
+			 appTooltip [tooltip]="info.tooltip"
+			 [ngClass]="info.value ? 'status-warn' : 'status-good'">
+			<mat-icon>{{info.icon}}</mat-icon>
+			<div class="text">{{info.label}}</div>
+		</div>
+
+		<div class="status-label"
+			 *ngIf="(isPasswordSet$ | async) | passwordStatusInfo as info"
+			 appTooltip [tooltip]="info.tooltip"
+			 [ngClass]="info.value ? 'status-good' : 'status-bad'">
+			<mat-icon>{{info.icon}}</mat-icon>
+			<div class="text">{{info.label}}</div>
+		</div>
+	</ng-container>
+</app-toolbar>
+<div class="page-tab-content container">
+	<div class="section">
+		<div class="form" [formGroup]="changePasswordForm" *ngIf="isPasswordSet$ | async; else setPasswordTemplate">
+			<div class="section-name">Change password</div>
+			<app-form-field title="Current password">
+				<input matInput formControlName="currentPassword" type="password">
+			</app-form-field>
+			<app-form-field title="New password">
+				<input matInput formControlName="password" type="password">
+			</app-form-field>
+			<app-form-field title="Repeat new password">
+				<input matInput formControlName="confirmPassword" type="password">
+			</app-form-field>
+
+			<div class="actions">
+				<button mat-flat-button
+						class="submit-button"
+						[disabled]="!changePasswordForm.dirty || !changePasswordForm.valid"
+						(click)="changePassword()">
+					Change password
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<ng-template #setPasswordTemplate>
+	<div class="form" [formGroup]="setPasswordForm">
+		<div class="section-name">Set password</div>
+		<app-form-field title="Password">
+			<input matInput formControlName="password" type="password">
+		</app-form-field>
+		<app-form-field title="Repeat password">
+			<input matInput formControlName="confirmPassword" type="password">
+		</app-form-field>
+
+		<div class="actions">
+			<button mat-flat-button
+					class="submit-button"
+					[disabled]="!setPasswordForm.dirty || !setPasswordForm.valid"
+					(click)="setPassword()">
+				Set password
+			</button>
+		</div>
+	</div>
+</ng-template>

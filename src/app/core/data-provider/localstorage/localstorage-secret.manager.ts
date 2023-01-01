@@ -1,11 +1,13 @@
 import { SecretManager } from '../secret.manager';
 import { Injectable } from '@angular/core';
-import { from, Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { GLOBAL_PREFIX } from './constants';
+import * as sha256 from 'crypto-js/sha256';
 import * as md5 from 'crypto-js/md5';
 import * as aes from 'crypto-js/aes';
 import * as encUtf8 from 'crypto-js/enc-utf8';
+import * as encHex from 'crypto-js/enc-hex';
 
 @Injectable({providedIn: 'root'})
 export class LocalstorageSecretManager implements SecretManager {
@@ -19,13 +21,7 @@ export class LocalstorageSecretManager implements SecretManager {
 	}
 
 	encodePassword(password: string): Observable<string> {
-		const passwordBuffer = new TextEncoder().encode(`${this.salt}:${password}`);
-
-		const hashPromise = crypto.subtle.digest('SHA-256', passwordBuffer)
-			.then(array => Buffer.from(array))
-			.then(hashBuffer => hashBuffer.toString('hex'));
-
-		return from(hashPromise);
+		return of(sha256(`${this.salt}:${password}`).toString(encHex));
 	}
 
 	setPassword(password: string, previousPassword?: string): Observable<string> {
@@ -33,6 +29,7 @@ export class LocalstorageSecretManager implements SecretManager {
 			switchMap(() => this.isPasswordInitialized().pipe(
 				switchMap(isInitialized => {
 					if (!previousPassword && isInitialized) {
+						console.log('Previous password is not provided.');
 						return throwError(new Error('Previous password is not provided.'));
 					}
 
@@ -41,7 +38,7 @@ export class LocalstorageSecretManager implements SecretManager {
 					}
 
 					return this.encodePassword(previousPassword).pipe(
-						switchMap(prevPasswordHash => this.assetValidPasswordHash(prevPasswordHash))
+						switchMap(prevPasswordHash => this.assertValidPasswordHash(prevPasswordHash))
 					);
 				}),
 			)),
@@ -71,7 +68,13 @@ export class LocalstorageSecretManager implements SecretManager {
 					return throwError('Password is not using.');
 				}
 
-				return of(this.decrypt(passwordHash, message) === this.verificationMessage);
+				try {
+					const isValid = this.decrypt(passwordHash, message) === this.verificationMessage;
+
+					return of(isValid);
+				} catch (e) {
+					return of(false);
+				}
 			}),
 		);
 	}
@@ -123,7 +126,7 @@ export class LocalstorageSecretManager implements SecretManager {
 	}
 
 	deleteWalletSecretsByProjectId(passwordHash: string, projectId: string): Observable<void> {
-		return this.assetValidPasswordHash(passwordHash).pipe(
+		return this.assertValidPasswordHash(passwordHash).pipe(
 			switchMap(() => {
 				try {
 					localStorage.removeItem(this.getProjectWalletsKey(projectId));
@@ -137,7 +140,7 @@ export class LocalstorageSecretManager implements SecretManager {
 	}
 
 	private setWalletSecretMap(passwordHash: string, projectId: string, map: Record<string, string>): Observable<void> {
-		return this.assetValidPasswordHash(passwordHash).pipe(
+		return this.assertValidPasswordHash(passwordHash).pipe(
 			switchMap(() => {
 				try {
 					const encryptedJson = this.encryptMap(passwordHash, projectId, map);
@@ -153,7 +156,7 @@ export class LocalstorageSecretManager implements SecretManager {
 	}
 
 	private getWalletSecretMap(passwordHash: string, projectId: string): Observable<Record<string, string>> {
-		return this.assetValidPasswordHash(passwordHash).pipe(
+		return this.assertValidPasswordHash(passwordHash).pipe(
 			switchMap(() => {
 				try {
 					const encryptedJson = this.get(this.getProjectWalletsKey(projectId));
@@ -170,11 +173,11 @@ export class LocalstorageSecretManager implements SecretManager {
 		);
 	}
 
-	private assetValidPasswordHash(passwordHash: string): Observable<void> {
+	private assertValidPasswordHash(passwordHash: string): Observable<void> {
 		return this.isValidPasswordHash(passwordHash).pipe(
 			switchMap(isValid => {
-				if (isValid) {
-					return throwError(new Error('Password '))
+				if (!isValid) {
+					return throwError(new Error('Password is invalid'))
 				}
 
 				return of(undefined);
