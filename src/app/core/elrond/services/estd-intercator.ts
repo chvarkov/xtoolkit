@@ -93,9 +93,10 @@ export class ESDTInteractor {
 		});
 	}
 
-	async issueFungibleToken(network: INetworkEnvironment,
-							 wallet: ProjectWallet,
-							 options: IIssueTokenOptions): Promise<string> {
+	issueFungibleToken(projectId: string,
+					   network: INetworkEnvironment,
+					   wallet: ProjectWallet,
+					   options: IIssueTokenOptions): Observable<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.name),
 			BytesValue.fromUTF8(options.ticker),
@@ -117,19 +118,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 60000000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(60_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	mint(network: INetworkEnvironment,
+	mint(projectId: string,
+		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
-		 options: IMintBurnTokenOptions): Promise<string> {
+		 options: IMintBurnTokenOptions): Observable<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new BigUIntValue(new BigNumber(options.supply)),
@@ -142,19 +139,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 3_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(3_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	burn(network: INetworkEnvironment,
+	burn(projectId: string,
+		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
-		 options: IMintBurnTokenOptions): Promise<string> {
+		 options: IMintBurnTokenOptions): Observable<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new BigUIntValue(new BigNumber(options.supply)),
@@ -166,14 +159,9 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 3_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(3_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
 	pause(projectId: string,
@@ -214,9 +202,10 @@ export class ESDTInteractor {
 		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	freeze(network: INetworkEnvironment,
+	freeze(projectId: string,
+		   network: INetworkEnvironment,
 		   wallet: ProjectWallet,
-		   options: IFreezeUnFreezeOptions): Promise<string> {
+		   options: IFreezeUnFreezeOptions): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new AddressValue(new Address(options.address)),
@@ -228,19 +217,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	unFreeze(network: INetworkEnvironment,
+	unFreeze(projectId: string,
+			 network: INetworkEnvironment,
 			 wallet: ProjectWallet,
-			 options: IFreezeUnFreezeOptions): Promise<string> {
+			 options: IFreezeUnFreezeOptions): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new AddressValue(new Address(options.address)),
@@ -252,19 +237,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	wipe(network: INetworkEnvironment,
+	wipe(projectId: string,
+		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
-		 options: IWipeOptions): Promise<string> {
+		 options: IWipeOptions): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new AddressValue(new Address(options.address)),
@@ -276,19 +257,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	setSpecialRoles(network: INetworkEnvironment,
+	setSpecialRoles(projectId: string,
+					network: INetworkEnvironment,
 		 			wallet: ProjectWallet,
-		 			options: ISetSpecialRolesOptions): Promise<string> {
+		 			options: ISetSpecialRolesOptions): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new AddressValue(new Address(options.address)),
@@ -308,19 +285,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	transferOwnership(network: INetworkEnvironment,
+	transferOwnership(projectId: string,
+					  network: INetworkEnvironment,
 					  wallet: ProjectWallet,
-					  options: ITransferOwnershipOptions): Promise<string> {
+					  options: ITransferOwnershipOptions): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
 			new AddressValue(new Address(options.address)),
@@ -332,13 +305,8 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 }

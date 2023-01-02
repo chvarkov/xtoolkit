@@ -56,9 +56,7 @@ export class EstdService {
 					   network: INetworkEnvironment,
 					   wallet: ProjectWallet,
 					   options: IIssueTokenOptions): Observable<void> {
-		const txHash$ = from(this.estdInteractor.issueFungibleToken(network, wallet, options));
-
-		return txHash$.pipe(
+		return this.estdInteractor.issueFungibleToken(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -91,9 +89,7 @@ export class EstdService {
 		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.mint(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.mint(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -117,9 +113,7 @@ export class EstdService {
 		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.burn(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.burn(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -192,9 +186,7 @@ export class EstdService {
 		   network: INetworkEnvironment,
 		   wallet: ProjectWallet,
 		   options: IFreezeUnFreezeOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.freeze(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.freeze(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -218,9 +210,7 @@ export class EstdService {
 			 network: INetworkEnvironment,
 			 wallet: ProjectWallet,
 			 options: IFreezeUnFreezeOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.unFreeze(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.unFreeze(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -244,9 +234,7 @@ export class EstdService {
 		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
 		 options: IWipeOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.wipe(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.wipe(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -270,9 +258,7 @@ export class EstdService {
 		 			network: INetworkEnvironment,
 		 			wallet: ProjectWallet,
 		 			options: ISetSpecialRolesOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.setSpecialRoles(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.setSpecialRoles(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -296,9 +282,7 @@ export class EstdService {
 					  network: INetworkEnvironment,
 					  wallet: ProjectWallet,
 					  options: ITransferOwnershipOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.transferOwnership(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.transferOwnership(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
