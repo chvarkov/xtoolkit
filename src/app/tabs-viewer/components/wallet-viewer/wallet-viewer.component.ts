@@ -7,7 +7,7 @@ import { ProjectSelector } from '../../../project/store/project.selector';
 import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-transaction';
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 import { filter, map } from 'rxjs/operators';
-import { GeneratedWallet } from '../../../core/data-provider/data-provider';
+import { ProjectWallet } from '../../../core/data-provider/data-provider';
 import { Account, Address } from '@elrondnetwork/erdjs/out';
 import { FaucetService } from '../../../core/services/faucet.service';
 import { INft } from '../../../core/elrond/services/nft';
@@ -27,7 +27,7 @@ export class WalletViewerComponent implements OnInit {
 	nfts$?: Observable<INft[]>;
 	native$?: Observable<string>;
 	chainId$?: Observable<string>;
-	wallet$?: Observable<GeneratedWallet | undefined>;
+	wallet$?: Observable<ProjectWallet | undefined>;
 
 	constructor(private readonly store: Store,
 				public readonly faucet: FaucetService) {
@@ -63,11 +63,11 @@ export class WalletViewerComponent implements OnInit {
 		this.store.dispatch(ProjectAction.renameWallet({projectId: this.projectId, address: this.address, name}));
 	}
 
-	exportMnemonic(wallet: GeneratedWallet): void {
+	exportMnemonic(wallet: ProjectWallet): void {
 		this.store.dispatch(ProjectAction.exportMnemonic({wallet}));
 	}
 
-	deleteWallet(wallet: GeneratedWallet): void {
+	deleteWallet(wallet: ProjectWallet): void {
 		this.store.dispatch(ProjectAction.deleteWallet({projectId: this.projectId, address: wallet.address}));
 	}
 

@@ -12,6 +12,8 @@ import { LayoutSelector } from './layout/store/layout.selector';
 import { LayoutAction } from './layout/store/layout.action';
 import { SecurityAction } from './security/store/security.action';
 import { SecuritySelector } from './security/store/security.selector';
+import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
+import * as bip39 from 'bip39';
 
 @Component({
 	selector: 'app-root',
@@ -42,6 +44,19 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	async ngOnInit(): Promise<void> {
+		const m1 = Mnemonic.generate();
+
+		console.log('m1 ' + m1.toString());
+
+		const s1 = m1.deriveKey().hex();
+
+		console.log('secret ' + s1);
+
+		const s2 = bip39.entropyToMnemonic(m1.deriveKey().hex());
+
+		console.log('m2 ' + s2);
+
+
 		this.store.dispatch(NetworkAction.loadNetworks());
 		setTimeout(() => {
 			this.store.dispatch(ProjectAction.loadProjectTabs());

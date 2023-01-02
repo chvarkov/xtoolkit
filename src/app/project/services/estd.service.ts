@@ -10,7 +10,7 @@ import {
 	ActionHistoryElement,
 	ActionStatus,
 	ActionType,
-	GeneratedWallet
+	ProjectWallet
 } from '../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../store/project.action';
@@ -30,9 +30,7 @@ export class EstdService {
 	transferFunds(projectId: string,
 				  network: INetworkEnvironment,
 				  options: ITokenTransferOptions): Observable<void> {
-		const txHash$ = from(this.walletManager.transferFunds(network, options.wallet, options));
-
-		return txHash$.pipe(
+		return this.walletManager.transferFunds(projectId, network, options.wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -54,11 +52,9 @@ export class EstdService {
 
 	issueFungibleToken(projectId: string,
 					   network: INetworkEnvironment,
-					   wallet: GeneratedWallet,
+					   wallet: ProjectWallet,
 					   options: IIssueTokenOptions): Observable<void> {
-		const txHash$ = from(this.estdInteractor.issueFungibleToken(network, wallet, options));
-
-		return txHash$.pipe(
+		return this.estdInteractor.issueFungibleToken(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -89,11 +85,9 @@ export class EstdService {
 
 	mint(projectId: string,
 		 network: INetworkEnvironment,
-		 wallet: GeneratedWallet,
+		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.mint(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.mint(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -115,11 +109,9 @@ export class EstdService {
 
 	burn(projectId: string,
 		 network: INetworkEnvironment,
-		 wallet: GeneratedWallet,
+		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.burn(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.burn(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -141,37 +133,34 @@ export class EstdService {
 
 	pause(projectId: string,
 		  network: INetworkEnvironment,
-		  wallet: GeneratedWallet,
+		  wallet: ProjectWallet,
 		  identifier: string): Observable<void> {
-		const txHash$ = this.estdInteractor.pause(network, wallet, identifier);
+		return this.estdInteractor.pause(projectId, network, wallet, identifier)
+			.pipe(
+				map((txHash) => {
+					const log: ActionHistoryElement = {
+						id: uuid.v4(),
+						txHash,
+						projectId: projectId,
+						type: ActionType.Tx,
+						data: { identifier },
+						chainId: network.chainId,
+						title: `Pause token ${identifier}`,
+						status: ActionStatus.Pending,
+						caller: wallet.address,
+						timestamp: Date.now(),
+					};
 
-		return from(txHash$).pipe(
-			map((txHash) => {
-				const log: ActionHistoryElement = {
-					id: uuid.v4(),
-					txHash,
-					projectId: projectId,
-					type: ActionType.Tx,
-					data: { identifier },
-					chainId: network.chainId,
-					title: `Pause token ${identifier}`,
-					status: ActionStatus.Pending,
-					caller: wallet.address,
-					timestamp: Date.now(),
-				};
-
-				this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
-			}),
-		);
+					this.store.dispatch(ActionHistoryAction.logAction({ data: log }));
+				}),
+			);
 	}
 
 	unPause(projectId: string,
 		  	network: INetworkEnvironment,
-		  	wallet: GeneratedWallet,
+		  	wallet: ProjectWallet,
 		  	identifier: string): Observable<void> {
-		const txHash$ = this.estdInteractor.unPause(network, wallet, identifier);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.unPause(projectId, network, wallet, identifier).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -193,11 +182,9 @@ export class EstdService {
 
 	freeze(projectId: string,
 		   network: INetworkEnvironment,
-		   wallet: GeneratedWallet,
+		   wallet: ProjectWallet,
 		   options: IFreezeUnFreezeOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.freeze(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.freeze(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -219,11 +206,9 @@ export class EstdService {
 
 	unFreeze(projectId: string,
 			 network: INetworkEnvironment,
-			 wallet: GeneratedWallet,
+			 wallet: ProjectWallet,
 			 options: IFreezeUnFreezeOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.unFreeze(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.unFreeze(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -245,11 +230,9 @@ export class EstdService {
 
 	wipe(projectId: string,
 		 network: INetworkEnvironment,
-		 wallet: GeneratedWallet,
+		 wallet: ProjectWallet,
 		 options: IWipeOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.wipe(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.wipe(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -271,11 +254,9 @@ export class EstdService {
 
 	setSpecialRoles(projectId: string,
 		 			network: INetworkEnvironment,
-		 			wallet: GeneratedWallet,
+		 			wallet: ProjectWallet,
 		 			options: ISetSpecialRolesOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.setSpecialRoles(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.setSpecialRoles(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),
@@ -297,11 +278,9 @@ export class EstdService {
 
 	transferOwnership(projectId: string,
 					  network: INetworkEnvironment,
-					  wallet: GeneratedWallet,
+					  wallet: ProjectWallet,
 					  options: ITransferOwnershipOptions): Observable<void> {
-		const txHash$ = this.estdInteractor.transferOwnership(network, wallet, options);
-
-		return from(txHash$).pipe(
+		return this.estdInteractor.transferOwnership(projectId, network, wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),

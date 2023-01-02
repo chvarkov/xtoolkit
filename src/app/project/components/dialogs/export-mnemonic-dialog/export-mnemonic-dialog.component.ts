@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { GeneratedWallet } from '../../../../core/data-provider/data-provider';
+import { ProjectWallet } from '../../../../core/data-provider/data-provider';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 	styleUrls: ['./export-mnemonic-dialog.component.scss']
 })
 export class ExportMnemonicDialogComponent implements OnInit {
-	constructor(@Inject(MAT_DIALOG_DATA) readonly data: GeneratedWallet,
+	constructor(@Inject(MAT_DIALOG_DATA) readonly data: ProjectWallet,
 				readonly dialogRef: MatDialogRef<ExportMnemonicDialogComponent>) {
 	}
 

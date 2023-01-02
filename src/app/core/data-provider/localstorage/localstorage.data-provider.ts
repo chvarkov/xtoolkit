@@ -2,7 +2,7 @@ import {
 	ActionHistoryElement,
 	ActionStatus,
 	DataProvider,
-	GeneratedWallet, PendingTokenIssue,
+	ProjectWallet, PendingTokenIssue,
 	Project, ProjectAbi, ProjectAddress, ProjectInfo,
 	ProjectSmartContract
 } from '../data-provider';
@@ -388,7 +388,7 @@ export class LocalstorageDataProvider implements DataProvider {
 			);
 	}
 
-	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project> {
+	addWallet(projectId: string, wallet: ProjectWallet): Observable<Project> {
 		return this.getProject(projectId)
 			.pipe(
 				map(project => {

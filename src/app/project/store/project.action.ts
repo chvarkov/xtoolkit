@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GeneratedWallet, PendingTokenIssue, Project, ProjectInfo } from '../../core/data-provider/data-provider';
+import { ProjectWallet, PendingTokenIssue, Project, ProjectInfo } from '../../core/data-provider/data-provider';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
 import { ProjectComponentType } from '../../core/types';
 import { OpenedProjectTab, ProjectExplorerState, TabsData } from '../../core/data-provider/personal-settings.manager';
@@ -12,6 +12,7 @@ import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
 import { INft } from '../../core/elrond/services/nft';
+import { Transaction } from '@elrondnetwork/erdjs/out';
 
 export class ProjectAction {
 	static readonly openProject = createAction(`[${ProjectAction.name}] open project [...]`, props<{id: string}>());
@@ -50,7 +51,7 @@ export class ProjectAction {
 	static readonly loadAccountAndPositionsSuccess = createAction(`[${ProjectAction.name}] load account and positions [OK]`, props<{projectId: string, native: string, account: AccountOnNetwork, tokens: ITokenPosition[]}>());
 	static readonly loadAccountAndPositionsError = createAction(`[${ProjectAction.name}] load account and positions [ERR]`, props<{err: Error}>());
 
-	static readonly addWallet = createAction(`[${ProjectAction.name}] add wallet [...]`, props<{projectId: string, wallet: GeneratedWallet}>());
+	static readonly addWallet = createAction(`[${ProjectAction.name}] add wallet [...]`, props<{projectId: string, wallet: ProjectWallet}>());
 	static readonly addWalletSuccess = createAction(`[${ProjectAction.name}] add wallet [OK]`, props<{project: Project, address: string}>());
 	static readonly addWalletError = createAction(`[${ProjectAction.name}] add wallet [ERR]`, props<{err: Error}>());
 
@@ -159,7 +160,7 @@ export class ProjectAction {
 	static readonly searchTokensSuccess = createAction(`[${ProjectAction.name}] search tokens [OK]`, props<{projectId: string, tokens: ITokenInfo[]}>());
 	static readonly searchTokensError = createAction(`[${ProjectAction.name}] search tokens [ERR]`, props<{err: Error}>());
 
-	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: GeneratedWallet}>());
+	static readonly exportMnemonic = createAction(`[${ProjectAction.name}] export mnemonic`, props<{wallet: ProjectWallet}>());
 
 	static readonly renameProject = createAction(`[${ProjectAction.name}] rename project [...]`, props<{projectId: string, name: string}>());
 	static readonly renameProjectSuccess = createAction(`[${ProjectAction.name}] rename project [OK]`, props<{project: Project, list: ProjectInfo[]}>());
@@ -248,6 +249,10 @@ export class ProjectAction {
 	static readonly transferTokens = createAction(`[${ProjectAction.name}] transfer tokens [...]`, props<{projectId: string, chainId: string, sender?: string, identifier?: string}>());
 	static readonly transferTokensSuccess = createAction(`[${ProjectAction.name}] transfer tokens  [OK]`);
 	static readonly transferTokensError = createAction(`[${ProjectAction.name}] transfer tokens  [ERR]`, props<{err: Error}>());
+
+	static readonly sendTx = createAction(`[${ProjectAction.name}] sign tx [...]`, props<{projectId: string, sender: string, tx: Transaction}>());
+	static readonly sendTxSuccess = createAction(`[${ProjectAction.name}] sign tx  [OK]`, props<{txHash: string}>());
+	static readonly sendTxError = createAction(`[${ProjectAction.name}] sign tx  [ERR]`, props<{err: Error}>());
 
 	static readonly errorActions = [
 		ProjectAction.loadProjectListError,

@@ -1,0 +1,14 @@
+<app-modal-dialog-header title="Confirm transaction" [dialogRef]="dialogRef"></app-modal-dialog-header>
+<div class="content">
+	<p>Sender: {{data.getSender().bech32()}}</p>
+	<p>Receiver: {{data.getReceiver().bech32()}}</p>
+	<p>Amount: {{data.getValue().toString()}} EGLD</p>
+	<p>Gas limit: {{data.getGasLimit().valueOf()}}</p>
+
+	<textarea class="tx-payload">{{data.getData().toString() || 'N/A'}}</textarea>
+</div>
+
+<div class="actions">
+	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
+	<button mat-flat-button class="confirm-button" (click)="confirm()">Confirm</button>
+</div>

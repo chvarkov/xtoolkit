@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { EndpointDefinition, SmartContract, TokenIdentifierValue, TokenPayment } from '@elrondnetwork/erdjs/out';
-import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
-import { ScTransactionRunner } from '../../../../../core/elrond/services/sc-transaction-runner';
+import { ProjectWallet } from '../../../../../core/data-provider/data-provider';
+import { ScInteractor } from '../../../../../core/elrond/services/sc-interactor';
 import BigNumber from 'bignumber.js';
 
 @Component({
@@ -13,7 +13,7 @@ import BigNumber from 'bignumber.js';
 export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 	@Input() projectId: string = '';
 
-	@Input() wallets: GeneratedWallet[] = [];
+	@Input() wallets: ProjectWallet[] = [];
 
 	@Input() network?: INetworkEnvironment;
 
@@ -25,9 +25,9 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 
 	@Input() payload: any;
 
-	@Output() onSubmit = new EventEmitter<{wallet: GeneratedWallet, fee: number, payment?: TokenPayment}>();
+	@Output() onSubmit = new EventEmitter<{wallet: ProjectWallet, fee: number, payment?: TokenPayment}>();
 
-	wallet?: GeneratedWallet;
+	wallet?: ProjectWallet;
 
 	tokenAmount = 0;
 
@@ -35,7 +35,7 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 
 	fee = 50_000;
 
-	constructor(private readonly scTxRunner: ScTransactionRunner) {
+	constructor(private readonly scTxRunner: ScInteractor) {
 	}
 
 	ngOnInit(): void {
@@ -52,7 +52,7 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 
 		const fee = await this.scTxRunner.estimate(this.sc, {
 			network: this.network,
-			caller: this.wallet.address,
+			wallet: this.wallet,
 			payload: this.payload,
 			functionName: this.endpoint.name,
 		});
@@ -62,7 +62,7 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 		this.fee = fee;
 	}
 
-	async onSelectedWallet(wallet: GeneratedWallet): Promise<void> {
+	async onSelectedWallet(wallet: ProjectWallet): Promise<void> {
 		this.wallet = wallet;
 
 		await this.estimate();

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { GeneratedWallet, Project } from '../../../../../core/data-provider/data-provider';
+import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,7 +16,7 @@ import { NetworkSelector } from '../../../../../network/store/network.selector';
 	styleUrls: ['./pause-token-dialog.component.scss']
 })
 export class PauseTokenDialogComponent implements OnInit {
-	wallet?: GeneratedWallet;
+	wallet?: ProjectWallet;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
@@ -68,7 +68,7 @@ export class PauseTokenDialogComponent implements OnInit {
 		]);
 	}
 
-	onChangeSignerWallet(wallet: GeneratedWallet): void {
+	onChangeSignerWallet(wallet: ProjectWallet): void {
 		this.wallet = wallet;
 	}
 }

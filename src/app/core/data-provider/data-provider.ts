@@ -5,10 +5,18 @@ import { map } from 'rxjs/operators';
 
 export const DATA_PROVIDER = 'CORE:DATA_PROVIDER';
 
-export interface GeneratedWallet {
+export enum WalletSignStrategy {
+	Secret = 'secret',
+	Mnemonic = 'mnemonic',
+	Pem = 'pem',
+	MobileApp = 'mobile_app',
+}
+
+export interface ProjectWallet {
 	name: string;
 	address: string;
-	mnemonic: string[];
+	signStrategy: WalletSignStrategy;
+	mnemonic: string[]; // todo: remove it
 }
 
 export interface ProjectSmartContract {
@@ -22,7 +30,7 @@ export interface ProjectSmartContract {
 export interface Project extends ProjectInfo {
 	abiInterfaces: ProjectAbi[];
 	smartContracts: ProjectSmartContract[];
-	wallets: GeneratedWallet[];
+	wallets: ProjectWallet[];
 	tokens: string[];
 	addressBook: ProjectAddress[];
 }
@@ -125,7 +133,7 @@ export interface DataProvider {
 
 	renameProject(projectId: string, name: string): Observable<[Project, ProjectInfo[]]>;
 
-	addWallet(projectId: string, wallet: GeneratedWallet): Observable<Project>;
+	addWallet(projectId: string, wallet: ProjectWallet): Observable<Project>;
 
 	renameWallet(projectId: string, address: string, name: string): Observable<Project>;
 

@@ -34,6 +34,8 @@ import { IsNotMainnetNetworkPipe } from './pipes/is-not-mainnet-network.pipe';
 import { NftTypePipe } from './pipes/nft-type.pipe';
 import { LocalstorageSecretManager } from './data-provider/localstorage/localstorage-secret.manager';
 import { SECRET_MANAGER } from './data-provider/secret.manager';
+import { TxSender } from './elrond/services/tx.sender';
+import { ConfirmTransactionDialogComponent } from './ui/confirm-transaction-dialog/confirm-transaction-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -60,6 +62,7 @@ import { SECRET_MANAGER } from './data-provider/secret.manager';
 		TokenIdentifierSymbolPipe,
 		IsNotMainnetNetworkPipe,
 		NftTypePipe,
+		ConfirmTransactionDialogComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -86,6 +89,7 @@ import { SECRET_MANAGER } from './data-provider/secret.manager';
 		LocalstoragePersonalSettingManager,
 		LocalstorageSecretManager,
 		ESDTInteractor,
+		TxSender,
 		AppInitializer,
 	],
 	exports: [

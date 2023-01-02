@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { GeneratedWallet, ProjectAddress } from '../../../../core/data-provider/data-provider';
+import { ProjectWallet, ProjectAddress } from '../../../../core/data-provider/data-provider';
 import { ProjectSelector } from '../../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
 import { ITokenTransferOptions } from '../../../../core/elrond/services/wallet.manager';
@@ -14,14 +14,14 @@ import { ESDTTransferPayloadBuilder, TokenIdentifierValue, TokenPayment } from '
 	styleUrls: ['./transfer-token-dialog.component.scss']
 })
 export class TransferTokenDialogComponent implements OnInit {
-	wallets$?: Observable<GeneratedWallet[]>;
+	wallets$?: Observable<ProjectWallet[]>;
 
 	addressOptions$: Observable<ProjectAddress[]>;
 
 	gasLimit: number = 0;
 	amount: string = '0';
 	identifier: string = '';
-	sender?: GeneratedWallet;
+	sender?: ProjectWallet;
 	receiver: string = '';
 	txData: string = '';
 
@@ -78,7 +78,7 @@ export class TransferTokenDialogComponent implements OnInit {
 		this.calculateGasLimit();
 	}
 
-	onChangeSender(sender: GeneratedWallet): void {
+	onChangeSender(sender: ProjectWallet): void {
 		this.sender = sender;
 	}
 
