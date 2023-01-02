@@ -14,7 +14,7 @@ import { catchError, map } from 'rxjs/operators';
 import { IEstimateTxData } from './interfaces/estimate-tx-data';
 import { ITokenSearchOptions } from './interfaces/token-search-options';
 import { IElrondFullTransaction } from './interfaces/elrond-transaction';
-import { INft, NftType } from './services/nft';
+import { INft, NftType } from './interfaces/nft';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {

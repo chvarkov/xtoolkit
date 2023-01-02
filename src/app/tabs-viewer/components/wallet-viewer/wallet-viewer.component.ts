@@ -10,7 +10,7 @@ import { filter, map } from 'rxjs/operators';
 import { ProjectWallet } from '../../../core/data-provider/data-provider';
 import { Account, Address } from '@elrondnetwork/erdjs/out';
 import { FaucetService } from '../../../core/services/faucet.service';
-import { INft } from '../../../core/elrond/services/nft';
+import { INft } from '../../../core/elrond/interfaces/nft';
 
 @Component({
 	selector: 'app-wallet-viewer',

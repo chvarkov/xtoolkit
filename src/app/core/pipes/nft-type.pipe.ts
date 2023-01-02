@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NftType } from '../elrond/services/nft';
+import { NftType } from '../elrond/interfaces/nft';
 
 @Pipe({
 	name: 'nftType'
