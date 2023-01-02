@@ -58,16 +58,6 @@ export class TxSender {
 				this.dialog,
 				this.secretManager,
 			)),
-			switchMap((passwordHash) => {
-				if (this.isInternalSign(wallet.signStrategy)) {
-					return this.dialog.open(ConfirmTransactionDialogComponent, {data: tx}).afterClosed().pipe(
-						filter(v => !!v),
-						map(() => passwordHash),
-					);
-				}
-
-				return of(passwordHash);
-			}),
 			switchMap(passwordHash => this.secretManager.getWalletSecret(passwordHash, projectId, wallet.address)),
 			map((secretValue) => {
 				switch (wallet.signStrategy) {
@@ -83,6 +73,16 @@ export class TxSender {
 			}),
 			map((userSigner) => {
 				userSigner.sign(tx);
+			}),
+			switchMap(() => {
+				if (this.isInternalSign(wallet.signStrategy)) {
+					return this.dialog.open(ConfirmTransactionDialogComponent, {data: tx}).afterClosed().pipe(
+						filter(v => !!v),
+						map(() => undefined),
+					);
+				}
+
+				return of(undefined);
 			}),
 		);
 	}
