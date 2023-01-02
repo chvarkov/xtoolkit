@@ -13,7 +13,7 @@ import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Injectable } from '@angular/core';
 import * as estdAbi from '../abi/esdt.abi.json';
-import { ScTransactionRunner } from './sc-transaction-runner';
+import { ScInteractor } from './sc-interactor';
 import { ProjectWallet } from '../../data-provider/data-provider';
 import { TxSender } from './tx.sender';
 import { Observable } from 'rxjs';
@@ -84,7 +84,7 @@ export class ESDTInteractor {
 		'ESDTRoleLocalMint',
 	];
 
-	constructor(private readonly txRunner: ScTransactionRunner,
+	constructor(private readonly txRunner: ScInteractor,
 				private readonly txSender: TxSender,) {
 		const abi = (estdAbi as any).default;
 		this.contract = new SmartContract({

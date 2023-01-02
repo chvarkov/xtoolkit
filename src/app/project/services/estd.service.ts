@@ -30,9 +30,7 @@ export class EstdService {
 	transferFunds(projectId: string,
 				  network: INetworkEnvironment,
 				  options: ITokenTransferOptions): Observable<void> {
-		const txHash$ = from(this.walletManager.transferFunds(network, options.wallet, options));
-
-		return txHash$.pipe(
+		return this.walletManager.transferFunds(projectId, network, options.wallet, options).pipe(
 			map((txHash) => {
 				const log: ActionHistoryElement = {
 					id: uuid.v4(),

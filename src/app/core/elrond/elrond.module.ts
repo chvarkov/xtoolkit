@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScPipe } from './pipes/sc.pipe';
 import { ElrondProxyProvider } from './services/elrond-proxy-provider';
 import { ScQueryRunner } from './services/sc-query-runner';
-import { ScTransactionRunner } from './services/sc-transaction-runner';
+import { ScInteractor } from './services/sc-interactor';
 
 @NgModule({
 	imports: [
@@ -14,7 +14,7 @@ import { ScTransactionRunner } from './services/sc-transaction-runner';
 		ElrondDataProvider,
 		ElrondProxyProvider,
 		ScQueryRunner,
-		ScTransactionRunner,
+		ScInteractor,
 	],
 	declarations: [
 		ScPipe,

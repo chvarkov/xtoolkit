@@ -7,11 +7,12 @@ import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner'
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../../network/store/network.selector';
-import { ScTransactionRunner } from '../../../../core/elrond/services/sc-transaction-runner';
+import { ScInteractor } from '../../../../core/elrond/services/sc-interactor';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { ActionHistoryAction } from '../../../../action-history/store/action-history.action';
 import { ActionStatus, ActionType, ProjectWallet } from '../../../../core/data-provider/data-provider';
 import * as uuid from 'uuid';
+import { TxSender } from '../../../../core/elrond/services/tx.sender';
 
 @Component({
 	selector: 'app-sc-endpoint',
@@ -51,7 +52,8 @@ export class ScEndpointComponent implements OnInit {
 	constructor(private readonly fb: FormBuilder,
 				private readonly store: Store,
 				private readonly scQueryRunner: ScQueryRunner,
-				private readonly scTxRunner: ScTransactionRunner) {
+				private readonly txSender: TxSender,
+				private readonly scTxRunner: ScInteractor) {
 
 	}
 
@@ -144,22 +146,16 @@ export class ScEndpointComponent implements OnInit {
 			return;
 		}
 
-		const caller = Mnemonic.fromString(wallet.mnemonic.join(' '))
-			.deriveKey(0)
-			.generatePublicKey()
-			.toAddress()
-			.bech32();
-
 		try {
 			const txHash = await this.scTxRunner.run(this.sc, {
 				payload: this.form.value,
 				functionName: this.endpoint.name,
 				network,
 				gasLimit,
-				caller,
 				payment,
-				walletCredentials: { mnemonic: wallet.mnemonic },
-			});
+				wallet,
+				projectId: this.projectId,
+			}).toPromise();
 
 			this.txResultSubject.next(txHash);
 
@@ -173,7 +169,7 @@ export class ScEndpointComponent implements OnInit {
 					timestamp: Date.now(),
 					status: ActionStatus.Pending,
 					txHash,
-					caller: caller,
+					caller: wallet.address,
 					data: {
 						payload: this.transformActionData(this.form.value),
 					},

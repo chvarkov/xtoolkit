@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
 import { Address, Transaction, TransactionPayload } from '@elrondnetwork/erdjs/out';
 import { INetworkEnvironment } from '../interfaces/network-environment';
-import { ScTransactionRunner } from './sc-transaction-runner';
 import { ProjectWallet } from '../../data-provider/data-provider';
 import { DecimalPlacesHelper } from '../helpers/decimal-places.helper';
+import { TxSender } from './tx.sender';
+import { Observable } from 'rxjs';
 
 export interface ITokenTransferOptions {
 	sender: string;
@@ -19,12 +20,13 @@ export interface ITokenTransferOptions {
 
 @Injectable({providedIn: 'root'})
 export class WalletManager {
-	constructor(private readonly txRunner: ScTransactionRunner) {
+	constructor(private readonly txSender: TxSender) {
 	}
 
-	async transferFunds(network: INetworkEnvironment,
-						wallet: ProjectWallet,
-						options: ITokenTransferOptions): Promise<string> {
+	transferFunds(projectId: string,
+				  network: INetworkEnvironment,
+				  wallet: ProjectWallet,
+				  options: ITokenTransferOptions): Observable<string> {
 		const amount = DecimalPlacesHelper.toRaw(options.decimals, options.amount);
 
 		const tx = new Transaction({
@@ -36,13 +38,6 @@ export class WalletManager {
 			chainID: network.chainId,
 		});
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: options.gasLimit,
-			caller: options.sender,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		return this.txSender.send(projectId, wallet, tx);
 	}
 }
