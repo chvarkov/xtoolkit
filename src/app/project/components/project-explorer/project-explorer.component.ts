@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import {
-	GeneratedWallet,
+	ProjectWallet,
 	Project,
 	ProjectAbi,
 	ProjectInfo,
@@ -207,7 +207,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		return tokenId;
 	}
 
-	walletTrackBy(i: number, wallet: GeneratedWallet) {
+	walletTrackBy(i: number, wallet: ProjectWallet) {
 		return wallet.address;
 	}
 }

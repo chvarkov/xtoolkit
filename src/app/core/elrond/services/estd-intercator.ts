@@ -14,7 +14,10 @@ import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Injectable } from '@angular/core';
 import * as estdAbi from '../abi/esdt.abi.json';
 import { ScTransactionRunner } from './sc-transaction-runner';
-import { GeneratedWallet } from '../../data-provider/data-provider';
+import { ProjectWallet } from '../../data-provider/data-provider';
+import { TxSender } from './tx.sender';
+import { Observable } from 'rxjs';
+import { GasLimit } from '../models/gas-limit';
 
 export interface IIssueTokenOptions {
 	name: string,
@@ -81,7 +84,8 @@ export class ESDTInteractor {
 		'ESDTRoleLocalMint',
 	];
 
-	constructor(private readonly txRunner: ScTransactionRunner) {
+	constructor(private readonly txRunner: ScTransactionRunner,
+				private readonly txSender: TxSender,) {
 		const abi = (estdAbi as any).default;
 		this.contract = new SmartContract({
 			address: this.estdContractAddress,
@@ -90,7 +94,7 @@ export class ESDTInteractor {
 	}
 
 	async issueFungibleToken(network: INetworkEnvironment,
-							 wallet: GeneratedWallet,
+							 wallet: ProjectWallet,
 							 options: IIssueTokenOptions): Promise<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.name),
@@ -124,7 +128,7 @@ export class ESDTInteractor {
 	}
 
 	mint(network: INetworkEnvironment,
-		 wallet: GeneratedWallet,
+		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Promise<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.identifier),
@@ -149,7 +153,7 @@ export class ESDTInteractor {
 	}
 
 	burn(network: INetworkEnvironment,
-		 wallet: GeneratedWallet,
+		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Promise<string> {
 		const args: any[] = [
 			BytesValue.fromUTF8(options.identifier),
@@ -172,9 +176,10 @@ export class ESDTInteractor {
 		});
 	}
 
-	pause(network: INetworkEnvironment,
-		  wallet: GeneratedWallet,
-		  identifier: string): Promise<string> {
+	pause(projectId: string,
+		  network: INetworkEnvironment,
+		  wallet: ProjectWallet,
+		  identifier: string): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(identifier),
 		];
@@ -185,19 +190,15 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
-	async unPause(network: INetworkEnvironment,
-				  wallet: GeneratedWallet,
-				  identifier: string): Promise<string> {
+	unPause(projectId: string,
+			network: INetworkEnvironment,
+			wallet: ProjectWallet,
+			identifier: string): Observable<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(identifier),
 		];
@@ -208,18 +209,13 @@ export class ESDTInteractor {
 
 		const tx = interaction.buildTransaction();
 
-		return this.txRunner.signAndSendTx(tx, {
-			network,
-			gasLimit: 55_000_000,
-			caller: wallet.address,
-			credentials: {
-				mnemonic: wallet.mnemonic,
-			},
-		});
+		tx.setGasLimit(new GasLimit(55_000_000));
+
+		return this.txSender.send(projectId, wallet, tx);
 	}
 
 	freeze(network: INetworkEnvironment,
-		   wallet: GeneratedWallet,
+		   wallet: ProjectWallet,
 		   options: IFreezeUnFreezeOptions): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
@@ -243,7 +239,7 @@ export class ESDTInteractor {
 	}
 
 	unFreeze(network: INetworkEnvironment,
-			 wallet: GeneratedWallet,
+			 wallet: ProjectWallet,
 			 options: IFreezeUnFreezeOptions): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
@@ -267,7 +263,7 @@ export class ESDTInteractor {
 	}
 
 	wipe(network: INetworkEnvironment,
-		 wallet: GeneratedWallet,
+		 wallet: ProjectWallet,
 		 options: IWipeOptions): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
@@ -291,7 +287,7 @@ export class ESDTInteractor {
 	}
 
 	setSpecialRoles(network: INetworkEnvironment,
-		 			wallet: GeneratedWallet,
+		 			wallet: ProjectWallet,
 		 			options: ISetSpecialRolesOptions): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),
@@ -323,7 +319,7 @@ export class ESDTInteractor {
 	}
 
 	transferOwnership(network: INetworkEnvironment,
-					  wallet: GeneratedWallet,
+					  wallet: ProjectWallet,
 					  options: ITransferOwnershipOptions): Promise<string> {
 		const args: TypedValue[] = [
 			BytesValue.fromUTF8(options.identifier),

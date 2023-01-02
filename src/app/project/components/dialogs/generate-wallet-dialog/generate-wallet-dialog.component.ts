@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ProjectWallet, WalletSignStrategy } from '../../../../core/data-provider/data-provider';
+
+export interface IGeneratedProjectWallet {
+	wallet: ProjectWallet;
+	mnemonic: string;
+}
 
 @Component({
 	selector: 'app-generate-wallet-dialog',
@@ -20,10 +26,18 @@ export class GenerateWalletDialogComponent implements OnInit {
 		const mnemonic = Mnemonic.generate();
 		const address = mnemonic.deriveKey().generatePublicKey().toAddress()
 
-		this.dialogRef.close({
+		const wallet: ProjectWallet = {
 			name: this.walletName,
 			address: address.bech32(),
-			mnemonic: mnemonic.getWords(),
-		});
+			signStrategy: WalletSignStrategy.Mnemonic,
+			mnemonic: [],
+		};
+
+		const generatedWallet: IGeneratedProjectWallet = {
+			wallet,
+			mnemonic: mnemonic.toString(),
+		}
+
+		this.dialogRef.close(generatedWallet);
 	}
 }

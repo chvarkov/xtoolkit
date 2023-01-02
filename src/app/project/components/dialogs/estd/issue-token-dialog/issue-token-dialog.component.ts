@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { GeneratedWallet, Project } from '../../../../../core/data-provider/data-provider';
+import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { ITokenInfo } from '../../../../../core/elrond/interfaces/token-info';
@@ -17,7 +17,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 	styleUrls: ['./issue-token-dialog.component.scss']
 })
 export class IssueTokenDialogComponent implements OnInit {
-	wallet!: GeneratedWallet;
+	wallet!: ProjectWallet;
 
 	project$?: Observable<Project | undefined>;
 
@@ -57,7 +57,7 @@ export class IssueTokenDialogComponent implements OnInit {
 		});
 	}
 
-	onChangeIssuerWallet(wallet: GeneratedWallet): void {
+	onChangeIssuerWallet(wallet: ProjectWallet): void {
 		this.wallet = wallet;
 	}
 

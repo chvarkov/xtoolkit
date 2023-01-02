@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { GeneratedWallet, Project } from '../../../../../core/data-provider/data-provider';
+import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
@@ -16,7 +16,7 @@ import { ESDTInteractor } from '../../../../../core/elrond/services/estd-interca
 	styleUrls: ['./mint-burn-token-dialog.component.scss']
 })
 export class MintBurnTokenDialogComponent implements OnInit {
-	wallet?: GeneratedWallet;
+	wallet?: ProjectWallet;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
@@ -74,7 +74,7 @@ export class MintBurnTokenDialogComponent implements OnInit {
 		]);
 	}
 
-	onChangeIssuerWallet(wallet: GeneratedWallet): void {
+	onChangeIssuerWallet(wallet: ProjectWallet): void {
 		this.wallet = wallet;
 	}
 }

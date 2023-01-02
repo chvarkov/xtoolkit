@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GeneratedWallet } from '../../../../../core/data-provider/data-provider';
+import { ProjectWallet } from '../../../../../core/data-provider/data-provider';
 
 @Component({
 	selector: 'app-sc-endpoint-query',
@@ -7,11 +7,11 @@ import { GeneratedWallet } from '../../../../../core/data-provider/data-provider
 	styleUrls: ['./sc-endpoint-query.component.scss']
 })
 export class ScEndpointQueryComponent implements OnInit {
-	@Input() wallets: GeneratedWallet[] = [];
+	@Input() wallets: ProjectWallet[] = [];
 
-	@Output() onSubmit = new EventEmitter<{wallet?: GeneratedWallet}>();
+	@Output() onSubmit = new EventEmitter<{wallet?: ProjectWallet}>();
 
-	wallet?: GeneratedWallet;
+	wallet?: ProjectWallet;
 
 	constructor() {
 	}

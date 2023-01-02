@@ -12,7 +12,10 @@ import { CreateProjectDialogComponent } from '../components/dialogs/create-proje
 import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
 import { Store } from '@ngrx/store';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
-import { GenerateWalletDialogComponent } from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
+import {
+	GenerateWalletDialogComponent,
+	IGeneratedProjectWallet
+} from '../components/dialogs/generate-wallet-dialog/generate-wallet-dialog.component';
 import {
 	IUploadedAbi,
 	UploadAbiDialogComponent
@@ -45,6 +48,8 @@ import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-
 import { SpecialRolesTokenDialogComponent } from '../components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
 import { TransferOwnershipDialogComponent } from '../components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
 import { TransferTokenDialogComponent } from '../../tabs-viewer/components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
+import { SECRET_MANAGER, SecretManager } from '../../core/data-provider/secret.manager';
+import { SecurityNgrxHelper } from '../../security/store/security.ngrx-helper';
 
 @Injectable()
 export class ProjectEffect {
@@ -130,6 +135,23 @@ export class ProjectEffect {
 			.afterClosed()
 			.pipe(
 				filter(v => !!v),
+				switchMap((generatedProjectWallet: IGeneratedProjectWallet) => SecurityNgrxHelper
+					.resolvePasswordHash(this.store, this.dialog, this.secretManager).pipe(
+						map(passwordHash => [generatedProjectWallet, passwordHash] as [IGeneratedProjectWallet, string]),
+					),
+				),
+				switchMap(([generatedProjectWallet, passwordHash]: [IGeneratedProjectWallet, string]) => {
+					console.log('generatedProjectWallet', generatedProjectWallet);
+					console.log('passwordHash', passwordHash);
+					return this.secretManager.setWalletSecret(
+						passwordHash,
+						projectId,
+						generatedProjectWallet.wallet.address,
+						generatedProjectWallet.mnemonic,
+					).pipe(
+						map(() => generatedProjectWallet.wallet),
+					);
+				}),
 				map((wallet) => ProjectAction.addWallet({projectId, wallet}))
 			),
 		),
@@ -838,6 +860,7 @@ export class ProjectEffect {
 				private readonly txProvider: TransactionProvider,
 				private readonly dialog: MatDialog,
 				private readonly estdService: EstdService,
+				@Inject(SECRET_MANAGER) private readonly secretManager: SecretManager,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
 	}

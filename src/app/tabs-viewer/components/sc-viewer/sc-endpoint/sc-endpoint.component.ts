@@ -10,7 +10,7 @@ import { NetworkSelector } from '../../../../network/store/network.selector';
 import { ScTransactionRunner } from '../../../../core/elrond/services/sc-transaction-runner';
 import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { ActionHistoryAction } from '../../../../action-history/store/action-history.action';
-import { ActionStatus, ActionType, GeneratedWallet } from '../../../../core/data-provider/data-provider';
+import { ActionStatus, ActionType, ProjectWallet } from '../../../../core/data-provider/data-provider';
 import * as uuid from 'uuid';
 
 @Component({
@@ -36,7 +36,7 @@ export class ScEndpointComponent implements OnInit {
 
 	@Input() chainId!: string;
 
-	@Input() wallets: GeneratedWallet[] = [];
+	@Input() wallets: ProjectWallet[] = [];
 
 	form!: FormGroup;
 
@@ -137,7 +137,7 @@ export class ScEndpointComponent implements OnInit {
 	}
 
 	async submitTransaction(network: INetworkEnvironment,
-							wallet: GeneratedWallet,
+							wallet: ProjectWallet,
 							gasLimit: number,
 							payment?: TokenPayment): Promise<void> {
 		if (!this.endpoint) {

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { Address, Transaction, TransactionPayload } from '@elrondnetwork/erdjs/out';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { ScTransactionRunner } from './sc-transaction-runner';
-import { GeneratedWallet } from '../../data-provider/data-provider';
+import { ProjectWallet } from '../../data-provider/data-provider';
 import { DecimalPlacesHelper } from '../helpers/decimal-places.helper';
 
 export interface ITokenTransferOptions {
@@ -14,7 +14,7 @@ export interface ITokenTransferOptions {
 	amount: BigNumber.Value;
 	data?: string;
 	gasLimit: number;
-	wallet: GeneratedWallet;
+	wallet: ProjectWallet;
 }
 
 @Injectable({providedIn: 'root'})
@@ -23,7 +23,7 @@ export class WalletManager {
 	}
 
 	async transferFunds(network: INetworkEnvironment,
-						wallet: GeneratedWallet,
+						wallet: ProjectWallet,
 						options: ITokenTransferOptions): Promise<string> {
 		const amount = DecimalPlacesHelper.toRaw(options.decimals, options.amount);
 

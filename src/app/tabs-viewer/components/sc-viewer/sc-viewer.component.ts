@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { GeneratedWallet, ProjectAbi, ProjectSmartContract } from '../../../core/data-provider/data-provider';
+import { ProjectWallet, ProjectAbi, ProjectSmartContract } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../../project/store/project.action';
 import { Observable, of } from 'rxjs';
@@ -41,7 +41,7 @@ export class ScViewerComponent implements OnInit {
 
 	code$: Observable<string> = of('');
 
-	wallets$: Observable<GeneratedWallet[]> = of([]);
+	wallets$: Observable<ProjectWallet[]> = of([]);
 
 	openedTab = this.TABS.Endpoints;
 
