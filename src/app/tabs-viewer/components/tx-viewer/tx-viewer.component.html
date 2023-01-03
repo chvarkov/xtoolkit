@@ -109,7 +109,7 @@
 						</div>
 					</div>
 				</mat-tab>
-				<mat-tab label="Logs">
+				<mat-tab label="Logs" *ngIf="tx.logs">
 					<div class="page-tab-content">
 						<div class="tx-logs-address">
 							<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>

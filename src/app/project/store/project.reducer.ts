@@ -10,7 +10,7 @@ import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ReducerTypes } from '@ngrx/store/src/reducer_creator';
-import { INft } from '../../core/elrond/services/nft';
+import { INft } from '../../core/elrond/interfaces/nft';
 
 export interface IPositionsState {
 	native: string;

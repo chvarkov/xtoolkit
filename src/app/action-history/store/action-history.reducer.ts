@@ -20,7 +20,7 @@ export const reducer = createReducer(
 		...state,
 		list,
 	})),
-	on(ActionHistoryAction.clearActionHistory, ProjectAction.closeProjectSuccess, (state) => ({
+	on(ActionHistoryAction.clearActionHistorySuccess, ProjectAction.closeProjectSuccess, (state) => ({
 		...state,
 		list: [],
 	})),

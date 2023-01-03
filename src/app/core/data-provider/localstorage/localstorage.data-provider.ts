@@ -118,8 +118,8 @@ export class LocalstorageDataProvider implements DataProvider {
 	getActiveProject(): Observable<Project | undefined> {
 		const activeProjectId: string | undefined = this.get(this.activeProjectKey);
 
-		if (!activeProjectId) {
-			return of();
+		if (!activeProjectId || activeProjectId === SELF_PROJECT_ID) {
+			return of(undefined);
 		}
 
 		return this.getProject(activeProjectId);
@@ -464,7 +464,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	clearActionHistory(projectId: string): Observable<void> {
 		this.set(this.getActionHistoryKey(projectId), []);
 
-		return of();
+		return of(undefined);
 	}
 
 	updateActionStatus(projectId: string, id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {

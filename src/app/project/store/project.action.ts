@@ -11,7 +11,7 @@ import { ITokenHolder } from '../../core/elrond/interfaces/token-holder';
 import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
-import { INft } from '../../core/elrond/services/nft';
+import { INft } from '../../core/elrond/interfaces/nft';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 
 export class ProjectAction {

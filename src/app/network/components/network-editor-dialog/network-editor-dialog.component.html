@@ -1,21 +1,45 @@
 <app-modal-dialog-header [title]="title" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
 <form content class="content" [formGroup]="form">
-	<app-form-field title="Network name">
-		<input class="field input-field" formControlName="name" placeholder="Network name">
-	</app-form-field>
+	<div class="section">
+		<app-form-field title="Network name">
+			<input class="field input-field" formControlName="name" placeholder="Network name">
+		</app-form-field>
 
-	<app-form-field title="Chain ID">
-		<input class="field input-field" formControlName="chainId" placeholder="Chain ID">
-	</app-form-field>
+		<app-form-field title="Chain ID">
+			<input class="field input-field" formControlName="chainId" placeholder="Chain ID">
+		</app-form-field>
 
-	<app-form-field title="Gateway url">
-		<input class="field input-field" formControlName="gatewayUrl" placeholder="Gateway url">
-	</app-form-field>
+		<app-form-field title="API url">
+			<input class="field input-field" formControlName="apiUrl" placeholder="API url">
+		</app-form-field>
 
-	<app-form-field title="Explorer url">
-		<input class="field input-field" formControlName="explorerUrl" placeholder="Explorer url">
-	</app-form-field>
+		<app-form-field title="Explorer url">
+			<input class="field input-field" formControlName="explorerUrl" placeholder="Explorer url">
+		</app-form-field>
+
+		<app-form-field title="EGLD label">
+			<input class="field input-field" formControlName="egldLabel" placeholder="EGLD label">
+		</app-form-field>
+	</div>
+
+	<div class="section">
+		<app-form-field title="Gas per data byte">
+			<input class="field input-field" type="number" formControlName="gasPerDataByte" placeholder="Gas per data byte">
+		</app-form-field>
+
+		<app-form-field title="EGLD decimal places">
+			<input class="field input-field" formControlName="egldDenomination" placeholder="EGLD decimal places">
+		</app-form-field>
+
+		<app-form-field title="Wallet connect deep link">
+			<input class="field input-field" formControlName="walletConnectDeepLink" placeholder="Wallet connect deep link">
+		</app-form-field>
+
+		<app-form-field title="Wallet connect deep link">
+			<input class="field input-field" formControlName="walletConnectBridgeAddress" placeholder="Wallet connect bridge address">
+		</app-form-field>
+	</div>
 </form>
 
 <div class="actions">

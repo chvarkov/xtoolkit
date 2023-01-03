@@ -13,8 +13,11 @@
 				<td class="name">
 					{{network.name}} ({{network.chainId}})
 				</td>
+				<td class="native-token-cell">
+					{{network.egldLabel}} ({{network.egldDenomination}})
+				</td>
 				<td class="url-cell">
-					{{network.gatewayUrl}}
+					{{network.apiUrl}}
 				</td>
 				<td class="options">
 					<button mat-icon-button [matMenuTriggerFor]="menu">
@@ -25,6 +28,12 @@
 							<mat-icon>edit</mat-icon>
 							<span>Update</span>
 						</button>
+
+						<button mat-menu-item (click)="syncNetwork(network)">
+							<mat-icon>sync</mat-icon>
+							<span>Sync configs</span>
+						</button>
+
 						<button mat-menu-item (click)="deleteNetwork(network.chainId)">
 							<mat-icon>delete</mat-icon>
 							<span>Delete</span>

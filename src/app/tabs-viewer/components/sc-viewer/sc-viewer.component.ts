@@ -9,7 +9,7 @@ import { IElrondTransaction } from '../../../core/elrond/interfaces/elrond-trans
 import { ITokenPosition } from '../../../core/elrond/interfaces/token-position';
 import { ScEndpointComponent } from './sc-endpoint/sc-endpoint.component';
 import { filter } from 'rxjs/operators';
-import { INft } from '../../../core/elrond/services/nft';
+import { INft } from '../../../core/elrond/interfaces/nft';
 
 @Component({
 	selector: 'app-sc-viewer',

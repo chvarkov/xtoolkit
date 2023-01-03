@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INft } from '../../../../core/elrond/services/nft';
+import { INft } from '../../../../core/elrond/interfaces/nft';
 
 @Component({
 	selector: 'app-nft-list',

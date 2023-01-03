@@ -7,7 +7,7 @@ import {
 	AbiRegistry,
 	BytesValue,
 	U32Value,
-	BigUIntValue, AddressValue, TypedValue,
+	BigUIntValue, AddressValue, TypedValue, Transaction, ContractFunction, TokenIdentifierValue,
 } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
@@ -18,6 +18,7 @@ import { ProjectWallet } from '../../data-provider/data-provider';
 import { TxSender } from './tx.sender';
 import { Observable } from 'rxjs';
 import { GasLimit } from '../models/gas-limit';
+import { ContractCallPayloadBuilder } from '@elrondnetwork/erdjs/out/smartcontracts/transactionPayloadBuilders';
 
 export interface IIssueTokenOptions {
 	name: string,
@@ -127,17 +128,21 @@ export class ESDTInteractor {
 		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Observable<string> {
-		const args: any[] = [
-			BytesValue.fromUTF8(options.identifier),
-			new BigUIntValue(new BigNumber(options.supply)),
-			new AddressValue(new Address(options.mintedTokensOwner)),
-		];
+		const txPayload = new ContractCallPayloadBuilder()
+			.setFunction(new ContractFunction('ESDTLocalMint'))
+			.setArgs([
+				new TokenIdentifierValue(options.identifier),
+				new BigUIntValue(options.supply),
+			])
+			.build();
 
-		const interaction = <Interaction>this.contract.methodsExplicit
-			.mint(args)
-			.withChainID(network.chainId);
-
-		const tx = interaction.buildTransaction();
+		const tx = new Transaction({
+			gasLimit: new GasLimit(3_000_000),
+			sender: new Address(wallet.address),
+			receiver: new Address(wallet.address),
+			chainID: network.chainId,
+			data: txPayload,
+		});
 
 		tx.setGasLimit(new GasLimit(3_000_000));
 
@@ -148,18 +153,21 @@ export class ESDTInteractor {
 		 network: INetworkEnvironment,
 		 wallet: ProjectWallet,
 		 options: IMintBurnTokenOptions): Observable<string> {
-		const args: any[] = [
-			BytesValue.fromUTF8(options.identifier),
-			new BigUIntValue(new BigNumber(options.supply)),
-		];
+		const txPayload = new ContractCallPayloadBuilder()
+			.setFunction(new ContractFunction('ESDTLocalBurn'))
+			.setArgs([
+				new TokenIdentifierValue(options.identifier),
+				new BigUIntValue(options.supply),
+			])
+			.build();
 
-		const interaction = <Interaction>this.contract.methodsExplicit
-			.ESDTBurn(args)
-			.withChainID(network.chainId);
-
-		const tx = interaction.buildTransaction();
-
-		tx.setGasLimit(new GasLimit(3_000_000));
+		const tx = new Transaction({
+			gasLimit: new GasLimit(3_000_000),
+			sender: new Address(wallet.address),
+			receiver: new Address(wallet.address),
+			chainID: network.chainId,
+			data: txPayload,
+		});
 
 		return this.txSender.send(projectId, wallet, tx);
 	}

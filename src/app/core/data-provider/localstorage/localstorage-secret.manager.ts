@@ -96,8 +96,6 @@ export class LocalstorageSecretManager implements SecretManager {
 	setWalletSecret(passwordHash: string, projectId: string, address: string, secret: string): Observable<void> {
 		return this.getWalletSecretMap(passwordHash, projectId).pipe(
 			switchMap((map) => {
-				console.log('map', map);
-
 				map[address] = secret;
 
 				return this.setWalletSecretMap(passwordHash, projectId, map);
@@ -135,13 +133,10 @@ export class LocalstorageSecretManager implements SecretManager {
 				try {
 					const encryptedJson = this.encryptMap(passwordHash, projectId, map);
 
-					console.log('encrypted json', encryptedJson);
-					console.log('key', this.getProjectWalletsKey(projectId));
 					this.set(this.getProjectWalletsKey(projectId), encryptedJson);
 
 					return of(undefined);
 				} catch (e) {
-					console.log('caught error', e);
 					return throwError(e);
 				}
 			})

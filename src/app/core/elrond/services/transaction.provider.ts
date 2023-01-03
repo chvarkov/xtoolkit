@@ -11,7 +11,7 @@ export class TransactionProvider {
 
 	getTransactions(network: INetworkEnvironment,
 					address: string): Observable<IElrondTransaction[]> {
-		return this.http.get<IElrondTransaction[]>(`${network.gatewayUrl}/accounts/${address}/transactions`, {
+		return this.http.get<IElrondTransaction[]>(`${network.apiUrl}/accounts/${address}/transactions`, {
 			params: {
 				withScamInfo: true,
 			},
