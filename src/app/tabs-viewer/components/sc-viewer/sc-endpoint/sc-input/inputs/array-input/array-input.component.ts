@@ -63,8 +63,6 @@ export class ArrayInputComponent implements OnInit, OnDestroy, ControlValueAcces
 			list: this.fb.array([]),
 		});
 
-		setInterval(() => console.log('inner_array_value', this.form.value), 6000);
-
 		this.sub.add(this.list.valueChanges.subscribe(data => {
 			this.onChangeList(data);
 		}));

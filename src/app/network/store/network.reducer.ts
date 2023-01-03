@@ -1,6 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { NetworkAction } from './network.action';
 import { INetworkEnvironment } from '../../core/elrond/interfaces/network-environment';
+import { ReducerTypes } from '@ngrx/store/src/reducer_creator';
 
 export interface INetworkState {
 	list: INetworkEnvironment[];
@@ -42,6 +43,12 @@ export const reducer = createReducer(
 			list,
 		};
 	}),
+
+	...NetworkAction.errorActions.map((action): ReducerTypes<INetworkState, any> => on(action, (state, { err, type }): INetworkState => {
+		console.error(`Action: ${type}`, err);
+
+		return state as any;
+	}))
 );
 
 

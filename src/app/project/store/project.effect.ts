@@ -141,8 +141,6 @@ export class ProjectEffect {
 					),
 				),
 				switchMap(([generatedProjectWallet, passwordHash]: [IGeneratedProjectWallet, string]) => {
-					console.log('generatedProjectWallet', generatedProjectWallet);
-					console.log('passwordHash', passwordHash);
 					return this.secretManager.setWalletSecret(
 						passwordHash,
 						projectId,

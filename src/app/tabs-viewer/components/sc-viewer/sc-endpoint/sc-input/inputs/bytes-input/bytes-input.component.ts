@@ -58,7 +58,6 @@ export class BytesInputComponent implements OnInit, ControlValueAccessor {
 	}
 
 	writeValue(value: Buffer) {
-		console.log(`writeValue<BUTES> ${value.toString('utf-8')}`, value);
 		this.val = value;
 	}
 

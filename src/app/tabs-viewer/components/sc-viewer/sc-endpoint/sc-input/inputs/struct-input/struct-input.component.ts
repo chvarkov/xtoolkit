@@ -72,7 +72,6 @@ export class StructInputComponent implements OnInit, OnDestroy, ControlValueAcce
 	}
 
 	writeValue(value: any){
-		console.log('writeValue', value);
 		this.form.setValue(value);
 	}
 

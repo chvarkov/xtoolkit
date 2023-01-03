@@ -22,9 +22,9 @@ export class NetworkEffect {
 
 	addNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.addNetwork),
-		exhaustMap(() => this.dialog.open(NetworkEditorDialogComponent, {width: '320px'}).afterClosed()),
+		exhaustMap(() => this.dialog.open(NetworkEditorDialogComponent, {width: '510px'}).afterClosed()),
 		filter(v => !!v),
-		mergeMap(({network}) => this.dataProvider.addNetwork(network).pipe(
+		mergeMap((network) => this.dataProvider.addNetwork(network).pipe(
 			map((list) => NetworkAction.addNetworkSuccess({list})),
 			catchError(err => of(NetworkAction.addNetworkError({err})),
 		))),
@@ -33,9 +33,11 @@ export class NetworkEffect {
 	updateNetwork$ = createEffect(() => this.actions$.pipe(
 		ofType(NetworkAction.updateNetwork),
 		exhaustMap((action) => {
-			return this.dialog.open(NetworkEditorDialogComponent, {data: action.network, width: '320px'}).afterClosed();
+			return this.dialog.open(NetworkEditorDialogComponent, {data: action.network, width: '510px'}).afterClosed().pipe(
+				filter(v => !!v),
+				map((network) => ({network, chainId: action.network.chainId})),
+			);
 		}),
-		filter(v => !!v),
 		mergeMap(({chainId, network}) => this.dataProvider.updateNetwork(chainId, network).pipe(
 			map((list) => NetworkAction.updateNetworkSuccess({list})),
 			catchError(err => of(NetworkAction.updateNetworkError({err})),

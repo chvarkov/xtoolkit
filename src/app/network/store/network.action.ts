@@ -21,4 +21,12 @@ export class NetworkAction {
 	static readonly deleteNetwork = createAction(`[${NetworkAction.name}] delete network [...]`, props<{chainId: string}>());
 	static readonly deleteNetworkSuccess = createAction(`[${NetworkAction.name}] delete network [OK]`, props<{list: INetworkEnvironment[]}>());
 	static readonly deleteNetworkError = createAction(`[${NetworkAction.name}] delete network [ERR]`, props<{err: Error}>());
+
+	static readonly errorActions = [
+		NetworkAction.loadNetworksError,
+		NetworkAction.addNetworkError,
+		NetworkAction.updateNetworkError,
+		NetworkAction.syncNetworkError,
+		NetworkAction.deleteNetworkError,
+	];
 }
