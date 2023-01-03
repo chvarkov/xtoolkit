@@ -48,7 +48,7 @@ export class ActionHistoryEffect {
 			);
 		}),
 		mergeMap(({projectId}) => this.dataProvider.clearActionHistory(projectId).pipe(
-			map((list) => ActionHistoryAction.clearActionHistorySuccess()),
+			map(() => ActionHistoryAction.clearActionHistorySuccess()),
 			catchError(err => of(ActionHistoryAction.clearActionHistoryError({err})),
 			)),
 		)));

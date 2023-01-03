@@ -464,7 +464,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	clearActionHistory(projectId: string): Observable<void> {
 		this.set(this.getActionHistoryKey(projectId), []);
 
-		return of();
+		return of(undefined);
 	}
 
 	updateActionStatus(projectId: string, id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {
