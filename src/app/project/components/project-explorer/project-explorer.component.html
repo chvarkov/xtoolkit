@@ -29,7 +29,7 @@
 	</ng-container>
 </app-toolbar>
 
-<div class="project-explorer">
+<div class="project-explorer" [ngClass]="(activeMaiarWallet$ | async) ? 'connected-wallet-height' : 'regular-height'">
 	<ng-container *ngIf="activeProject$ | async as project; else projectSelectList">
 		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
 							 [bold]="true"
@@ -221,6 +221,10 @@
 							<mat-icon class="dropdown-icon">more_vert</mat-icon>
 						</button>
 						<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="connectWalletViaMaiarApp(project.id)">
+								<mat-icon>qr_code</mat-icon>
+								<span>Connect via Maiar</span>
+							</button>
 							<button mat-menu-item (click)="generateWallet(project.id)">
 								<mat-icon>key</mat-icon>
 								<span>Add secret key</span>
@@ -284,6 +288,18 @@
 		</app-project-element>
 	</ng-container>
 </div>
+
+
+<app-toolbar *ngIf="activeMaiarWallet$ | async as maiarWallet" [borderTop]="true" [borderRight]="true">
+	<ng-container left-side>
+		<mat-icon class="connected-wallet-icon">phone_iphone</mat-icon>
+		<span class="connected-wallet-label">{{maiarWallet.name}}</span>
+	</ng-container>
+	<ng-container right-side>
+		<app-toolbar-icon-button appTooltip tooltip="Logout"
+								 (click)="logoutMaiarWallet()">logout</app-toolbar-icon-button>
+	</ng-container>
+</app-toolbar>
 
 <ng-template #projectSelectList>
 	<app-project-list [projects]="(projectsList$ | async) || []"

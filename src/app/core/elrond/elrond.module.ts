@@ -5,6 +5,7 @@ import { ScPipe } from './pipes/sc.pipe';
 import { ElrondProxyProvider } from './services/elrond-proxy-provider';
 import { ScQueryRunner } from './services/sc-query-runner';
 import { ScInteractor } from './services/sc-interactor';
+import { WalletConnector } from './services/wallet-connector';
 
 @NgModule({
 	imports: [
@@ -15,6 +16,7 @@ import { ScInteractor } from './services/sc-interactor';
 		ElrondProxyProvider,
 		ScQueryRunner,
 		ScInteractor,
+		WalletConnector,
 	],
 	declarations: [
 		ScPipe,
