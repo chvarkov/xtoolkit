@@ -30,6 +30,12 @@ export const reducer = createReducer(
 			list,
 		};
 	}),
+	on(NetworkAction.syncNetworkSuccess, (state, { list }) => {
+		return {
+			...state,
+			list,
+		};
+	}),
 	on(NetworkAction.deleteNetworkSuccess, (state, { list }) => {
 		return {
 			...state,

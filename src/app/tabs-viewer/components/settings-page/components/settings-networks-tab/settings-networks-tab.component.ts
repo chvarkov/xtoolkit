@@ -31,6 +31,10 @@ export class SettingsNetworksTabComponent implements OnInit {
 		this.store.dispatch(NetworkAction.updateNetwork({network}));
 	}
 
+	syncNetwork(network: INetworkEnvironment): void {
+		this.store.dispatch(NetworkAction.syncNetwork({network}));
+	}
+
 	deleteNetwork(chainId: string): void {
 		this.store.dispatch(NetworkAction.deleteNetwork({chainId}));
 	}

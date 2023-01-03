@@ -15,6 +15,7 @@ import { IEstimateTxData } from './interfaces/estimate-tx-data';
 import { ITokenSearchOptions } from './interfaces/token-search-options';
 import { IElrondFullTransaction } from './interfaces/elrond-transaction';
 import { INft, NftType } from './interfaces/nft';
+import { IDappConfig } from './interfaces/dapp-config';
 
 @Injectable({ providedIn: 'root' })
 export class ElrondDataProvider {
@@ -23,7 +24,11 @@ export class ElrondDataProvider {
 	}
 
 	getProxy(network: INetworkEnvironment): ProxyNetworkProvider {
-		return new ProxyNetworkProvider(network.gatewayUrl);
+		return new ProxyNetworkProvider(network.apiUrl);
+	}
+
+	getDappConfig(apiUrl: string): Observable<IDappConfig> {
+		return this.http.get<IDappConfig>(`${apiUrl}/dapp/config`);
 	}
 
 	getAccountInfo(network: INetworkEnvironment, address: string): Observable<AccountOnNetwork> {
@@ -33,14 +38,14 @@ export class ElrondDataProvider {
 	getTokenPositions(network: INetworkEnvironment,
 					  address: string,
 					  filter?: ITokenPositionsFilter): Observable<ITokenPosition[]> {
-		return this.http.get<ITokenPosition[]>(`${network.gatewayUrl}/accounts/${address}/tokens`, {
+		return this.http.get<ITokenPosition[]>(`${network.apiUrl}/accounts/${address}/tokens`, {
 			params: this.createParams(filter),
 		});
 	}
 
 	getTransaction(network: INetworkEnvironment,
 				   txHash: string): Observable<IElrondFullTransaction> {
-		return this.http.get<any>(`${network.gatewayUrl}/transactions/${txHash}`);
+		return this.http.get<any>(`${network.apiUrl}/transactions/${txHash}`);
 	}
 
 	estimateTransactionConst(network: INetworkEnvironment,
@@ -54,19 +59,19 @@ export class ElrondDataProvider {
 			chainID: tx.getChainID().valueOf(),
 			version: 1,
 		};
-		return this.http.post<any>(`${network.gatewayUrl}/transaction/cost`, data).pipe(
+		return this.http.post<any>(`${network.apiUrl}/transaction/cost`, data).pipe(
 			map((res: {code: string, data: {txGasUnits: number}}) => res.data.txGasUnits)
 		);
 	}
 
 	getToken(network: INetworkEnvironment,
 			 identifier: string): Observable<ITokenInfo> {
-		return this.http.get<ITokenInfo>(`${network.gatewayUrl}/tokens/${identifier.trim()}`);
+		return this.http.get<ITokenInfo>(`${network.apiUrl}/tokens/${identifier.trim()}`);
 	}
 
 	getTokens(network: INetworkEnvironment,
 			  options?: ITokenSearchOptions): Observable<ITokenInfo[]> {
-		return this.http.get<ITokenInfo[]>(`${network.gatewayUrl}/tokens`, {
+		return this.http.get<ITokenInfo[]>(`${network.apiUrl}/tokens`, {
 			params: this.createParams(options),
 		});
 	}
@@ -74,7 +79,7 @@ export class ElrondDataProvider {
 	getTokenHolders(network: INetworkEnvironment,
 					identifier: string,
 					options: IPaginationOptions): Observable<ITokenHolder[]> {
-		return this.http.get<ITokenHolder[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/accounts`, {
+		return this.http.get<ITokenHolder[]>(`${network.apiUrl}/tokens/${identifier.trim()}/accounts`, {
 			params: this.createParams(options),
 		});
 	}
@@ -82,14 +87,14 @@ export class ElrondDataProvider {
 	getTokenTransfers(network: INetworkEnvironment,
 					  identifier: string,
 					  options: IPaginationOptions): Observable<ITokenTransfer[]> {
-		return this.http.get<ITokenTransfer[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/transfers`, {
+		return this.http.get<ITokenTransfer[]>(`${network.apiUrl}/tokens/${identifier.trim()}/transfers`, {
 			params: this.createParams(options),
 		});
 	}
 
 	getTokenRoles(network: INetworkEnvironment,
 				  identifier: string): Observable<ITokenRole[]> {
-		return this.http.get<ITokenRole[]>(`${network.gatewayUrl}/tokens/${identifier.trim()}/roles`).pipe(
+		return this.http.get<ITokenRole[]>(`${network.apiUrl}/tokens/${identifier.trim()}/roles`).pipe(
 			catchError((err) => of([])),
 		);
 	}
@@ -97,7 +102,7 @@ export class ElrondDataProvider {
 	getAccountNfts(network: INetworkEnvironment,
 				   address: string,
 				   types = [NftType.SemiFungibleESDT, NftType.NonFungibleESDT]): Observable<INft[]> {
-		return this.http.get<INft[]>(`${network.gatewayUrl}/accounts/${address}/nfts`, {
+		return this.http.get<INft[]>(`${network.apiUrl}/accounts/${address}/nfts`, {
 			params: this.createParams({
 				includeFlagged: true,
 				type: types.join(','),
