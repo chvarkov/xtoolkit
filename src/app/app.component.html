@@ -1,6 +1,9 @@
 <app-loading-screen *ngIf="isVisibleLoadingScreen$ | async"></app-loading-screen>
 <app-layout #layout>
 	<app-logo logo (click)="onLogoClick()"></app-logo>
+	<ng-container header *ngIf="activeProject$ | async as activeProject">
+		<app-active-project [project]="activeProject" [connectedWallet]="(connectedMaiarWallet$ | async) || undefined"></app-active-project>
+	</ng-container>
 	<app-project-explorer project (resize)="layout.resizePanel('left', $event)"></app-project-explorer>
 	<app-project-tabs
 		scViewer

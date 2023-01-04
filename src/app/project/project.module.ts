@@ -33,6 +33,7 @@ import { MaiarWalletService } from './services/maiar-wallet.service';
 import { ConnectMaiarWalletDialogComponent } from './components/dialogs/connect-maiar-wallet-dialog/connect-maiar-wallet-dialog.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { SetMaiarWalletNameDialogComponent } from './components/dialogs/set-maiar-wallet-name-dialog/set-maiar-wallet-name-dialog.component';
+import { ActiveProjectComponent } from './components/active-project/active-project.component';
 
 @NgModule({
 	declarations: [
@@ -58,6 +59,7 @@ import { SetMaiarWalletNameDialogComponent } from './components/dialogs/set-maia
 		ProjectListComponent,
 		ConnectMaiarWalletDialogComponent,
   SetMaiarWalletNameDialogComponent,
+  ActiveProjectComponent,
 	],
 	imports: [
 		CommonModule,
@@ -73,10 +75,11 @@ import { SetMaiarWalletNameDialogComponent } from './components/dialogs/set-maia
 		TokenIssueAwaiter,
 		MaiarWalletService,
 	],
-	exports: [
-		StoreModule,
-		EffectsModule,
-		ProjectExplorerComponent,
-	],
+    exports: [
+        StoreModule,
+        EffectsModule,
+        ProjectExplorerComponent,
+        ActiveProjectComponent,
+    ],
 })
 export class ProjectModule { }

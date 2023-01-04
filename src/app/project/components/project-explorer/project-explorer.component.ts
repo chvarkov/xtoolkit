@@ -17,7 +17,7 @@ import {
 	PersonalSettingsManager,
 	ProjectExplorerNode,
 } from '../../../core/data-provider/personal-settings.manager';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { ProjectElementComponent } from '../project-element/project-element.component';
 import { Actions, ofType } from '@ngrx/effects';
 import { Clipboard } from '@angular/cdk/clipboard';
@@ -32,7 +32,6 @@ import { MaiarWalletService } from '../../services/maiar-wallet.service';
 export class ProjectExplorerComponent implements OnInit, OnDestroy {
 	projectsList$: Observable<ProjectInfo[]>;
 	activeProject$: Observable<Project | undefined>;
-	activeMaiarWallet$: Observable<ProjectWallet | undefined>;
 	projectExplorerState$: Observable<{ [id: string]: ProjectExplorerNode }>;
 
 	activeElementRef?: ProjectElementComponent;
@@ -54,7 +53,6 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.projectsList$ = this.store.select(ProjectSelector.projectList);
 		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
 		this.projectExplorerState$ = this.store.select(ProjectSelector.projectExplorerNodeMap);
-		this.activeMaiarWallet$ = this.maiarWalletService.activeMaiarWallet$;
 
 		this.sub.add(
 			this.actions$.pipe(
@@ -139,10 +137,6 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	connectWalletViaMaiarApp(projectId: string): void {
 		this.store.dispatch(ProjectAction.connectMaiarWallet({projectId}));
-	}
-
-	logoutMaiarWallet(): void {
-		this.store.dispatch(ProjectAction.logoutMaiarWallet());
 	}
 
 	openProjectComponent(title: string,

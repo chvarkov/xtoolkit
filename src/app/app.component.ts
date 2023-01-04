@@ -2,7 +2,7 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NetworkAction } from './network/store/network.action';
 import { Observable } from 'rxjs';
-import { ProjectAbi, ProjectSmartContract } from './core/data-provider/data-provider';
+import { Project, ProjectAbi, ProjectSmartContract, ProjectWallet } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
 import { OpenedProjectTab, SELF_PROJECT_ID, Theme } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
@@ -12,6 +12,7 @@ import { LayoutSelector } from './layout/store/layout.selector';
 import { LayoutAction } from './layout/store/layout.action';
 import { SecurityAction } from './security/store/security.action';
 import { SecuritySelector } from './security/store/security.selector';
+import { MaiarWalletService } from './project/services/maiar-wallet.service';
 
 @Component({
 	selector: 'app-root',
@@ -19,6 +20,10 @@ import { SecuritySelector } from './security/store/security.selector';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
+	activeProject$: Observable<Project | undefined>;
+
+	connectedMaiarWallet$: Observable<ProjectWallet | undefined>
+
 	theme$: Observable<Theme>;
 
 	isPasswordSet$: Observable<boolean>;
@@ -32,13 +37,16 @@ export class AppComponent implements OnInit, OnDestroy {
 	isVisibleLoadingScreen$: Observable<boolean>;
 
 	constructor(private readonly store: Store,
-				private readonly tokenIssueAwaiter: TokenIssueAwaiter) {
+				private readonly tokenIssueAwaiter: TokenIssueAwaiter,
+				private readonly maiarWalletService: MaiarWalletService) {
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 		this.isVisibleLoadingScreen$ = this.store.select(LayoutSelector.isLoadingScreenVisible);
 		this.isPasswordSet$ = this.store.select(SecuritySelector.isPasswordSet);
 		this.isUnlockedWalletAccess$ = this.store.select(SecuritySelector.isSecretsUnlocked);
 		this.theme$ = this.store.select(LayoutSelector.theme);
+		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
+		this.connectedMaiarWallet$ = this.maiarWalletService.activeMaiarWallet$;
 	}
 
 	async ngOnInit(): Promise<void> {

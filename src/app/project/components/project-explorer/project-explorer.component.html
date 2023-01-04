@@ -29,7 +29,7 @@
 	</ng-container>
 </app-toolbar>
 
-<div class="project-explorer" [ngClass]="(activeMaiarWallet$ | async) ? 'connected-wallet-height' : 'regular-height'">
+<div class="project-explorer">
 	<ng-container *ngIf="activeProject$ | async as project; else projectSelectList">
 		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
 							 [bold]="true"
@@ -289,17 +289,6 @@
 	</ng-container>
 </div>
 
-
-<app-toolbar *ngIf="activeMaiarWallet$ | async as maiarWallet" [borderTop]="true" [borderRight]="true">
-	<ng-container left-side>
-		<mat-icon class="connected-wallet-icon">phone_iphone</mat-icon>
-		<span class="connected-wallet-label">{{maiarWallet.name}}</span>
-	</ng-container>
-	<ng-container right-side>
-		<app-toolbar-icon-button appTooltip tooltip="Logout"
-								 (click)="logoutMaiarWallet()">logout</app-toolbar-icon-button>
-	</ng-container>
-</app-toolbar>
 
 <ng-template #projectSelectList>
 	<app-project-list [projects]="(projectsList$ | async) || []"
