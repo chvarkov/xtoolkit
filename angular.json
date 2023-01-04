@@ -22,9 +22,20 @@
 					"options": {
 						"allowedCommonJsDependencies": [
 							"@elrondnetwork/erdjs-network-providers",
+							"@elrondnetwork/erdjs-wallet-connect-provider",
 							"@elrondnetwork/erdjs-walletcore",
 							"@elrondnetwork/transaction-decoder",
-							"@elrondnetwork/erdjs"
+							"@elrondnetwork/erdjs",
+							"@walletconnect/browser-utils",
+							"@walletconnect/crypto",
+							"@walletconnect/core",
+							"@walletconnect/window-metadata",
+							"@walletconnect/socket-transport",
+							"@walletconnect/environment",
+							"query-string",
+							"qrcode",
+							"crypto-js",
+							"angularx-qrcode"
 						],
 						"outputPath": "dist/elrond-sc",
 						"index": "src/index.html",
