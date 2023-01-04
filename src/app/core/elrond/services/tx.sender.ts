@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Observable, of, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { ElrondProxyProvider } from './elrond-proxy-provider';
 import { ElrondDataProvider } from '../elrond.data-provider';
 import { NetworkSelector } from '../../../network/store/network.selector';
@@ -13,12 +13,14 @@ import { SECRET_MANAGER, SecretManager } from '../../data-provider/secret.manage
 import { MatDialog } from '@angular/material/dialog';
 import { SecurityNgrxHelper } from '../../../security/store/security.ngrx-helper';
 import { ConfirmTransactionDialogComponent } from '../../ui/confirm-transaction-dialog/confirm-transaction-dialog.component';
+import { WalletConnector } from './wallet-connector';
 
 @Injectable({providedIn: 'root'})
 export class TxSender {
 	constructor(private readonly store: Store,
 				private readonly proxy: ElrondProxyProvider,
 				private readonly elrondDataProvider: ElrondDataProvider,
+				private readonly walletConnector: WalletConnector,
 				private readonly dialog: MatDialog,
 				@Inject(SECRET_MANAGER) private readonly secretManager: SecretManager) {
 	}
@@ -53,11 +55,34 @@ export class TxSender {
 		 network: INetworkEnvironment,
 		 tx: Transaction): Observable<void> {
 		return of(undefined).pipe(
-			switchMap(() => SecurityNgrxHelper.resolvePasswordHash(
-				this.store,
-				this.dialog,
-				this.secretManager,
-			)),
+			map(() => this.walletConnector.activeAddress),
+			switchMap((connectedAddress) => {
+				console.log('pass ', connectedAddress);
+				if (connectedAddress && connectedAddress === wallet.address) {
+					return this.walletConnector.signTransaction(tx);
+				}
+
+				return this.signViaInternalSigner(projectId, wallet, tx);
+			}),
+			switchMap(() => {
+				if (this.isInternalSign(wallet.signStrategy)) {
+					return this.dialog.open(ConfirmTransactionDialogComponent, {data: tx}).afterClosed().pipe(
+						filter(v => !!v),
+						map(() => undefined),
+					);
+				}
+
+				return of(undefined);
+			}),
+		);
+	}
+
+	private signViaInternalSigner(projectId: string, wallet: ProjectWallet, tx: Transaction): Observable<void> {
+		return SecurityNgrxHelper.resolvePasswordHash(
+			this.store,
+			this.dialog,
+			this.secretManager,
+		).pipe(
 			switchMap(passwordHash => this.secretManager.getWalletSecret(passwordHash, projectId, wallet.address)),
 			map((secretValue) => {
 				switch (wallet.signStrategy) {
@@ -74,17 +99,7 @@ export class TxSender {
 			map((userSigner) => {
 				userSigner.sign(tx);
 			}),
-			switchMap(() => {
-				if (this.isInternalSign(wallet.signStrategy)) {
-					return this.dialog.open(ConfirmTransactionDialogComponent, {data: tx}).afterClosed().pipe(
-						filter(v => !!v),
-						map(() => undefined),
-					);
-				}
-
-				return of(undefined);
-			}),
-		);
+		)
 	}
 
 	private isInternalSign(strategy: WalletSignStrategy): boolean {

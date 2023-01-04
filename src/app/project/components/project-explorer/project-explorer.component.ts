@@ -17,11 +17,12 @@ import {
 	PersonalSettingsManager,
 	ProjectExplorerNode,
 } from '../../../core/data-provider/personal-settings.manager';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { ProjectElementComponent } from '../project-element/project-element.component';
 import { Actions, ofType } from '@ngrx/effects';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { FaucetService } from '../../../core/services/faucet.service';
+import { MaiarWalletService } from '../../services/maiar-wallet.service';
 
 @Component({
 	selector: 'app-project-explorer',
@@ -47,6 +48,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 				private readonly actions$: Actions,
 				private readonly clipboard: Clipboard,
 				public readonly faucet: FaucetService,
+				private readonly maiarWalletService: MaiarWalletService,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly ps: PersonalSettingsManager) {
 		this.projectsList$ = this.store.select(ProjectSelector.projectList);
 		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
@@ -131,6 +133,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	generateWallet(projectId: string): void {
 		this.store.dispatch(ProjectAction.generateWallet({projectId}));
+	}
+
+	connectWalletViaMaiarApp(projectId: string): void {
+		this.store.dispatch(ProjectAction.connectMaiarWallet({projectId}));
 	}
 
 	openProjectComponent(title: string,

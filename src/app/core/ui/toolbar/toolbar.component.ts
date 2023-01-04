@@ -12,6 +12,7 @@ export class ToolbarComponent implements OnInit {
 	@Input() title?: string
 	@Input() borderRight: boolean = false;
 	@Input() borderLeft: boolean = false;
+	@Input() borderTop: boolean = false;
 
 	constructor() {
 	}

@@ -221,6 +221,10 @@
 							<mat-icon class="dropdown-icon">more_vert</mat-icon>
 						</button>
 						<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="connectWalletViaMaiarApp(project.id)">
+								<mat-icon>qr_code</mat-icon>
+								<span>Connect via Maiar</span>
+							</button>
 							<button mat-menu-item (click)="generateWallet(project.id)">
 								<mat-icon>key</mat-icon>
 								<span>Add secret key</span>
@@ -284,6 +288,7 @@
 		</app-project-element>
 	</ng-container>
 </div>
+
 
 <ng-template #projectSelectList>
 	<app-project-list [projects]="(projectsList$ | async) || []"

@@ -29,6 +29,11 @@ import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-d
 import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
 import { TransferOwnershipDialogComponent } from './components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
+import { MaiarWalletService } from './services/maiar-wallet.service';
+import { ConnectMaiarWalletDialogComponent } from './components/dialogs/connect-maiar-wallet-dialog/connect-maiar-wallet-dialog.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { SetMaiarWalletNameDialogComponent } from './components/dialogs/set-maiar-wallet-name-dialog/set-maiar-wallet-name-dialog.component';
+import { ActiveProjectComponent } from './components/active-project/active-project.component';
 
 @NgModule({
 	declarations: [
@@ -52,6 +57,9 @@ import { ProjectListComponent } from './components/project-list/project-list.com
 		SpecialRolesTokenDialogComponent,
 		TransferOwnershipDialogComponent,
 		ProjectListComponent,
+		ConnectMaiarWalletDialogComponent,
+  SetMaiarWalletNameDialogComponent,
+  ActiveProjectComponent,
 	],
 	imports: [
 		CommonModule,
@@ -61,14 +69,17 @@ import { ProjectListComponent } from './components/project-list/project-list.com
 		FormsModule,
 		NetworkModule,
 		ReactiveFormsModule,
+		QRCodeModule,
 	],
 	providers: [
 		TokenIssueAwaiter,
+		MaiarWalletService,
 	],
-	exports: [
-		StoreModule,
-		EffectsModule,
-		ProjectExplorerComponent,
-	],
+    exports: [
+        StoreModule,
+        EffectsModule,
+        ProjectExplorerComponent,
+        ActiveProjectComponent,
+    ],
 })
 export class ProjectModule { }

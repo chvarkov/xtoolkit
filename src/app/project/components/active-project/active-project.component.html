@@ -1,0 +1,15 @@
+<div class="project-wrapper">
+	<div class="project-name">{{project.name}} [{{project.chainId | networkName | async}}]</div>
+
+	<mat-icon class="close" (click)="closeProject()">close</mat-icon>
+
+	<div class="wallet-wrapper" *ngIf="connectedWallet">
+		<div class="splitter"></div>
+		<div class="active-wallet">
+			<mat-icon class="wallet-icon">phone_iphone</mat-icon>
+			<div>{{connectedWallet.name}}</div>
+
+			<mat-icon class="close" (click)="disconnectWallet()">logout</mat-icon>
+		</div>
+	</div>
+</div>

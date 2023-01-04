@@ -1,0 +1,61 @@
+.project-wrapper {
+	width: fit-content;
+	height: var(--toolbar-height);
+	border-radius: 32px;
+	margin: 16px 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border: solid 1px var(--border-low-color);
+}
+
+.project-name {
+	padding: 10px;
+	font-weight: 600;
+	font-size: 14px;
+	margin-left: 10px;
+	color: var(--low-text);
+}
+
+.wallet-wrapper {
+	left: 300px;
+	display: flex;
+	flex-direction: row;
+}
+
+.wallet-icon {
+	font-size: 18px;
+	margin-top: 4px;
+	cursor: pointer;
+
+}
+
+.active-wallet {
+	padding: 8px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	color: var(--wallet-color);
+}
+
+.splitter {
+	width: 6px;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	margin-right: 6px;
+	border-right: solid 1px var(--border-low-color);
+	height: calc(var(--toolbar-height) - 16px);
+}
+
+.close {
+	color: var(--low-text);
+	cursor: pointer;
+	margin-left: 12px;
+	margin-right: 4px;
+	font-size: 18px;
+	margin-top: 5px;
+
+	&:hover {
+		color: var(--text-color);
+	}
+}

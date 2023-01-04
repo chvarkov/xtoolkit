@@ -28,3 +28,17 @@
 	font-size: 1.6em;
 	padding: 6px 0;
 }
+
+.connected-wallet-icon {
+	color: var(--wallet-color);
+	padding: 9px;
+	font-size: 18px;
+	margin-left: 6px;
+}
+
+.connected-wallet-label {
+	color: var(--wallet-color);
+	font-size: 14px;
+	font-weight: 600;
+	padding: 10px;
+}

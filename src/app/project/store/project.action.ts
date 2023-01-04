@@ -254,6 +254,14 @@ export class ProjectAction {
 	static readonly sendTxSuccess = createAction(`[${ProjectAction.name}] sign tx  [OK]`, props<{txHash: string}>());
 	static readonly sendTxError = createAction(`[${ProjectAction.name}] sign tx  [ERR]`, props<{err: Error}>());
 
+	static readonly connectMaiarWallet = createAction(`[${ProjectAction.name}] connect maiar wallet [...]`, props<{projectId: string}>());
+	static readonly connectMaiarWalletSuccess = createAction(`[${ProjectAction.name}] connect maiar wallet [OK]`, props<{ address: string }>());
+	static readonly connectMaiarWalletError = createAction(`[${ProjectAction.name}] connect maiar wallet [ERR]`, props<{err: Error}>());
+
+	static readonly logoutMaiarWallet = createAction(`[${ProjectAction.name}] logout maiar wallet [...]`);
+	static readonly logoutMaiarWalletSuccess = createAction(`[${ProjectAction.name}] logout maiar wallet [OK]`);
+	static readonly logoutMaiarWalletError = createAction(`[${ProjectAction.name}] logout maiar wallet [ERR]`, props<{err: Error}>());
+
 	static readonly errorActions = [
 		ProjectAction.loadProjectListError,
 		ProjectAction.loadActiveProjectError,

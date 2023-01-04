@@ -6,7 +6,7 @@ import {
 	DATA_PROVIDER,
 	DataProvider, ProjectAddress,
 } from '../../core/data-provider/data-provider';
-import { catchError, exhaustMap, filter, map, mergeMap, switchMap, take } from 'rxjs/operators';
+import { catchError, exhaustMap, filter, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 import { forkJoin, from, of } from 'rxjs';
 import { CreateProjectDialogComponent } from '../components/dialogs/create-project-dialog/create-project-dialog.component';
 import { ElrondDataProvider } from '../../core/elrond/elrond.data-provider';
@@ -50,6 +50,9 @@ import { TransferOwnershipDialogComponent } from '../components/dialogs/estd/tra
 import { TransferTokenDialogComponent } from '../../tabs-viewer/components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
 import { SECRET_MANAGER, SecretManager } from '../../core/data-provider/secret.manager';
 import { SecurityNgrxHelper } from '../../security/store/security.ngrx-helper';
+import { WalletConnector } from '../../core/elrond/services/wallet-connector';
+import { ConnectMaiarWalletDialogComponent } from '../components/dialogs/connect-maiar-wallet-dialog/connect-maiar-wallet-dialog.component';
+import { MaiarWalletService } from '../services/maiar-wallet.service';
 
 @Injectable()
 export class ProjectEffect {
@@ -851,6 +854,22 @@ export class ProjectEffect {
 		)),
 	));
 
+	connectMaiarWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.connectMaiarWallet),
+		switchMap(() => this.maiarWalletService.connectWallet().pipe(
+			map(address => ProjectAction.connectMaiarWalletSuccess({address})),
+			catchError(err => of(ProjectAction.connectMaiarWalletError({err})))
+		)),
+	));
+
+	logoutMaiarWallet$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.logoutMaiarWallet),
+		switchMap(() => this.maiarWalletService.logout().pipe(
+			map(() => ProjectAction.logoutMaiarWalletSuccess()),
+			catchError(err => of(ProjectAction.logoutMaiarWalletError({err}))),
+		)),
+	));
+
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
 				private readonly elrondDataProvider: ElrondDataProvider,
@@ -858,6 +877,7 @@ export class ProjectEffect {
 				private readonly txProvider: TransactionProvider,
 				private readonly dialog: MatDialog,
 				private readonly estdService: EstdService,
+				private readonly maiarWalletService: MaiarWalletService,
 				@Inject(SECRET_MANAGER) private readonly secretManager: SecretManager,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
