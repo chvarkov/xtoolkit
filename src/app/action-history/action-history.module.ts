@@ -13,6 +13,7 @@ import { CoreModule } from '../core/core.module';
 import { ActionStatusIconPipe } from './pipes/action-status-icon.pipe';
 import { ActionTypeIconPipe } from './pipes/action-type-icon.pipe';
 import { ActionTypeIconComponent } from './components/action-type-icon/action-type-icon.component';
+import { FieldLabelPipe } from './pipes/field-label.pipe';
 
 @NgModule({
 	imports: [
@@ -26,15 +27,16 @@ import { ActionTypeIconComponent } from './components/action-type-icon/action-ty
 		ActionHistoryListComponent,
 		ActionComponent,
 		ActionStatusIconComponent,
-  ActionStatusIconPipe,
-  ActionTypeIconPipe,
-  ActionTypeIconComponent,
+		ActionStatusIconPipe,
+		ActionTypeIconPipe,
+		FieldLabelPipe,
+		ActionTypeIconComponent,
 	],
-    exports: [
-        ActionHistoryListComponent,
-        EffectsModule,
-        StoreModule,
-    ],
+	exports: [
+		ActionHistoryListComponent,
+		EffectsModule,
+		StoreModule,
+	],
 })
 export class ActionHistoryModule {
 }

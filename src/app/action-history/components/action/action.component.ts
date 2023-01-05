@@ -19,10 +19,16 @@ import { TransactionStatus } from '../../../core/elrond/enums/transaction-status
 export class ActionComponent implements OnInit {
 	@Input() data?: ActionHistoryElement;
 
+	isExpanded = false;
+
 	private transactionWatcher?: TransactionWatcher;
 
 	constructor(private readonly proxy: ElrondProxyProvider,
 				private readonly store: Store) {
+	}
+
+	get keys(): string[] {
+		return Object.keys(this.data?.data || {});
 	}
 
 	async ngOnInit(): Promise<void> {
@@ -83,5 +89,9 @@ export class ActionComponent implements OnInit {
 			componentType: 'tx',
 			title: txTabName(this.data.txHash),
 		}));
+	}
+
+	toggleExpand(): void {
+		this.isExpanded = !this.isExpanded;
 	}
 }

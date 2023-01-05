@@ -10,7 +10,7 @@ export class ActionHistoryAction {
 	static readonly logActionSuccess = createAction(`[${ActionHistoryAction.name}] log action [OK]`, props<{list: ActionHistoryElement[]}>());
 	static readonly logActionError = createAction(`[${ActionHistoryAction.name}] log action [ERR]`, props<{err: Error}>());
 
-	static readonly updateActionStatus = createAction(`[${ActionHistoryAction.name}] update action status [...]`, props<{projectId: string, id: string, status: ActionStatus}>());
+	static readonly updateActionStatus = createAction(`[${ActionHistoryAction.name}] update action status [...]`, props<{projectId: string, id: string, status: ActionStatus, concatTitle?: string}>());
 	static readonly updateActionStatusSuccess = createAction(`[${ActionHistoryAction.name}] update action status [OK]`, props<{list: ActionHistoryElement[]}>());
 	static readonly updateActionStatusError = createAction(`[${ActionHistoryAction.name}] update action status [ERR]`, props<{err: Error}>());
 

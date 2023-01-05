@@ -1,4 +1,4 @@
-<div *ngIf="data" class="action-container">
+<div *ngIf="data" mat-ripple class="preview-container" (click)="toggleExpand()" >
 	<div class="primary-info">
 		<div class="title">
 			<app-action-type-icon [type]="data.type"></app-action-type-icon>
@@ -15,5 +15,12 @@
 					 (open)="openTx()">
 		</app-tx-hash>
 		<div>{{data.timestamp | date:'medium'}}</div>
+	</div>
+</div>
+
+<div class="expand-data-container" *ngIf="isExpanded && data">
+	<div class="row" *ngFor="let key of keys">
+		<div class="key">{{key | fieldLabel}}:</div>
+		<div class="value">{{data.data[key]?.toString() | shortString: 18}}</div>
 	</div>
 </div>

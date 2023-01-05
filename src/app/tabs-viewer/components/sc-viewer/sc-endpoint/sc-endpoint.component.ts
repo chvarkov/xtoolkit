@@ -95,47 +95,9 @@ export class ScEndpointComponent implements OnInit {
 			functionName: this.endpoint.name,
 		});
 
-		try {
-			const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
+		const queryResult = await this.scQueryRunner.runQuery(network, this.sc, query);
 
-			this.store.dispatch(ActionHistoryAction.logAction({
-				data: {
-					projectId: this.projectId,
-					id: uuid.v4(),
-					chainId: this.chainId,
-					type: ActionType.Query,
-					title: query.func.name,
-					timestamp: Date.now(),
-					status: ActionStatus.Success,
-					data: {
-						query:  this.transformActionData(this.form.value),
-						result: {
-							returnMessage: queryResult.returnMessage,
-							returnCode: queryResult.returnCode.toString(),
-							data: queryResult.values.map(value => value.valueOf()?.toString()),
-						},
-					},
-				},
-			}));
-
-			this.queryResultSubject.next(queryResult);
-		} catch (e) {
-			this.store.dispatch(ActionHistoryAction.logAction({
-				data: {
-					id: uuid.v4(),
-					projectId: this.projectId,
-					chainId: this.chainId,
-					type: ActionType.Query,
-					title: query.func.name,
-					timestamp: Date.now(),
-					status: ActionStatus.Fail,
-					data: {
-						query: this.transformActionData(this.form.value),
-					},
-				},
-			}))
-			throw e;
-		}
+		this.queryResultSubject.next(queryResult);
 	}
 
 	async submitTransaction(network: INetworkEnvironment,
@@ -185,6 +147,7 @@ export class ScEndpointComponent implements OnInit {
 					title: this.endpoint.name,
 					timestamp: Date.now(),
 					status: ActionStatus.Fail,
+					caller: wallet.address,
 					data: {
 						payload: this.transformActionData(this.form.value),
 					},

@@ -84,6 +84,7 @@ export class TokenIssueAwaiter {
 									projectId: data.projectId,
 									id: data.actionId,
 									status,
+									concatTitle: ` ${identifier}`,
 								}));
 
 								break;
