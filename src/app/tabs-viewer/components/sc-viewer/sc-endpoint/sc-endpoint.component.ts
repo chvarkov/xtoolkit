@@ -2,7 +2,7 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
 import { EndpointDefinition, SmartContract, TokenPayment, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
 import { Store } from '@ngrx/store';
@@ -13,6 +13,7 @@ import { ActionHistoryAction } from '../../../../action-history/store/action-his
 import { ActionStatus, ActionType, ProjectWallet } from '../../../../core/data-provider/data-provider';
 import * as uuid from 'uuid';
 import { TxSender } from '../../../../core/elrond/services/tx.sender';
+import { catchError, switchMap, take } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-sc-endpoint',
@@ -100,61 +101,69 @@ export class ScEndpointComponent implements OnInit {
 		this.queryResultSubject.next(queryResult);
 	}
 
-	async submitTransaction(network: INetworkEnvironment,
-							wallet: ProjectWallet,
-							gasLimit: number,
-							payment?: TokenPayment): Promise<void> {
+	submitTransaction(network: INetworkEnvironment,
+					  wallet: ProjectWallet,
+					  gasLimit: number,
+					  payment?: TokenPayment): void {
 		if (!this.endpoint) {
 			return;
 		}
 
-		try {
-			const txHash = await this.scTxRunner.run(this.sc, {
-				payload: this.form.value,
-				functionName: this.endpoint.name,
-				network,
-				gasLimit,
-				payment,
-				wallet,
-				projectId: this.projectId,
-			}).toPromise();
+		const endpointName = this.endpoint.name || '';
 
-			this.txResultSubject.next(txHash);
+		this.scTxRunner.call(this.sc, {
+			payload: this.form.value,
+			functionName: this.endpoint.name,
+			network,
+			gasLimit,
+			payment,
+			wallet,
+			projectId: this.projectId,
+		}).pipe(
+			switchMap(txHash => {
+				this.store.dispatch(ActionHistoryAction.logAction({
+					data: {
+						id: uuid.v4(),
+						projectId: this.projectId,
+						chainId: this.chainId,
+						type: ActionType.Tx,
+						title: endpointName,
+						timestamp: Date.now(),
+						status: ActionStatus.Pending,
+						txHash,
+						caller: wallet.address,
+						data: {
+							payload: this.transformActionData(this.form.value),
+						},
+					},
+				}));
 
-			this.store.dispatch(ActionHistoryAction.logAction({
-				data: {
-					id: uuid.v4(),
-					projectId: this.projectId,
-					chainId: this.chainId,
-					type: ActionType.Tx,
-					title: this.endpoint.name,
-					timestamp: Date.now(),
-					status: ActionStatus.Pending,
-					txHash,
-					caller: wallet.address,
+				return of(txHash);
+			}),
+			catchError((e) => {
+				this.store.dispatch(ActionHistoryAction.logAction({
 					data: {
-						payload: this.transformActionData(this.form.value),
+						id: uuid.v4(),
+						projectId: this.projectId,
+						chainId: this.chainId,
+						type: ActionType.Tx,
+						title: endpointName,
+						timestamp: Date.now(),
+						status: ActionStatus.Fail,
+						caller: wallet.address,
+						data: {
+							payload: this.transformActionData(this.form.value),
+						},
 					},
-				},
-			}));
-		} catch (e) {
-			this.store.dispatch(ActionHistoryAction.logAction({
-				data: {
-					id: uuid.v4(),
-					projectId: this.projectId,
-					chainId: this.chainId,
-					type: ActionType.Tx,
-					title: this.endpoint.name,
-					timestamp: Date.now(),
-					status: ActionStatus.Fail,
-					caller: wallet.address,
-					data: {
-						payload: this.transformActionData(this.form.value),
-					},
-				},
-			}));
-			throw e;
-		}
+				}));
+
+				return of(undefined);
+			})
+		).pipe(take(1)).subscribe((txHash) => {
+			if (txHash) {
+				this.txResultSubject.next(txHash);
+			}
+		});
 	}
 
 	private transformActionData(data: any): any {
