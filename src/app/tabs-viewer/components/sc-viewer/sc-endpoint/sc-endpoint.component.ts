@@ -132,9 +132,7 @@ export class ScEndpointComponent implements OnInit {
 						status: ActionStatus.Pending,
 						txHash,
 						caller: wallet.address,
-						data: {
-							payload: this.transformActionData(this.form.value),
-						},
+						data: this.transformActionData(this.form.value),
 					},
 				}));
 
@@ -151,9 +149,7 @@ export class ScEndpointComponent implements OnInit {
 						timestamp: Date.now(),
 						status: ActionStatus.Fail,
 						caller: wallet.address,
-						data: {
-							payload: this.transformActionData(this.form.value),
-						},
+						data: this.transformActionData(this.form.value),
 					},
 				}));
 
