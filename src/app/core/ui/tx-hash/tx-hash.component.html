@@ -1,6 +1,6 @@
 <span class="tx-hash">
 	{{label}}
-	<span [ngClass]="{interactive: interactive}" (click)="open.emit()">
+	<span [ngClass]="{interactive: interactive}" (click)="$event.stopImmediatePropagation(); open.emit()">
 		{{txHash | shortString:maxLength}}
 	</span>
 	<span class="material-icons action" (click)="copy()" appTooltip tooltip="Copy">
