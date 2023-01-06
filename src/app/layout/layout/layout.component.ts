@@ -25,8 +25,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
 	private readonly sub = new Subscription();
 
-	githubUrl = environment.githubLink;
+	githubLink = environment.githubLink;
 	githubIssuesLink = environment.githubIssuesLink;
+	feedbackLink = environment.feedbackFormUrl;
 
 	constructor(private readonly renderer: Renderer2,
 				private readonly store: Store,
