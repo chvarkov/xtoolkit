@@ -5,6 +5,8 @@
 export const environment = {
 	production: false,
 	apiUrl: 'http://localhost:3001',
+	githubLink: 'https://github.com/chvarkov/xdebug',
+	githubIssuesLink: 'https://github.com/chvarkov/xdebug/issues',
 };
 
 /*

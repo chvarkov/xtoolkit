@@ -13,6 +13,7 @@
 	margin: 8px;
 	font-size: 1em;
 	border-right: solid 1px var(--border-low-color);
+	padding-right: 12px;
 }
 
 .releases {
@@ -28,4 +29,26 @@
 	font-weight: 600;
 	text-transform: uppercase;
 	margin-bottom: 10px;
+}
+
+.roadmap-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.roadmap-title {
+	margin: 2px 0 6px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.roadmap-item {
+	margin-left: 30px;
+	padding: 2px;
+}
+
+.disclaimer {
+	padding: 8px;
+	border: solid var(--border-low-color);
+	font-weight: bold;
 }

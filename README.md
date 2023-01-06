@@ -1,4 +1,4 @@
-# Elrond SC [MVP develop]
+# XDEBUG [MVP develop]
 
 The tool for easy interaction with smart contacts and ESTD/NFT/SFT token management on [Elrond network](https://github.com/ElrondNetwork) :heart:
 
