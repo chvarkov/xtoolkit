@@ -13,6 +13,8 @@ import { HeaderIconButtonComponent } from './components/header-icon-button/heade
 import { HeaderToolbarComponent } from './components/header-toolbar/header-toolbar.component';
 import { ThemeSwitcher } from './services/theme.switcher';
 import { ThemeIconPipe } from './pipes/theme-icon.pipe';
+import { DonationDialogComponent } from './components/donation-dialog/donation-dialog.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
 	declarations: [
@@ -22,13 +24,15 @@ import { ThemeIconPipe } from './pipes/theme-icon.pipe';
 		HeaderIconButtonComponent,
 		HeaderToolbarComponent,
 		ThemeIconPipe,
+  DonationDialogComponent,
 	],
-	imports: [
-		CommonModule,
-		CoreModule,
-		StoreModule.forFeature(LAYOUT_FEATURE, layoutReducer),
-		EffectsModule.forFeature([LayoutEffect]),
-	],
+    imports: [
+        CommonModule,
+        CoreModule,
+        StoreModule.forFeature(LAYOUT_FEATURE, layoutReducer),
+        EffectsModule.forFeature([LayoutEffect]),
+        QRCodeModule,
+    ],
 	providers: [
 		ThemeSwitcher,
 	],
