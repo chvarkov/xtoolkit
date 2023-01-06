@@ -1,0 +1,29 @@
+<div class="release-item">
+	<div class="header">
+		<div class="title">Release v{{release.version}}</div>
+		<div *ngIf="release.isAlpha" class="label alpha">ALPHA</div>
+		<div *ngIf="release.isBetta" class="label betta">BETTA</div>
+	</div>
+	<ng-container *ngIf="release.features?.length">
+		<div class="sub-title">Features:</div>
+		<ul>
+			<li *ngFor="let feature of features">{{feature}}</li>
+		</ul>
+		<span class="show-more"
+			  *ngIf="!isFeatureListExpanded && release.features.length > maxLength"
+			  (click)="expandFeatureList()">
+			Show more
+		</span>
+	</ng-container>
+	<ng-container *ngIf="release.bugfixes?.length">
+		<div class="sub-title">Bugfixes:</div>
+		<ul>
+			<li *ngFor="let bugfix of bugfixes">{{bugfix}}</li>
+		</ul>
+		<span class="show-more"
+			  *ngIf="!isBugfixListExpanded && release.bugfixes.length > maxLength"
+			  (click)="expandBugfixList()">
+			Show more
+		</span>
+	</ng-container>
+</div>

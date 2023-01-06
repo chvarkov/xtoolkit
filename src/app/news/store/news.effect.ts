@@ -7,13 +7,21 @@ import { ApiClient } from '../../core/data-provider/api.client';
 
 @Injectable()
 export class NewsEffect {
-	loadNetworks$ = createEffect(() => this.actions$.pipe(
+	loadNews$ = createEffect(() => this.actions$.pipe(
 		ofType(NewsAction.loadNews),
 		switchMap(() => this.apiClient.getNews().pipe(
 			map((list) => NewsAction.loadNewsSuccess({list})),
 			catchError(err => of(NewsAction.loadNewsError({err})),
 		)),
 	)));
+
+	loadReleases$ = createEffect(() => this.actions$.pipe(
+		ofType(NewsAction.loadReleases),
+		switchMap(() => this.apiClient.getReleases().pipe(
+			map((list) => NewsAction.loadReleasesSuccess({list})),
+			catchError(err => of(NewsAction.loadReleasesError({err})),
+			)),
+		)));
 
 	constructor(private readonly actions$: Actions,
 				private readonly apiClient: ApiClient) {

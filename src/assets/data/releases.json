@@ -1,0 +1,23 @@
+[
+	{
+		"version": "0.0.1",
+		"isAlpha": true,
+		"isBetta": false,
+		"features": [
+			"Interaction with smart contracts",
+			"ESTD token issuance",
+			"ESTD token management",
+			"Network management",
+			"Transaction history",
+			"Explore transaction",
+			"Project management",
+			"Maiar wallet connect",
+			"Explore wallet NFTs",
+			"Transfer funds",
+			"MultiversX news widget"
+		],
+		"bugfixes": [
+			"Fixed sign transactions"
+		]
+	}
+]

@@ -1,0 +1,57 @@
+.release-item {
+	margin: 4px 0;
+	padding: 4px 0;
+	border-bottom: solid 1px var(--border-low-color);
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 6px 0;
+}
+
+.title {
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.label {
+	font-weight: 600;
+	font-size: 12px;
+	padding: 3px 8px;
+	border-radius: 4px;
+}
+
+ul {
+	margin-block-start: 0.3em;
+	margin-block-end: 0.3em;
+}
+
+.alpha {
+	color: var(--static-red);
+	border: solid 2px var(--static-red);
+}
+
+.betta {
+	color: var(--static-cyan);
+	border: solid 2px var(--static-cyan);
+}
+
+.sub-title {
+	font-size: 14px;
+}
+
+.show-more {
+	margin: 0 0 6px 40px;
+	font-size: 13px;
+	color: var(--low-text);
+	cursor: pointer;
+
+	&:hover {
+		color: var(--text-color);
+		text-decoration: underline;
+	}
+}

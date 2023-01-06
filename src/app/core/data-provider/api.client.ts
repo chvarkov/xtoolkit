@@ -13,6 +13,14 @@ export interface Post {
 	publishedAt: string;
 }
 
+export interface ReleaseInfo {
+	version: string;
+	isAlpha: boolean;
+	isBetta: boolean;
+	features: string[];
+	bugfixes: string[];
+}
+
 @Injectable({providedIn: 'root'})
 export class ApiClient {
 	private readonly apiUrl = environment.apiUrl;
@@ -22,5 +30,9 @@ export class ApiClient {
 
 	getNews(): Observable<Post[]> {
 		return this.http.get<Post[]>(`${this.apiUrl}/news`);
+	}
+
+	getReleases(): Observable<ReleaseInfo[]> {
+		return this.http.get<ReleaseInfo[]>(`/assets/data/releases.json`);
 	}
 }

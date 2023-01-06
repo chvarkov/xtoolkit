@@ -7,4 +7,9 @@ export class NewsSelector {
 		(app: Record<string, any>) => app[NEWS_FEATURE],
 		(state: INewsState) => state.news,
 	);
+
+	static releases = createSelector(
+		(app: Record<string, any>) => app[NEWS_FEATURE],
+		(state: INewsState) => state.releases,
+	);
 }

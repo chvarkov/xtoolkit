@@ -40,6 +40,7 @@ import { SettingsNetworksTabComponent } from './components/settings-page/compone
 import { SettingsSecurityTabComponent } from './components/settings-page/components/settings-security-tab/settings-security-tab.component';
 import { SecretsLockedStatusInfoPipe } from './components/settings-page/pipes/secrets-locked-status-info.pipe';
 import { PasswordStatusInfoPipe } from './components/settings-page/pipes/password-status-info.pipe';
+import { ReleaseInfoComponent } from './components/home-page/components/release-info/release-info.component';
 
 @NgModule({
 	declarations: [
@@ -79,6 +80,7 @@ import { PasswordStatusInfoPipe } from './components/settings-page/pipes/passwor
   SettingsSecurityTabComponent,
   SecretsLockedStatusInfoPipe,
   PasswordStatusInfoPipe,
+  ReleaseInfoComponent,
 	],
 	imports: [
 		CommonModule,
