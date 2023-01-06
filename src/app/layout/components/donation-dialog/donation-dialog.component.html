@@ -1,0 +1,19 @@
+<app-modal-dialog-header title="Donation" [dialogRef]="dialogRef"></app-modal-dialog-header>
+
+<div class="container">
+	<span class="text">
+		XDebug is an MIT licensed open-source project. <br />
+		Hence, it grows thanks to the sponsors and support. <br />
+		Please, consider supporting us!
+	</span>
+
+	<div class="qr-code">
+		<qrcode [width]="180" [margin]="3" [qrdata]="address"></qrcode>
+	</div>
+
+	<div class="payment-info"><app-address [address]="address"></app-address></div>
+
+	<div class="payment-info">HT: @{{herotag}}</div>
+</div>
+
+

@@ -8,6 +8,8 @@ import { LayoutAction } from '../store/layout.action';
 import { Theme } from '../../core/data-provider/personal-settings.manager';
 import { ThemeSwitcher } from '../services/theme.switcher';
 import { environment } from '../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { DonationDialogComponent } from '../components/donation-dialog/donation-dialog.component';
 
 @Component({
 	selector: 'app-layout',
@@ -28,6 +30,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
 	constructor(private readonly renderer: Renderer2,
 				private readonly store: Store,
+				private readonly dialog: MatDialog,
 				private readonly themeSwitcher: ThemeSwitcher) {
 	}
 
@@ -66,5 +69,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
 		this.store.dispatch(LayoutAction.setLayoutState({
 			layoutState: {rightPanelWidth, leftPanelWidth},
 		}));
+	}
+
+	openDonationDialog(): void {
+		this.dialog.open(DonationDialogComponent);
 	}
 }
