@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { LayoutAction } from '../store/layout.action';
 import { Theme } from '../../core/data-provider/personal-settings.manager';
 import { ThemeSwitcher } from '../services/theme.switcher';
+import { environment } from '../../../environments/environment';
 
 @Component({
 	selector: 'app-layout',
@@ -21,6 +22,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
 	gridTemplateColumns$: Observable<string | undefined> = of();
 
 	private readonly sub = new Subscription();
+
+	githubUrl = environment.githubLink;
+	githubIssuesLink = environment.githubIssuesLink;
 
 	constructor(private readonly renderer: Renderer2,
 				private readonly store: Store,
