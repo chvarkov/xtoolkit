@@ -13,13 +13,8 @@
 			</ul>
 		</div>
 	</div>
-	<div class="projects">
-		<div class="header">Projects</div>
-		<div *ngFor="let project of projectList$ | async"
-			 class="project-item"
-			 mat-ripple (click)="openProject(project.id)">
-			<span>{{project.name}}</span>
-			<span>{{project.chainId | networkName | async}}</span>
-		</div>
+	<div class="releases">
+		<div class="header">Releases</div>
+		<app-release-info *ngFor="let release of releasesList$ | async" [release]="release"></app-release-info>
 	</div>
 </div>

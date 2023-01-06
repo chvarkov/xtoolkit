@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ProjectInfo } from '../../../core/data-provider/data-provider';
-import { ProjectSelector } from '../../../project/store/project.selector';
-import { ProjectAction } from '../../../project/store/project.action';
+import { ReleaseInfo } from '../../../core/data-provider/api.client';
+import { NewsSelector } from '../../../news/store/news.selector';
+import { NewsAction } from '../../../news/store/news.action';
 
 @Component({
 	selector: 'app-home-page',
@@ -11,16 +11,13 @@ import { ProjectAction } from '../../../project/store/project.action';
 	styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-	projectList$: Observable<ProjectInfo[]>;
+	releasesList$: Observable<ReleaseInfo[]>;
 
 	constructor(private readonly store: Store) {
-		this.projectList$ = this.store.select(ProjectSelector.projectList)
+		this.releasesList$ = this.store.select(NewsSelector.releases)
 	}
 
 	ngOnInit(): void {
-	}
-
-	openProject(id: string): void {
-		this.store.dispatch(ProjectAction.openProject({id}));
+		this.store.dispatch(NewsAction.loadReleases());
 	}
 }

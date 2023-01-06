@@ -1,0 +1,16 @@
+<app-toolbar title="News" [borderLeft]="true">
+	<ng-container right-side *ngIf="news$ | async as projectId">
+		<app-toolbar-icon-button appTooltip tooltip="Reload" (click)="loadNews()">
+			refresh
+		</app-toolbar-icon-button>
+	</ng-container>
+</app-toolbar>
+<div class="news-list-container">
+	<ng-container *ngIf="(news$ | async)?.length; else emptyState">
+		<app-post *ngFor="let item of news$ | async; trackBy: trackBy" [data]="item"></app-post>
+	</ng-container>
+</div>
+
+<ng-template #emptyState>
+	<div class="empty-state">NO NEWS</div>
+</ng-template>

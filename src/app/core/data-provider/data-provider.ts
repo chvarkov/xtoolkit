@@ -72,7 +72,6 @@ export enum ActionStatus {
 export enum ActionType {
 	Issue = 'issue',
 	Tx = 'tx',
-	Query = 'query',
 }
 
 export interface ActionHistoryElement {
@@ -81,11 +80,16 @@ export interface ActionHistoryElement {
 	type: ActionType;
 	chainId: string;
 	title: string;
-	caller?: string;
+	caller: string;
 	txHash?: string;
 	status: ActionStatus;
 	data: Record<string, any>;
 	timestamp: number;
+}
+
+export interface UpdateActionHistoryElementOptions {
+	status: ActionStatus;
+	concatTitle?: string;
 }
 
 export interface DataProvider {
@@ -147,7 +151,7 @@ export interface DataProvider {
 
 	getActionHistory(projectId: string): Observable<ActionHistoryElement[]>;
 
-	updateActionStatus(projectId: string, id: string, status: ActionStatus): Observable<ActionHistoryElement[]>;
+	updateAction(projectId: string, id: string, options: UpdateActionHistoryElementOptions): Observable<ActionHistoryElement[]>;
 
 	clearActionHistory(projectId: string): Observable<void>;
 

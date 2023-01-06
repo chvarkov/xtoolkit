@@ -28,7 +28,7 @@ export class ActionHistoryEffect {
 
 	updateActionStatus$ = createEffect(() => this.actions$.pipe(
 		ofType(ActionHistoryAction.updateActionStatus),
-		switchMap(({projectId, id, status}) => this.dataProvider.updateActionStatus(projectId, id, status).pipe(
+		switchMap(({projectId, id, status, concatTitle}) => this.dataProvider.updateAction(projectId, id, { status, concatTitle }).pipe(
 			map((list) => ActionHistoryAction.updateActionStatusSuccess({list})),
 			catchError(err => of(ActionHistoryAction.updateActionStatusError({err})),
 			)),

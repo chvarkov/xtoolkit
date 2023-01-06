@@ -15,7 +15,7 @@
 	border-right: solid 1px var(--border-low-color);
 }
 
-.projects {
+.releases {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
@@ -28,19 +28,4 @@
 	font-weight: 600;
 	text-transform: uppercase;
 	margin-bottom: 10px;
-}
-
-.project-item {
-	cursor: pointer;
-	margin: 4px 0;
-	padding: 8px;
-	border-radius: 4px;
-	border: solid 1px var(--border-low-color);
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-
-.project-item:hover {
-	border: solid 1px var(--border-accent-color);
 }

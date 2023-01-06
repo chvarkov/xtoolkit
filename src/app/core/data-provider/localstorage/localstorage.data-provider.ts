@@ -4,7 +4,7 @@ import {
 	DataProvider,
 	ProjectWallet, PendingTokenIssue,
 	Project, ProjectAbi, ProjectAddress, ProjectInfo,
-	ProjectSmartContract
+	ProjectSmartContract, UpdateActionHistoryElementOptions
 } from '../data-provider';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
@@ -467,7 +467,7 @@ export class LocalstorageDataProvider implements DataProvider {
 		return of(undefined);
 	}
 
-	updateActionStatus(projectId: string, id: string, status: ActionStatus): Observable<ActionHistoryElement[]> {
+	updateAction(projectId: string, id: string, options: UpdateActionHistoryElementOptions): Observable<ActionHistoryElement[]> {
 		return this.getActionHistory(projectId)
 			.pipe(
 				map(list => {
@@ -477,7 +477,11 @@ export class LocalstorageDataProvider implements DataProvider {
 						throw new Error(`Action history element (${id}) not found`);
 					}
 
-					item.status = status;
+					item.status = options.status;
+
+					if (options.concatTitle) {
+						item.title += options.concatTitle;
+					}
 
 					this.set(this.getActionHistoryKey(projectId), list);
 

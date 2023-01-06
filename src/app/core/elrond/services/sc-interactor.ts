@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+	Address,
 	ContractFunction, Interaction,
 	SmartContract, TokenPayment, Transaction,
 } from '@elrondnetwork/erdjs/out';
@@ -10,6 +11,7 @@ import { ElrondProxyProvider } from './elrond-proxy-provider';
 import { ProjectWallet } from '../../data-provider/data-provider';
 import { TxSender } from './tx.sender';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface IScTxOptions {
 	network: INetworkEnvironment;
@@ -59,14 +61,22 @@ export class ScInteractor {
 	async estimate(sc: SmartContract, options: IScTxOptions): Promise<number> {
 		const tx = await this.createTx(sc, options);
 
+		tx['sender'] = new Address(options.wallet.address);
+
+		const account = await this.elrondDataProvider.getAccountInfo(options.network, options.wallet.address).toPromise();
+
+		tx.setNonce(account.nonce);
+
 		return this.elrondDataProvider.estimateTransactionConst(options.network, tx).toPromise();
 	}
 
-	run(sc: SmartContract, options: IScCallOptions): Observable<string> {
+	call(sc: SmartContract, options: IScCallOptions): Observable<string> {
 		const tx = this.createTx(sc, options);
 
 		tx.setGasLimit(options.gasLimit);
 
-		return this.txSender.send(options.projectId, options.wallet, tx);
+		return this.txSender.send(options.projectId, options.wallet, tx).pipe(
+			tap((v) => console.log('txHash: ' + v)),
+		);
 	}
 }

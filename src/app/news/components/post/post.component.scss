@@ -1,0 +1,25 @@
+.post-container {
+	padding: 10px;
+	border-bottom: solid 1px var(--border-low-color);
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+
+	.image {
+		border-radius: 10px;
+	}
+
+	.title {
+		font-size: 16px;
+		padding: 8px 4px 4px;
+	}
+
+	.description {
+		font-size: 13px;
+		padding: 4px;
+	}
+
+	.read-in-min {
+		color: var(--low-text);
+	}
+}

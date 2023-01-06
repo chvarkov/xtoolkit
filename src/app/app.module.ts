@@ -16,6 +16,7 @@ import { ProjectTabsModule } from './tabs-viewer/modules/project-tabs/project-ta
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppInitializer } from './core/services/app-initializer';
 import { SecurityModule } from './security/security.module';
+import { NewsModule } from './news/news.module';
 
 @NgModule({
 	declarations: [
@@ -31,6 +32,7 @@ import { SecurityModule } from './security/security.module';
         ProjectModule,
         CoreModule,
 		SecurityModule,
+		NewsModule,
         StoreModule.forRoot({}),
         EffectsModule.forRoot(),
         StoreDevtoolsModule.instrument({

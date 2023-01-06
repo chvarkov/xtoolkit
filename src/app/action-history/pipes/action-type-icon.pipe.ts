@@ -10,8 +10,6 @@ export class ActionTypeIconPipe implements PipeTransform {
 		switch (value) {
 			case ActionType.Issue:
 				return 'token';
-			case ActionType.Query:
-				return 'switch_access_shortcut';
 			case ActionType.Tx:
 				return 'code';
 		}

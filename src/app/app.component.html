@@ -44,7 +44,16 @@
 			<app-settings-page *ngIf="tab.componentType === 'settings'"></app-settings-page>
 		</app-project-tab>
 	</app-project-tabs>
-	<app-action-list actionHistory (resize)="layout.resizePanel('right', $event)"></app-action-list>
+
+	<ng-container actionHistory>
+		<ng-container *ngIf="activeProject$ | async; else news">
+			<app-action-list (resize)="layout.resizePanel('right', $event)"></app-action-list>
+		</ng-container>
+
+		<ng-template #news>
+			<app-news-list></app-news-list>
+		</ng-template>
+	</ng-container>
 
 	<app-header-toolbar headerToolbar>
 		<ng-container *ngIf="isPasswordSet$ | async">
