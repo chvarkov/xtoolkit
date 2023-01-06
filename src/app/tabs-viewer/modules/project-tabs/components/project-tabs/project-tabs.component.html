@@ -21,7 +21,7 @@
 	</div>
 	<ng-container *ngIf="(invisibleTabsSubject | async) as invisibleTabs">
 		<ng-container *ngIf="invisibleTabs.length">
-			<button class="invisible-list" [matMenuTriggerFor]="hiddenTabsMenu" style="font-size: 1.2em">
+			<button class="invisible-list" [matMenuTriggerFor]="hiddenTabsMenu">
 				<mat-icon class="dropdown-icon">expand_more</mat-icon>
 			</button>
 			<mat-menu #hiddenTabsMenu="matMenu" classList="dropdown-list" xPosition="before">
