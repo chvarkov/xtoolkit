@@ -1,0 +1,5 @@
+<div mat-ripple class="post-container" (click)="open()">
+	<img class="image" [src]="data.image" width="100%">
+	<div class="title">{{data.title}}</div>
+	<div class="description">{{data.publishedAt | date}}  <span class="read-in-min">{{data.readInMin}} min read</span></div>
+</div>
