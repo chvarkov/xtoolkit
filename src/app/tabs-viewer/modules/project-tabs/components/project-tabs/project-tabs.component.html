@@ -11,7 +11,7 @@
 				class="tab"
 				[ngClass]="{'active': tab.active === true }"
 				(click)="selectTab(tab, i)">
-				<span class="icon material-icons" [ngStyle]="{color: tab.type | componentColor}">
+				<span class="material-icons icon" [ngStyle]="{color: tab.type | componentColor}">
 					{{tab.type | componentIcon}}
 				</span>
 				<span class="title" [ngStyle]="{color: tab.type | componentColor}">{{ tab.title }}</span>
