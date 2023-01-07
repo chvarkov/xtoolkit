@@ -13,6 +13,8 @@ import { LayoutAction } from './layout/store/layout.action';
 import { SecurityAction } from './security/store/security.action';
 import { SecuritySelector } from './security/store/security.selector';
 import { MaiarWalletService } from './project/services/maiar-wallet.service';
+import { ProjectComponentType } from './core/types';
+import { FaucetService } from './core/services/faucet.service';
 
 @Component({
 	selector: 'app-root',
@@ -38,7 +40,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	constructor(private readonly store: Store,
 				private readonly tokenIssueAwaiter: TokenIssueAwaiter,
-				private readonly maiarWalletService: MaiarWalletService) {
+				private readonly maiarWalletService: MaiarWalletService,
+				public readonly faucet: FaucetService) {
 		this.openedTabs$ = this.store.select(ProjectSelector.openedTabs);
 		this.currentTabIndex$ = this.store.select(ProjectSelector.currentTabIndex);
 		this.isVisibleLoadingScreen$ = this.store.select(LayoutSelector.isLoadingScreenVisible);
@@ -126,5 +129,51 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	toggleTheme(): void {
 		this.store.dispatch(LayoutAction.toggleTheme());
+	}
+
+	openProjectComponent(title: string,
+						 componentType: ProjectComponentType,
+						 componentId: string): void {
+		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
+	}
+
+	openAddressBook(projectId: string): void {
+		this.openProjectComponent(`Address book`, 'address_book', projectId);
+	}
+
+	importToken(projectId: string): void {
+		this.store.dispatch(ProjectAction.importToken({projectId}));
+	}
+
+	renameProject(projectId: string, name: string): void {
+		this.store.dispatch(ProjectAction.renameProject({projectId, name}));
+	}
+
+	updateProjectNetwork(projectId: string): void {
+		this.store.dispatch(ProjectAction.updateProjectNetwork({projectId}));
+	}
+
+	uploadScAbi(projectId: string): void {
+		this.store.dispatch(ProjectAction.uploadAbi({projectId}));
+	}
+
+	addSmartContract(projectId: string): void {
+		this.store.dispatch(ProjectAction.addSmartContract({projectId}));
+	}
+
+	connectWalletViaMaiarApp(projectId: string): void {
+		this.store.dispatch(ProjectAction.connectMaiarWallet({projectId}));
+	}
+
+	generateWallet(projectId: string): void {
+		this.store.dispatch(ProjectAction.generateWallet({projectId}));
+	}
+
+	deleteProject(projectId: string): void {
+		this.store.dispatch(ProjectAction.deleteProject({projectId}));
+	}
+
+	transferFunds(projectId: string, chainId: string): void {
+		this.store.dispatch(ProjectAction.transferTokens({projectId, chainId}))
 	}
 }

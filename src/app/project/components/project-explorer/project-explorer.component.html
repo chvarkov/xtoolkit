@@ -41,10 +41,6 @@
 					<mat-icon class="dropdown-icon">more_vert</mat-icon>
 				</button>
 				<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
-					<button mat-menu-item (click)="openAddressBook(project)">
-						<mat-icon>bookmark</mat-icon>
-						<span>Open address book</span>
-					</button>
 					<button mat-menu-item (click)="renameProject(project.id, project.name)">
 						<mat-icon>drive_file_rename_outline</mat-icon>
 						<span>Rename</span>

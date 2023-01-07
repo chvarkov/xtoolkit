@@ -145,10 +145,6 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
 	}
 
-	openAddressBook(project: Project): void {
-		this.openProjectComponent(`${project.name} address book`, 'address_book', project.id);
-	}
-
 	renameProject(projectId: string, name: string): void {
 		this.store.dispatch(ProjectAction.renameProject({projectId, name}));
 	}

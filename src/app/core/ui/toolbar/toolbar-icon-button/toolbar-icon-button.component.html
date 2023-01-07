@@ -1,4 +1,17 @@
-<button class="icon-button" [title]="hint">
+<button *ngIf="matMenuTriggerFor"
+		class="icon-button"
+		[title]="hint"
+		[ngStyle]="{color: color}"
+		[matMenuTriggerFor]="matMenuTriggerFor"> <!-- TODO Refactor it -->
+	<span class="material-icons">
+		<ng-content></ng-content>{{icon}}
+	</span>
+</button>
+
+<button *ngIf="!matMenuTriggerFor"
+		class="icon-button"
+		[title]="hint"
+		[ngStyle]="{color: color}">
 	<span class="material-icons">
 		<ng-content></ng-content>
 	</span>
