@@ -125,10 +125,6 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
 	}
 
-	renameProject(projectId: string, name: string): void {
-		this.store.dispatch(ProjectAction.renameProject({projectId, name}));
-	}
-
 	renameSmartContract(projectId: string, scId: string, name: string): void {
 		this.store.dispatch(ProjectAction.renameSmartContract({projectId, scId, name}));
 	}
@@ -147,18 +143,6 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	exploreToken(projectId: string, identifier: string): void {
 		this.store.dispatch(ProjectAction.exploreToken({projectId, identifier}));
-	}
-
-	updateProjectNetwork(projectId: string): void {
-		this.store.dispatch(ProjectAction.updateProjectNetwork({projectId}));
-	}
-
-	closeProject(): void {
-		this.store.dispatch(ProjectAction.closeProject());
-	}
-
-	deleteProject(projectId: string): void {
-		this.store.dispatch(ProjectAction.deleteProject({projectId}));
 	}
 
 	deleteSmartContract(projectId: string, scId: string): void {

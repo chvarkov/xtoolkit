@@ -32,15 +32,19 @@
 		flex: 1;
 		padding: 6px 0;
 		color: var(--text-color);
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 
 	.bold {
-		font-weight: bold;
+		font-weight: 500;
 	}
 
 	.actions {
 		display: flex;
 		justify-content: right;
+		align-items: center;
 		flex-direction: row;
 	}
 }

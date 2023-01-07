@@ -1,7 +1,9 @@
 <app-loading-screen *ngIf="isVisibleLoadingScreen$ | async"></app-loading-screen>
 <app-layout #layout>
 	<div leftHeader class="right-header-container">
-		<app-logo (click)="onLogoClick()"></app-logo>
+		<app-logo (click)="onLogoClick()"
+				  [networkName]="((activeProject$ | async)?.chainId || '' | networkName | async) || ''">
+		</app-logo>
 		<app-active-project *ngIf="activeProject$ | async as activeProject" [project]="activeProject"></app-active-project>
 	</div>
 	<ng-container header *ngIf="activeProject$ | async as activeProject">

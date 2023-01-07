@@ -36,6 +36,7 @@ import { LocalstorageSecretManager } from './data-provider/localstorage/localsto
 import { SECRET_MANAGER } from './data-provider/secret.manager';
 import { TxSender } from './elrond/services/tx.sender';
 import { ConfirmTransactionDialogComponent } from './ui/confirm-transaction-dialog/confirm-transaction-dialog.component';
+import { SubStringPipe } from './pipes/sub-string.pipe';
 
 @NgModule({
 	declarations: [
@@ -63,6 +64,7 @@ import { ConfirmTransactionDialogComponent } from './ui/confirm-transaction-dial
 		IsNotMainnetNetworkPipe,
 		NftTypePipe,
 		ConfirmTransactionDialogComponent,
+  SubStringPipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -115,6 +117,7 @@ import { ConfirmTransactionDialogComponent } from './ui/confirm-transaction-dial
 		TokenIdentifierSymbolPipe,
 		IsNotMainnetNetworkPipe,
 		NftTypePipe,
+		SubStringPipe,
 	],
 })
 export class CoreModule { }

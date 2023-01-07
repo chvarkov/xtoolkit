@@ -4,6 +4,12 @@ export type AbiJson = {
 	name: string;
 	endpoints: any[];
 	types: any;
+	buildInfo?: {
+		framework?: {
+			name?: string,
+			version?: string,
+		}
+	}
 };
 
 export class ScBuilder {
