@@ -24,6 +24,8 @@
 &#x2705; Explore token <br>
 &#x2705; Transfer funds <br>
 &#x2705; MultiversX news widget <br>
+&#x23F3; Sign transactions via Maiar extension <br>
+&#x23F3; Sign transaction via ledger <br>
 &#x23F3; Meta ESTD issuance <br>
 &#x23F3; Meta ESTD management <br>
 &#x23F3; SFT issuance <br>
