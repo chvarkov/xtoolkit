@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectAction } from './project.action';
 import {
-	ActionHistoryElement,
 	DATA_PROVIDER,
 	DataProvider, ProjectAddress,
 } from '../../core/data-provider/data-provider';
@@ -50,9 +49,8 @@ import { TransferOwnershipDialogComponent } from '../components/dialogs/esdt/tra
 import { TransferTokenDialogComponent } from '../../tabs-viewer/components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
 import { SECRET_MANAGER, SecretManager } from '../../core/data-provider/secret.manager';
 import { SecurityNgrxHelper } from '../../security/store/security.ngrx-helper';
-import { WalletConnector } from '../../core/elrond/services/wallet-connector';
-import { ConnectMaiarWalletDialogComponent } from '../components/dialogs/connect-maiar-wallet-dialog/connect-maiar-wallet-dialog.component';
 import { MaiarWalletService } from '../services/maiar-wallet.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ProjectEffect {
@@ -106,6 +104,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	updateProjectNetworkSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.updateProjectNetworkSuccess),
+		tap(() => this.toastrService.success('Project network was successful updated', 'Update project network')),
+	), {dispatch: false});
+
+	updateProjectNetworkError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.updateProjectNetworkError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot update project network')),
+	), {dispatch: false});
+
 	createProject$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.createProject),
 		exhaustMap(() => this.dialog.open(CreateProjectDialogComponent, {width: '300px'}).afterClosed()),
@@ -115,6 +123,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.createProjectError({err})),
 			)),
 		)));
+
+	createProjectSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.createProjectSuccess),
+		tap(() => this.toastrService.success('Project was successful created', 'Create project')),
+	), {dispatch: false});
+
+	createProjectError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.createProjectError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot create project')),
+	), {dispatch: false});
 
 	addAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAbi),
@@ -601,6 +619,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteProjectSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteProjectSuccess),
+		tap(() => this.toastrService.success('Project was successful deleted', 'Delete project')),
+	), {dispatch: false});
+
+	deleteProjectError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteProjectError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete project')),
+	), {dispatch: false});
+
 	deleteSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteSmartContract),
 		exhaustMap(action => {
@@ -878,6 +906,7 @@ export class ProjectEffect {
 				private readonly dialog: MatDialog,
 				private readonly esdtService: EsdtService,
 				private readonly maiarWalletService: MaiarWalletService,
+				private readonly toastrService: ToastrService,
 				@Inject(SECRET_MANAGER) private readonly secretManager: SecretManager,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly personalSettingsManager: PersonalSettingsManager) {
