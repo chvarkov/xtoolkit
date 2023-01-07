@@ -15,7 +15,7 @@ import { PERSONAL_SETTINGS_MANAGER } from './data-provider/personal-settings.man
 import { AddressComponent } from './ui/address/address.component';
 import { TxHashComponent } from './ui/tx-hash/tx-hash.component';
 import { AddressInputComponent } from './ui/address-input/address-input.component';
-import { ESDTInteractor } from './elrond/services/estd-intercator';
+import { ESDTInteractor } from './elrond/services/esdt-intercator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.component';
 import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';

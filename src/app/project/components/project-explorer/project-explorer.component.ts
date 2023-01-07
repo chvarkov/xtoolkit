@@ -111,42 +111,18 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.createProject());
 	}
 
-	uploadScAbi(projectId: string): void {
-		this.store.dispatch(ProjectAction.uploadAbi({projectId}));
-	}
-
-	addSmartContract(projectId: string): void {
-		this.store.dispatch(ProjectAction.addSmartContract({projectId}));
-	}
-
 	loadProjects(): void {
 		this.store.dispatch(ProjectAction.loadProjectList());
-	}
-
-	importToken(projectId: string): void {
-		this.store.dispatch(ProjectAction.importToken({projectId}));
-	}
-
-	issueToken(projectId: string): void {
-		this.store.dispatch(ProjectAction.issueToken({projectId}));
 	}
 
 	generateWallet(projectId: string): void {
 		this.store.dispatch(ProjectAction.generateWallet({projectId}));
 	}
 
-	connectWalletViaMaiarApp(projectId: string): void {
-		this.store.dispatch(ProjectAction.connectMaiarWallet({projectId}));
-	}
-
 	openProjectComponent(title: string,
 						 componentType: ProjectComponentType,
 						 componentId: string): void {
 		this.store.dispatch(ProjectAction.openProjectTab({title, componentType, componentId}));
-	}
-
-	openAddressBook(project: Project): void {
-		this.openProjectComponent(`${project.name} address book`, 'address_book', project.id);
 	}
 
 	renameProject(projectId: string, name: string): void {

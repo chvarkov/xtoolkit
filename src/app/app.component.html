@@ -1,9 +1,84 @@
 <app-loading-screen *ngIf="isVisibleLoadingScreen$ | async"></app-loading-screen>
 <app-layout #layout>
-	<app-logo logo (click)="onLogoClick()"></app-logo>
+	<div leftHeader class="right-header-container">
+		<app-logo (click)="onLogoClick()"></app-logo>
+		<app-active-project *ngIf="activeProject$ | async as activeProject" [project]="activeProject"></app-active-project>
+	</div>
 	<ng-container header *ngIf="activeProject$ | async as activeProject">
-		<app-active-project [project]="activeProject" [connectedWallet]="(connectedMaiarWallet$ | async) || undefined"></app-active-project>
+		<app-toolbar>
+			<ng-container left-side>
+				<app-toolbar-icon-button (click)="openAddressBook(activeProject.id)">bookmarks</app-toolbar-icon-button>
+				<app-toolbar-icon-button (click)="importToken(activeProject.id)">manage_search</app-toolbar-icon-button>
+				<app-toolbar-icon-button [matMenuTriggerFor]="addMenu" icon="add_circle">add_circle</app-toolbar-icon-button>
+
+				<mat-menu #addMenu="matMenu" classList="dropdown-list">
+					<button mat-menu-item (click)="uploadScAbi(activeProject.name)">
+						<mat-icon>data_object</mat-icon>
+						<span>Upload ABI</span>
+					</button>
+					<button mat-menu-item (click)="addSmartContract(activeProject.id)">
+						<mat-icon>code</mat-icon>
+						<span>Create smart contract</span>
+					</button>
+					<button mat-menu-item (click)="addSmartContract(activeProject.id)">
+						<mat-icon>token</mat-icon>
+						<span>Issue token</span>
+					</button>
+					<button mat-menu-item [matMenuTriggerFor]="addWalletMenu">
+						<mat-icon>account_balance_wallet</mat-icon>
+						<span>Add wallet</span>
+					</button>
+				</mat-menu>
+
+				<mat-menu #addWalletMenu="matMenu" classList="dropdown-list">
+					<button mat-menu-item (click)="generateWallet(activeProject.id)">
+						<mat-icon>add_task</mat-icon>
+						<span>Generate new one</span>
+					</button>
+					<button mat-menu-item (click)="connectWalletViaMaiarApp(activeProject.id)">
+						<mat-icon>qr_code</mat-icon>
+						<span>Connect via Maiar</span>
+					</button>
+					<button mat-menu-item (click)="generateWallet(activeProject.id)">
+						<mat-icon>key</mat-icon>
+						<span>Add secret key</span>
+					</button>
+				</mat-menu>
+
+				<div class="toolbar-splitter"></div>
+
+				<app-toolbar-icon-button (click)="updateProjectNetwork(activeProject.id)">public</app-toolbar-icon-button>
+				<app-toolbar-icon-button (click)="renameProject(activeProject.id, activeProject.name)">drive_file_rename_outline</app-toolbar-icon-button>
+				<app-toolbar-icon-button [color]="'var(--static-red)'" (click)="deleteProject(activeProject.id)">delete</app-toolbar-icon-button>
+			</ng-container>
+			<ng-container right-side>
+				<app-toolbar-icon-button (click)="transferFunds(activeProject.id, activeProject.chainId)">send</app-toolbar-icon-button>
+				<app-toolbar-icon-button *ngIf="activeProject.chainId | isNotMainnetNetwork" (click)="faucet.gotoFaucet()">
+					monetization_on
+				</app-toolbar-icon-button>
+			</ng-container>
+		</app-toolbar>
 	</ng-container>
+
+	<div rightHeader class="left-header-container">
+		<div>
+			<app-connected-wallet *ngIf="connectedMaiarWallet$ | async as connectedWallet"
+								  [connectedWallet]="connectedWallet">
+			</app-connected-wallet>
+		</div>
+		<app-header-toolbar>
+			<ng-container *ngIf="isPasswordSet$ | async">
+				<app-toolbar-icon-button *ngIf="!(isUnlockedWalletAccess$ | async)" (click)="putPassword()">
+					login
+				</app-toolbar-icon-button>
+				<app-toolbar-icon-button *ngIf="isUnlockedWalletAccess$ | async"  (click)="lockWalletAccess()">
+					lock
+				</app-toolbar-icon-button>
+			</ng-container>
+			<app-toolbar-icon-button (click)="openSettings()">settings</app-toolbar-icon-button>
+		</app-header-toolbar>
+	</div>
+
 	<app-project-explorer project (resize)="layout.resizePanel('left', $event)"></app-project-explorer>
 	<app-project-tabs
 		scViewer
@@ -54,16 +129,4 @@
 			<app-news-list></app-news-list>
 		</ng-template>
 	</ng-container>
-
-	<app-header-toolbar headerToolbar>
-		<ng-container *ngIf="isPasswordSet$ | async">
-			<app-toolbar-icon-button *ngIf="!(isUnlockedWalletAccess$ | async)" (click)="putPassword()">
-				login
-			</app-toolbar-icon-button>
-			<app-toolbar-icon-button *ngIf="isUnlockedWalletAccess$ | async"  (click)="lockWalletAccess()">
-				lock
-			</app-toolbar-icon-button>
-		</ng-container>
-		<app-toolbar-icon-button (click)="openSettings()">settings</app-toolbar-icon-button>
-	</app-header-toolbar>
 </app-layout>

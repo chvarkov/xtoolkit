@@ -1,0 +1,8 @@
+<div class="wallet-wrapper" *ngIf="connectedWallet">
+	<div class="active-wallet">
+		<mat-icon class="wallet-icon">phone_iphone</mat-icon>
+		<div>{{connectedWallet.name}}</div>
+
+		<mat-icon class="logout" (click)="disconnectWallet()">logout</mat-icon>
+	</div>
+</div>

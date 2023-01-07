@@ -4,39 +4,37 @@ import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ESDTInteractor } from '../../../../../core/elrond/services/estd-intercator';
+import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
 
 @Component({
-	selector: 'app-freeze-un-freeze-token-dialog',
-	templateUrl: './freeze-un-freeze-token-dialog.component.html',
-	styleUrls: ['./freeze-un-freeze-token-dialog.component.scss']
+	selector: 'app-pause-token-dialog',
+	templateUrl: './pause-token-dialog.component.html',
+	styleUrls: ['./pause-token-dialog.component.scss']
 })
-export class FreezeUnFreezeTokenDialogComponent implements OnInit {
+export class PauseTokenDialogComponent implements OnInit {
 	wallet?: ProjectWallet;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	project$?: Observable<Project | undefined>;
 
-	address = '';
-
 	form!: FormGroup;
 
 	get actionName() {
-		return this.data.isFreeze ? 'Freeze' : 'Unfreeze';
+		return this.data.isPause ? 'Pause' : 'Unpause';
 	}
 
 	get title() {
-		return this.data.isFreeze ? 'Freeze account' : 'Unfreeze account';
+		return this.data.isPause ? 'Pause token' : 'Unpause token';
 	}
 
-	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string, isFreeze: boolean},
-				readonly dialogRef: MatDialogRef<FreezeUnFreezeTokenDialogComponent>,
-				private readonly estdInteractor: ESDTInteractor,
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string, isPause: boolean},
+				readonly dialogRef: MatDialogRef<PauseTokenDialogComponent>,
+				private readonly esdtInteractor: ESDTInteractor,
 				private readonly fb: FormBuilder,
 				private readonly store: Store) {
 		this.project$ = this.store.select(ProjectSelector.activeProject());
@@ -66,13 +64,8 @@ export class FreezeUnFreezeTokenDialogComponent implements OnInit {
 			this.wallet,
 			{
 				identifier: this.data.identifier,
-				address: this.address,
 			},
 		]);
-	}
-
-	onChangeAddress(address: string): void {
-		this.address = address;
 	}
 
 	onChangeSignerWallet(wallet: ProjectWallet): void {

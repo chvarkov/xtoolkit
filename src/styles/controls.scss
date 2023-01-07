@@ -63,3 +63,12 @@ button {
 		color: var(--text-accent-color);
 	}
 }
+
+.toolbar-splitter {
+	width: 6px;
+	margin-bottom: 8px;
+	margin-top: 8px;
+	margin-right: 6px;
+	border-right: solid 1px var(--border-low-color);
+	height: calc(var(--toolbar-height) - 16px);
+}

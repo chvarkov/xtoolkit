@@ -8,38 +8,9 @@
 
 .project-name {
 	padding: 8px 0;
-	font-weight: 600;
+	font-weight: 500;
 	font-size: 14px;
-	color: var(--low-text);
-}
-
-.wallet-wrapper {
-	display: flex;
-	flex-direction: row;
-}
-
-.wallet-icon {
-	font-size: 18px;
-	margin-top: 4px;
-	cursor: pointer;
-
-}
-
-.active-wallet {
-	padding: 8px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	color: var(--wallet-color);
-}
-
-.splitter {
-	width: 6px;
-	margin-bottom: 20px;
-	margin-top: 20px;
-	margin-right: 6px;
-	border-right: solid 1px var(--border-low-color);
-	height: calc(var(--toolbar-height) - 16px);
+	color: var(--text-color);
 }
 
 .close {

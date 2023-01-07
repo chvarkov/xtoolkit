@@ -2,39 +2,37 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ESDTInteractor } from '../../../../../core/elrond/services/estd-intercator';
+import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
 
 @Component({
-	selector: 'app-pause-token-dialog',
-	templateUrl: './pause-token-dialog.component.html',
-	styleUrls: ['./pause-token-dialog.component.scss']
+	selector: 'app-special-roles-token-dialog',
+	templateUrl: './special-roles-token-dialog.component.html',
+	styleUrls: ['./special-roles-token-dialog.component.scss']
 })
-export class PauseTokenDialogComponent implements OnInit {
+export class SpecialRolesTokenDialogComponent implements OnInit {
 	wallet?: ProjectWallet;
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	project$?: Observable<Project | undefined>;
 
+	address = '';
+
 	form!: FormGroup;
 
-	get actionName() {
-		return this.data.isPause ? 'Pause' : 'Unpause';
+	get disabled(): boolean {
+		return !this.address || (!this.form.value.ESDTRoleLocalBurn && !this.form.value.ESDTRoleLocalMint)
 	}
 
-	get title() {
-		return this.data.isPause ? 'Pause token' : 'Unpause token';
-	}
-
-	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string, isPause: boolean},
-				readonly dialogRef: MatDialogRef<PauseTokenDialogComponent>,
-				private readonly estdInteractor: ESDTInteractor,
+	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string},
+				readonly dialogRef: MatDialogRef<SpecialRolesTokenDialogComponent>,
+				private readonly esdtInteractor: ESDTInteractor,
 				private readonly fb: FormBuilder,
 				private readonly store: Store) {
 		this.project$ = this.store.select(ProjectSelector.activeProject());
@@ -47,6 +45,8 @@ export class PauseTokenDialogComponent implements OnInit {
 				value: this.data.identifier,
 				disabled: true,
 			},
+			ESDTRoleLocalBurn: [false],
+			ESDTRoleLocalMint: [false],
 		});
 	}
 
@@ -63,9 +63,14 @@ export class PauseTokenDialogComponent implements OnInit {
 			network,
 			this.wallet,
 			{
-				identifier: this.data.identifier,
+				...this.form.getRawValue(),
+				address: this.address,
 			},
 		]);
+	}
+
+	onChangeAddress(address: string): void {
+		this.address = address;
 	}
 
 	onChangeSignerWallet(wallet: ProjectWallet): void {
