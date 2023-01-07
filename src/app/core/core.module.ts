@@ -78,6 +78,7 @@ import { ToastrComponent } from './ui/toastr/toastr.component';
 		MaterialModule,
 		ToastrModule.forRoot({
 			toastComponent: ToastrComponent,
+			timeOut: 3_600,
 			toastClass: '',
 			positionClass: 'toast-bottom-right'
 		}),
