@@ -34,6 +34,7 @@ import { ConnectMaiarWalletDialogComponent } from './components/dialogs/connect-
 import { QRCodeModule } from 'angularx-qrcode';
 import { SetMaiarWalletNameDialogComponent } from './components/dialogs/set-maiar-wallet-name-dialog/set-maiar-wallet-name-dialog.component';
 import { ActiveProjectComponent } from './components/active-project/active-project.component';
+import { ConnectedWalletComponent } from './components/connected-wallet/connected-wallet.component';
 
 @NgModule({
 	declarations: [
@@ -60,6 +61,7 @@ import { ActiveProjectComponent } from './components/active-project/active-proje
 		ConnectMaiarWalletDialogComponent,
   SetMaiarWalletNameDialogComponent,
   ActiveProjectComponent,
+  ConnectedWalletComponent,
 	],
 	imports: [
 		CommonModule,
@@ -80,6 +82,7 @@ import { ActiveProjectComponent } from './components/active-project/active-proje
         EffectsModule,
         ProjectExplorerComponent,
         ActiveProjectComponent,
+        ConnectedWalletComponent,
     ],
 })
 export class ProjectModule { }

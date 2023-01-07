@@ -1,0 +1,33 @@
+.wallet-wrapper {
+	display: flex;
+	flex-direction: row;
+}
+
+.wallet-icon {
+	width: 20px;
+	margin-top: 4px;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.active-wallet {
+	padding: 4px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	color: var(--wallet-color);
+	border-left: solid 1px var(--border-low-color);
+}
+
+.logout {
+	color: var(--low-text);
+	cursor: pointer;
+	margin-left: 12px;
+	margin-right: 4px;
+	font-size: 17px;
+	margin-top: 5px;
+
+	&:hover {
+		color: var(--text-color);
+	}
+}

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Project, ProjectWallet } from '../../../core/data-provider/data-provider';
+import { Project } from '../../../core/data-provider/data-provider';
 import { Store } from '@ngrx/store';
 import { ProjectAction } from '../../store/project.action';
 
@@ -11,8 +11,6 @@ import { ProjectAction } from '../../store/project.action';
 export class ActiveProjectComponent implements OnInit {
 	@Input() project!: Project;
 
-	@Input() connectedWallet?: ProjectWallet;
-
 	constructor(private readonly store: Store) {
 	}
 
@@ -21,9 +19,5 @@ export class ActiveProjectComponent implements OnInit {
 
 	closeProject(): void {
 		this.store.dispatch(ProjectAction.closeProject());
-	}
-
-	disconnectWallet(): void {
-		this.store.dispatch(ProjectAction.logoutMaiarWallet());
 	}
 }

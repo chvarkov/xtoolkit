@@ -1,12 +1,12 @@
 <div #layout class="layout-container" [ngStyle]="{'grid-template-columns': gridTemplateColumns$ | async}">
 	<div class="header-element">
-		<ng-content select="[logo]"></ng-content>
+		<ng-content select="[leftHeader]"></ng-content>
 	</div>
 	<div class="header-element">
 		<ng-content select="[header]"></ng-content>
 	</div>
 	<div class="header-element">
-		<ng-content select="[headerToolbar]"></ng-content>
+		<ng-content select="[rightHeader]"></ng-content>
 	</div>
 	<div>
 		<ng-content select="[project]"></ng-content>
