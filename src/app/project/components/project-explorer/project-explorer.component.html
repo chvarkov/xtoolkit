@@ -64,17 +64,6 @@
 									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'abi') | async)"
 									 (onExpand)="onExpandElement(project.id, 'group', 'abi', $event)"
 									 name="ABI interfaces">
-					<ng-container actions>
-						<button mat-icon-button [matMenuTriggerFor]="abiGroupMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
-						<mat-menu #abiGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-							<button mat-menu-item (click)="uploadScAbi(project.id)">
-								<mat-icon>upload_file</mat-icon>
-								<span>Upload ABI</span>
-							</button>
-						</mat-menu>
-					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #abiElem
 											 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
@@ -107,17 +96,6 @@
 									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'sc') | async)"
 									 (onExpand)="onExpandElement(project.id, 'group', 'sc', $event)"
 									 name="Smart contracts">
-					<ng-container actions>
-						<button mat-icon-button [matMenuTriggerFor]="scGroupMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
-						<mat-menu #scGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-							<button mat-menu-item (click)="addSmartContract(project.id)">
-								<mat-icon>add</mat-icon>
-								<span>Add smart contract</span>
-							</button>
-						</mat-menu>
-					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #scElem
 											 (click)="openProjectComponent(sc.name, 'sc', sc.id)"
@@ -151,21 +129,6 @@
 									 (onExpand)="onExpandElement(project.id, 'group', 'token', $event)"
 									 type="group"
 									 name="Tokens">
-					<ng-container actions>
-						<button mat-icon-button [matMenuTriggerFor]="tokenGroupMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
-						<mat-menu #tokenGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-							<button mat-menu-item (click)="issueToken(project.id)">
-								<mat-icon>add_circle</mat-icon>
-								<span>Issue token</span>
-							</button>
-							<button mat-menu-item (click)="importToken(project.id)">
-								<mat-icon>manage_search</mat-icon>
-								<span>Import</span>
-							</button>
-						</mat-menu>
-					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens; trackBy: tokenTrackBy"
 											 (click)="openProjectComponent(tokenAddress, 'token', tokenAddress)"
@@ -198,13 +161,6 @@
 									 (onExpand)="onExpandElement(project.id, 'group', 'nft', $event)"
 									 type="group"
 									 name="NFTs (coming soon)">
-					<ng-container actions>
-						<button mat-icon-button [matMenuTriggerFor]="nftGroupMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
-						<mat-menu #nftGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-						</mat-menu>
-					</ng-container>
 				</app-project-element>
 
 				<app-project-element [expandable]="true"
@@ -212,37 +168,6 @@
 									 (onExpand)="onExpandElement(project.id, 'group', 'wallet', $event)"
 									 type="group"
 									 name="Wallets">
-					<ng-container actions>
-						<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
-						<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-							<button mat-menu-item (click)="connectWalletViaMaiarApp(project.id)">
-								<mat-icon>qr_code</mat-icon>
-								<span>Connect via Maiar</span>
-							</button>
-							<button mat-menu-item (click)="generateWallet(project.id)">
-								<mat-icon>key</mat-icon>
-								<span>Add secret key</span>
-							</button>
-							<button mat-menu-item (click)="generateWallet(project.id)">
-								<mat-icon>article</mat-icon>
-								<span>Add mnemonic</span>
-							</button>
-							<button mat-menu-item (click)="generateWallet(project.id)">
-								<mat-icon>add_task</mat-icon>
-								<span>Generate new one</span>
-							</button>
-							<button mat-menu-item (click)="generateWallet(project.id)">
-								<mat-icon>qr_code_2</mat-icon>
-								<span>Connect via Maiar</span>
-							</button>
-							<button mat-menu-item (click)="generateWallet(project.id)">
-								<mat-icon>public</mat-icon>
-								<span>Add web wallet</span>
-							</button>
-						</mat-menu>
-					</ng-container>
 					<ng-container innerElements>
 						<app-project-element #walletElem *ngFor="let wallet of project.wallets; trackBy: walletTrackBy"
 											 (click)="openProjectComponent(wallet.name, 'wallet', wallet.address)"
