@@ -6,5 +6,9 @@
 	.logo-text {
 		color: var(--low-text);
 		font-size: 15px;
+
+		&:hover {
+			color: var(--text-color);
+		}
 	}
 }
