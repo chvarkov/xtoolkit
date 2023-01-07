@@ -36,29 +36,6 @@
 							 [expandable]="true"
 							 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'"
 							 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
-			<ng-container actions>
-				<button mat-icon-button [matMenuTriggerFor]="projectMenu" (click)="$event.stopImmediatePropagation()">
-					<mat-icon class="dropdown-icon">more_vert</mat-icon>
-				</button>
-				<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
-					<button mat-menu-item (click)="renameProject(project.id, project.name)">
-						<mat-icon>drive_file_rename_outline</mat-icon>
-						<span>Rename</span>
-					</button>
-					<button mat-menu-item (click)="updateProjectNetwork(project.id)">
-						<mat-icon>public</mat-icon>
-						<span>Change network</span>
-					</button>
-					<button mat-menu-item (click)="closeProject()">
-						<mat-icon>close</mat-icon>
-						<span>Close</span>
-					</button>
-					<button mat-menu-item (click)="deleteProject(project.id)">
-						<mat-icon>delete</mat-icon>
-						<span>Delete</span>
-					</button>
-				</mat-menu>
-			</ng-container>
 			<div innerElements>
 				<app-project-element [expandable]="true"
 									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'abi') | async)"
