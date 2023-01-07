@@ -34,8 +34,12 @@
 		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
 							 [bold]="true"
 							 [expandable]="true"
-							 [name]="project.name + ' [' + (project.chainId | networkName | async) + ']'"
+							 [name]="project.name"
 							 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
+			<div actions class="project-network">
+				{{(project.chainId | networkName | async)}}
+			</div>
+
 			<div innerElements>
 				<app-project-element [expandable]="true"
 									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'abi') | async)"
@@ -52,6 +56,7 @@
 											 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
 											 [name]="abi.name || abi.name">
 							<ng-container actions>
+								<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
 								<button mat-icon-button [matMenuTriggerFor]="abiMenu" (click)="$event.stopImmediatePropagation()">
 									<mat-icon class="dropdown-icon">more_vert</mat-icon>
 								</button>
@@ -84,6 +89,7 @@
 											 (onActivate)="onActivateElement(scElem)"
 											 [name]="sc.name || sc.name">
 							<ng-container actions>
+								<div class="tip-label">{{sc.address | subString}}</div>
 								<button mat-icon-button [matMenuTriggerFor]="scMenu" (click)="$event.stopImmediatePropagation()">
 									<mat-icon class="dropdown-icon">more_vert</mat-icon>
 								</button>
@@ -116,6 +122,7 @@
 											 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
 											 [name]="tokenAddress">
 							<ng-container actions>
+								<div class="tip-label">ESDT</div>
 								<button mat-icon-button [matMenuTriggerFor]="tokenMenu" (click)="$event.stopImmediatePropagation()">
 									<mat-icon class="dropdown-icon">more_vert</mat-icon>
 								</button>
@@ -155,6 +162,7 @@
 											 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
 											 [name]="wallet.name">
 							<ng-container actions>
+								<div class="tip-label">{{wallet.address | subString}}</div>
 								<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
 									<mat-icon class="dropdown-icon">more_vert</mat-icon>
 								</button>
