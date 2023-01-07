@@ -1,0 +1,11 @@
+<div class="container" [ngStyle]="{width: (containerWidth$ | async) || '300px'}">
+	<div class="icon">
+		<mat-icon [ngClass]="'icon-' + toastPackage.toastType">{{icon}}</mat-icon>
+	</div>
+	<div class="content">
+		<div class="title" *ngIf="toastPackage.title">
+			{{toastPackage.title}}
+		</div>
+		<div class="message" *ngIf="toastPackage.message">{{toastPackage.message}}</div>
+	</div>
+</div>

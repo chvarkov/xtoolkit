@@ -37,6 +37,8 @@ import { SECRET_MANAGER } from './data-provider/secret.manager';
 import { TxSender } from './elrond/services/tx.sender';
 import { ConfirmTransactionDialogComponent } from './ui/confirm-transaction-dialog/confirm-transaction-dialog.component';
 import { SubStringPipe } from './pipes/sub-string.pipe';
+import { ToastrModule } from 'ngx-toastr';
+import { ToastrComponent } from './ui/toastr/toastr.component';
 
 @NgModule({
 	declarations: [
@@ -64,7 +66,8 @@ import { SubStringPipe } from './pipes/sub-string.pipe';
 		IsNotMainnetNetworkPipe,
 		NftTypePipe,
 		ConfirmTransactionDialogComponent,
-  SubStringPipe,
+		SubStringPipe,
+		ToastrComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -73,6 +76,11 @@ import { SubStringPipe } from './pipes/sub-string.pipe';
 		ReactiveFormsModule,
 		DragDropModule,
 		MaterialModule,
+		ToastrModule.forRoot({
+			toastComponent: ToastrComponent,
+			toastClass: '',
+			positionClass: 'toast-bottom-right'
+		}),
 	],
 	providers: [
 		{
@@ -95,6 +103,7 @@ import { SubStringPipe } from './pipes/sub-string.pipe';
 		AppInitializer,
 	],
 	exports: [
+		BrowserAnimationsModule,
 		ElrondModule,
 		MaterialModule,
 		ReactiveFormsModule,
