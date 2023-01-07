@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ESDTInteractor } from '../../../../../core/elrond/services/estd-intercator';
+import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class WipeTokenDialogComponent implements OnInit {
 
 	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string},
 				readonly dialogRef: MatDialogRef<WipeTokenDialogComponent>,
-				private readonly estdInteractor: ESDTInteractor,
+				private readonly esdtInteractor: ESDTInteractor,
 				private readonly fb: FormBuilder,
 				private readonly store: Store) {
 		this.project$ = this.store.select(ProjectSelector.activeProject());

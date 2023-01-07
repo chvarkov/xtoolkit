@@ -14,7 +14,7 @@ import { ProjectExplorerComponent } from './components/project-explorer/project-
 import { ProjectElementComponent } from './components/project-element/project-element.component';
 import { NetworkModule } from '../network/network.module';
 import { ExportMnemonicDialogComponent } from './components/dialogs/export-mnemonic-dialog/export-mnemonic-dialog.component';
-import { IssueTokenDialogComponent } from './components/dialogs/estd/issue-token-dialog/issue-token-dialog.component';
+import { IssueTokenDialogComponent } from './components/dialogs/esdt/issue-token-dialog/issue-token-dialog.component';
 import { ImportTokenDialogComponent } from './components/dialogs/import-token-dialog/import-token-dialog.component';
 import { IsActiveProjectElementPipe } from './pipes/is-active-project-element.pipe';
 import { TokenIssueAwaiter } from './services/token-issue.awaiter';
@@ -22,12 +22,12 @@ import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update
 import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from './components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
-import { MintBurnTokenDialogComponent } from './components/dialogs/estd/mint-burn-token-dialog/mint-burn-token-dialog.component';
-import { PauseTokenDialogComponent } from './components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
-import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
-import { WipeTokenDialogComponent } from './components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
-import { SpecialRolesTokenDialogComponent } from './components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
-import { TransferOwnershipDialogComponent } from './components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
+import { MintBurnTokenDialogComponent } from './components/dialogs/esdt/mint-burn-token-dialog/mint-burn-token-dialog.component';
+import { PauseTokenDialogComponent } from './components/dialogs/esdt/pause-token-dialog/pause-token-dialog.component';
+import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/esdt/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
+import { WipeTokenDialogComponent } from './components/dialogs/esdt/wipe-token-dialog/wipe-token-dialog.component';
+import { SpecialRolesTokenDialogComponent } from './components/dialogs/esdt/special-roles-token-dialog/special-roles-token-dialog.component';
+import { TransferOwnershipDialogComponent } from './components/dialogs/esdt/transfer-ownership-dialog/transfer-ownership-dialog.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { MaiarWalletService } from './services/maiar-wallet.service';
 import { ConnectMaiarWalletDialogComponent } from './components/dialogs/connect-maiar-wallet-dialog/connect-maiar-wallet-dialog.component';

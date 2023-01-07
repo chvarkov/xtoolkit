@@ -33,20 +33,20 @@ import { ExportMnemonicDialogComponent } from '../components/dialogs/export-mnem
 import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dialog.component';
 import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
 import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
-import { IssueTokenDialogComponent } from '../components/dialogs/estd/issue-token-dialog/issue-token-dialog.component';
+import { IssueTokenDialogComponent } from '../components/dialogs/esdt/issue-token-dialog/issue-token-dialog.component';
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
 import { ProjectSelector } from './project.selector';
 import { MatDialog } from '@angular/material/dialog';
-import { MintBurnTokenDialogComponent } from '../components/dialogs/estd/mint-burn-token-dialog/mint-burn-token-dialog.component';
-import { EstdService } from '../services/estd.service';
-import { PauseTokenDialogComponent } from '../components/dialogs/estd/pause-token-dialog/pause-token-dialog.component';
-import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/estd/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
-import { WipeTokenDialogComponent } from '../components/dialogs/estd/wipe-token-dialog/wipe-token-dialog.component';
-import { SpecialRolesTokenDialogComponent } from '../components/dialogs/estd/special-roles-token-dialog/special-roles-token-dialog.component';
-import { TransferOwnershipDialogComponent } from '../components/dialogs/estd/transfer-ownership-dialog/transfer-ownership-dialog.component';
+import { MintBurnTokenDialogComponent } from '../components/dialogs/esdt/mint-burn-token-dialog/mint-burn-token-dialog.component';
+import { EsdtService } from '../services/esdt.service';
+import { PauseTokenDialogComponent } from '../components/dialogs/esdt/pause-token-dialog/pause-token-dialog.component';
+import { FreezeUnFreezeTokenDialogComponent } from '../components/dialogs/esdt/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
+import { WipeTokenDialogComponent } from '../components/dialogs/esdt/wipe-token-dialog/wipe-token-dialog.component';
+import { SpecialRolesTokenDialogComponent } from '../components/dialogs/esdt/special-roles-token-dialog/special-roles-token-dialog.component';
+import { TransferOwnershipDialogComponent } from '../components/dialogs/esdt/transfer-ownership-dialog/transfer-ownership-dialog.component';
 import { TransferTokenDialogComponent } from '../../tabs-viewer/components/wallet-viewer/transfer-token-dialog/transfer-token-dialog.component';
 import { SECRET_MANAGER, SecretManager } from '../../core/data-provider/secret.manager';
 import { SecurityNgrxHelper } from '../../security/store/security.ngrx-helper';
@@ -230,7 +230,7 @@ export class ProjectEffect {
 			width: '480px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.issueFungibleToken(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.issueFungibleToken(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.issueTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.issueTokenError({err}))),
@@ -243,7 +243,7 @@ export class ProjectEffect {
 			width: '320px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.mint(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.mint(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.mintTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.mintTokenError({err}))),
@@ -256,7 +256,7 @@ export class ProjectEffect {
 			width: '320px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.burn(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.burn(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.burnTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.burnTokenError({err}))),
@@ -269,7 +269,7 @@ export class ProjectEffect {
 			width: '320px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.pause(projectId, network, wallet, options.identifier).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.pause(projectId, network, wallet, options.identifier).pipe(
 			map(() => ProjectAction.pauseTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.pauseTokenError({err}))),
@@ -282,7 +282,7 @@ export class ProjectEffect {
 			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.unPause(projectId, network, wallet, options.identifier).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.unPause(projectId, network, wallet, options.identifier).pipe(
 			map(() => ProjectAction.unPauseTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.unPauseTokenError({err}))),
@@ -295,7 +295,7 @@ export class ProjectEffect {
 			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.freeze(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.freeze(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.freezeTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.freezeTokenError({err}))),
@@ -308,7 +308,7 @@ export class ProjectEffect {
 			width: '320px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.unFreeze(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.unFreeze(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.unFreezeTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.unFreezeTokenError({err}))),
@@ -321,7 +321,7 @@ export class ProjectEffect {
 			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.wipe(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.wipe(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.wipeTokenSuccess()),
 		)),
 		catchError(err => of(ProjectAction.wipeTokenError({err}))),
@@ -334,7 +334,7 @@ export class ProjectEffect {
 			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.setSpecialRoles(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.setSpecialRoles(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.setTokenSpecialRoleSuccess()),
 		)),
 		catchError(err => of(ProjectAction.setTokenSpecialRoleError({err}))),
@@ -347,7 +347,7 @@ export class ProjectEffect {
 			width: '500px',
 		}).afterClosed()),
 		filter(v => !!v),
-		switchMap(([projectId, network, wallet, options]) => this.estdService.transferOwnership(projectId, network, wallet, options).pipe(
+		switchMap(([projectId, network, wallet, options]) => this.esdtService.transferOwnership(projectId, network, wallet, options).pipe(
 			map(() => ProjectAction.transferTokenOwnershipSuccess()),
 		)),
 		catchError(err => of(ProjectAction.transferTokenOwnershipError({err}))),
@@ -848,7 +848,7 @@ export class ProjectEffect {
 				map((options) => [action.projectId, network, options]),
 			);
 		}),
-		mergeMap(([projectId, network, options]) => this.estdService.transferFunds(projectId, network, options).pipe(
+		mergeMap(([projectId, network, options]) => this.esdtService.transferFunds(projectId, network, options).pipe(
 			map(() => ProjectAction.transferTokensSuccess()),
 			catchError(err => of(ProjectAction.transferTokensError({err})))
 		)),
@@ -876,7 +876,7 @@ export class ProjectEffect {
 				private readonly elrondProxy: ElrondProxyProvider,
 				private readonly txProvider: TransactionProvider,
 				private readonly dialog: MatDialog,
-				private readonly estdService: EstdService,
+				private readonly esdtService: EsdtService,
 				private readonly maiarWalletService: MaiarWalletService,
 				@Inject(SECRET_MANAGER) private readonly secretManager: SecretManager,
 				@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider,

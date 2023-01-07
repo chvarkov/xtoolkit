@@ -46,7 +46,7 @@ export interface ITxLogEvent {
 export interface ITxOperation {
 	id: string;
 	action: 'transfer' | string;
-	type: 'estd' | 'signalError';
+	type: 'esdt' | 'signalError';
 	sender: string;
 	receiver: string;
 	data: string;

@@ -12,7 +12,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Injectable } from '@angular/core';
-import * as estdAbi from '../abi/esdt.abi.json';
+import * as esdtAbi from '../abi/esdt.abi.json';
 import { ScInteractor } from './sc-interactor';
 import { ProjectWallet } from '../../data-provider/data-provider';
 import { TxSender } from './tx.sender';
@@ -65,7 +65,7 @@ export interface ITransferOwnershipOptions {
 
 @Injectable({providedIn: 'root'})
 export class ESDTInteractor {
-	private readonly estdContractAddress = new Address('erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u');
+	private readonly esdtContractAddress = new Address('erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u');
 	private readonly issuePriceInEgld = new BigNumber(0.05);
 	private readonly contract: SmartContract;
 
@@ -80,16 +80,16 @@ export class ESDTInteractor {
 		'canAddSpecialRoles',
 	];
 
-	private readonly estdSpecialRoles = [
+	private readonly esdtSpecialRoles = [
 		'ESDTRoleLocalBurn',
 		'ESDTRoleLocalMint',
 	];
 
 	constructor(private readonly txRunner: ScInteractor,
 				private readonly txSender: TxSender,) {
-		const abi = (estdAbi as any).default;
+		const abi = (esdtAbi as any).default;
 		this.contract = new SmartContract({
-			address: this.estdContractAddress,
+			address: this.esdtContractAddress,
 			abi: new SmartContractAbi(AbiRegistry.create(abi)),
 		});
 	}
@@ -279,7 +279,7 @@ export class ESDTInteractor {
 			new AddressValue(new Address(options.address)),
 		];
 
-		for (const role of this.estdSpecialRoles) {
+		for (const role of this.esdtSpecialRoles) {
 			const roleEnabled = !!options[role];
 
 			if (roleEnabled) {

@@ -5,8 +5,8 @@
 		"isBetta": false,
 		"features": [
 			"Interaction with smart contracts",
-			"ESTD token issuance",
-			"ESTD token management",
+			"ESDT token issuance",
+			"ESDT token management",
 			"Network management",
 			"Transaction history",
 			"Explore transaction",

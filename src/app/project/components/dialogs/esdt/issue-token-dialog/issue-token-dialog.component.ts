@@ -5,7 +5,7 @@ import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/netwo
 import { ITokenInfo } from '../../../../../core/elrond/interfaces/token-info';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ESDTInteractor } from '../../../../../core/elrond/services/estd-intercator';
+import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
@@ -30,7 +30,7 @@ export class IssueTokenDialogComponent implements OnInit {
 	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
 				readonly dialogRef: MatDialogRef<IssueTokenDialogComponent>,
 				private readonly store: Store,
-				private readonly estdInteractor: ESDTInteractor,
+				private readonly esdtInteractor: ESDTInteractor,
 				private readonly fb: FormBuilder) {
 	}
 
