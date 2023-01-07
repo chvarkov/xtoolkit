@@ -24,15 +24,15 @@ import { QRCodeModule } from 'angularx-qrcode';
 		HeaderIconButtonComponent,
 		HeaderToolbarComponent,
 		ThemeIconPipe,
-  DonationDialogComponent,
+		DonationDialogComponent,
 	],
-    imports: [
-        CommonModule,
-        CoreModule,
-        StoreModule.forFeature(LAYOUT_FEATURE, layoutReducer),
-        EffectsModule.forFeature([LayoutEffect]),
-        QRCodeModule,
-    ],
+	imports: [
+		CommonModule,
+		CoreModule,
+		StoreModule.forFeature(LAYOUT_FEATURE, layoutReducer),
+		EffectsModule.forFeature([LayoutEffect]),
+		QRCodeModule,
+	],
 	providers: [
 		ThemeSwitcher,
 	],

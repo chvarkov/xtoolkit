@@ -1,14 +1,28 @@
 .logo-container {
 	padding: 10px;
-	font-weight: 600;
 	cursor: pointer;
 
 	.logo-text {
+		font-weight: 600;
 		color: var(--low-text);
 		font-size: 15px;
 
 		&:hover {
 			color: var(--text-color);
 		}
+	}
+
+	.splitter {
+		color: var(--border-color);
+		font-weight: 500;
+		font-size: 15px;
+		margin-left: 6px;
+		margin-right: 4px;
+	}
+
+	.network-text {
+		font-weight: 400;
+		color: var(--text-color);
+		font-size: 15px;
 	}
 }

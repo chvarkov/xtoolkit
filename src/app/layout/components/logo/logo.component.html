@@ -1,3 +1,8 @@
 <div class="logo-container">
 	<span class="logo-text">XDEBUG</span>
+
+	<ng-container *ngIf="networkName">
+		<span class="splitter">|</span>
+		<span class="network-text">{{networkName}}</span>
+	</ng-container>
 </div>
