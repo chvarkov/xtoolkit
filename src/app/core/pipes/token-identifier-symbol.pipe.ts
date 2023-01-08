@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-	name: 'tokenIdentifierSymbol'
+	name: 'tokenIdentifierSymbol',
+	pure: true,
 })
 export class TokenIdentifierSymbolPipe implements PipeTransform {
 	transform(value: string): string {

@@ -3,6 +3,7 @@ import { ActionType } from '../../core/data-provider/data-provider';
 
 @Pipe({
 	name: 'actionTypeIcon',
+	pure: true,
 })
 export class ActionTypeIconPipe implements PipeTransform {
 

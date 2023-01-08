@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ProjectComponentType } from '../types';
 
 @Pipe({
-	name: 'componentIcon'
+	name: 'componentIcon',
+	pure: true,
 })
 export class ComponentIconPipe implements PipeTransform {
 	transform(value: ProjectComponentType): string {

@@ -49,8 +49,10 @@
 	}
 }
 
-.active {
-	background: var(--low-bg);
+.active, .active:hover {
+	background: var(--active-bg);
+
+	color: var(--text-accent-color);
 }
 
 .content {

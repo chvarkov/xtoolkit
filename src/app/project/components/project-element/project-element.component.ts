@@ -17,7 +17,11 @@ import { ProjectComponentType } from '../../../core/types';
 	styleUrls: ['./project-element.component.scss']
 })
 export class ProjectElementComponent implements OnInit, OnChanges {
+	private readonly levelMargin = 25;
+
 	@ViewChild('container', {static: true}) containerRef?: ElementRef;
+
+	@Input() level: number = 0;
 
 	@Input() name = '';
 
@@ -40,6 +44,10 @@ export class ProjectElementComponent implements OnInit, OnChanges {
 	@Output() onActivate: EventEmitter<void> = new EventEmitter<void>();
 
 	ngOnInit(): void {
+	}
+
+	get paddingLeft(): string {
+		return `${this.levelMargin * this.level}px`;
 	}
 
 	ngOnChanges(changes: SimpleChanges) {

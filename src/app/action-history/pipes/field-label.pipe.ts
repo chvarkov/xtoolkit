@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
 	name: 'fieldLabel',
+	pure: true,
 })
 export class FieldLabelPipe implements PipeTransform {
 	private readonly upperCaseLetters = 'QWERTYUIOPASDFGHJKLZXCVBNM';

@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { reverseTheme, Theme } from '../../core/data-provider/personal-settings.manager';
 
 @Pipe({
-  name: 'themeIcon'
+	name: 'themeIcon',
+	pure: true,
 })
 export class ThemeIconPipe implements PipeTransform {
 

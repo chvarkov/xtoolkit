@@ -31,167 +31,181 @@
 
 <div class="project-explorer">
 	<ng-container *ngIf="activeProject$ | async as project; else projectSelectList">
-		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
+		<app-project-element [isExpanded]="projectExplorerState.project"
 							 [bold]="true"
 							 [expandable]="true"
 							 [name]="project.name"
-							 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
+							 (onExpand)="onExpandElement(project.id, 'project', $event)">
 			<div actions class="project-network">
 				{{(project.chainId | networkName | async)}}
 			</div>
-
-			<div innerElements>
-				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'abi') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'abi', $event)"
-									 name="ABI interfaces">
-					<ng-container innerElements>
-						<app-project-element #abiElem
-											 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
-											 *ngFor="let abi of project.abiInterfaces; trackBy: abiTrackBy"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'abi': abi.id) | async)"
-											 (onExpand)="onExpandElement(project.id, 'abi', abi.id, $event)"
-											 (onActivate)="onActivateElement(abiElem)"
-											 type="abi"
-											 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
-											 [name]="abi.name || abi.name">
-							<ng-container actions>
-								<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
-								<button mat-icon-button [matMenuTriggerFor]="abiMenu" (click)="$event.stopImmediatePropagation()">
-									<mat-icon class="dropdown-icon">more_vert</mat-icon>
-								</button>
-								<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
-									<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
-										<mat-icon>drive_file_rename_outline</mat-icon>
-										<span>Rename</span>
-									</button>
-									<button mat-menu-item (click)="deleteAbi(project.id, abi.id)">
-										<mat-icon>delete</mat-icon>
-										<span>Delete</span>
-									</button>
-								</mat-menu>
-							</ng-container>
-						</app-project-element>
-					</ng-container>
-				</app-project-element>
-				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'sc') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'sc', $event)"
-									 name="Smart contracts">
-					<ng-container innerElements>
-						<app-project-element #scElem
-											 (click)="openProjectComponent(sc.name, 'sc', sc.id)"
-											 *ngFor="let sc of project.smartContracts; trackBy: scTrackBy"
-											 type="sc"
-											 [active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'sc': sc.id) | async)"
-											 (onExpand)="onExpandElement(project.id, 'sc', sc.id, $event)"
-											 (onActivate)="onActivateElement(scElem)"
-											 [name]="sc.name || sc.name">
-							<ng-container actions>
-								<div class="tip-label">{{sc.address | subString}}</div>
-								<button mat-icon-button [matMenuTriggerFor]="scMenu" (click)="$event.stopImmediatePropagation()">
-									<mat-icon class="dropdown-icon">more_vert</mat-icon>
-								</button>
-								<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
-									<button mat-menu-item (click)="renameSmartContract(project.id, sc.id, sc.name)">
-										<mat-icon>drive_file_rename_outline</mat-icon>
-										<span>Rename</span>
-									</button>
-									<button mat-menu-item (click)="deleteSmartContract(project.id, sc.id)">
-										<mat-icon>delete</mat-icon>
-										<span>Delete</span>
-									</button>
-								</mat-menu>
-							</ng-container>
-						</app-project-element>
-					</ng-container>
-				</app-project-element>
-				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'token') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'token', $event)"
-									 type="group"
-									 name="Tokens">
-					<ng-container innerElements>
-						<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens; trackBy: tokenTrackBy"
-											 (click)="openProjectComponent(tokenAddress, 'token', tokenAddress)"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'token': tokenAddress) | async)"
-											 (onExpand)="onExpandElement(project.id, 'token', tokenAddress, $event)"
-											 (onActivate)="onActivateElement(tokenElem)"
-											 type="token"
-											 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
-											 [name]="tokenAddress">
-							<ng-container actions>
-								<div class="tip-label">ESDT</div>
-								<button mat-icon-button [matMenuTriggerFor]="tokenMenu" (click)="$event.stopImmediatePropagation()">
-									<mat-icon class="dropdown-icon">more_vert</mat-icon>
-								</button>
-								<mat-menu #tokenMenu="matMenu" classList="dropdown-list" xPosition="before">
-									<button mat-menu-item (click)="exploreToken(project.id, tokenAddress)">
-										<mat-icon>search</mat-icon>
-										<span>Explore</span>
-									</button>
-									<button mat-menu-item (click)="deleteToken(project.id, tokenAddress)">
-										<mat-icon>delete</mat-icon>
-										<span>Delete</span>
-									</button>
-								</mat-menu>
-							</ng-container>
-						</app-project-element>
-					</ng-container>
-				</app-project-element>
-				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'nft') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'nft', $event)"
-									 type="group"
-									 name="NFTs (coming soon)">
-				</app-project-element>
-
-				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'wallet') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'wallet', $event)"
-									 type="group"
-									 name="Wallets">
-					<ng-container innerElements>
-						<app-project-element #walletElem *ngFor="let wallet of project.wallets; trackBy: walletTrackBy"
-											 (click)="openProjectComponent(wallet.name, 'wallet', wallet.address)"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'wallet': wallet.address) | async)"
-											 (onExpand)="onExpandElement(project.id, 'wallet', wallet.address, $event)"
-											 (onActivate)="onActivateElement(walletElem)"
-											 type="wallet"
-											 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
-											 [name]="wallet.name">
-							<ng-container actions>
-								<div class="tip-label">{{wallet.address | subString}}</div>
-								<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
-									<mat-icon class="dropdown-icon">more_vert</mat-icon>
-								</button>
-								<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
-									<button *ngIf="project.chainId | isNotMainnetNetwork"
-											mat-menu-item
-											(click)="faucet.gotoFaucet()">
-										<mat-icon>monetization_on</mat-icon>
-										<span>Open faucet</span>
-									</button>
-									<button mat-menu-item (click)="copyWalletAddress(wallet.address)">
-										<mat-icon>content_copy</mat-icon>
-										<span>Copy address</span>
-									</button>
-									<button mat-menu-item (click)="renameWallet(project.id, wallet.address, wallet.name)">
-										<mat-icon>drive_file_rename_outline</mat-icon>
-										<span>Rename</span>
-									</button>
-									<button mat-menu-item (click)="deleteWallet(project.id, wallet.address)">
-										<mat-icon>delete</mat-icon>
-										<span>Delete</span>
-									</button>
-								</mat-menu>
-							</ng-container>
-						</app-project-element>
-					</ng-container>
-				</app-project-element>
-			</div>
 		</app-project-element>
+
+		<ng-container *ngIf="projectExplorerState.project">
+			<app-project-element [level]="1"
+								 [expandable]="true"
+								 [isExpanded]="projectExplorerState.abi"
+								 (onExpand)="onExpandElement(project.id,'abi', $event)"
+								 name="ABI interfaces">
+			</app-project-element>
+
+			<ng-container *ngIf="projectExplorerState.abi">
+				<app-project-element #abiElem
+									 [level]="2"
+									 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
+									 *ngFor="let abi of project.abiInterfaces; trackBy: abiTrackBy"
+									 [isExpanded]="projectExplorerState.abi"
+									 (onActivate)="onActivateElement(abiElem)"
+									 type="abi"
+									 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
+									 [name]="abi.name || abi.name">
+					<ng-container actions>
+						<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
+						<button mat-icon-button [matMenuTriggerFor]="abiMenu" (click)="$event.stopImmediatePropagation()">
+							<mat-icon class="dropdown-icon">more_vert</mat-icon>
+						</button>
+						<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
+								<mat-icon>drive_file_rename_outline</mat-icon>
+								<span>Rename</span>
+							</button>
+							<button mat-menu-item (click)="deleteAbi(project.id, abi.id)">
+								<mat-icon>delete</mat-icon>
+								<span>Delete</span>
+							</button>
+						</mat-menu>
+					</ng-container>
+				</app-project-element>
+			</ng-container>
+
+			<app-project-element [level]="1"
+								 [expandable]="true"
+								 [isExpanded]="projectExplorerState.sc"
+								 (onExpand)="onExpandElement(project.id,'sc', $event)"
+								 name="Smart contracts">
+			</app-project-element>
+			<ng-container *ngIf="projectExplorerState.sc">
+				<app-project-element #scElem
+									 [level]="2"
+									 (click)="openProjectComponent(sc.name, 'sc', sc.id)"
+									 *ngFor="let sc of project.smartContracts; trackBy: scTrackBy"
+									 type="sc"
+									 [active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
+									 [isExpanded]="projectExplorerState.sc"
+									 (onActivate)="onActivateElement(scElem)"
+									 [name]="sc.name || sc.name">
+					<ng-container actions>
+						<div class="tip-label">{{sc.address | subString}}</div>
+						<button mat-icon-button [matMenuTriggerFor]="scMenu" (click)="$event.stopImmediatePropagation()">
+							<mat-icon class="dropdown-icon">more_vert</mat-icon>
+						</button>
+						<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="renameSmartContract(project.id, sc.id, sc.name)">
+								<mat-icon>drive_file_rename_outline</mat-icon>
+								<span>Rename</span>
+							</button>
+							<button mat-menu-item (click)="deleteSmartContract(project.id, sc.id)">
+								<mat-icon>delete</mat-icon>
+								<span>Delete</span>
+							</button>
+						</mat-menu>
+					</ng-container>
+				</app-project-element>
+			</ng-container>
+
+
+			<app-project-element [level]="1"
+								 [expandable]="true"
+								 [isExpanded]="projectExplorerState.token"
+								 (onExpand)="onExpandElement(project.id, 'token', $event)"
+								 type="group"
+								 name="Tokens">
+			</app-project-element>
+			<ng-container *ngIf="projectExplorerState.token">
+				<app-project-element #tokenElem
+									 *ngFor="let tokenAddress of project.tokens; trackBy: tokenTrackBy"
+									 [level]="2"
+									 (click)="openProjectComponent(tokenAddress, 'token', tokenAddress)"
+									 [isExpanded]="projectExplorerState.token"
+									 (onActivate)="onActivateElement(tokenElem)"
+									 type="token"
+									 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
+									 [name]="tokenAddress">
+					<ng-container actions>
+						<div class="tip-label">ESDT</div>
+						<button mat-icon-button [matMenuTriggerFor]="tokenMenu" (click)="$event.stopImmediatePropagation()">
+							<mat-icon class="dropdown-icon">more_vert</mat-icon>
+						</button>
+						<mat-menu #tokenMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="exploreToken(project.id, tokenAddress)">
+								<mat-icon>search</mat-icon>
+								<span>Explore</span>
+							</button>
+							<button mat-menu-item (click)="deleteToken(project.id, tokenAddress)">
+								<mat-icon>delete</mat-icon>
+								<span>Delete</span>
+							</button>
+						</mat-menu>
+					</ng-container>
+				</app-project-element>
+			</ng-container>
+
+
+			<app-project-element [level]="1"
+								 [expandable]="true"
+								 [isExpanded]="projectExplorerState.nft"
+								 (onExpand)="onExpandElement(project.id, 'nft', $event)"
+								 type="group"
+								 name="NFTs (coming soon)">
+			</app-project-element>
+
+			<app-project-element [level]="1"
+								 [expandable]="true"
+								 [isExpanded]="projectExplorerState.wallet"
+								 (onExpand)="onExpandElement(project.id, 'wallet', $event)"
+								 type="group"
+								 name="Wallets">
+			</app-project-element>
+
+			<ng-container *ngIf="projectExplorerState.wallet">
+				<app-project-element #walletElem
+									 *ngFor="let wallet of project.wallets; trackBy: walletTrackBy"
+									 [level]="2"
+									 (click)="openProjectComponent(wallet.name, 'wallet', wallet.address)"
+									 [isExpanded]="projectExplorerState.wallet"
+									 (onActivate)="onActivateElement(walletElem)"
+									 type="wallet"
+									 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"
+									 [name]="wallet.name">
+					<ng-container actions>
+						<div class="tip-label">{{wallet.address | subString}}</div>
+						<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
+							<mat-icon class="dropdown-icon">more_vert</mat-icon>
+						</button>
+						<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button *ngIf="project.chainId | isNotMainnetNetwork"
+									mat-menu-item
+									(click)="faucet.gotoFaucet()">
+								<mat-icon>monetization_on</mat-icon>
+								<span>Open faucet</span>
+							</button>
+							<button mat-menu-item (click)="copyWalletAddress(wallet.address)">
+								<mat-icon>content_copy</mat-icon>
+								<span>Copy address</span>
+							</button>
+							<button mat-menu-item (click)="renameWallet(project.id, wallet.address, wallet.name)">
+								<mat-icon>drive_file_rename_outline</mat-icon>
+								<span>Rename</span>
+							</button>
+							<button mat-menu-item (click)="deleteWallet(project.id, wallet.address)">
+								<mat-icon>delete</mat-icon>
+								<span>Delete</span>
+							</button>
+						</mat-menu>
+					</ng-container>
+				</app-project-element>
+			</ng-container>
+		</ng-container>
 	</ng-container>
 </div>
 

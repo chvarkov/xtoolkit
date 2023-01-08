@@ -7,6 +7,7 @@ import { ProjectComponentType } from '../../core/types';
 
 @Pipe({
 	name: 'isActiveProjectElement',
+	pure: true,
 })
 export class IsActiveProjectElementPipe implements PipeTransform {
 	constructor(private readonly store: Store) {

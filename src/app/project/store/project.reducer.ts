@@ -1,7 +1,11 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ProjectAction } from './project.action';
 import { ITokenPosition } from '../../core/elrond/interfaces/token-position';
-import { ProjectExplorerState, TabsData } from '../../core/data-provider/personal-settings.manager';
+import {
+	DEFAULT_PROJECT_EXPLORER_STATE,
+	ProjectExplorerExpandState,
+	TabsData
+} from '../../core/data-provider/personal-settings.manager';
 import { PendingTokenIssue, Project, ProjectInfo } from '../../core/data-provider/data-provider';
 import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 import { IElrondFullTransaction, IElrondTransaction } from '../../core/elrond/interfaces/elrond-transaction';
@@ -30,11 +34,12 @@ export interface ILoadedProjectDataState {
 	tokens: ITokenInfo[];
 }
 
-export interface IProjectState extends TabsData, ProjectExplorerState {
+export interface IProjectState extends TabsData {
 	activeProject?: Project;
 	projectList: ProjectInfo[];
 	loadedDataMap: ILoadedProjectDataState;
 	issueTokenWaitList: PendingTokenIssue[];
+	explorerState: ProjectExplorerExpandState;
 }
 
 const initialState: IProjectState = {
@@ -54,7 +59,7 @@ const initialState: IProjectState = {
 	},
 	tabs: [],
 	issueTokenWaitList: [],
-	explorerNodeMap: {},
+	explorerState: DEFAULT_PROJECT_EXPLORER_STATE,
 };
 
 export const reducer = createReducer(
@@ -302,13 +307,9 @@ export const reducer = createReducer(
 		...state,
 		...explorerState,
 	})),
-	on(ProjectAction.syncProjectExplorerTreeSuccess, (state, {explorerState}) => ({
+	on(ProjectAction.updateProjectExplorerTreeSuccess, (state, {data}) => ({
 		...state,
-		...explorerState,
-	})),
-	on(ProjectAction.updateProjectExplorerTreeSuccess, (state, {explorerState}) => ({
-		...state,
-		...explorerState,
+		explorerState: data,
 	})),
 	on(ProjectAction.loadAccountNftsSuccess, (state, {address, data}) => ({
 		...state,
@@ -319,7 +320,6 @@ export const reducer = createReducer(
 			},
 		},
 	})),
-
 
 	...ProjectAction.errorActions.map((action): ReducerTypes<IProjectState, any> => on(action, (state, { err, type }): IProjectState => {
 		console.error(`Action: ${type}`, err);
