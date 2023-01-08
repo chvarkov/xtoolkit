@@ -1,8 +1,22 @@
 <div class="token-transfer-container" *ngIf="transfer">
-	<app-tx-hash label="Hash:" [txHash]="transfer.txHash" [chainId]="chainId"></app-tx-hash>
-	<span>{{transfer.status}}</span>
-	<app-address label="From:" [address]="transfer.sender" [chainId]="chainId"></app-address>
-	<span>{{transfer.value | decimalPlaces: transfer.action?.decimals || 0}} {{ticket}}</span>
-	<app-address label="To:" [address]="transfer.receiver" [chainId]="chainId"></app-address>
-	<span>{{transfer.timestamp * 1000 | date:'medium'}}</span>
+	<div class="header">
+		<app-tx-hash [txHash]="transfer.txHash" [chainId]="chainId"></app-tx-hash>
+
+		<div class="status-datetime">
+			<div class="datetime">{{transfer.timestamp * 1000 | date:'medium'}}</div>
+			<app-account-transaction-status-badge class="tx-status"
+												  [status]="transfer.status">
+			</app-account-transaction-status-badge>
+		</div>
+	</div>
+
+	<div class="details">
+		<app-address [address]="transfer.sender" [chainId]="chainId" [maxLength]="24"></app-address>
+
+		<mat-icon class="arrow">navigate_next</mat-icon>
+		<div class="amount">{{transfer.value | decimalPlaces: transfer.action?.decimals || 0}} {{ticket}}</div>
+		<mat-icon class="arrow">navigate_next</mat-icon>
+
+		<app-address [address]="transfer.receiver" [chainId]="chainId" [maxLength]="24"></app-address>
+	</div>
 </div>
