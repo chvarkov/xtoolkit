@@ -31,26 +31,26 @@
 
 <div class="project-explorer">
 	<ng-container *ngIf="activeProject$ | async as project; else projectSelectList">
-		<app-project-element [isExpanded]="((project.id | isExpandedExplorerNode:'project': project.id) | async)"
+		<app-project-element [isExpanded]="projectExplorerState.project"
 							 [bold]="true"
 							 [expandable]="true"
 							 [name]="project.name"
-							 (onExpand)="onExpandElement(project.id, 'project', project.id, $event)">
+							 (onExpand)="onExpandElement(project.id, 'project', $event)">
 			<div actions class="project-network">
 				{{(project.chainId | networkName | async)}}
 			</div>
 
 			<div innerElements>
 				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'abi') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'abi', $event)"
+									 [isExpanded]="projectExplorerState.abi"
+									 (onExpand)="onExpandElement(project.id,'abi', $event)"
 									 name="ABI interfaces">
 					<ng-container innerElements>
 						<app-project-element #abiElem
 											 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
 											 *ngFor="let abi of project.abiInterfaces; trackBy: abiTrackBy"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'abi': abi.id) | async)"
-											 (onExpand)="onExpandElement(project.id, 'abi', abi.id, $event)"
+											 [isExpanded]="projectExplorerState.abi"
+											 (onExpand)="onExpandElement(project.id, 'abi', $event)"
 											 (onActivate)="onActivateElement(abiElem)"
 											 type="abi"
 											 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
@@ -75,8 +75,8 @@
 					</ng-container>
 				</app-project-element>
 				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'sc') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'sc', $event)"
+									 [isExpanded]="projectExplorerState.sc"
+									 (onExpand)="onExpandElement(project.id,'sc', $event)"
 									 name="Smart contracts">
 					<ng-container innerElements>
 						<app-project-element #scElem
@@ -84,8 +84,8 @@
 											 *ngFor="let sc of project.smartContracts; trackBy: scTrackBy"
 											 type="sc"
 											 [active]="(sc.id | isActiveProjectElement: project.id : 'sc') | async"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'sc': sc.id) | async)"
-											 (onExpand)="onExpandElement(project.id, 'sc', sc.id, $event)"
+											 [isExpanded]="projectExplorerState.sc"
+											 (onExpand)="onExpandElement(project.id, 'sc', $event)"
 											 (onActivate)="onActivateElement(scElem)"
 											 [name]="sc.name || sc.name">
 							<ng-container actions>
@@ -108,15 +108,15 @@
 					</ng-container>
 				</app-project-element>
 				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'token') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'token', $event)"
+									 [isExpanded]="projectExplorerState.token"
+									 (onExpand)="onExpandElement(project.id, 'token', $event)"
 									 type="group"
 									 name="Tokens">
 					<ng-container innerElements>
 						<app-project-element #tokenElem *ngFor="let tokenAddress of project.tokens; trackBy: tokenTrackBy"
 											 (click)="openProjectComponent(tokenAddress, 'token', tokenAddress)"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'token': tokenAddress) | async)"
-											 (onExpand)="onExpandElement(project.id, 'token', tokenAddress, $event)"
+											 [isExpanded]="projectExplorerState.token"
+											 (onExpand)="onExpandElement(project.id, 'token', $event)"
 											 (onActivate)="onActivateElement(tokenElem)"
 											 type="token"
 											 [active]="(tokenAddress | isActiveProjectElement: project.id : 'token') | async"
@@ -141,22 +141,22 @@
 					</ng-container>
 				</app-project-element>
 				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'nft') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'nft', $event)"
+									 [isExpanded]="projectExplorerState.nft"
+									 (onExpand)="onExpandElement(project.id, 'nft', $event)"
 									 type="group"
 									 name="NFTs (coming soon)">
 				</app-project-element>
 
 				<app-project-element [expandable]="true"
-									 [isExpanded]="((project.id | isExpandedExplorerNode:'group': 'wallet') | async)"
-									 (onExpand)="onExpandElement(project.id, 'group', 'wallet', $event)"
+									 [isExpanded]="projectExplorerState.wallet"
+									 (onExpand)="onExpandElement(project.id, 'wallet', $event)"
 									 type="group"
 									 name="Wallets">
 					<ng-container innerElements>
 						<app-project-element #walletElem *ngFor="let wallet of project.wallets; trackBy: walletTrackBy"
 											 (click)="openProjectComponent(wallet.name, 'wallet', wallet.address)"
-											 [isExpanded]="((project.id | isExpandedExplorerNode:'wallet': wallet.address) | async)"
-											 (onExpand)="onExpandElement(project.id, 'wallet', wallet.address, $event)"
+											 [isExpanded]="projectExplorerState.wallet"
+											 (onExpand)="onExpandElement(project.id, 'wallet', $event)"
 											 (onActivate)="onActivateElement(walletElem)"
 											 type="wallet"
 											 [active]="(wallet.address | isActiveProjectElement: project.id : 'wallet') | async"

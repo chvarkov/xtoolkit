@@ -21,7 +21,6 @@ import { TokenIssueAwaiter } from './services/token-issue.awaiter';
 import { UpdateProjectNetworkDialogComponent } from './components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from './components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from './components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
-import { IsExpandedExplorerNodePipe } from './pipes/is-expanded-explorer-node.pipe';
 import { MintBurnTokenDialogComponent } from './components/dialogs/esdt/mint-burn-token-dialog/mint-burn-token-dialog.component';
 import { PauseTokenDialogComponent } from './components/dialogs/esdt/pause-token-dialog/pause-token-dialog.component';
 import { FreezeUnFreezeTokenDialogComponent } from './components/dialogs/esdt/freeze-un-freeze-token-dialog/freeze-un-freeze-token-dialog.component';
@@ -50,7 +49,6 @@ import { ConnectedWalletComponent } from './components/connected-wallet/connecte
 		UpdateProjectNetworkDialogComponent,
 		AddSmartContractDialogComponent,
 		AddProjectAddressDialogComponent,
-		IsExpandedExplorerNodePipe,
 		MintBurnTokenDialogComponent,
 		PauseTokenDialogComponent,
 		FreezeUnFreezeTokenDialogComponent,
@@ -59,9 +57,9 @@ import { ConnectedWalletComponent } from './components/connected-wallet/connecte
 		TransferOwnershipDialogComponent,
 		ProjectListComponent,
 		ConnectMaiarWalletDialogComponent,
-  SetMaiarWalletNameDialogComponent,
-  ActiveProjectComponent,
-  ConnectedWalletComponent,
+		SetMaiarWalletNameDialogComponent,
+		ActiveProjectComponent,
+		ConnectedWalletComponent,
 	],
 	imports: [
 		CommonModule,
@@ -77,12 +75,12 @@ import { ConnectedWalletComponent } from './components/connected-wallet/connecte
 		TokenIssueAwaiter,
 		MaiarWalletService,
 	],
-    exports: [
-        StoreModule,
-        EffectsModule,
-        ProjectExplorerComponent,
-        ActiveProjectComponent,
-        ConnectedWalletComponent,
-    ],
+	exports: [
+		StoreModule,
+		EffectsModule,
+		ProjectExplorerComponent,
+		ActiveProjectComponent,
+		ConnectedWalletComponent,
+	],
 })
 export class ProjectModule { }

@@ -12,10 +12,11 @@ import { ProjectSelector } from '../../store/project.selector';
 import { ProjectAction } from '../../store/project.action';
 import { ProjectComponentType } from '../../../core/types';
 import {
-	getProjectComponentNodeId,
+	DEFAULT_PROJECT_EXPLORER_STATE,
+	getUpdateExplorerStatePayload,
 	PERSONAL_SETTINGS_MANAGER,
 	PersonalSettingsManager,
-	ProjectExplorerNode,
+	ProjectExplorerExpandState,
 } from '../../../core/data-provider/personal-settings.manager';
 import { filter } from 'rxjs/operators';
 import { ProjectElementComponent } from '../project-element/project-element.component';
@@ -32,7 +33,7 @@ import { MaiarWalletService } from '../../services/maiar-wallet.service';
 export class ProjectExplorerComponent implements OnInit, OnDestroy {
 	projectsList$: Observable<ProjectInfo[]>;
 	activeProject$: Observable<Project | undefined>;
-	projectExplorerState$: Observable<{ [id: string]: ProjectExplorerNode }>;
+	projectExplorerState: ProjectExplorerExpandState = DEFAULT_PROJECT_EXPLORER_STATE;
 
 	activeElementRef?: ProjectElementComponent;
 
@@ -52,28 +53,30 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly ps: PersonalSettingsManager) {
 		this.projectsList$ = this.store.select(ProjectSelector.projectList);
 		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
-		this.projectExplorerState$ = this.store.select(ProjectSelector.projectExplorerNodeMap);
+
+
+		// this.sub.add(
+		// 	this.actions$.pipe(
+		// 		ofType(ProjectAction.updateProjectExplorerTreeSuccess),
+		// 		filter(action => action.isShowActiveTab),
+		// 	).subscribe(() => {
+		// 		this.activeElementRef?.containerRef?.nativeElement?.scrollIntoView({behavior: 'smooth'});
+		// 	}),
+		// );
 
 		this.sub.add(
-			this.actions$.pipe(
-				ofType(ProjectAction.updateProjectExplorerTreeSuccess),
-				filter(action => action.isShowActiveTab),
-			).subscribe(() => {
-				this.activeElementRef?.containerRef?.nativeElement?.scrollIntoView({behavior: 'smooth'});
-			}),
-		);
-
-		this.sub.add(
-			this.activeProject$.subscribe(async project => {
+			this.activeProject$.subscribe(project => {
 				if (project) {
-					await this.ps.syncProjectExplorerTree(project).toPromise();
-
 					this.store.dispatch(ProjectAction.loadProjectExplorerState({
 						projectId: project.id,
 					}));
 				}
 			}),
 		);
+
+		this.sub.add(
+			this.store.select(ProjectSelector.projectExplorerState).subscribe(state => this.projectExplorerState = state),
+		)
 	}
 
 	ngOnInit(): void {
@@ -92,15 +95,11 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.showCurrentTabInExplorer({projectId}));
 	}
 
-	onExpandElement(projectId: string, type: ProjectComponentType, componentId: string, isExpanded: boolean): void {
+	onExpandElement(projectId: string, componentType: ProjectComponentType, isExpanded: boolean): void {
 		this.store.dispatch(ProjectAction.updateProjectExplorerTree({
 			projectId,
-			nodeId: getProjectComponentNodeId(projectId, type, componentId),
-			withChildren: false,
-			withParents: false,
-			isExpanded: isExpanded,
-			isShowActiveTab: false,
-		}))
+			update: getUpdateExplorerStatePayload(componentType, isExpanded),
+		}));
 	}
 
 	openProject(id: string): void {

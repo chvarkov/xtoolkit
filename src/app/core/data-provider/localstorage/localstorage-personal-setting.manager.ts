@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import {
-	getProjectComponentNodeId,
+	DEFAULT_PROJECT_EXPLORER_STATE,
 	LayoutState,
 	OpenedProjectTab,
 	PersonalSettingsManager,
-	ProjectExplorerNode,
-	ProjectExplorerState, reverseTheme,
+	ProjectExplorerExpandState, reverseTheme,
 	SELF_PROJECT_ID,
 	TabsData,
 	Theme
@@ -23,8 +22,6 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 	private readonly currentTabIndexKey = `${GLOBAL_PREFIX}.current_tab_index`;
 	private readonly layoutStateKey = `${GLOBAL_PREFIX}.layout_state`;
 	private readonly projectExplorerStateKey = `${GLOBAL_PREFIX}.project_explorer_state`;
-
-	private readonly projectComponentGroups: ProjectComponentType[] = ['abi', 'sc', 'token', 'nft', 'wallet'];
 
 	constructor(@Inject(DATA_PROVIDER) private readonly dataProvider: DataProvider) {
 	}
@@ -315,142 +312,33 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 		);
 	}
 
-	getProjectExplorerState(projectId: string): Observable<ProjectExplorerState> {
-		const state: ProjectExplorerState = this.get(this.getProjectStateKey(projectId));
+	getProjectExplorerState(projectId: string): Observable<ProjectExplorerExpandState> {
+		const state: ProjectExplorerExpandState = this.get(this.getProjectStateKey(projectId));
 
 		if (state) {
 			return of(state);
 		}
 
-		const defaultState: ProjectExplorerState = {
-			explorerNodeMap: {},
-		};
+		this.set(this.getProjectStateKey(projectId), DEFAULT_PROJECT_EXPLORER_STATE);
 
-		this.set(this.getProjectStateKey(projectId), defaultState);
-
-		return of(defaultState);
+		return of(DEFAULT_PROJECT_EXPLORER_STATE);
 	}
 
 	updateProjectExplorerTree(projectId: string,
-							  nodeId: string,
-							  isExpanded: boolean,
-							  withParents: boolean,
-							  withChildren: boolean): Observable<ProjectExplorerState> {
+							  update: Partial<ProjectExplorerExpandState>): Observable<ProjectExplorerExpandState> {
 		return this.getProjectExplorerState(projectId).pipe(
 			map((state) => {
-				this.updateProjectStateTree(state, isExpanded, [nodeId], withParents, withChildren);
+				const updatedState = {
+					...state,
+					...update,
+				};
 
-				this.set(this.getProjectStateKey(projectId), state);
+				this.set(this.getProjectStateKey(projectId), updatedState);
 
-				return state;
+				return updatedState;
 			}),
 		);
 	}
-
-	syncProjectExplorerTree(project: Project): Observable<ProjectExplorerState> {
-		return this.getProjectExplorerState(project.id).pipe(
-			map((state) => {
-				const projectNodeId = getProjectComponentNodeId(project.id, 'project', project.id);
-
-				if (!state.explorerNodeMap[projectNodeId]) {
-					state.explorerNodeMap[projectNodeId] = {
-						id: projectNodeId,
-						isExpanded: true,
-						childrenIds: [],
-					};
-				}
-
-				const projectNode = state.explorerNodeMap[projectNodeId];
-
-				for (const groupType of this.projectComponentGroups) {
-					const group = getProjectComponentNodeId(project.id, 'group', groupType);
-
-					this.syncProjectExplorerNode(state, projectNode, group);
-				}
-
-				const abiFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'abi');
-
-				for (const abi of project.abiInterfaces) {
-					const nodeId = getProjectComponentNodeId(project.id, 'abi', abi.id);
-					this.syncProjectExplorerNode(state, state.explorerNodeMap[abiFolderNodeId], nodeId);
-				}
-
-				const scFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'sc');
-
-				for (const sc of project.smartContracts) {
-					const nodeId = getProjectComponentNodeId(project.id, 'sc', sc.id);
-					this.syncProjectExplorerNode(state, state.explorerNodeMap[scFolderNodeId], nodeId);
-				}
-
-				const tokenFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'token');
-
-				for (const token of project.tokens) {
-					const nodeId = getProjectComponentNodeId(project.id, 'token', token);
-					this.syncProjectExplorerNode(state, state.explorerNodeMap[tokenFolderNodeId], nodeId);
-				}
-
-				const nftFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'nft');
-
-				// TODO: SYNC NFT TREE
-
-				const walletFolderNodeId = getProjectComponentNodeId(project.id, 'group', 'wallet');
-
-				for (const wallet of project.wallets) {
-					const nodeId = getProjectComponentNodeId(project.id, 'wallet', wallet.address);
-					this.syncProjectExplorerNode(state, state.explorerNodeMap[walletFolderNodeId], nodeId);
-				}
-
-				this.set(this.getProjectStateKey(project.id), state);
-
-				return state;
-			}),
-		);
-	}
-
-	private syncProjectExplorerNode(stateRef: ProjectExplorerState, parentRef: ProjectExplorerNode, currentNodeId: string): void {
-		if (!stateRef.explorerNodeMap[currentNodeId]) {
-			stateRef.explorerNodeMap[currentNodeId] = {
-				id: currentNodeId,
-				isExpanded: true,
-				childrenIds: [],
-				parentId: parentRef.id,
-			};
-		}
-
-		if (!parentRef.childrenIds.includes(currentNodeId)) {
-			parentRef.childrenIds.push(currentNodeId);
-		}
-	}
-
-	private updateProjectStateTree(stateRef: ProjectExplorerState,
-								   isExpanded: boolean,
-								   ids: string[],
-								   withParent: boolean,
-								   withChildren: boolean): void {
-		const idsToMutate: string[] = [];
-
-		for (const id of ids) {
-			const current = stateRef.explorerNodeMap[id];
-			if (!current) {
-				continue;
-			}
-
-			current.isExpanded = isExpanded;
-
-			if (withParent && current.parentId) {
-				idsToMutate.push(current.parentId);
-			}
-
-			if (withChildren) {
-				current.childrenIds.forEach(childrenId => idsToMutate.push(childrenId));
-			}
-
-		}
-
-		if (idsToMutate.length) {
-			this.updateProjectStateTree(stateRef, isExpanded, idsToMutate, withParent, withChildren);
-		}
-	};
 
 	private getActiveProjectOpenedTabList(projectId?: string): OpenedProjectTab[] {
 		if (!projectId) {

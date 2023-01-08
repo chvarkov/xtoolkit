@@ -20,7 +20,7 @@ import {
 	UploadAbiDialogComponent
 } from '../components/dialogs/upload-abi-dialog/upload-abi-dialog.component';
 import {
-	getProjectComponentNodeId,
+	getUpdateExplorerStatePayload,
 	PERSONAL_SETTINGS_MANAGER,
 	PersonalSettingsManager
 } from '../../core/data-provider/personal-settings.manager';
@@ -810,23 +810,9 @@ export class ProjectEffect {
 
 	updateProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectExplorerTree),
-		mergeMap(({projectId, nodeId, isExpanded, withParents, withChildren, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(
-			projectId,
-			nodeId,
-			isExpanded,
-			withParents,
-			withChildren,
-		).pipe(
-			map((explorerState) => ProjectAction.updateProjectExplorerTreeSuccess({explorerState, isShowActiveTab})),
+		mergeMap(({projectId, update}) => this.personalSettingsManager.updateProjectExplorerTree(projectId, update).pipe(
+			map((data) => ProjectAction.updateProjectExplorerTreeSuccess({data})),
 			catchError(err => of(ProjectAction.updateProjectExplorerTreeError({err})))
-		))),
-	);
-
-	syncProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
-		ofType(ProjectAction.syncProjectExplorerTree),
-		mergeMap(({project}) => this.personalSettingsManager.getProjectExplorerState(project.id).pipe(
-			map((explorerState) => ProjectAction.syncProjectExplorerTreeSuccess({explorerState})),
-			catchError(err => of(ProjectAction.syncProjectExplorerTreeError({err})))
 		))),
 	);
 
@@ -839,14 +825,9 @@ export class ProjectEffect {
 					throw new Error('No tab');
 				}
 
-				const nodeId = getProjectComponentNodeId(opened.projectId, opened.componentType, opened.componentId);
 				return ProjectAction.updateProjectExplorerTree({
 					projectId,
-					nodeId,
-					withChildren: false,
-					withParents: true,
-					isExpanded: true,
-					isShowActiveTab: true,
+					update: getUpdateExplorerStatePayload(opened.componentType, true),
 				});
 			}),
 		)),
