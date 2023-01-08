@@ -810,8 +810,8 @@ export class ProjectEffect {
 
 	updateProjectExplorerTree$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.updateProjectExplorerTree),
-		mergeMap(({projectId, update}) => this.personalSettingsManager.updateProjectExplorerTree(projectId, update).pipe(
-			map((data) => ProjectAction.updateProjectExplorerTreeSuccess({data})),
+		mergeMap(({projectId, update, isShowActiveTab}) => this.personalSettingsManager.updateProjectExplorerTree(projectId, update).pipe(
+			map((data) => ProjectAction.updateProjectExplorerTreeSuccess({data, isShowActiveTab})),
 			catchError(err => of(ProjectAction.updateProjectExplorerTreeError({err})))
 		))),
 	);
@@ -828,6 +828,7 @@ export class ProjectEffect {
 				return ProjectAction.updateProjectExplorerTree({
 					projectId,
 					update: getUpdateExplorerStatePayload(opened.componentType, true),
+					isShowActiveTab: true,
 				});
 			}),
 		)),

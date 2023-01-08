@@ -54,15 +54,14 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.projectsList$ = this.store.select(ProjectSelector.projectList);
 		this.activeProject$ = this.store.select(ProjectSelector.activeProject());
 
-
-		// this.sub.add(
-		// 	this.actions$.pipe(
-		// 		ofType(ProjectAction.updateProjectExplorerTreeSuccess),
-		// 		filter(action => action.isShowActiveTab),
-		// 	).subscribe(() => {
-		// 		this.activeElementRef?.containerRef?.nativeElement?.scrollIntoView({behavior: 'smooth'});
-		// 	}),
-		// );
+		this.sub.add(
+			this.actions$.pipe(
+				ofType(ProjectAction.updateProjectExplorerTreeSuccess),
+				filter(action => !!action.isShowActiveTab),
+			).subscribe(() => {
+				setTimeout(() => this.activeElementRef?.containerRef?.nativeElement?.scrollIntoView({behavior: 'smooth'}), 0);
+			}),
+		);
 
 		this.sub.add(
 			this.activeProject$.subscribe(project => {

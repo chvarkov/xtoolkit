@@ -73,19 +73,25 @@ export interface PersonalSettingsManager {
 }
 
 export function getUpdateExplorerStatePayload(type: ProjectComponentType, isExpanded: boolean): Partial<ProjectExplorerExpandState> {
+	const group: Partial<ProjectExplorerExpandState> = {};
+
+	if (isExpanded && type !== 'project') {
+		group.project = true;
+	}
+
 	switch (type) {
 		case 'project':
 			return {project: isExpanded};
 		case 'sc':
-			return {sc: isExpanded};
+			return {...group, sc: isExpanded};
 		case 'abi':
-			return {abi: isExpanded};
+			return {...group, abi: isExpanded};
 		case 'token':
-			return {token: isExpanded};
+			return {...group, token: isExpanded};
 		case 'wallet':
-			return {wallet: isExpanded};
+			return {...group, wallet: isExpanded};
 		case 'nft':
-			return {nft: isExpanded};
+			return {...group, nft: isExpanded};
 		default:
 			return {};
 	}
