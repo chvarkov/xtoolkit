@@ -28,7 +28,7 @@ import { MaiarWalletService } from '../../services/maiar-wallet.service';
 @Component({
 	selector: 'app-project-explorer',
 	templateUrl: './project-explorer.component.html',
-	styleUrls: ['./project-explorer.component.scss']
+	styleUrls: ['./project-explorer.component.scss'],
 })
 export class ProjectExplorerComponent implements OnInit, OnDestroy {
 	projectsList$: Observable<ProjectInfo[]>;

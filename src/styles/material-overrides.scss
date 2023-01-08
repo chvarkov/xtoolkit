@@ -59,3 +59,15 @@ mat-select, mat-autocomplete {
 	color: var(--low-text) !important;
 	font-size: 13px !important;
 }
+
+.mat-progress-bar-buffer {
+	background: var(--border-low-color) !important;
+}
+
+.mat-progress-bar-primary {
+	background: var(--border-color) !important;
+}
+
+.mat-progress-bar-secondary {
+	background: var(--border-accent-color) !important;
+}
