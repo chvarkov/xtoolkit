@@ -1,4 +1,4 @@
-<div #container class="project-element" [ngClass]="{active: this.active}">
+<div #container class="project-element" [ngClass]="{active: this.active}" [ngStyle]="{paddingLeft: paddingLeft}">
 	<div *ngIf="expandable"
 		 class="material-icons expand" (click)="toggleExpand()">
 		{{isExpanded ? 'expand_more' : 'chevron_right'}}
@@ -19,6 +19,3 @@
 	</div>
 </div>
 
-<div class="content" *ngIf="isExpanded">
-	<ng-content select="[innerElements]"></ng-content>
-</div>
