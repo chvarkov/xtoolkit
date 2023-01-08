@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import BigNumber from 'bignumber.js';
 
 @Pipe({
-	name: 'decimalPlaces'
+	name: 'decimalPlaces',
+	pure: true,
 })
 export class DecimalPlacesPipe implements PipeTransform {
 	transform(value: BigNumber.Value, decimals = 18): string {

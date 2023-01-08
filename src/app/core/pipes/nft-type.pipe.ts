@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { NftType } from '../elrond/interfaces/nft';
 
 @Pipe({
-	name: 'nftType'
+	name: 'nftType',
+	pure: true,
 })
 export class NftTypePipe implements PipeTransform {
 

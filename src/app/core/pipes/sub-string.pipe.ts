@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export type SubStrType = 'start' | 'end';
 
 @Pipe({
-	name: 'subString'
+	name: 'subString',
+	pure: true,
 })
 export class SubStringPipe implements PipeTransform {
 

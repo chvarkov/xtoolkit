@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ProjectComponentType } from '../types';
 
 @Pipe({
-	name: 'componentColor'
+	name: 'componentColor',
+	pure: true,
 })
 export class ComponentColorPipe implements PipeTransform {
 	transform(value: ProjectComponentType): string {

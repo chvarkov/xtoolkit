@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { NOT_MAINNET_CHAIN_IDS } from '../constants';
 
 @Pipe({
-	name: 'isNotMainnetNetwork'
+	name: 'isNotMainnetNetwork',
+	pure: true,
 })
 export class IsNotMainnetNetworkPipe implements PipeTransform {
 	transform(chainId: string): boolean {

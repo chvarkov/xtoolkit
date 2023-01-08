@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-	name: 'decodeBase64'
+	name: 'decodeBase64',
+	pure: true,
 })
 export class DecodeBase64Pipe implements PipeTransform {
 

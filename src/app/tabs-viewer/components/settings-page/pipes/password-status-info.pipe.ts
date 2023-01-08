@@ -3,6 +3,7 @@ import { ISecurityStatusInfo } from '../interfaces/security-status-info';
 
 @Pipe({
 	name: 'passwordStatusInfo',
+	pure: true,
 })
 export class PasswordStatusInfoPipe implements PipeTransform {
 	transform(value: boolean | null): ISecurityStatusInfo {

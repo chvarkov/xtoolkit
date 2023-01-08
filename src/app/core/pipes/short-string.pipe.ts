@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
 	name: 'shortString',
+	pure: true,
 })
 export class ShortStringPipe implements PipeTransform {
 	transform(value: string, maxLength?: number, separator = '...'): string {

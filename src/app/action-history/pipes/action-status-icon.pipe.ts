@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ActionStatus } from '../../core/data-provider/data-provider';
 
 @Pipe({
-	name: 'actionStatusIcon'
+	name: 'actionStatusIcon',
+	pure: true,
 })
 export class ActionStatusIconPipe implements PipeTransform {
 
