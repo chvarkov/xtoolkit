@@ -39,6 +39,7 @@ import { ConfirmTransactionDialogComponent } from './ui/confirm-transaction-dial
 import { SubStringPipe } from './pipes/sub-string.pipe';
 import { ToastrModule } from 'ngx-toastr';
 import { ToastrComponent } from './ui/toastr/toastr.component';
+import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 
 @NgModule({
 	declarations: [
@@ -68,6 +69,7 @@ import { ToastrComponent } from './ui/toastr/toastr.component';
 		ConfirmTransactionDialogComponent,
 		SubStringPipe,
 		ToastrComponent,
+  DecodeBase64Pipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -128,6 +130,7 @@ import { ToastrComponent } from './ui/toastr/toastr.component';
 		IsNotMainnetNetworkPipe,
 		NftTypePipe,
 		SubStringPipe,
+		DecodeBase64Pipe,
 	],
 })
 export class CoreModule { }
