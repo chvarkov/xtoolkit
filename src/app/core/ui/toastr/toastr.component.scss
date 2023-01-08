@@ -1,0 +1,51 @@
+.container {
+	width: 360px;
+	padding: 8px;
+	border-radius: 4px;
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+	background: var(--primary-bg);
+	margin-top: 12px;
+	display: flex;
+	flex-direction: row;
+	position: relative;
+}
+
+.icon {
+	width: 44px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	mat-icon {
+		font-size: 26px;
+		margin-left: -6px;
+
+	}
+}
+
+.icon-toast-success {
+	color: var(--success-text-color);
+}
+
+.icon-toast-error {
+	color: var(--error-text-color);
+}
+
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.title {
+	font-size: 17px;
+	display: flex;
+	flex-direction: row;
+	font-weight: 500;
+}
+
+.message {
+	font-size: 15px;
+}

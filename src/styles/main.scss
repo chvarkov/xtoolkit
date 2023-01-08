@@ -5,6 +5,8 @@
 @import "material-overrides";
 @import "typography";
 
+//@import '~ngx-toastr/toastr';
+
 body {
 	padding: 0;
 	margin: 0;
@@ -61,4 +63,8 @@ body {
 
 .dropdown-icon {
 	font-size: 1.2em;
+}
+
+.toast-bottom-right {
+	bottom: calc(var(--footer-height) + 12px) !important;
 }

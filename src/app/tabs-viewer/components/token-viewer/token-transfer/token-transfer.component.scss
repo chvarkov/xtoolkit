@@ -1,7 +1,36 @@
 .token-transfer-container {
-	display: grid;
-	grid-template-columns: auto 100px;
-	grid-template-rows: 22px 22px 22px;
+	display: flex;
+	flex-direction: column;
 	border-bottom: solid 1px var(--border-low-color);
 	padding: 10px;
+	gap: 6px
+}
+
+.header, .details {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.arrow {
+	font-weight: 100;
+	color: var(--border-color);
+}
+
+.amount {
+	font-weight: 500;
+	margin: 0 6px;
+}
+
+
+.status-datetime {
+	display: flex;
+	flex-direction: row;
+
+	.datetime {
+		margin-right: 10px;
+		color: var(--low-text);
+		font-size: 13px;
+	}
 }

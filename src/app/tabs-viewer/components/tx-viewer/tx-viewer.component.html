@@ -13,38 +13,38 @@
 				<mat-tab label="Details">
 					<div class="page-tab-content">
 						<div class="details">
-							<div class="grid-cell">Status</div>
+							<div class="grid-cell field-label">Status</div>
 							<div class="grid-cell">
 								<app-account-transaction-status-badge class="tx-status"
 																	  [status]="tx.status">
 								</app-account-transaction-status-badge>
 							</div>
 
-							<div class="grid-cell">Date</div>
+							<div class="grid-cell field-label">Date</div>
 							<div class="grid-cell">{{tx.timestamp * 1000 | date: 'medium'}}</div>
 
-							<div class="grid-cell">Miniblock</div>
+							<div class="grid-cell field-label">Miniblock</div>
 							<div class="grid-cell">{{tx.miniBlockHash}}</div>
 
-							<div class="grid-cell">Sender</div>
+							<div class="grid-cell field-label">Sender</div>
 							<div class="address-field grid-cell">
 								<app-address [address]="tx.sender" [chainId]="network.chainId"></app-address>
 								<div class="shard">(Shard {{tx.senderShard}})</div>
 							</div>
 
-							<div class="grid-cell">Receiver</div>
+							<div class="grid-cell field-label">Receiver</div>
 							<div class="address-field grid-cell">
 								<app-address [address]="tx.receiver" [chainId]="network.chainId"></app-address>
 								<div class="shard">(Shard {{tx.receiverShard}})</div>
 							</div>
 
 							<ng-container *ngIf="tx.function">
-								<div class="grid-cell">Method</div>
+								<div class="grid-cell field-label">Method</div>
 								<div class="grid-cell">{{tx.function}}</div>
 							</ng-container>
 
 							<ng-container *ngIf="getTransferOperations(tx) as transferOperations">
-								<div class="grid-cell">Operations</div>
+								<div class="grid-cell field-label">Operations</div>
 								<div class="grid-cell">
 									<app-tx-token-operation *ngFor="let operation of transferOperations; let i = index"
 															[chainId]="network.chainId"
@@ -54,58 +54,58 @@
 								</div>
 							</ng-container>
 
-							<div class="grid-cell">Value</div>
+							<div class="grid-cell field-label">Value</div>
 							<div class="grid-cell">
 								{{tx.value}}
 							</div>
 
-							<div class="grid-cell">Fee</div>
+							<div class="grid-cell field-label">Fee</div>
 							<div class="grid-cell">
 								{{tx.fee}}
 							</div>
 
-							<div class="grid-cell">Gas limit</div>
+							<div class="grid-cell field-label">Gas limit</div>
 							<div class="grid-cell">
 								{{tx.gasLimit}}
 							</div>
 
-							<div class="grid-cell">Gas used</div>
+							<div class="grid-cell field-label">Gas used</div>
 							<div class="grid-cell">
 								{{tx.gasUsed}}
 							</div>
 
-							<div class="grid-cell">Gas price</div>
+							<div class="grid-cell field-label">Gas price</div>
 							<div class="grid-cell">
 								{{tx.gasPrice}}
 							</div>
 
-							<div class="grid-cell">Nonce</div>
+							<div class="grid-cell field-label">Nonce</div>
 							<div class="grid-cell">
 								{{tx.nonce}}
 							</div>
 
-							<div class="grid-cell">Data</div>
-							<textarea class="tx-data grid-cell" readonly>{{tx.data}}</textarea>
+							<div class="grid-cell field-label">Data</div>
+							<textarea class="tx-data grid-cell" readonly rows="3">{{tx.data | decodeBase64}}</textarea>
 						</div>
 					</div>
 				</mat-tab>
 				<mat-tab label="SC results" *ngIf="tx.results?.length">
 					<div class="page-tab-content">
 						<div class="tx-sc-result" *ngFor="let scResult of tx.results">
-							<div class="grid-cell">Hash</div>
+							<div class="grid-cell field-label">Hash</div>
 							<app-tx-hash class="grid-cell" [txHash]="scResult.hash" [chainId]="network.chainId"></app-tx-hash>
 
-							<div class="grid-cell">From</div>
+							<div class="grid-cell field-label">From</div>
 							<app-address class="grid-cell" [address]="scResult.sender" [chainId]="network.chainId"></app-address>
 
-							<div class="grid-cell">To</div>
+							<div class="grid-cell field-label">To</div>
 							<app-address class="grid-cell" [address]="scResult.receiver" [chainId]="network.chainId"></app-address>
 
-							<div class="grid-cell">Value</div>
+							<div class="grid-cell field-label">Value</div>
 							<div class="grid-cell">{{scResult.value}}</div>
 
-							<div class="grid-cell">Data</div>
-							<textarea readonly class="tx-data grid-cell">{{scResult.data}}</textarea>
+							<div class="grid-cell field-label">Data</div>
+							<textarea readonly class="tx-data grid-cell" rows="3">{{scResult.data | decodeBase64}}</textarea>
 						</div>
 					</div>
 				</mat-tab>
@@ -115,16 +115,16 @@
 							<app-address [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 						</div>
 						<div class="tx-log" *ngFor="let txLog of tx.logs.events">
-							<div class="grid-cell">Address</div>
+							<div class="grid-cell field-label">Address</div>
 							<app-address class="grid-cell" [address]="tx.logs.address" [chainId]="network.chainId"></app-address>
 
-							<div class="grid-cell">Identifier</div>
+							<div class="grid-cell field-label">Identifier</div>
 							<div class="grid-cell">{{txLog.identifier}}</div>
 
-							<div class="grid-cell">Topics</div>
+							<div class="grid-cell field-label">Topics</div>
 							<textarea readonly class="tx-data grid-cell">{{txLog.topics.join('\n')}}</textarea>
 
-							<div class="grid-cell">Data</div>
+							<div class="grid-cell field-label">Data</div>
 							<textarea readonly class="tx-data grid-cell">{{txLog.data}}</textarea>
 						</div>
 					</div>
