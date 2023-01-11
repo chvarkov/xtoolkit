@@ -61,9 +61,11 @@
 									 [name]="abi.name || abi.name">
 					<ng-container actions>
 						<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
-						<button mat-icon-button [matMenuTriggerFor]="abiMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
+						<mat-icon class="element-menu-icon"
+								  [matMenuTriggerFor]="abiMenu"
+								  (click)="$event.stopImmediatePropagation()">
+							more_vert
+						</mat-icon>
 						<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
 							<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
 								<mat-icon>drive_file_rename_outline</mat-icon>
@@ -96,9 +98,12 @@
 									 [name]="sc.name || sc.name">
 					<ng-container actions>
 						<div class="tip-label">{{sc.address | subString}}</div>
-						<button mat-icon-button [matMenuTriggerFor]="scMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
+						<mat-icon class="element-menu-icon"
+								  [matMenuTriggerFor]="scMenu"
+								  (click)="$event.stopImmediatePropagation()">
+							more_vert
+						</mat-icon>
+
 						<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
 							<button mat-menu-item (click)="renameSmartContract(project.id, sc.id, sc.name)">
 								<mat-icon>drive_file_rename_outline</mat-icon>
@@ -133,9 +138,11 @@
 									 [name]="tokenAddress">
 					<ng-container actions>
 						<div class="tip-label">ESDT</div>
-						<button mat-icon-button [matMenuTriggerFor]="tokenMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
+						<mat-icon class="element-menu-icon"
+								  [matMenuTriggerFor]="tokenMenu"
+								  (click)="$event.stopImmediatePropagation()">
+							more_vert
+						</mat-icon>
 						<mat-menu #tokenMenu="matMenu" classList="dropdown-list" xPosition="before">
 							<button mat-menu-item (click)="exploreToken(project.id, tokenAddress)">
 								<mat-icon>search</mat-icon>
@@ -179,9 +186,11 @@
 									 [name]="wallet.name">
 					<ng-container actions>
 						<div class="tip-label">{{wallet.address | subString}}</div>
-						<button mat-icon-button [matMenuTriggerFor]="walletGroupMenu" (click)="$event.stopImmediatePropagation()">
-							<mat-icon class="dropdown-icon">more_vert</mat-icon>
-						</button>
+						<mat-icon class="element-menu-icon"
+								  [matMenuTriggerFor]="walletGroupMenu"
+								  (click)="$event.stopImmediatePropagation()">
+							more_vert
+						</mat-icon>
 						<mat-menu #walletGroupMenu="matMenu" classList="dropdown-list" xPosition="before">
 							<button *ngIf="project.chainId | isNotMainnetNetwork"
 									mat-menu-item

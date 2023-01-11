@@ -12,23 +12,15 @@
 	justify-content: center;
 	align-items: center;
 
-	.text {
+	.content {
 		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		align-items: center;
 		color: var(--text-color);
 		font-size: 1.6em;
-		position: relative;
 		letter-spacing: 2px;
-
-		.cursor {
-			width: 0.5em;
-			height: 1.3em;
-			margin-left: 10px;
-			background: none;
-		}
-
-		.visible {
-			background: var(--text-color);
-		}
+		width: 360px;
 	}
 }
 
