@@ -1,4 +1,4 @@
-# DAPPLAB [MVP develop]
+# DAPP Lab [MVP develop]
 
 ## About project
 

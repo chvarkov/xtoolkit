@@ -2,9 +2,9 @@
 <app-layout #layout>
 	<div leftHeader class="right-header-container">
 		<app-logo (click)="onLogoClick()"
-				  [networkName]="((activeProject$ | async)?.chainId || '' | networkName | async) || ''">
+				  [projectName]="(activeProject$ | async)?.name || ''">
+			<app-active-project *ngIf="activeProject$ | async as activeProject" [project]="activeProject"></app-active-project>
 		</app-logo>
-		<app-active-project *ngIf="activeProject$ | async as activeProject" [project]="activeProject"></app-active-project>
 	</div>
 	<ng-container header *ngIf="activeProject$ | async as activeProject">
 		<app-toolbar>
@@ -14,7 +14,7 @@
 				<app-toolbar-icon-button [matMenuTriggerFor]="addMenu" icon="add_circle">add_circle</app-toolbar-icon-button>
 
 				<mat-menu #addMenu="matMenu" classList="dropdown-list">
-					<button mat-menu-item (click)="uploadScAbi(activeProject.name)">
+					<button mat-menu-item (click)="uploadScAbi(activeProject.id)">
 						<mat-icon>data_object</mat-icon>
 						<span>Upload ABI</span>
 					</button>
@@ -49,7 +49,6 @@
 
 				<div class="toolbar-splitter"></div>
 
-				<app-toolbar-icon-button (click)="updateProjectNetwork(activeProject.id)">public</app-toolbar-icon-button>
 				<app-toolbar-icon-button (click)="renameProject(activeProject.id, activeProject.name)">drive_file_rename_outline</app-toolbar-icon-button>
 				<app-toolbar-icon-button [color]="'var(--static-red)'" (click)="deleteProject(activeProject.id)">delete</app-toolbar-icon-button>
 			</ng-container>
@@ -57,6 +56,15 @@
 				<app-toolbar-icon-button (click)="transferFunds(activeProject.id, activeProject.chainId)">send</app-toolbar-icon-button>
 				<app-toolbar-icon-button *ngIf="activeProject.chainId | isNotMainnetNetwork" (click)="faucet.gotoFaucet()">
 					monetization_on
+				</app-toolbar-icon-button>
+
+				<div class="toolbar-splitter"></div>
+
+				<span class="network-name">{{activeProject.chainId | networkName | async}}</span>
+
+				<app-toolbar-icon-button color="var(--network-color)"
+										 (click)="updateProjectNetwork(activeProject.id)">
+					public
 				</app-toolbar-icon-button>
 			</ng-container>
 		</app-toolbar>

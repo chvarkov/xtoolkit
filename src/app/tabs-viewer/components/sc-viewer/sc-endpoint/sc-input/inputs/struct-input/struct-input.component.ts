@@ -2,6 +2,7 @@ import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output }
 import { FieldDefinition, StructType, Type } from '@elrondnetwork/erdjs/out';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-struct-input',
@@ -56,7 +57,9 @@ export class StructInputComponent implements OnInit, OnDestroy, ControlValueAcce
 				.reduce((p, c) => ({...p, ...c}), {}),
 		);
 
-		this.sub.add(this.form.valueChanges.subscribe(data => {
+		this.sub.add(this.form.valueChanges.pipe(
+			distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+		).subscribe(data => {
 			this.onChangeForm(data);
 		}));
 	}
