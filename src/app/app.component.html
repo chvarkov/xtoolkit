@@ -14,7 +14,7 @@
 				<app-toolbar-icon-button [matMenuTriggerFor]="addMenu" icon="add_circle">add_circle</app-toolbar-icon-button>
 
 				<mat-menu #addMenu="matMenu" classList="dropdown-list">
-					<button mat-menu-item (click)="uploadScAbi(activeProject.name)">
+					<button mat-menu-item (click)="uploadScAbi(activeProject.id)">
 						<mat-icon>data_object</mat-icon>
 						<span>Upload ABI</span>
 					</button>
