@@ -62,7 +62,10 @@
 
 				<span class="network-name">{{activeProject.chainId | networkName | async}}</span>
 
-				<app-toolbar-icon-button (click)="updateProjectNetwork(activeProject.id)">public</app-toolbar-icon-button>
+				<app-toolbar-icon-button color="var(--network-color)"
+										 (click)="updateProjectNetwork(activeProject.id)">
+					public
+				</app-toolbar-icon-button>
 			</ng-container>
 		</app-toolbar>
 	</ng-container>
