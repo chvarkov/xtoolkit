@@ -1,0 +1,15 @@
+<div class="container">
+	<div class="content">
+		<ng-content></ng-content>
+	</div>
+	<div class="tabs" *ngIf="(tabs?.length || 0) > 1">
+		<div class="empty-space"></div>
+
+		<div class="tab-label"
+			 (click)="select(tab.id)"
+			 [ngClass]="{active: tab.id === activeId }"
+			 *ngFor="let tab of tabs">
+			{{tab.title}}
+		</div>
+	</div>
+</div>

@@ -130,13 +130,12 @@
 		</app-project-tab>
 	</app-project-tabs>
 
-	<ng-container actionHistory>
-		<ng-container *ngIf="activeProject$ | async; else news">
+	<app-tabs-widget actionHistory>
+		<app-widget-tab *ngIf="activeProject$ | async" title="Action history">
 			<app-action-list (resize)="layout.resizePanel('right', $event)"></app-action-list>
-		</ng-container>
-
-		<ng-template #news>
+		</app-widget-tab>
+		<app-widget-tab title="News">
 			<app-news-list></app-news-list>
-		</ng-template>
-	</ng-container>
+		</app-widget-tab>
+	</app-tabs-widget>
 </app-layout>
