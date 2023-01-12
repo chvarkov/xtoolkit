@@ -1,8 +1,15 @@
+:host {
+	width: 100%;
+}
+
 .logo-container {
-	padding: 10px;
+	width: 100%;
 	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
 
 	.logo-text {
+		padding: 10px 0 10px 10px;
 		font-weight: 600;
 		color: var(--low-text);
 		font-size: 15px;
@@ -24,7 +31,7 @@
 		margin-right: 4px;
 	}
 
-	.network-text {
+	.project-name {
 		font-weight: 400;
 		color: var(--text-color);
 		font-size: 15px;

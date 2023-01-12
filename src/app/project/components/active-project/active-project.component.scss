@@ -1,9 +1,29 @@
+:host {
+	width: 100%;
+}
+
 .project-wrapper {
-	width: fit-content;
+	width: 100%;
 	height: var(--toolbar-height);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	justify-content: space-between;
+}
+
+.title {
+	display: flex;
+	flex-direction: row;
+}
+
+.arrow {
+	width: 20px;
+	margin-right: 2px;
+	margin-left: 4px;
+	font-size: 18px;
+	padding: 6px 0;
+	font-weight: 100;
+	color: var(--low-text)
 }
 
 .project-name {

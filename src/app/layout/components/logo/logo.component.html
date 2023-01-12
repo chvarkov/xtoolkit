@@ -1,8 +1,4 @@
 <div class="logo-container">
 	<span class="logo-text"><span class="prefix-text">DAPP</span>Lab</span>
-
-	<ng-container *ngIf="networkName">
-		<span class="splitter">|</span>
-		<span class="network-text">{{networkName}}</span>
-	</ng-container>
+	<ng-content></ng-content>
 </div>
