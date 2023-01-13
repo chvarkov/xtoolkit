@@ -316,6 +316,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						return throwError(new Error(`Abi interface "${abiId}" not found`));
 					}
 
+					abi.wasmSize = new Blob([wasm]).size;
 					abi.hasWasm = true;
 
 					this.saveProject(project);
@@ -337,6 +338,7 @@ export class LocalstorageDataProvider implements DataProvider {
 						return throwError(new Error(`Abi interface "${abiId}" not found`));
 					}
 
+					abi.wasmSize = undefined;
 					abi.hasWasm = false;
 
 					this.saveProject(project);

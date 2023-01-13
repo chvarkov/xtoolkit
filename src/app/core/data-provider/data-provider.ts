@@ -45,6 +45,7 @@ export interface ProjectAbi {
 	projectId: string;
 	name: string;
 	content: AbiJson;
+	wasmSize?: number;
 	hasWasm: boolean;
 }
 
