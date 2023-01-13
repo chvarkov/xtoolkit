@@ -13,7 +13,7 @@ export class ComponentColorPipe implements PipeTransform {
 			case 'abi':
 				return 'var(--abi-color)';
 			case 'wasm':
-				return 'var(--text-color)';
+				return 'var(--wasm-color)';
 			case 'sc':
 				return 'var(--sc-color)';
 			case 'token':
