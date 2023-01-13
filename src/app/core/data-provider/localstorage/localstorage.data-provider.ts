@@ -10,7 +10,7 @@ import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { DEFAULT_NETWORKS } from '../../constants';
 import { Injectable } from '@angular/core';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { AbiJson } from '../../elrond/builders/sc.builder';
 import { SELF_PROJECT_ID } from '../personal-settings.manager';
@@ -231,15 +231,27 @@ export class LocalstorageDataProvider implements DataProvider {
 		);
 	}
 
-	addAbi(projectId: string, content: AbiJson, name: string = content.name): Observable<Project> {
+	addAbi(projectId: string, content: AbiJson, name: string = content.name, wasm?: string): Observable<Project> {
+		const abiId = uuid.v4();
+
 		return this.getProject(projectId)
 			.pipe(
+				switchMap((project) => {
+					if (wasm) {
+						return this.setWasm(projectId, abiId, wasm).pipe(
+							map(() => project),
+						);
+					}
+
+					return of(project);
+				}),
 				map((project => {
 					const abi: ProjectAbi = {
-						id: uuid.v4(),
+						id: abiId,
 						projectId,
 						name,
 						content,
+						hasWasm: !!wasm,
 					};
 
 					project.abiInterfaces.push(abi);
@@ -280,6 +292,58 @@ export class LocalstorageDataProvider implements DataProvider {
 					this.saveProject(project);
 
 					return project;
+				}),
+			);
+	}
+
+	getWasm(projectId: string, abiId: string): Observable<string> {
+		const project: string | undefined = this.get(this.getWasmKey(projectId, abiId));
+
+		if (!project) {
+			return throwError(new Error(`Wasm "${abiId}" not found.`));
+		}
+
+		return of(project);
+	}
+
+	setWasm(projectId: string, abiId: string, wasm: string): Observable<Project> {
+		return this.getProject(projectId)
+			.pipe(
+				switchMap(project => {
+					const abi = project.abiInterfaces.find(abi => abi.id === abiId);
+
+					if (!abi) {
+						return throwError(new Error(`Abi interface "${abiId}" not found`));
+					}
+
+					abi.hasWasm = true;
+
+					this.saveProject(project);
+
+					localStorage.setItem(this.getWasmKey(projectId, abiId), wasm);
+
+					return of(project);
+				}),
+			);
+	}
+
+	deleteWasm(projectId: string, abiId: string): Observable<Project> {
+		return this.getProject(projectId)
+			.pipe(
+				switchMap(project => {
+					const abi = project.abiInterfaces.find(abi => abi.id === abiId);
+
+					if (!abi) {
+						return throwError(new Error(`Abi interface "${abiId}" not found`));
+					}
+
+					abi.hasWasm = false;
+
+					this.saveProject(project);
+
+					localStorage.removeItem(this.getWasmKey(projectId, abiId));
+
+					return of(project);
 				}),
 			);
 	}
@@ -580,6 +644,10 @@ export class LocalstorageDataProvider implements DataProvider {
 				return project;
 			}),
 		);
+	}
+
+	private getWasmKey(projectId: string, abiId: string): string {
+		return `${this.projectKey}.${projectId}.wasm.${abiId}`;
 	}
 
 	private saveProject(project: Project): void {

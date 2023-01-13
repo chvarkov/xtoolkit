@@ -28,6 +28,11 @@ export class ProjectSelector {
 		(state: IProjectState) => (state.activeProject?.smartContracts || []).find(sc => sc.id === scId),
 	);
 
+	static wasmByAbiId = (abiId: string) => createSelector(
+		(app: Record<string, any>) => app[PROJECT_FEATURE],
+		(state: IProjectState) => state.wasmMap[abiId],
+	);
+
 	static abiById = (abiId: string) => createSelector(
 		(app: Record<string, any>) => app[PROJECT_FEATURE],
 		(state: IProjectState) => (state.activeProject?.abiInterfaces || []).find(abi => abi.id === abiId),

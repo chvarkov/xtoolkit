@@ -147,6 +147,14 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.deleteSmartContract({projectId, scId}));
 	}
 
+	uploadWasm(projectId: string, abiId: string): void {
+		this.store.dispatch(ProjectAction.setWasm({projectId, abiId}));
+	}
+
+	deleteWasm(projectId: string, abiId: string): void {
+		this.store.dispatch(ProjectAction.deleteWasm({projectId, abiId}));
+	}
+
 	deleteAbi(projectId: string, abiId: string): void {
 		this.store.dispatch(ProjectAction.deleteAbi({projectId, abiId}));
 	}
