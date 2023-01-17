@@ -31,7 +31,7 @@ import {
 	U64Value,
 	U8Type,
 	U8Value
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
 
 export class ScArgsBuilder {

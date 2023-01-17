@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TypedValue } from '@elrondnetwork/erdjs/out';
+import { TypedValue } from '@multiversx/sdk-core/out';
 
 @Component({
 	selector: 'app-sc-query-result-element',

@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ScInputComponent } from './sc-input/sc-input.component';
-import { EndpointDefinition, SmartContract, TokenPayment, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
+import { EndpointDefinition, SmartContract, TokenPayment, TypedOutcomeBundle } from '@multiversx/sdk-core/out';
 import { Observable, of, Subject } from 'rxjs';
 import { ScQueryRunner } from '../../../../core/elrond/services/sc-query-runner';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';

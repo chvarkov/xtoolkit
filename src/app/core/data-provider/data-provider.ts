@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../elrond/interfaces/network-environment';
 import { AbiJson } from '../elrond/builders/sc.builder';
-import { map } from 'rxjs/operators';
 
 export const DATA_PROVIDER = 'CORE:DATA_PROVIDER';
 
@@ -46,6 +45,8 @@ export interface ProjectAbi {
 	projectId: string;
 	name: string;
 	content: AbiJson;
+	wasmSize?: number;
+	hasWasm: boolean;
 }
 
 export interface ProjectAddress {
@@ -121,11 +122,17 @@ export interface DataProvider {
 
 	deleteProject(projectId: string): Observable<void>;
 
-	addAbi(projectId: string, abi: AbiJson, name?: string): Observable<Project>;
+	addAbi(projectId: string, abi: AbiJson, name?: string, wasm?: string): Observable<Project>;
 
 	renameAbi(projectId: string, abiId: string, name: string): Observable<Project>;
 
 	deleteAbi(projectId: string, abiId: string): Observable<Project>;
+
+	getWasm(projectId: string, abiId: string): Observable<string>;
+
+	setWasm(projectId: string, abiId: string, wasm: string): Observable<Project>;
+
+	deleteWasm(projectId: string, abiId: string): Observable<Project>;
 
 	createSmartContract(projectId: string, abiId: string, name: string, address: string): Observable<Project>;
 

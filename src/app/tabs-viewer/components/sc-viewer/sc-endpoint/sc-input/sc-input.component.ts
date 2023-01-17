@@ -6,8 +6,8 @@ import {
 	BytesType,
 	EnumType, OptionalType, StructType,
 	TokenIdentifierType, Type, VariadicType
-} from '@elrondnetwork/erdjs/out';
-import { NumericalType } from '@elrondnetwork/erdjs/out/smartcontracts/typesystem/numerical';
+} from '@multiversx/sdk-core/out';
+import { NumericalType } from '@multiversx/sdk-core/out/smartcontracts/typesystem/numerical';
 
 @Component({
 	selector: 'app-sc-input',

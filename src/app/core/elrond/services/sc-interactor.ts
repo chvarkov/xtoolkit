@@ -3,7 +3,7 @@ import {
 	Address,
 	ContractFunction, Interaction,
 	SmartContract, TokenPayment, Transaction,
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
 import { ElrondDataProvider } from '../elrond.data-provider';
 import { INetworkEnvironment } from '../interfaces/network-environment';

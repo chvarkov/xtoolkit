@@ -40,11 +40,13 @@ export interface IProjectState extends TabsData {
 	loadedDataMap: ILoadedProjectDataState;
 	issueTokenWaitList: PendingTokenIssue[];
 	explorerState: ProjectExplorerExpandState;
+	wasmMap: {[abiId: string]: string};
 }
 
 const initialState: IProjectState = {
 	activeProject: undefined,
 	projectList: [],
+	wasmMap: {},
 	loadedDataMap: {
 		transactionsMap: {},
 		accountsMap: {},
@@ -319,6 +321,21 @@ export const reducer = createReducer(
 				[address]: data,
 			},
 		},
+	})),
+	on(ProjectAction.loadWasmSuccess, (state, {abiId, wasm}) => ({
+		...state,
+		wasmMap: {
+			...state.wasmMap,
+			[abiId]: wasm,
+		},
+	})),
+	on(ProjectAction.setWasmSuccess, (state, { project }) => ({
+		...state,
+		activeProject: project,
+	})),
+	on(ProjectAction.deleteWasmSuccess, (state, { project }) => ({
+		...state,
+		activeProject: project,
 	})),
 
 	...ProjectAction.errorActions.map((action): ReducerTypes<IProjectState, any> => on(action, (state, { err, type }): IProjectState => {

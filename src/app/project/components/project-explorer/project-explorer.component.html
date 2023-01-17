@@ -50,34 +50,61 @@
 			</app-project-element>
 
 			<ng-container *ngIf="projectExplorerState.abi">
-				<app-project-element #abiElem
-									 [level]="2"
-									 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
-									 *ngFor="let abi of project.abiInterfaces; trackBy: abiTrackBy"
-									 [isExpanded]="projectExplorerState.abi"
-									 (onActivate)="onActivateElement(abiElem)"
-									 type="abi"
-									 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
-									 [name]="abi.name || abi.name">
-					<ng-container actions>
-						<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
-						<mat-icon class="element-menu-icon"
-								  [matMenuTriggerFor]="abiMenu"
-								  (click)="$event.stopImmediatePropagation()">
-							more_vert
-						</mat-icon>
-						<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
-							<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
-								<mat-icon>drive_file_rename_outline</mat-icon>
-								<span>Rename</span>
-							</button>
-							<button mat-menu-item (click)="deleteAbi(project.id, abi.id)">
-								<mat-icon>delete</mat-icon>
-								<span>Delete</span>
-							</button>
-						</mat-menu>
-					</ng-container>
-				</app-project-element>
+				<ng-container *ngFor="let abi of project.abiInterfaces; trackBy: abiTrackBy">
+					<app-project-element #abiElem
+										 [level]="2"
+										 (click)="openProjectComponent(abi.name, 'abi', abi.id)"
+										 [isExpanded]="projectExplorerState.abi"
+										 (onActivate)="onActivateElement(abiElem)"
+										 type="abi"
+										 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
+										 [name]="abi.name || abi.name">
+						<ng-container actions>
+							<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
+							<mat-icon class="element-menu-icon"
+									  [matMenuTriggerFor]="abiMenu"
+									  (click)="$event.stopImmediatePropagation()">
+								more_vert
+							</mat-icon>
+							<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="uploadWasm(project.id, abi.id)">
+									<mat-icon>{{abi.hasWasm ? 'add' : 'add'}}</mat-icon>
+									<span>{{abi.hasWasm ? 'Update WASM' : 'Upload WASM'}}</span>
+								</button>
+								<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
+									<mat-icon>drive_file_rename_outline</mat-icon>
+									<span>Rename</span>
+								</button>
+								<button mat-menu-item (click)="deleteAbi(project.id, abi.id)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
+						</ng-container>
+					</app-project-element>
+					<app-project-element *ngIf="abi.hasWasm"
+										 [level]="3"
+										 [isExpanded]="projectExplorerState.abi"
+										 [name]="abi.name + '.wasm'"
+										 type="wasm">
+						<ng-container actions>
+							<div class="tip-label" *ngIf="abi.wasmSize">{{abi.wasmSize | bytesToKb}}kb</div>
+							<mat-icon class="element-menu-icon"
+									  [matMenuTriggerFor]="wasmMenu"
+									  (click)="$event.stopImmediatePropagation()">
+								more_vert
+							</mat-icon>
+							<mat-menu #wasmMenu="matMenu" classList="dropdown-list" xPosition="before">
+								<button mat-menu-item (click)="deleteWasm(project.id, abi.id)">
+									<mat-icon>delete</mat-icon>
+									<span>Delete</span>
+								</button>
+							</mat-menu>
+						</ng-container>
+					</app-project-element>
+				</ng-container>
+
+
 			</ng-container>
 
 			<app-project-element [level]="1"

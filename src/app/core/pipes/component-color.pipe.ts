@@ -12,6 +12,8 @@ export class ComponentColorPipe implements PipeTransform {
 				return 'var(--default-component-color)';
 			case 'abi':
 				return 'var(--abi-color)';
+			case 'wasm':
+				return 'var(--wasm-color)';
 			case 'sc':
 				return 'var(--sc-color)';
 			case 'token':

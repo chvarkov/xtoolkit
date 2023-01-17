@@ -8,7 +8,7 @@ import {
 	BytesValue,
 	U32Value,
 	BigUIntValue, AddressValue, TypedValue, Transaction, ContractFunction, TokenIdentifierValue,
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Injectable } from '@angular/core';
@@ -18,7 +18,7 @@ import { ProjectWallet } from '../../data-provider/data-provider';
 import { TxSender } from './tx.sender';
 import { Observable } from 'rxjs';
 import { GasLimit } from '../models/gas-limit';
-import { ContractCallPayloadBuilder } from '@elrondnetwork/erdjs/out/smartcontracts/transactionPayloadBuilders';
+import { ContractCallPayloadBuilder } from '@multiversx/sdk-core/out/smartcontracts/transactionPayloadBuilders';
 
 export interface IIssueTokenOptions {
 	name: string,

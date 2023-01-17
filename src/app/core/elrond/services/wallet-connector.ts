@@ -4,7 +4,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { filter, map, switchMap, take } from 'rxjs/operators';
 import { DEFAULT_WALLET_CONNECT_BRIDGE_URL } from '../../constants';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
 
 export class WalletLoginRef {
 	constructor(public readonly connectUrl: string,

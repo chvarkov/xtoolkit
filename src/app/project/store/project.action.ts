@@ -12,7 +12,7 @@ import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
 import { INft } from '../../core/elrond/interfaces/nft';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
 
 export class ProjectAction {
 	static readonly openProject = createAction(`[${ProjectAction.name}] open project [...]`, props<{id: string}>());
@@ -42,6 +42,18 @@ export class ProjectAction {
 	static readonly addAbi = createAction(`[${ProjectAction.name}] add abi [...]`, props<{projectId: string, name?: string, abi: AbiJson}>());
 	static readonly addAbiSuccess = createAction(`[${ProjectAction.name}] add abi [OK]`, props<{project: Project}>());
 	static readonly addAbiError = createAction(`[${ProjectAction.name}] add abi [ERR]`, props<{err: Error}>());
+
+	static readonly loadWasm = createAction(`[${ProjectAction.name}] load wasm [...]`, props<{projectId: string, abiId: string}>());
+	static readonly loadWasmSuccess = createAction(`[${ProjectAction.name}] load wasm [OK]`, props<{abiId: string, wasm: string}>());
+	static readonly loadWasmError = createAction(`[${ProjectAction.name}] load wasm [ERR]`, props<{err: Error}>());
+
+	static readonly setWasm = createAction(`[${ProjectAction.name}] set wasm [...]`, props<{projectId: string, abiId: string}>());
+	static readonly setWasmSuccess = createAction(`[${ProjectAction.name}] set wasm [OK]`, props<{project: Project}>());
+	static readonly setWasmError = createAction(`[${ProjectAction.name}] set wasm [ERR]`, props<{err: Error}>());
+
+	static readonly deleteWasm = createAction(`[${ProjectAction.name}] delete wasm [...]`, props<{projectId: string, abiId: string}>());
+	static readonly deleteWasmSuccess = createAction(`[${ProjectAction.name}] delete wasm [OK]`, props<{project: Project}>());
+	static readonly deleteWasmError = createAction(`[${ProjectAction.name}] delete wasm [ERR]`, props<{err: Error}>());
 
 	static readonly addSmartContract = createAction(`[${ProjectAction.name}] add smart contract [...]`, props<{projectId: string}>());
 	static readonly addSmartContractSuccess = createAction(`[${ProjectAction.name}] add smart contract [OK]`, props<{project: Project}>());

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FieldDefinition, StructType, Type } from '@elrondnetwork/erdjs/out';
+import { FieldDefinition, StructType, Type } from '@multiversx/sdk-core/out';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';

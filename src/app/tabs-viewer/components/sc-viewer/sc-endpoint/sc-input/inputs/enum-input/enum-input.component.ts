@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { EnumType, EnumVariantDefinition, Type } from '@elrondnetwork/erdjs/out';
+import { EnumType, EnumVariantDefinition, Type } from '@multiversx/sdk-core/out';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({

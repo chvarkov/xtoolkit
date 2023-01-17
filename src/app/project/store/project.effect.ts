@@ -33,7 +33,6 @@ import { ConfirmDialogComponent } from '../../core/ui/confirm-dialog/confirm-dia
 import { RenameDialogComponent } from '../../core/ui/rename-dialog/rename-dialog.component';
 import { ImportTokenDialogComponent } from '../components/dialogs/import-token-dialog/import-token-dialog.component';
 import { IssueTokenDialogComponent } from '../components/dialogs/esdt/issue-token-dialog/issue-token-dialog.component';
-import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { UpdateProjectNetworkDialogComponent } from '../components/dialogs/update-project-network-dialog/update-project-network-dialog.component';
 import { AddSmartContractDialogComponent } from '../components/dialogs/add-smart-contract-dialog/add-smart-contract-dialog.component';
 import { AddProjectAddressDialogComponent } from '../components/dialogs/add-project-address-dialog/add-project-address-dialog.component';
@@ -51,6 +50,7 @@ import { SECRET_MANAGER, SecretManager } from '../../core/data-provider/secret.m
 import { SecurityNgrxHelper } from '../../security/store/security.ngrx-helper';
 import { MaiarWalletService } from '../services/maiar-wallet.service';
 import { ToastrService } from 'ngx-toastr';
+import { AddWasmDialogComponent } from '../components/dialogs/add-wasm-dialog/add-wasm-dialog.component';
 
 @Injectable()
 export class ProjectEffect {
@@ -139,6 +139,46 @@ export class ProjectEffect {
 		mergeMap(({projectId, abi, name}) => this.dataProvider.addAbi(projectId, abi, name).pipe(
 			map((project) => ProjectAction.addAbiSuccess({project})),
 			catchError(err => of(ProjectAction.addAbiError({err})),
+			)),
+		)));
+
+	loadWasm$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.loadWasm),
+		mergeMap(({projectId, abiId}) => this.dataProvider.getWasm(projectId, abiId).pipe(
+			map((wasm) => ProjectAction.loadWasmSuccess({abiId, wasm})),
+			catchError(err => of(ProjectAction.loadWasmError({err})),
+			)),
+		)));
+
+	setWasm$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.setWasm),
+		exhaustMap(({projectId, abiId}) => this.dialog.open(AddWasmDialogComponent, {
+			data: {projectId, abiId},
+		}).afterClosed().pipe(
+			filter(v => !!v),
+		)),
+		mergeMap(({projectId, abiId, wasm}) => this.dataProvider.setWasm(projectId, abiId, wasm).pipe(
+			map((project) => ProjectAction.setWasmSuccess({project})),
+			catchError(err => of(ProjectAction.setWasmError({err})),
+			)),
+		)));
+
+	deleteWasm$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWasm),
+		exhaustMap(action => {
+			return this.dialog.open(ConfirmDialogComponent, {
+				data: {
+					title: 'Delete WASM code',
+					message: 'Are you sure? After deletion, it will not be possible to restore.',
+				},
+			}).afterClosed().pipe(
+				filter(v => !!v),
+				map(() => action),
+			);
+		}),
+		mergeMap(({projectId, abiId}) => this.dataProvider.deleteWasm(projectId, abiId).pipe(
+			map((project) => ProjectAction.deleteWasmSuccess({project})),
+			catchError(err => of(ProjectAction.deleteWasmError({err})),
 			)),
 		)));
 

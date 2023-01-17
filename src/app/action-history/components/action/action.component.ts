@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActionHistoryElement, ActionStatus, ActionType } from '../../../core/data-provider/data-provider';
-import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@elrondnetwork/erdjs/out';
+import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@multiversx/sdk-core/out';
 import { ElrondProxyProvider } from '../../../core/elrond/services/elrond-proxy-provider';
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../network/store/network.selector';

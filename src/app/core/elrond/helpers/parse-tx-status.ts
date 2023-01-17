@@ -1,4 +1,4 @@
-import { ITransactionOnNetwork } from '@elrondnetwork/erdjs/out';
+import { ITransactionOnNetwork } from '@multiversx/sdk-core/out';
 import { TransactionStatus } from '../enums/transaction-status';
 
 export function parseTxStatus(tx: ITransactionOnNetwork): TransactionStatus {

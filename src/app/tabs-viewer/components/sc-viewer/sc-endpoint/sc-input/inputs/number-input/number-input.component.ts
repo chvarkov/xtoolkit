@@ -11,7 +11,7 @@ import {
 	U32Type,
 	U64Type,
 	U8Type,
-} from '@elrondnetwork/erdjs/out';
+} from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 

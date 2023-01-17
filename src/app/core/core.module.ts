@@ -40,6 +40,7 @@ import { SubStringPipe } from './pipes/sub-string.pipe';
 import { ToastrModule } from 'ngx-toastr';
 import { ToastrComponent } from './ui/toastr/toastr.component';
 import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
+import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 
 @NgModule({
 	declarations: [
@@ -69,7 +70,8 @@ import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 		ConfirmTransactionDialogComponent,
 		SubStringPipe,
 		ToastrComponent,
-  DecodeBase64Pipe,
+		DecodeBase64Pipe,
+		BytesToKbPipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -131,6 +133,7 @@ import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 		NftTypePipe,
 		SubStringPipe,
 		DecodeBase64Pipe,
+		BytesToKbPipe,
 	],
 })
 export class CoreModule { }
