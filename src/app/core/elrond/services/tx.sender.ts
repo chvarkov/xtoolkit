@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
 import { Observable, of, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';

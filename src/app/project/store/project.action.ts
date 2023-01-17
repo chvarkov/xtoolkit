@@ -12,7 +12,7 @@ import { ITokenRole } from '../../core/elrond/interfaces/token-role';
 import { ITokenTransfer } from '../../core/elrond/interfaces/token-transfer';
 import { ITokenSearchOptions } from '../../core/elrond/interfaces/token-search-options';
 import { INft } from '../../core/elrond/interfaces/nft';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/sdk-core/out';
 
 export class ProjectAction {
 	static readonly openProject = createAction(`[${ProjectAction.name}] open project [...]`, props<{id: string}>());

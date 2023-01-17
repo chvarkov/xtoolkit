@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { AbiJson, ScBuilder } from '../builders/sc.builder';
-import { SmartContract } from '@elrondnetwork/erdjs/out';
+import { SmartContract } from '@multiversx/sdk-core/out';
 
 @Pipe({
 	name: 'sc',

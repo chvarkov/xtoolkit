@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@multiversx/sdk-core/out';
 
 export function addressValidator(control: FormControl): Record<'invalidAddress', boolean> | null {
 	const value = control.value;

@@ -25,7 +25,7 @@
 							"@elrondnetwork/erdjs-wallet-connect-provider",
 							"@elrondnetwork/erdjs-walletcore",
 							"@elrondnetwork/transaction-decoder",
-							"@elrondnetwork/erdjs",
+							"@multiversx/sdk-core",
 							"@walletconnect/browser-utils",
 							"@walletconnect/crypto",
 							"@walletconnect/core",

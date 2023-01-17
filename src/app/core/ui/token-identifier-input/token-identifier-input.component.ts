@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
-import { TokenIdentifierValue } from '@elrondnetwork/erdjs/out';
+import { TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 

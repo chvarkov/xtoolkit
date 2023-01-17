@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
-import { Address, Transaction, TransactionPayload } from '@elrondnetwork/erdjs/out';
+import { Address, Transaction, TransactionPayload } from '@multiversx/sdk-core/out';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { ProjectWallet } from '../../data-provider/data-provider';
 import { DecimalPlacesHelper } from '../helpers/decimal-places.helper';

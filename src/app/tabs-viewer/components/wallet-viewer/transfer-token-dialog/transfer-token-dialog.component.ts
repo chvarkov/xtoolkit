@@ -6,7 +6,7 @@ import { ProjectWallet, ProjectAddress } from '../../../../core/data-provider/da
 import { ProjectSelector } from '../../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
 import { ITokenTransferOptions } from '../../../../core/elrond/services/wallet.manager';
-import { ESDTTransferPayloadBuilder, TokenIdentifierValue, TokenPayment } from '@elrondnetwork/erdjs/out';
+import { ESDTTransferPayloadBuilder, TokenIdentifierValue, TokenPayment } from '@multiversx/sdk-core/out';
 
 @Component({
 	selector: 'app-transfer-token-dialog',

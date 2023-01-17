@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../store/project.selector';
 import { ElrondDataProvider } from '../../../../core/elrond/elrond.data-provider';
 import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-environment';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@multiversx/sdk-core/out';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

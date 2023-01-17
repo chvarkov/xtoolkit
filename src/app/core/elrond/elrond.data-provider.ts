@@ -4,7 +4,7 @@ import { INetworkEnvironment } from './interfaces/network-environment';
 import { ITokenPosition, ITokenPositionsFilter } from './interfaces/token-position';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AccountOnNetwork, ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
-import { Address, Transaction } from '@elrondnetwork/erdjs/out';
+import { Address, Transaction } from '@multiversx/sdk-core/out';
 import { ITokenInfo } from './interfaces/token-info';
 import { ITokenHolder } from './interfaces/token-holder';
 import { IPaginationOptions } from './interfaces/pagination-options';

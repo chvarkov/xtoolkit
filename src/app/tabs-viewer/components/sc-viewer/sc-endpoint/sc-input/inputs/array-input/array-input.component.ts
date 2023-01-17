@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Type, VariadicType } from '@elrondnetwork/erdjs/out';
+import { Type, VariadicType } from '@multiversx/sdk-core/out';
 import {
 	ControlValueAccessor,
 	FormArray,

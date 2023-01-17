@@ -5,7 +5,7 @@ import { ActionStatus, PendingTokenIssue } from '../../core/data-provider/data-p
 import { ProjectSelector } from '../store/project.selector';
 import { NetworkSelector } from '../../network/store/network.selector';
 import { take } from 'rxjs/operators';
-import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@elrondnetwork/erdjs/out';
+import { ITransactionOnNetwork, TransactionHash, TransactionWatcher } from '@multiversx/sdk-core/out';
 import { ActionHistoryAction } from '../../action-history/store/action-history.action';
 import { ElrondProxyProvider } from '../../core/elrond/services/elrond-proxy-provider';
 import { ProjectAction } from '../store/project.action';

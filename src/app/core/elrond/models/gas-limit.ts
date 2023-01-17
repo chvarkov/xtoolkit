@@ -1,4 +1,4 @@
-import { IGasLimit } from '@elrondnetwork/erdjs';
+import { IGasLimit } from '@multiversx/sdk-core';
 
 export class GasLimit implements IGasLimit {
 	constructor(private readonly value: number) {

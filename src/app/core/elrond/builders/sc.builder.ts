@@ -1,4 +1,4 @@
-import { AbiRegistry, Address, SmartContract, SmartContractAbi } from '@elrondnetwork/erdjs/out';
+import { AbiRegistry, Address, SmartContract, SmartContractAbi } from '@multiversx/sdk-core/out';
 
 export type AbiJson = {
 	name: string;

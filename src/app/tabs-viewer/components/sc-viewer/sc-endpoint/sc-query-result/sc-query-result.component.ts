@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
+import { TypedOutcomeBundle } from '@multiversx/sdk-core/out';
 
 @Component({
 	selector: 'app-sc-query-result',

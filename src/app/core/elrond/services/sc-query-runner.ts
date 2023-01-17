@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { INetworkEnvironment } from '../interfaces/network-environment';
 import { Address } from '@elrondnetwork/erdjs-network-providers/out/primitives';
-import { Query, ResultsParser, SmartContract, TypedOutcomeBundle } from '@elrondnetwork/erdjs/out';
+import { Query, ResultsParser, SmartContract, TypedOutcomeBundle } from '@multiversx/sdk-core/out';
 import { ScArgsBuilder } from '../builders/sc-args.builder';
 import { ElrondProxyProvider } from './elrond-proxy-provider';
 

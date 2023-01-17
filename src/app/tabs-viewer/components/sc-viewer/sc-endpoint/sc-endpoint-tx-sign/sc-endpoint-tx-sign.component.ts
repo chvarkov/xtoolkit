@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { EndpointDefinition, SmartContract, TokenIdentifierValue, TokenPayment } from '@elrondnetwork/erdjs/out';
+import { EndpointDefinition, SmartContract, TokenIdentifierValue, TokenPayment } from '@multiversx/sdk-core/out';
 import { ProjectWallet } from '../../../../../core/data-provider/data-provider';
 import { ScInteractor } from '../../../../../core/elrond/services/sc-interactor';
 import BigNumber from 'bignumber.js';
