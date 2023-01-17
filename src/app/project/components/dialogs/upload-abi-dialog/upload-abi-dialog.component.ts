@@ -20,7 +20,7 @@ export class UploadAbiDialogComponent implements OnInit {
 
 	abi: AbiJson = {
 		name: '',
-		types: [],
+		types: {},
 		endpoints: [],
 	};
 

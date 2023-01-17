@@ -3,7 +3,7 @@ import { AbiRegistry, Address, SmartContract, SmartContractAbi } from '@multiver
 export type AbiJson = {
 	name: string;
 	endpoints: any[];
-	types: any;
+	types: { [name: string]: Record<string, any> };
 	buildInfo?: {
 		framework?: {
 			name?: string,
@@ -21,14 +21,17 @@ export class ScBuilder {
 		} catch (e) {
 		}
 
+		const types = Object.entries(abi.types) // TODO: Upgrade mx core-sdk to v12 and remove it.
+			.sort(([key, value]) => value.type !== 'enum' ? 1 : -1)
+			.map(([key, value]) => ({[key]: { ...value }}))
+			.reduce((p, c) => ({...p, ...c}), {});
+
 		const restructured = {
 			address: addressValue,
 			abi: new SmartContractAbi(AbiRegistry.create({
 				...abi,
 				endpoints: abi.endpoints.map(e => ({...e})),
-				types: Object.keys(abi.types)
-					.map(key => ({[key]: {...abi.types[key as any]}}))
-					.reduce((f, s) => ({...f, ...s}), {}) as any,
+				types,
 			}))
 		};
 
