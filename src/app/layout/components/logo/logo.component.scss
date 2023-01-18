@@ -9,6 +9,8 @@
 	justify-content: space-between;
 
 	.logo-text {
+		display: flex;
+		align-items: center;
 		padding: 10px 0 10px 10px;
 		font-weight: 600;
 		color: var(--low-text);
@@ -18,9 +20,19 @@
 			color: var(--text-color);
 		}
 
-		.prefix-text {
+		.text {
 			color: var(--text-color);
 		}
+
+		.symbol-text {
+			color: var(--low-text);
+			margin: 0 4px;
+		}
+	}
+
+	.icon {
+		font-size: 18px;
+		margin: -2px 2px 0;
 	}
 
 	.splitter {

@@ -18,12 +18,13 @@
 
 .arrow {
 	width: 20px;
-	margin-right: 2px;
-	margin-left: 4px;
+	margin-right: 4px;
+	margin-left: 6px;
 	font-size: 18px;
 	padding: 6px 0;
 	font-weight: 100;
-	color: var(--low-text)
+	color: var(--low-text);
+	opacity: 0.6;
 }
 
 .project-name {
