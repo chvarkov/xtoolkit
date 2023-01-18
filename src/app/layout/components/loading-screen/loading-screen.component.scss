@@ -11,16 +11,27 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
-	.content {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		align-items: center;
-		color: var(--text-color);
-		font-size: 1.6em;
-		letter-spacing: 2px;
-		width: 360px;
-	}
 }
 
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	align-items: center;
+	font-weight: 700;
+	font-size: 1.8em;
+	box-sizing: border-box;
+	color: rgba(255, 255, 255, 0.84);
+	letter-spacing: 2px;
+	width: 360px;
+}
+
+.label {
+	display: flex;
+	flex-direction: row;
+}
+
+.symbol {
+	color: rgba(255, 255, 255, 0.68);
+	margin: 0 4px;
+}
