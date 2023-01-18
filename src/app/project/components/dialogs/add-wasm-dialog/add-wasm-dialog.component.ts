@@ -22,7 +22,7 @@ export class AddWasmDialogComponent implements OnInit {
 
 		if (file) {
 			this.fileName = file.name;
-			this.wasm = Buffer.from(await file.text(), 'utf-8').toString('hex');
+			this.wasm = await file.text();
 		}
 	}
 

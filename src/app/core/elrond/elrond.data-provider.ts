@@ -48,7 +48,7 @@ export class ElrondDataProvider {
 		return this.http.get<any>(`${network.apiUrl}/transactions/${txHash}`);
 	}
 
-	estimateTransactionConst(network: INetworkEnvironment,
+	estimateTransactionCost(network: INetworkEnvironment,
 							 tx: Transaction): Observable<number> {
 		const data: IEstimateTxData = {
 			data: tx.getData().encoded(),
@@ -57,7 +57,7 @@ export class ElrondDataProvider {
 			value: tx.getValue().toString(),
 			receiver: tx.getReceiver().bech32(),
 			chainID: tx.getChainID().valueOf(),
-			version: 1,
+			version: 2,
 		};
 		return this.http.post<any>(`${network.apiUrl}/transaction/cost`, data).pipe(
 			map((res: {code: string, data: {txGasUnits: number}}) => res.data.txGasUnits)

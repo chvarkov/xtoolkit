@@ -297,7 +297,7 @@ export class LocalstorageDataProvider implements DataProvider {
 	}
 
 	getWasm(projectId: string, abiId: string): Observable<string> {
-		const project: string | undefined = this.get(this.getWasmKey(projectId, abiId));
+		const project: string | undefined = localStorage.getItem(this.getWasmKey(projectId, abiId)) || undefined;
 
 		if (!project) {
 			return throwError(new Error(`Wasm "${abiId}" not found.`));

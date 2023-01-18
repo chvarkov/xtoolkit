@@ -50,7 +50,7 @@ export class ScEndpointTxSignComponent implements OnInit, OnChanges {
 			return;
 		}
 
-		const fee = await this.scTxRunner.estimate(this.sc, {
+		const fee = await this.scTxRunner.estimateScCall(this.sc, {
 			network: this.network,
 			wallet: this.wallet,
 			payload: this.payload,

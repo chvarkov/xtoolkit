@@ -7,7 +7,7 @@ import {
 	BigUIntType,
 	BigUIntValue,
 	BytesType,
-	BytesValue,
+	BytesValue, EndpointDefinition,
 	EndpointParameterDefinition,
 	EnumType,
 	EnumValue, Field,
@@ -41,7 +41,11 @@ export class ScArgsBuilder {
 	build(functionName: string, payload: Record<string, any>): TypedValue[] {
 		const endpoint = this.sc.getEndpoint(functionName);
 
-		const args = endpoint.input.map((input): TypedValue | null => {
+		return ScArgsBuilder.buildFromEndpointDefinition(endpoint, payload)
+	}
+
+	static buildFromEndpointDefinition(endpointDefinition: EndpointDefinition, payload: Record<string, any>): TypedValue[] {
+		const args = endpointDefinition.input.map((input): TypedValue | null => {
 			const value = payload[input.name];
 
 			return this.transformToTypedValue(input, value);
@@ -50,7 +54,7 @@ export class ScArgsBuilder {
 		return args.filter((i) => !!i) as TypedValue[];
 	}
 
-	transformToTypedValue(input: EndpointParameterDefinition, value?: any): TypedValue | null {
+	static transformToTypedValue(input: EndpointParameterDefinition, value?: any): TypedValue | null {
 		console.log(`transform_value[${input.type.getClassName()}]`, value)
 
 		switch (input.type.getClassName()) {
