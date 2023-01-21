@@ -60,7 +60,7 @@
 										 [active]="(abi.id | isActiveProjectElement: project.id : 'abi') | async"
 										 [name]="abi.name || abi.name">
 						<ng-container actions>
-							<div class="tip-label">{{abi.content.buildInfo?.framework?.name}}</div>
+							<div class="tip-label" *ngIf="abi.hasWasm">+WASM</div>
 							<mat-icon class="element-menu-icon"
 									  [matMenuTriggerFor]="abiMenu"
 									  (click)="$event.stopImmediatePropagation()">
@@ -76,26 +76,6 @@
 									<span>Rename</span>
 								</button>
 								<button mat-menu-item (click)="deleteAbi(project.id, abi.id)">
-									<mat-icon>delete</mat-icon>
-									<span>Delete</span>
-								</button>
-							</mat-menu>
-						</ng-container>
-					</app-project-element>
-					<app-project-element *ngIf="abi.hasWasm"
-										 [level]="3"
-										 [isExpanded]="projectExplorerState.abi"
-										 [name]="abi.name + '.wasm'"
-										 type="wasm">
-						<ng-container actions>
-							<div class="tip-label" *ngIf="abi.wasmSize">{{abi.wasmSize | bytesToKb}}kb</div>
-							<mat-icon class="element-menu-icon"
-									  [matMenuTriggerFor]="wasmMenu"
-									  (click)="$event.stopImmediatePropagation()">
-								more_vert
-							</mat-icon>
-							<mat-menu #wasmMenu="matMenu" classList="dropdown-list" xPosition="before">
-								<button mat-menu-item (click)="deleteWasm(project.id, abi.id)">
 									<mat-icon>delete</mat-icon>
 									<span>Delete</span>
 								</button>

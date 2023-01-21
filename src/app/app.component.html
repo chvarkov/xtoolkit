@@ -134,6 +134,9 @@
 		<app-widget-tab *ngIf="activeProject$ | async" title="Action history">
 			<app-action-list (resize)="layout.resizePanel('right', $event)"></app-action-list>
 		</app-widget-tab>
+		<app-widget-tab title="Deploy SC">
+			<app-deploy-sc></app-deploy-sc>
+		</app-widget-tab>
 		<app-widget-tab title="News">
 			<app-news-list></app-news-list>
 		</app-widget-tab>

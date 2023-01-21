@@ -1,0 +1,46 @@
+<app-toolbar title="Deploy smart contract" [borderLeft]="true"></app-toolbar>
+<div class="container" *ngIf="activeProject$ | async as activeProject">
+	<app-form-field title="ABI interface">
+		<mat-select panelClass="select-panel" (selectionChange)="selectAbi($event.value, activeProject)">
+			<mat-option *ngFor="let abi of abiInterfaces$ | async"
+						[value]="abi">
+				{{abi.name}}
+			</mat-option>
+		</mat-select>
+	</app-form-field>
+
+	<ng-container *ngIf="form">
+		<app-form-field title="SC metadata">
+			<input [(ngModel)]="scMetadata">
+		</app-form-field>
+
+		<div class="args" *ngIf="sc?.getAbi()?.getConstructorDefinition() as constructor" [formGroup]="form">
+			<div class="constructor-title">SC Constructor</div>
+			<app-form-field [title]="input.name" *ngFor="let input of constructor.input">
+				<app-sc-input [formControlName]="input.name" [chainId]="activeProject.chainId"
+							  [projectId]="activeProject.id" [type]="input.type">
+				</app-sc-input>
+			</app-form-field>
+		</div>
+	</ng-container>
+
+	<app-form-field title="SC owner">
+		<mat-select panelClass="select-panel" (selectionChange)="selectWallet($event.value, activeProject)">
+			<mat-option *ngFor="let wallet of wallets$ | async"
+						[value]="wallet">
+				{{wallet.name}}
+			</mat-option>
+		</mat-select>
+	</app-form-field>
+
+	<app-form-field title="Gas limit">
+		<input type="number" [(ngModel)]="gasLimit">
+	</app-form-field>
+
+	<button class="deploy-btn"
+			mat-flat-button
+			[disabled]="!form || form.invalid" (click)="deploy(activeProject)">
+		Deploy SC
+	</button>
+
+</div>

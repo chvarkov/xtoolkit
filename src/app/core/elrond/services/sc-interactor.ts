@@ -12,6 +12,7 @@ import { ProjectWallet } from '../../data-provider/data-provider';
 import { TxSender } from './tx.sender';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { TxEstimator } from './tx-estimator';
 
 export interface IScTxOptions {
 	network: INetworkEnvironment;
@@ -30,7 +31,7 @@ export interface IScCallOptions extends IScTxOptions {
 export class ScInteractor {
 	constructor(private readonly proxy: ElrondProxyProvider,
 				private readonly txSender: TxSender,
-				private readonly elrondDataProvider: ElrondDataProvider) {
+				private readonly txEstimator: TxEstimator) {
 	}
 
 	createTx(sc: SmartContract, options: IScTxOptions): Transaction {
@@ -58,16 +59,10 @@ export class ScInteractor {
 		return interaction.buildTransaction();
 	}
 
-	async estimate(sc: SmartContract, options: IScTxOptions): Promise<number> {
+	async estimateScCall(sc: SmartContract, options: IScTxOptions): Promise<number> {
 		const tx = await this.createTx(sc, options);
 
-		tx['sender'] = new Address(options.wallet.address);
-
-		const account = await this.elrondDataProvider.getAccountInfo(options.network, options.wallet.address).toPromise();
-
-		tx.setNonce(account.nonce);
-
-		return this.elrondDataProvider.estimateTransactionConst(options.network, tx).toPromise();
+		return this.txEstimator.estimate(tx, options.wallet, options.network)
 	}
 
 	call(sc: SmartContract, options: IScCallOptions): Observable<string> {

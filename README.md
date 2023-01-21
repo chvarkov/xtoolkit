@@ -1,8 +1,8 @@
-# DAPP Lab [MVP develop]
+# XTOOLKIT [MVP develop]
 
 ## About project
 
-**XDebug** - the tool for easy interaction with smart contacts and ESTD/NFT/SFT token management on MultiversX network (previously Elrond).
+**XToolkit** - the tool for easy interaction with smart contacts and ESTD/NFT/SFT token management on MultiversX network (previously Elrond).
 
 **DISCLAIMER:**
 

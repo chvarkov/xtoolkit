@@ -41,6 +41,7 @@ import { SettingsSecurityTabComponent } from './components/settings-page/compone
 import { SecretsLockedStatusInfoPipe } from './components/settings-page/pipes/secrets-locked-status-info.pipe';
 import { PasswordStatusInfoPipe } from './components/settings-page/pipes/password-status-info.pipe';
 import { ReleaseInfoComponent } from './components/home-page/components/release-info/release-info.component';
+import { DeployScComponent } from './components/deploy-sc/deploy-sc.component';
 
 @NgModule({
 	declarations: [
@@ -72,15 +73,16 @@ import { ReleaseInfoComponent } from './components/home-page/components/release-
 		HomePageComponent,
 		ArrayInputComponent,
 		SettingsPageComponent,
-  NftListComponent,
-  NtfElementComponent,
-  TransferTokenDialogComponent,
-  NoTokenPlaceholderComponent,
-  SettingsNetworksTabComponent,
-  SettingsSecurityTabComponent,
-  SecretsLockedStatusInfoPipe,
-  PasswordStatusInfoPipe,
-  ReleaseInfoComponent,
+		NftListComponent,
+		NtfElementComponent,
+		TransferTokenDialogComponent,
+		NoTokenPlaceholderComponent,
+		SettingsNetworksTabComponent,
+		SettingsSecurityTabComponent,
+		SecretsLockedStatusInfoPipe,
+		PasswordStatusInfoPipe,
+		ReleaseInfoComponent,
+		DeployScComponent,
 	],
 	imports: [
 		CommonModule,
@@ -90,14 +92,15 @@ import { ReleaseInfoComponent } from './components/home-page/components/release-
 		NetworkModule,
 		DragDropModule,
 	],
-    exports: [
-        ScViewerComponent,
-        TokenViewerComponent,
-        WalletViewerComponent,
-        AddressBookViewerComponent,
-        TxViewerComponent,
-        HomePageComponent,
-        SettingsPageComponent,
-    ]
+	exports: [
+		ScViewerComponent,
+		TokenViewerComponent,
+		WalletViewerComponent,
+		AddressBookViewerComponent,
+		TxViewerComponent,
+		HomePageComponent,
+		SettingsPageComponent,
+		DeployScComponent,
+	]
 })
 export class TabsViewerModule { }

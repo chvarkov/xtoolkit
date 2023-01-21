@@ -14,7 +14,7 @@
 </div>
 <div class="actions">
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
-	<button mat-flat-button class="create-button" [disabled]="!fileName || !wasm"
+	<button mat-flat-button class="create-button" [disabled]="!wasm"
 			(click)="submit()">
 		Upload
 	</button>
