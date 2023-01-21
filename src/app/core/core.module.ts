@@ -41,6 +41,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ToastrComponent } from './ui/toastr/toastr.component';
 import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
 	declarations: [
@@ -80,6 +81,7 @@ import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 		ReactiveFormsModule,
 		DragDropModule,
 		MaterialModule,
+		TooltipModule,
 		ToastrModule.forRoot({
 			toastComponent: ToastrComponent,
 			timeOut: 3_600,
@@ -108,6 +110,7 @@ import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 		AppInitializer,
 	],
 	exports: [
+		TooltipModule,
 		BrowserAnimationsModule,
 		ElrondModule,
 		MaterialModule,
