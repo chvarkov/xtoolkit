@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { Store } from '@ngrx/store';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
 import { Observable, of } from 'rxjs';
@@ -8,6 +7,7 @@ import { isValidAddress } from '../../validators/address-validator';
 import { ProjectAddress } from '../../data-provider/data-provider';
 import { ProjectSelector } from '../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
+import { ClipboardService } from '../../services/clipboard.service';
 
 @Component({
 	selector: 'app-address-input',
@@ -32,7 +32,7 @@ export class AddressInputComponent implements OnInit {
 
 	private prevValue?: string;
 
-	constructor(readonly clipboard: Clipboard,
+	constructor(readonly clipboard: ClipboardService,
 				private readonly store: Store) {
 	}
 

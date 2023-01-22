@@ -39,6 +39,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ToastrComponent } from './ui/toastr/toastr.component';
 import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
+import { ClipboardService } from './services/clipboard.service';
 
 @NgModule({
 	declarations: [
@@ -102,6 +103,7 @@ import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 		ESDTInteractor,
 		TxSender,
 		AppInitializer,
+		ClipboardService,
 	],
 	exports: [
 		BrowserAnimationsModule,

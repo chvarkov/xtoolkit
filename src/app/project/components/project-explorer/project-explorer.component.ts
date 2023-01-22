@@ -21,9 +21,9 @@ import {
 import { filter } from 'rxjs/operators';
 import { ProjectElementComponent } from '../project-element/project-element.component';
 import { Actions, ofType } from '@ngrx/effects';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { FaucetService } from '../../../core/services/faucet.service';
 import { MaiarWalletService } from '../../services/maiar-wallet.service';
+import { ClipboardService } from '../../../core/services/clipboard.service';
 
 @Component({
 	selector: 'app-project-explorer',
@@ -47,7 +47,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 
 	constructor(private readonly store: Store,
 				private readonly actions$: Actions,
-				private readonly clipboard: Clipboard,
+				private readonly clipboard: ClipboardService,
 				public readonly faucet: FaucetService,
 				private readonly maiarWalletService: MaiarWalletService,
 				@Inject(PERSONAL_SETTINGS_MANAGER) private readonly ps: PersonalSettingsManager) {
@@ -136,7 +136,7 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 	}
 
 	copyWalletAddress(address: string): void {
-		this.clipboard.copy(address);
+		this.clipboard.copy(address, 'Wallet address');
 	}
 
 	exploreToken(projectId: string, identifier: string): void {
