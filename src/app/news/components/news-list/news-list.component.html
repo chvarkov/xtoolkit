@@ -1,6 +1,6 @@
 <app-toolbar title="News" [borderLeft]="true">
 	<ng-container right-side *ngIf="news$ | async as projectId">
-		<app-toolbar-icon-button appTooltip tooltip="Reload" (click)="loadNews()">
+		<app-toolbar-icon-button matTooltip="Reload" (click)="loadNews()">
 			refresh
 		</app-toolbar-icon-button>
 	</ng-container>
