@@ -11,7 +11,7 @@
 		<ng-container *ngIf="!isInvalidAddress(input.value)">
 				<span class="material-icons action"
 					  matTooltip="Copy"
-					  (click)="clipboard.copy(address)">
+					  (click)="clipboard.copy(address, 'Address')">
 					content_copy
 				</span>
 				<span class="material-icons action"

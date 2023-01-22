@@ -1,4 +1,7 @@
 <div class="field">
-	<div class="label">{{title}}</div>
+	<div class="header">
+		<div class="label">{{title}}</div>
+		<div class="label error" *ngIf="error">{{error}}</div>
+	</div>
 	<ng-content></ng-content>
 </div>

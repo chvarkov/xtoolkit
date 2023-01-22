@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../network/store/network.selector';
+import { ClipboardService } from '../../services/clipboard.service';
 
 @Component({
 	selector: 'app-tx-hash',
@@ -25,7 +25,7 @@ export class TxHashComponent implements OnInit {
 
 	network$?: Observable<INetworkEnvironment | undefined>;
 
-	constructor(private readonly clipboard: Clipboard,
+	constructor(private readonly clipboard: ClipboardService,
 				private readonly store: Store) {
 	}
 
@@ -34,7 +34,7 @@ export class TxHashComponent implements OnInit {
 	}
 
 	copy(): void {
-		this.clipboard.copy(this.txHash);
+		this.clipboard.copy(this.txHash, 'Transaction hash');
 	}
 
 	explore(url: string): void {

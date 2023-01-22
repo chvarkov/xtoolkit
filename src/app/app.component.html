@@ -146,9 +146,9 @@
 		</app-project-tab>
 	</app-project-tabs>
 
-	<app-tabs-widget actionHistory>
+	<app-tabs-widget actionHistory (resize)="layout.resizePanel('right', $event)">
 		<app-widget-tab *ngIf="activeProject$ | async" title="Action history">
-			<app-action-list (resize)="layout.resizePanel('right', $event)"></app-action-list>
+			<app-action-list></app-action-list>
 		</app-widget-tab>
 		<app-widget-tab title="Deploy SC">
 			<app-deploy-sc></app-deploy-sc>

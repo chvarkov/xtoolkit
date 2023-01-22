@@ -8,7 +8,6 @@ import { INetworkEnvironment } from '../../../../core/elrond/interfaces/network-
 import { Store } from '@ngrx/store';
 import { NetworkSelector } from '../../../../network/store/network.selector';
 import { ScInteractor } from '../../../../core/elrond/services/sc-interactor';
-import { Mnemonic } from '@elrondnetwork/erdjs-walletcore/out';
 import { ActionHistoryAction } from '../../../../action-history/store/action-history.action';
 import { ActionStatus, ActionType, ProjectWallet } from '../../../../core/data-provider/data-provider';
 import * as uuid from 'uuid';

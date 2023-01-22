@@ -4,6 +4,12 @@
 	padding: 6px 0;
 }
 
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
 .label {
 	font-size: 0.76em;
 	color: var(--field-label-color);
@@ -11,6 +17,6 @@
 	margin-left: 2px;
 }
 
-.errors {
-	font-size: 0.76em;
+.error {
+	color: var(--static-red)
 }
