@@ -19,8 +19,6 @@ import { ESDTInteractor } from './elrond/services/esdt-intercator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RenameDialogComponent } from './ui/rename-dialog/rename-dialog.component';
 import { DecimalPlacesPipe } from './pipes/decimal-places.pipe';
-import { TooltipComponent } from './ui/tooltip/tooltip.component';
-import { TooltipDirective } from './ui/tooltip/tooltip.directive';
 import { FormFieldComponent } from './ui/form-field/form-field.component';
 import { TokenIdentifierInputComponent } from './ui/token-identifier-input/token-identifier-input.component';
 import { ResizeVerticalSplitterComponent } from './ui/resize-vertical-splitter/resize-vertical-splitter.component';
@@ -57,8 +55,6 @@ import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 		AddressInputComponent,
 		RenameDialogComponent,
 		DecimalPlacesPipe,
-		TooltipComponent,
-		TooltipDirective,
 		FormFieldComponent,
 		TokenIdentifierInputComponent,
 		TokenIdentifierInputComponent,
@@ -123,7 +119,6 @@ import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 		TxHashComponent,
 		AddressInputComponent,
 		DecimalPlacesPipe,
-		TooltipDirective,
 		FormFieldComponent,
 		TokenIdentifierInputComponent,
 		ResizeVerticalSplitterComponent,
