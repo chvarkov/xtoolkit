@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 	styleUrls: ['./toastr.component.scss']
 })
 export class ToastrComponent extends ToastNoAnimation implements OnInit {
+	readonly rightOffset = 26;
 	private readonly margin = 12;
 
 	containerWidth$: Observable<string>;
@@ -33,7 +34,7 @@ export class ToastrComponent extends ToastNoAnimation implements OnInit {
 		super(toastrService, toastPackage, appRef);
 
 		this.containerWidth$ = this.store.select(LayoutSelector.panelsWidth).pipe(
-			map(v => v.right - (this.margin * 2)),
+			map(v => v.right - (this.margin * 2) - this.rightOffset),
 			map(width => `${width}px`),
 		);
 	}
