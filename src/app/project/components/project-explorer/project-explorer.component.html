@@ -155,6 +155,10 @@
 								<mat-icon>search</mat-icon>
 								<span>Explore</span>
 							</button>
+							<button mat-menu-item (click)="copyTokenIdentifier(tokenAddress)">
+								<mat-icon>content_copy</mat-icon>
+								<span>Copy identifier</span>
+							</button>
 							<button mat-menu-item (click)="deleteToken(project.id, tokenAddress)">
 								<mat-icon>delete</mat-icon>
 								<span>Delete</span>

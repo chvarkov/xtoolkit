@@ -139,6 +139,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.clipboard.copy(address, 'Wallet address');
 	}
 
+	copyTokenIdentifier(identifier: string): void {
+		this.clipboard.copy(identifier, 'Token identifier');
+	}
+
 	exploreToken(projectId: string, identifier: string): void {
 		this.store.dispatch(ProjectAction.exploreToken({projectId, identifier}));
 	}
