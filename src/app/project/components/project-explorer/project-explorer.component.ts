@@ -135,6 +135,10 @@ export class ProjectExplorerComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.renameWallet({projectId, address, name}));
 	}
 
+	copyContractAddress(address: string): void {
+		this.clipboard.copy(address, 'Smart contract address');
+	}
+
 	copyWalletAddress(address: string): void {
 		this.clipboard.copy(address, 'Wallet address');
 	}

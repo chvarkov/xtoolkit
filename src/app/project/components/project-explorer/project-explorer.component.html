@@ -112,6 +112,10 @@
 						</mat-icon>
 
 						<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="copyContractAddress(sc.address)">
+								<mat-icon>content_copy</mat-icon>
+								<span>Copy address</span>
+							</button>
 							<button mat-menu-item (click)="renameSmartContract(project.id, sc.id, sc.name)">
 								<mat-icon>drive_file_rename_outline</mat-icon>
 								<span>Rename</span>
