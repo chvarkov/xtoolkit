@@ -5,11 +5,11 @@
 <app-toolbar title="Action history" [borderLeft]="true">
 	<ng-container right-side *ngIf="activeProjectId$ | async as projectId">
 		<app-toolbar-icon-button *ngIf="(actionHistory$ | async)?.length"
-								 appTooltip tooltip="Clear"
+								 matTooltip="Clear"
 								 (click)="clearActionHistory(projectId)">
 			delete
 		</app-toolbar-icon-button>
-		<app-toolbar-icon-button appTooltip tooltip="Reload" (click)="loadActionHistory(projectId)">
+		<app-toolbar-icon-button matTooltip="Reload" (click)="loadActionHistory(projectId)">
 			refresh
 		</app-toolbar-icon-button>
 	</ng-container>

@@ -1,4 +1,4 @@
-<div class="container" [ngStyle]="{width: (containerWidth$ | async) || '300px'}">
+<div class="container" [ngStyle]="{width: (containerWidth$ | async) || '300px', marginRight: rightOffset}">
 	<div class="icon">
 		<mat-icon [ngClass]="'icon-' + toastPackage.toastType">{{icon}}</mat-icon>
 	</div>

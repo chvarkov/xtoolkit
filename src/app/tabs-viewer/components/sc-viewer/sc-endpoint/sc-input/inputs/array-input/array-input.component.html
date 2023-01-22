@@ -2,13 +2,13 @@
 	<app-toolbar [title]="name" titleSize="small">
 		<app-toolbar-icon-button right-side
 								 appTooltip
-								 tooltip="Clear array"
+								 matTooltip="Clear array"
 								 (click)="clear()">
 			delete
 		</app-toolbar-icon-button>
 		<app-toolbar-icon-button right-side
 								 appTooltip
-								 tooltip="Add element"
+								 matTooltip="Add element"
 								 (click)="addElement()">
 			add
 		</app-toolbar-icon-button>
@@ -37,7 +37,7 @@
 			<div class="actions">
 				<div class="material-icons delete-icon"
 					 appTooltip
-					 tooltip="Delete element"
+					 matTooltip="Delete element"
 					 (click)="delete(i)">
 					close
 				</div>

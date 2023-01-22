@@ -1,11 +1,11 @@
 <span class="address">
 	{{label}}
 	{{address | shortString:maxLength}}
-	<span class="material-icons action" appTooltip tooltip="Copy" (click)="copy()">
+	<span class="material-icons action" matTooltip="Copy" (click)="copy()">
 		content_copy
 	</span>
 	<span class="material-icons action"
-		  appTooltip tooltip="Explore"
+		  matTooltip="Explore"
 		  *ngIf="(network$ | async) as network"
 		  (click)="explore(network.explorerUrl)">
 		search

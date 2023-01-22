@@ -13,20 +13,20 @@
 			<ng-container right-side [ngSwitch]="tabs.selectedIndexChange.asObservable() | async">
 				<ng-container *ngSwitchCase="TABS.Endpoints">
 					<app-toolbar-icon-button appTooltip
-											 tooltip="Expand all"
+											 matTooltip="Expand all"
 											 (click)="expandAll()">expand_more</app-toolbar-icon-button>
 					<app-toolbar-icon-button appTooltip
-											 tooltip="Hide all"
+											 matTooltip="Hide all"
 											 (click)="hideAll()">expand_less</app-toolbar-icon-button>
 				</ng-container>
 				<ng-container *ngSwitchCase="TABS.Tokens">
-					<app-toolbar-icon-button appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
+					<app-toolbar-icon-button matTooltip="Reload">refresh</app-toolbar-icon-button>
 				</ng-container>
 				<ng-container *ngSwitchCase="TABS.NFTs">
-					<app-toolbar-icon-button appTooltip tooltip="Reload">refresh</app-toolbar-icon-button>
+					<app-toolbar-icon-button matTooltip="Reload">refresh</app-toolbar-icon-button>
 				</ng-container>
 				<ng-container *ngSwitchCase="TABS.Code">
-					<app-toolbar-icon-button appTooltip tooltip="Download WASM file">download</app-toolbar-icon-button>
+					<app-toolbar-icon-button matTooltip="Download WASM file">download</app-toolbar-icon-button>
 				</ng-container>
 			</ng-container>
 		</app-toolbar>

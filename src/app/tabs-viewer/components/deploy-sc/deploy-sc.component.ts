@@ -164,7 +164,7 @@ export class DeployScComponent implements OnInit {
 					id: uuid.v4(),
 					txHash,
 					projectId: project.id,
-					type: ActionType.Issue,
+					type: ActionType.Tx,
 					data: this.form?.value,
 					chainId: project.chainId,
 					title: `Deploy ${this.selectedAbi.name} SC`,

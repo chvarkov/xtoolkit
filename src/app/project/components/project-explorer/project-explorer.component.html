@@ -6,7 +6,7 @@
 <app-toolbar title="Projects" [borderRight]="true">
 	<ng-container left-side *ngIf="activeProject$ | async as project">
 		<mat-icon [matMenuTriggerFor]="projectMenu"
-				  appTooltip tooltip="Show projects"
+				  matTooltip="Show projects"
 				  class="project-list-icon">arrow_drop_down</mat-icon>
 		<mat-menu #projectMenu="matMenu" classList="dropdown-list" xPosition="before">
 			<button mat-menu-item *ngFor="let project of (projectsList$ | async) || []" (click)="openProject(project.id)">
@@ -17,13 +17,13 @@
 	</ng-container>
 
 	<ng-container right-side *ngIf="activeProject$ | async as project">
-		<app-toolbar-icon-button  appTooltip tooltip="Select opened element" (click)="showCurrentTab(project.id)">
+		<app-toolbar-icon-button  matTooltip="Select opened element" (click)="showCurrentTab(project.id)">
 			my_location
 		</app-toolbar-icon-button>
-		<app-toolbar-icon-button appTooltip tooltip="Create" (click)="createProject()">
+		<app-toolbar-icon-button matTooltip="Create" (click)="createProject()">
 			add
 		</app-toolbar-icon-button>
-		<app-toolbar-icon-button appTooltip tooltip="Refresh" (click)="loadProjects()">
+		<app-toolbar-icon-button matTooltip="Refresh" (click)="loadProjects()">
 			refresh
 		</app-toolbar-icon-button>
 	</ng-container>

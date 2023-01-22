@@ -9,11 +9,11 @@
 		<div left-side *ngIf="token.isPaused" class="paused-label">PAUSED</div>
 
 		<ng-container right-side *ngIf="token.canMint || token.canBurn">
-			<app-toolbar-icon-button *ngIf="token.canMint" appTooltip tooltip="Mint" (click)="mint()">
+			<app-toolbar-icon-button *ngIf="token.canMint" matTooltip="Mint" (click)="mint()">
 				data_saver_on
 			</app-toolbar-icon-button>
 
-			<app-toolbar-icon-button *ngIf="token.canBurn" appTooltip tooltip="Burn" (click)="burn()">
+			<app-toolbar-icon-button *ngIf="token.canBurn" matTooltip="Burn" (click)="burn()">
 				local_fire_department
 			</app-toolbar-icon-button>
 
@@ -21,12 +21,12 @@
 		</ng-container>
 
 		<ng-container right-side *ngIf="token.canPause">
-			<app-toolbar-icon-button *ngIf="token.isPaused" appTooltip tooltip="Un pause"
+			<app-toolbar-icon-button *ngIf="token.isPaused" matTooltip="Un pause"
 									 (click)="unpause()">
 				play_arrow
 			</app-toolbar-icon-button>
 
-			<app-toolbar-icon-button *ngIf="!token.isPaused" appTooltip tooltip="Pause"
+			<app-toolbar-icon-button *ngIf="!token.isPaused" matTooltip="Pause"
 									 (click)="pause()">
 				pause
 			</app-toolbar-icon-button>
@@ -36,12 +36,12 @@
 
 		<ng-container right-side>
 			<app-toolbar-icon-button *ngIf="token.canChangeOwner"
-									 appTooltip tooltip="Transfer ownership"
+									 matTooltip="Transfer ownership"
 									 (click)="transferOwnership()">
 				admin_panel_settings
 			</app-toolbar-icon-button>
 
-			<app-toolbar-icon-button appTooltip tooltip="Set special role" (click)="setSpecialRole()">
+			<app-toolbar-icon-button matTooltip="Set special role" (click)="setSpecialRole()">
 				group_add
 			</app-toolbar-icon-button>
 
@@ -49,16 +49,16 @@
 		</ng-container>
 
 		<ng-container right-side *ngIf="token.canWipe || token.canFreeze">
-			<app-toolbar-icon-button *ngIf="token.canWipe" appTooltip tooltip="Wipe" (click)="wipe()">
+			<app-toolbar-icon-button *ngIf="token.canWipe" matTooltip="Wipe" (click)="wipe()">
 				cleaning_services
 			</app-toolbar-icon-button>
 
 			<ng-container *ngIf="token.canFreeze">
-				<app-toolbar-icon-button appTooltip tooltip="Freeze account" (click)="freeze()">
+				<app-toolbar-icon-button matTooltip="Freeze account" (click)="freeze()">
 					mood_bad
 				</app-toolbar-icon-button>
 
-				<app-toolbar-icon-button appTooltip tooltip="Un freeze account" (click)="unfreeze()">
+				<app-toolbar-icon-button matTooltip="Un freeze account" (click)="unfreeze()">
 					mood
 				</app-toolbar-icon-button>
 			</ng-container>
@@ -66,16 +66,16 @@
 			<div class="toolbar-splitter"></div>
 		</ng-container>
 
-		<app-toolbar-icon-button right-side appTooltip tooltip="Delete token"
+		<app-toolbar-icon-button right-side matTooltip="Delete token"
 								 (click)="delete()">
 			delete
 		</app-toolbar-icon-button>
 		<app-toolbar-icon-button *ngIf="network$ | async as network"
-								 right-side appTooltip tooltip="Explore"
+								 right-side matTooltip="Explore"
 								 (click)="explore(network)">
 			search
 		</app-toolbar-icon-button>
-		<app-toolbar-icon-button right-side appTooltip tooltip="Refresh"
+		<app-toolbar-icon-button right-side matTooltip="Refresh"
 								 (click)="loadData()">
 			refresh
 		</app-toolbar-icon-button>

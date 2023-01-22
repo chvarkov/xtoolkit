@@ -5,34 +5,34 @@
 		</div>
 		<ng-container right-side *ngIf="(chainId$ | async) || '' as chainId">
 			<app-toolbar-icon-button *ngIf="chainId | isNotMainnetNetwork"
-									 appTooltip tooltip="Transfer"
+									 matTooltip="Transfer"
 									 (click)="transferTokens(chainId)">
 				send
 			</app-toolbar-icon-button>
 		</ng-container>
 		<app-toolbar-icon-button *ngIf="(chainId$ | async) || '' | isNotMainnetNetwork"
-								 right-side appTooltip tooltip="Open faucet"
+								 right-side matTooltip="Open faucet"
 								 (click)="faucet.gotoFaucet()">
 			monetization_on
 		</app-toolbar-icon-button>
 		<app-toolbar-icon-button *ngIf="wallet$ | async as wallet"
-								 right-side appTooltip tooltip="Delete wallet"
+								 right-side matTooltip="Delete wallet"
 								 (click)="deleteWallet(wallet)">
 			delete
 		</app-toolbar-icon-button>
 		<ng-container right-side *ngIf="wallet$ | async as wallet">
-			<app-toolbar-icon-button  appTooltip tooltip="Rename"
+			<app-toolbar-icon-button  matTooltip="Rename"
 									 (click)="renameWallet(wallet.name)">
 				drive_file_rename_outline
 			</app-toolbar-icon-button>
 			<app-toolbar-icon-button
-				appTooltip tooltip="Export keys"
+				matTooltip="Export keys"
 				(click)="exportMnemonic(wallet)">
 				key
 			</app-toolbar-icon-button>
 		</ng-container>
 		<app-toolbar-icon-button right-side appTooltip
-								 tooltip="Refresh"
+								 matTooltip="Refresh"
 								 (click)="loadData()">refresh</app-toolbar-icon-button>
 	</app-toolbar>
 

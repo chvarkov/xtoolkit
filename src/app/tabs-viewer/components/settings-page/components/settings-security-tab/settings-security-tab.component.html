@@ -3,7 +3,7 @@
 	<ng-container right-side>
 		<div class="status-label"
 			 *ngIf="(isSecretsLocked$ | async) | secretsLockedStatusInfo as info"
-			 appTooltip [tooltip]="info.tooltip"
+			 [matTooltip]="info.tooltip"
 			 [ngClass]="info.value ? 'status-warn' : 'status-good'">
 			<mat-icon>{{info.icon}}</mat-icon>
 			<div class="text">{{info.label}}</div>
@@ -11,7 +11,7 @@
 
 		<div class="status-label"
 			 *ngIf="(isPasswordSet$ | async) | passwordStatusInfo as info"
-			 appTooltip [tooltip]="info.tooltip"
+			 [matTooltip]="info.tooltip"
 			 [ngClass]="info.value ? 'status-good' : 'status-bad'">
 			<mat-icon>{{info.icon}}</mat-icon>
 			<div class="text">{{info.label}}</div>

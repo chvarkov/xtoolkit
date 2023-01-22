@@ -3,11 +3,11 @@
 	<span [ngClass]="{interactive: interactive}" (click)="$event.stopImmediatePropagation(); open.emit()">
 		{{txHash | shortString:maxLength}}
 	</span>
-	<span class="material-icons action" (click)="copy()" appTooltip tooltip="Copy">
+	<span class="material-icons action" (click)="copy()" matTooltip="Copy">
 		content_copy
 	</span>
 	<span class="material-icons action"
-		  appTooltip tooltip="Explore"
+		  matTooltip="Explore"
 		  *ngIf="(network$ | async) as network"
 		  (click)="explore(network.explorerUrl)">
 		search

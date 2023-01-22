@@ -71,3 +71,9 @@ mat-select, mat-autocomplete {
 .mat-progress-bar-secondary {
 	background: var(--border-accent-color) !important;
 }
+
+.mat-tooltip {
+	background: var(--primary-bg);
+	border: solid 1px var(--border-color);
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}
