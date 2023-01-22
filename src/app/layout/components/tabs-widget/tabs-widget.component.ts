@@ -1,9 +1,9 @@
 import {
 	AfterViewInit,
 	Component,
-	ContentChildren,
+	ContentChildren, EventEmitter,
 	Input,
-	OnInit,
+	OnInit, Output,
 	QueryList,
 } from '@angular/core';
 import { WidgetTabComponent } from './widget-tab/widget-tab.component';
@@ -16,7 +16,17 @@ import { WidgetTabComponent } from './widget-tab/widget-tab.component';
 export class TabsWidgetComponent implements OnInit, AfterViewInit {
 	@Input() activeId?: string;
 
+	@Output() resize: EventEmitter<number> = new EventEmitter<number>();
+
 	@ContentChildren(WidgetTabComponent) tabs?: QueryList<WidgetTabComponent>;
+
+	get minResizeMovingX(): number {
+		return window.innerWidth - 480;
+	}
+
+	get maxResizeMoving(): number {
+		return window.innerWidth - 360;
+	}
 
 	get length(): number {
 		return this.tabs?.length || 0;
