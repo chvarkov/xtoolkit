@@ -4,7 +4,7 @@ import { SecurityAction } from '../../../../../security/store/security.action';
 import { Observable } from 'rxjs';
 import { SecuritySelector } from '../../../../../security/store/security.selector';
 import { map } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatchPasswordsValidator } from '../../validators/match-passwords.validator';
 import { CorrectPasswordValidator } from '../../../../../security/validators/correct-password.validator';
 import { SECRET_MANAGER, SecretManager } from '../../../../../core/data-provider/secret.manager';
@@ -39,7 +39,7 @@ export class SettingsSecurityTabComponent implements OnInit {
 				CorrectPasswordValidator.createValidator(this.secretManager),
 			]),
 			password: ['', Validators.required],
-			confirmPassword: ['', Validators.required],
+			confirmPassword: ['', [Validators.required]],
 		}, {
 			validators: MatchPasswordsValidator.validator,
 		});
@@ -47,6 +47,26 @@ export class SettingsSecurityTabComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.store.dispatch(SecurityAction.loadSecurityState());
+	}
+
+	getChangePasswordControl(controlName: string): AbstractControl {
+		return this.changePasswordForm.get(controlName)!;
+	}
+
+	getSetPasswordControl(controlName: string): AbstractControl {
+		return this.setPasswordForm.get(controlName)!;
+	}
+
+	isShowChangePasswordError(controlName: string): boolean {
+		const control = this.getChangePasswordControl(controlName);
+
+		return control.invalid && (control.dirty || control.touched);
+	}
+
+	isShowSetPasswordError(controlName: string): boolean {
+		const control = this.getSetPasswordControl(controlName);
+
+		return control.invalid && (control.dirty || control.touched);
 	}
 
 	changePassword(): void {

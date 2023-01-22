@@ -72,3 +72,8 @@
 	color: var(--static-red);
 	border-color: var(--static-red);
 }
+
+.form-error {
+	color: var(--error-text-color);
+	font-size: 13px;
+}

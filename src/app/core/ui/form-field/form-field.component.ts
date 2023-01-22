@@ -8,8 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class FormFieldComponent implements OnInit {
 	@Input() title = '';
 
-	@Input() error = '';
-
 	constructor() {
 	}
 
