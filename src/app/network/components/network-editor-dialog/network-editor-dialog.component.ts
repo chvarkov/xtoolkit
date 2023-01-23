@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { INetworkEnvironment } from '../../../core/elrond/interfaces/network-environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DEFAULT_WALLET_CONNECT_BRIDGE_URL, DEFAULT_WALLET_CONNECT_DEEP_LINK } from '../../../core/constants';
 
@@ -37,6 +37,16 @@ export class NetworkEditorDialogComponent implements OnInit {
 			walletConnectDeepLink: [this.data?.walletConnectDeepLink || DEFAULT_WALLET_CONNECT_DEEP_LINK, Validators.required],
 			walletConnectBridgeAddress: [this.data?.walletConnectBridgeAddresses?.[0] || DEFAULT_WALLET_CONNECT_BRIDGE_URL, Validators.required],
 		});
+	}
+
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
 	}
 
 	submit(): void {

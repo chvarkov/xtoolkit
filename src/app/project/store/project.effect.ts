@@ -182,6 +182,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteWasmSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWasmSuccess),
+		tap(() => this.toastrService.success('WASM was successful deleted', 'Delete WASM')),
+	), {dispatch: false});
+
+	deleteWasmError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWasmError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete WASM')),
+	), {dispatch: false});
+
 	addWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addWallet),
 		mergeMap(({projectId, wallet}) => this.dataProvider.addWallet(projectId, wallet).pipe(
@@ -577,6 +587,16 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameProjectSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameProjectSuccess),
+		tap(() => this.toastrService.success('Project successful renamed', 'Rename project')),
+	), {dispatch: false});
+
+	renameProjectError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameProjectError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename project')),
+	), {dispatch: false});
+
 	renameSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameSmartContract),
 		exhaustMap(({projectId, scId, name}) => this.dialog.open(RenameDialogComponent, {
@@ -594,6 +614,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.renameSmartContractError({err})))
 		))),
 	);
+
+	renameSmartContractSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameSmartContractSuccess),
+		tap(() => this.toastrService.success('Smart contract successful renamed', 'Rename smart contract')),
+	), {dispatch: false});
+
+	renameSmartContractError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameSmartContractError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename smart contract')),
+	), {dispatch: false});
 
 	renameAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAbi),
@@ -613,6 +643,16 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameAbiSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAbiSuccess),
+		tap(() => this.toastrService.success('ABI interface successful renamed', 'Rename ABI interface')),
+	), {dispatch: false});
+
+	renameAbiError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAbiError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename ABI interface')),
+	), {dispatch: false});
+
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
 		exhaustMap(({projectId, address, name}) => this.dialog.open(RenameDialogComponent, {
@@ -630,6 +670,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.renameWalletError({err})))
 		))),
 	);
+
+	renameWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameWalletSuccess),
+		tap(() => this.toastrService.success('Wallet successful renamed', 'Rename wallet')),
+	), {dispatch: false});
+
+	renameWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename wallet')),
+	), {dispatch: false});
 
 	exploreToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.exploreToken),
@@ -691,6 +741,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteSmartContractSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteSmartContractSuccess),
+		tap(() => this.toastrService.success('Smart contract was successful deleted', 'Delete smart contract')),
+	), {dispatch: false});
+
+	deleteSmartContractError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteSmartContractError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete smart contract')),
+	), {dispatch: false});
+
 	deleteAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteAbi),
 		exhaustMap(action => {
@@ -712,6 +772,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteAbiError({err})),
 			)),
 		)));
+
+	deleteAbiSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAbiSuccess),
+		tap(() => this.toastrService.success('ABI interface was successful deleted', 'Delete ABI interface')),
+	), {dispatch: false});
+
+	deleteAbiError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAbiError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete ABI interface')),
+	), {dispatch: false});
 
 	deleteToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteToken),
@@ -735,6 +805,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteTokenSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteTokenSuccess),
+		tap(() => this.toastrService.success('Token was successful deleted', 'Delete token')),
+	), {dispatch: false});
+
+	deleteTokenError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteTokenError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete token')),
+	), {dispatch: false});
+
 	deleteWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteWallet),
 		exhaustMap(action => {
@@ -756,6 +836,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteWalletError({err})),
 			)),
 		)));
+
+	deleteWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWalletSuccess),
+		tap(() => this.toastrService.success('Wallet was successful deleted', 'Delete wallet')),
+	), {dispatch: false});
+
+	deleteWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete wallet')),
+	), {dispatch: false});
 
 	addProjectAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAddress),
@@ -799,6 +889,16 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameAddressSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAddressSuccess),
+		tap(() => this.toastrService.success('Address successful renamed', 'Rename address')),
+	), {dispatch: false});
+
+	renameAddressError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAddressError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename address')),
+	), {dispatch: false});
+
 	deleteAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteAddress),
 		exhaustMap(action => {
@@ -817,6 +917,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteAddressError({err})))
 		))),
 	);
+
+	deleteAddressSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAddressSuccess),
+		tap(() => this.toastrService.success('Address was successful deleted', 'Delete address')),
+	), {dispatch: false});
+
+	deleteAddressError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAddressError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete address')),
+	), {dispatch: false});
 
 	loadTokenIssueWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenIssueWaitList),
@@ -923,6 +1033,16 @@ export class ProjectEffect {
 		)),
 	));
 
+	connectMaiarWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.connectMaiarWalletSuccess),
+		tap(() => this.toastrService.success('Maiar wallet was successful connected', 'Maiar connect')),
+	), {dispatch: false});
+
+	connectMaiarWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.connectMaiarWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot connect Maiar wallet')),
+	), {dispatch: false});
+
 	logoutMaiarWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.logoutMaiarWallet),
 		switchMap(() => this.maiarWalletService.logout().pipe(
@@ -930,6 +1050,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.logoutMaiarWalletError({err}))),
 		)),
 	));
+
+	logoutMaiarWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.logoutMaiarWalletSuccess),
+		tap(() => this.toastrService.success('Maiar wallet was successful disconnected', 'Maiar wallet disconnect')),
+	), {dispatch: false});
+
+	logoutMaiarWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.logoutMaiarWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot disconnect Maiar wallet')),
+	), {dispatch: false});
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,

@@ -82,6 +82,7 @@ export class MaiarWalletService {
 
 						return address;
 					}),
+					take(1),
 				)),
 			)),
 		);

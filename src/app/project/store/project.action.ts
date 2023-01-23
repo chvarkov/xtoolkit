@@ -258,10 +258,6 @@ export class ProjectAction {
 	static readonly transferTokensSuccess = createAction(`[${ProjectAction.name}] transfer tokens  [OK]`);
 	static readonly transferTokensError = createAction(`[${ProjectAction.name}] transfer tokens  [ERR]`, props<{err: Error}>());
 
-	static readonly sendTx = createAction(`[${ProjectAction.name}] sign tx [...]`, props<{projectId: string, sender: string, tx: Transaction}>());
-	static readonly sendTxSuccess = createAction(`[${ProjectAction.name}] sign tx  [OK]`, props<{txHash: string}>());
-	static readonly sendTxError = createAction(`[${ProjectAction.name}] sign tx  [ERR]`, props<{err: Error}>());
-
 	static readonly connectMaiarWallet = createAction(`[${ProjectAction.name}] connect maiar wallet [...]`, props<{projectId: string}>());
 	static readonly connectMaiarWalletSuccess = createAction(`[${ProjectAction.name}] connect maiar wallet [OK]`, props<{ address: string }>());
 	static readonly connectMaiarWalletError = createAction(`[${ProjectAction.name}] connect maiar wallet [ERR]`, props<{err: Error}>());
