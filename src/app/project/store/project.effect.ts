@@ -389,7 +389,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.setTokenSpecialRole),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(SpecialRolesTokenDialogComponent, {
 			data: {projectId, identifier},
-			width: '500px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.setSpecialRoles(projectId, network, wallet, options).pipe(
