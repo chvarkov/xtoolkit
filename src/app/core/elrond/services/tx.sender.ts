@@ -48,11 +48,18 @@ export class TxSender {
 				switchMap(network => this.sign(projectId, wallet, network, tx).pipe(
 					map(() => network),
 				)),
-				switchMap((network) => this.proxy.getProxy(network).sendTransaction(tx).catch(e => {
-					this.handleError(e);
+				switchMap((network) => this.proxy.getProxy(network).sendTransaction(tx)
+					.then(txHash => {
+						this.toastrService.success('Transaction successful sent', 'Send transaction');
 
-					throw e;
-				})),
+						return txHash;
+					})
+					.catch(e => {
+						this.handleError(e);
+
+						throw e;
+					}),
+				),
 			)),
 		);
 	}
