@@ -2,12 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
+import { addressValidator } from '../../../../../core/validators/address-validator';
 
 @Component({
 	selector: 'app-transfer-ownership-dialog',
@@ -20,8 +21,6 @@ export class TransferOwnershipDialogComponent implements OnInit {
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	project$?: Observable<Project | undefined>;
-
-	address = '';
 
 	form!: FormGroup;
 
@@ -39,14 +38,25 @@ export class TransferOwnershipDialogComponent implements OnInit {
 				value: this.data.identifier,
 				disabled: true,
 			},
+			address: ['', [Validators.required, addressValidator]],
 		});
 	}
 
 	ngOnInit(): void {
 	}
 
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
+	}
+
 	submit(network: INetworkEnvironment): void {
-		if (!this.wallet) {
+		if (!this.wallet || this.form.invalid) {
 			return;
 		}
 
@@ -56,13 +66,9 @@ export class TransferOwnershipDialogComponent implements OnInit {
 			this.wallet,
 			{
 				identifier: this.data.identifier,
-				address: this.address,
+				address: this.form.value.address,
 			},
 		]);
-	}
-
-	onChangeAddress(address: string): void {
-		this.address = address;
 	}
 
 	onChangeSignerWallet(wallet: ProjectWallet): void {

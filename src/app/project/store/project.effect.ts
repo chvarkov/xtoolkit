@@ -402,7 +402,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.transferTokenOwnership),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(TransferOwnershipDialogComponent, {
 			data: {projectId, identifier},
-			width: '500px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.transferOwnership(projectId, network, wallet, options).pipe(

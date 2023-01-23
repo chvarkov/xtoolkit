@@ -3,16 +3,20 @@
 <form [formGroup]="form" class="content" *ngIf="project$ | async as project">
 	<app-form-field title="Identifier">
 		<input formControlName="identifier">
+		<span error *ngIf="isControlHasError('identifier')">
+			{{getControl('identifier') | errorMessage}}
+		</span>
 	</app-form-field>
 
 	<app-form-field title="Address">
 		<app-address-input type="wallet"
+						   formControlName="address"
 						   [chainId]="project.chainId"
-						   [projectId]="project.id"
-						   [showAddressBook]="true"
-						   (changed)="onChangeAddress($event)"></app-address-input>
+						   [projectId]="project.id"></app-address-input>
+		<span error *ngIf="isControlHasError('address')">
+			{{getControl('address') | errorMessage}}
+		</span>
 	</app-form-field>
-
 
 	<app-form-field class="caller" title="Caller">
 		<mat-select class="input-control"
