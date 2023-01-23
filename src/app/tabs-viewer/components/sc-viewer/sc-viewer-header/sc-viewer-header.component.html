@@ -1,8 +1,8 @@
 <form class="header-container">
 	<div class="material-icons icon" [ngStyle]="{color: 'sc' | componentColor}">code</div>
 
-	<app-address-input class="address" [address]="address"
-					   type="sc"
-					   [chainId]="chainId"
-					   (changed)="onChangeAddress($event)"></app-address-input>
+	<app-address-input class="address" [value]="address"
+                       type="sc"
+                       [chainId]="chainId"
+                       (changed)="onChangeAddress($event)"></app-address-input>
 </form>
