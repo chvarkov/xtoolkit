@@ -350,7 +350,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.freezeToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
 			data: {projectId, identifier, isFreeze: true},
-			width: '500px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.freeze(projectId, network, wallet, options).pipe(
@@ -363,7 +363,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.unFreezeToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
 			data: {projectId, identifier, isFreeze: false},
-			width: '320px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.unFreeze(projectId, network, wallet, options).pipe(
