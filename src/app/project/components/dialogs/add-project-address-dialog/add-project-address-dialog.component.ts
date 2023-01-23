@@ -9,6 +9,8 @@ import { Address } from '@multiversx/sdk-core/out';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../network/store/network.selector';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { addressValidator } from '../../../../core/validators/address-validator';
 
 @Component({
 	selector: 'app-add-project-address-dialog',
@@ -16,9 +18,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 	styleUrls: ['./add-project-address-dialog.component.scss']
 })
 export class AddProjectAddressDialogComponent implements OnInit {
-	name = '';
-
-	address = '';
+	form: FormGroup;
 
 	project$?: Observable<Project | undefined>;
 	network$?: Observable<INetworkEnvironment | undefined>;
@@ -26,7 +26,15 @@ export class AddProjectAddressDialogComponent implements OnInit {
 	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
 				readonly dialogRef: MatDialogRef<AddProjectAddressDialogComponent>,
 				private readonly store: Store,
+				private readonly fb: FormBuilder,
 				private readonly elrondDataProvider: ElrondDataProvider) {
+		this.form = this.fb.group({
+			name: ['', Validators.required],
+			address: ['', [
+				Validators.required,
+				addressValidator,
+			]],
+		});
 	}
 
 	ngOnInit(): void {
@@ -37,22 +45,33 @@ export class AddProjectAddressDialogComponent implements OnInit {
 		);
 	}
 
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
+	}
+
 	async create(network: INetworkEnvironment): Promise<void> {
-		if (!this.address) {
+		if (this.form.invalid) {
 			return;
 		}
 
-		const type = await this.elrondDataProvider.getProxy(network).getAccount(new Address(this.address))
+		const address = this.form.value.address;
+		const type = await this.elrondDataProvider.getProxy(network).getAccount(new Address(address))
 			.then(acc => acc.code ? 'sc' : 'wallet');
 
-		const address: ProjectAddress = {
-			address: this.address,
-			name: this.name,
+		const addressObject: ProjectAddress = {
+			address: this.form.value.address,
+			name: this.form.value.name,
 			projectId: this.data.projectId,
 			type,
 			savedAt: Date.now(),
 		};
 
-		this.dialogRef.close(address);
+		this.dialogRef.close(addressObject);
 	}
 }

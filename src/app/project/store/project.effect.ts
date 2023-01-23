@@ -761,6 +761,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.addAddress),
 		exhaustMap(action => {
 			return this.dialog.open(AddProjectAddressDialogComponent, {
+				width: '640px',
 				data: {
 					projectId: action.projectId,
 				},

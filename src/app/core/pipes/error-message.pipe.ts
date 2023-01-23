@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Pipe({
-	name: 'errorMessage'
+	name: 'errorMessage',
 })
 export class ErrorMessagePipe implements PipeTransform {
 	transform(formControl: AbstractControl): string | undefined {
@@ -21,6 +21,8 @@ export class ErrorMessagePipe implements PipeTransform {
 				return 'Required';
 			case 'incorrectPassword':
 				return 'Wrong password';
+			case 'invalidAddress':
+				return 'Invalid address';
 			default:
 				return 'Invalid value';
 		}
