@@ -182,6 +182,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteWasmSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWasmSuccess),
+		tap(() => this.toastrService.success('WASM was successful deleted', 'Delete WASM')),
+	), {dispatch: false});
+
+	deleteWasmError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWasmError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete WASM')),
+	), {dispatch: false});
+
 	addWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addWallet),
 		mergeMap(({projectId, wallet}) => this.dataProvider.addWallet(projectId, wallet).pipe(
@@ -731,6 +741,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteSmartContractSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteSmartContractSuccess),
+		tap(() => this.toastrService.success('Smart contract was successful deleted', 'Delete smart contract')),
+	), {dispatch: false});
+
+	deleteSmartContractError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteSmartContractError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete smart contract')),
+	), {dispatch: false});
+
 	deleteAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteAbi),
 		exhaustMap(action => {
@@ -752,6 +772,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteAbiError({err})),
 			)),
 		)));
+
+	deleteAbiSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAbiSuccess),
+		tap(() => this.toastrService.success('ABI interface was successful deleted', 'Delete ABI interface')),
+	), {dispatch: false});
+
+	deleteAbiError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAbiError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete ABI interface')),
+	), {dispatch: false});
 
 	deleteToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteToken),
@@ -775,6 +805,16 @@ export class ProjectEffect {
 			)),
 		)));
 
+	deleteTokenSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteTokenSuccess),
+		tap(() => this.toastrService.success('Token was successful deleted', 'Delete token')),
+	), {dispatch: false});
+
+	deleteTokenError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteTokenError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete token')),
+	), {dispatch: false});
+
 	deleteWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteWallet),
 		exhaustMap(action => {
@@ -796,6 +836,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteWalletError({err})),
 			)),
 		)));
+
+	deleteWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWalletSuccess),
+		tap(() => this.toastrService.success('Wallet was successful deleted', 'Delete wallet')),
+	), {dispatch: false});
+
+	deleteWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete wallet')),
+	), {dispatch: false});
 
 	addProjectAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAddress),
@@ -867,6 +917,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.deleteAddressError({err})))
 		))),
 	);
+
+	deleteAddressSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAddressSuccess),
+		tap(() => this.toastrService.success('Address was successful deleted', 'Delete address')),
+	), {dispatch: false});
+
+	deleteAddressError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.deleteAddressError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot delete address')),
+	), {dispatch: false});
 
 	loadTokenIssueWaitList$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.loadTokenIssueWaitList),
