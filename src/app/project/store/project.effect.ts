@@ -577,6 +577,16 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameProjectSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameProjectSuccess),
+		tap(() => this.toastrService.success('Project successful renamed', 'Rename project')),
+	), {dispatch: false});
+
+	renameProjectError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameProjectError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename project')),
+	), {dispatch: false});
+
 	renameSmartContract$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameSmartContract),
 		exhaustMap(({projectId, scId, name}) => this.dialog.open(RenameDialogComponent, {
@@ -594,6 +604,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.renameSmartContractError({err})))
 		))),
 	);
+
+	renameSmartContractSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameSmartContractSuccess),
+		tap(() => this.toastrService.success('Smart contract successful renamed', 'Rename smart contract')),
+	), {dispatch: false});
+
+	renameSmartContractError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameSmartContractError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename smart contract')),
+	), {dispatch: false});
 
 	renameAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAbi),
@@ -613,6 +633,16 @@ export class ProjectEffect {
 		))),
 	);
 
+	renameAbiSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAbiSuccess),
+		tap(() => this.toastrService.success('ABI interface successful renamed', 'Rename ABI interface')),
+	), {dispatch: false});
+
+	renameAbiError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAbiError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename ABI interface')),
+	), {dispatch: false});
+
 	renameWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameWallet),
 		exhaustMap(({projectId, address, name}) => this.dialog.open(RenameDialogComponent, {
@@ -630,6 +660,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.renameWalletError({err})))
 		))),
 	);
+
+	renameWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameWalletSuccess),
+		tap(() => this.toastrService.success('Wallet successful renamed', 'Rename wallet')),
+	), {dispatch: false});
+
+	renameWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename wallet')),
+	), {dispatch: false});
 
 	exploreToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.exploreToken),
@@ -798,6 +838,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.renameAddressError({err})))
 		))),
 	);
+
+	renameAddressSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAddressSuccess),
+		tap(() => this.toastrService.success('Address successful renamed', 'Rename address')),
+	), {dispatch: false});
+
+	renameAddressError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.renameAddressError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot rename address')),
+	), {dispatch: false});
 
 	deleteAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.deleteAddress),
