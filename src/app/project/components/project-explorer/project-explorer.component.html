@@ -112,6 +112,10 @@
 						</mat-icon>
 
 						<mat-menu #scMenu="matMenu" classList="dropdown-list" xPosition="before">
+							<button mat-menu-item (click)="copyContractAddress(sc.address)">
+								<mat-icon>content_copy</mat-icon>
+								<span>Copy address</span>
+							</button>
 							<button mat-menu-item (click)="renameSmartContract(project.id, sc.id, sc.name)">
 								<mat-icon>drive_file_rename_outline</mat-icon>
 								<span>Rename</span>
@@ -154,6 +158,10 @@
 							<button mat-menu-item (click)="exploreToken(project.id, tokenAddress)">
 								<mat-icon>search</mat-icon>
 								<span>Explore</span>
+							</button>
+							<button mat-menu-item (click)="copyTokenIdentifier(tokenAddress)">
+								<mat-icon>content_copy</mat-icon>
+								<span>Copy identifier</span>
 							</button>
 							<button mat-menu-item (click)="deleteToken(project.id, tokenAddress)">
 								<mat-icon>delete</mat-icon>

@@ -40,6 +40,7 @@ import { ToastrComponent } from './ui/toastr/toastr.component';
 import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 import { ClipboardService } from './services/clipboard.service';
+import { ErrorMessagePipe } from './pipes/error-message.pipe';
 
 @NgModule({
 	declarations: [
@@ -69,6 +70,7 @@ import { ClipboardService } from './services/clipboard.service';
 		ToastrComponent,
 		DecodeBase64Pipe,
 		BytesToKbPipe,
+  ErrorMessagePipe,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -131,6 +133,7 @@ import { ClipboardService } from './services/clipboard.service';
 		SubStringPipe,
 		DecodeBase64Pipe,
 		BytesToKbPipe,
+		ErrorMessagePipe,
 	],
 })
 export class CoreModule { }

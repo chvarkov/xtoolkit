@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SecurityNgrxHelper } from '../../../security/store/security.ngrx-helper';
 import { ConfirmTransactionDialogComponent } from '../../ui/confirm-transaction-dialog/confirm-transaction-dialog.component';
 import { WalletConnector } from './wallet-connector';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({providedIn: 'root'})
 export class TxSender {
@@ -22,6 +24,7 @@ export class TxSender {
 				private readonly elrondDataProvider: ElrondDataProvider,
 				private readonly walletConnector: WalletConnector,
 				private readonly dialog: MatDialog,
+				private readonly toastrService: ToastrService,
 				@Inject(SECRET_MANAGER) private readonly secretManager: SecretManager) {
 	}
 
@@ -45,7 +48,11 @@ export class TxSender {
 				switchMap(network => this.sign(projectId, wallet, network, tx).pipe(
 					map(() => network),
 				)),
-				switchMap((network) => this.proxy.getProxy(network).sendTransaction(tx)),
+				switchMap((network) => this.proxy.getProxy(network).sendTransaction(tx).catch(e => {
+					this.handleError(e);
+
+					throw e;
+				})),
 			)),
 		);
 	}
@@ -75,6 +82,20 @@ export class TxSender {
 				return of(undefined);
 			}),
 		);
+	}
+
+	private handleError(e: HttpErrorResponse): void {
+		const msg = this.extractErrorMessage(e);
+
+		this.toastrService.error(msg, 'Transaction sending was failed');
+	}
+
+	private extractErrorMessage(e: Error): string {
+		const msg = (e.message.split(':').pop() || '');
+
+		const extractedMessage = msg.substr(0, msg.length - 1);
+
+		return extractedMessage.charAt(0).toUpperCase() + extractedMessage.slice(1);
 	}
 
 	private signViaInternalSigner(projectId: string, wallet: ProjectWallet, tx: Transaction): Observable<void> {

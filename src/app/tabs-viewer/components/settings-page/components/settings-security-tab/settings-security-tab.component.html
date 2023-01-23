@@ -24,13 +24,26 @@
 			<div class="section-name">Change password</div>
 			<app-form-field title="Current password">
 				<input matInput formControlName="currentPassword" type="password">
+				<span error *ngIf="isShowChangePasswordError('currentPassword')">
+					{{getChangePasswordControl('currentPassword') | errorMessage}}
+				</span>
 			</app-form-field>
 			<app-form-field title="New password">
 				<input matInput formControlName="password" type="password">
+				<span error *ngIf="isShowChangePasswordError('password')">
+					{{getChangePasswordControl('password') | errorMessage}}
+				</span>
 			</app-form-field>
 			<app-form-field title="Repeat new password">
 				<input matInput formControlName="confirmPassword" type="password">
+				<span error *ngIf="isShowChangePasswordError('confirmPassword')">
+					{{getChangePasswordControl('confirmPassword') | errorMessage}}
+				</span>
 			</app-form-field>
+
+			<span class="form-error" *ngIf="changePasswordForm.hasError('confirmPassword')">
+				Passwords are not equal
+			</span>
 
 			<div class="actions">
 				<button mat-flat-button
@@ -49,10 +62,20 @@
 		<div class="section-name">Set password</div>
 		<app-form-field title="Password">
 			<input matInput formControlName="password" type="password">
+			<span error *ngIf="isShowSetPasswordError('password')">
+				{{getSetPasswordControl('password') | errorMessage}}
+			</span>
 		</app-form-field>
 		<app-form-field title="Repeat password">
 			<input matInput formControlName="confirmPassword" type="password">
+			<span error *ngIf="isShowSetPasswordError('confirmPassword')">
+				{{getSetPasswordControl('confirmPassword') | errorMessage}}
+			</span>
 		</app-form-field>
+
+		<span class="form-error" *ngIf="changePasswordForm.hasError('confirmPassword')">
+			Passwords are not equal
+		</span>
 
 		<div class="actions">
 			<button mat-flat-button
