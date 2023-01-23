@@ -61,10 +61,6 @@ export class LocalstorageDataProvider implements DataProvider {
 		return this.getNetworks()
 			.pipe(
 				map((networks => {
-					if (DEFAULT_NETWORKS.find(n => n.chainId === chainId)) {
-						throw new Error(`Cannot delete default network`);
-					}
-
 					networks = networks.map(n => n.chainId !== chainId ? n : network);
 
 					this.set(this.networksKey, networks);
