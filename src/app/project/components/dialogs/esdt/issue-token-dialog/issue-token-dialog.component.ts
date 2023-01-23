@@ -3,7 +3,7 @@ import { ProjectWallet, Project } from '../../../../../core/data-provider/data-p
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
 import { ITokenInfo } from '../../../../../core/elrond/interfaces/token-info';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { ProjectSelector } from '../../../../store/project.selector';
@@ -25,7 +25,7 @@ export class IssueTokenDialogComponent implements OnInit {
 
 	tokens$!: Observable<ITokenInfo[]>;
 
-	issueTokenForm!: FormGroup;
+	form!: FormGroup;
 
 	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string},
 				readonly dialogRef: MatDialogRef<IssueTokenDialogComponent>,
@@ -41,7 +41,7 @@ export class IssueTokenDialogComponent implements OnInit {
 		);
 		this.tokens$ = this.store.select(ProjectSelector.tokens());
 
-		this.issueTokenForm = this.fb.group({
+		this.form = this.fb.group({
 			name: ['', Validators.required],
 			ticker: ['', Validators.required],
 			supply: [0, Validators.required],
@@ -57,12 +57,22 @@ export class IssueTokenDialogComponent implements OnInit {
 		});
 	}
 
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
+	}
+
 	onChangeIssuerWallet(wallet: ProjectWallet): void {
 		this.wallet = wallet;
 	}
 
 	async submit(network: INetworkEnvironment): Promise<void> {
-		if (!this.issueTokenForm.valid) {
+		if (!this.form.valid) {
 			return;
 		}
 
@@ -74,7 +84,7 @@ export class IssueTokenDialogComponent implements OnInit {
 			this.data.projectId,
 			network,
 			this.wallet,
-			this.issueTokenForm.value
+			this.form.value
 		]);
 	}
 }

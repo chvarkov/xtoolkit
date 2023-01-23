@@ -1,22 +1,34 @@
 <app-modal-dialog-header title="Issue token" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
 <div class="content" *ngIf="project$ | async as project">
-	<form [formGroup]="issueTokenForm" class="issue-form">
+	<form [formGroup]="form" class="issue-form">
 		<div class="form-section">
 			<app-form-field title="Token name">
 				<input class="input" formControlName="name">
+				<span error *ngIf="isControlHasError('name')">
+					{{getControl('name') | errorMessage}}
+				</span>
 			</app-form-field>
 
 			<app-form-field title="Token ticker">
 				<input class="input" formControlName="ticker">
+				<span error *ngIf="isControlHasError('ticker')">
+					{{getControl('ticker') | errorMessage}}
+				</span>
 			</app-form-field>
 
 			<app-form-field title="Mint value">
 				<input class="input" formControlName="supply" type="number" min="0">
+				<span error *ngIf="isControlHasError('supply')">
+					{{getControl('supply') | errorMessage}}
+				</span>
 			</app-form-field>
 
 			<app-form-field title="Decimals">
 				<input class="input" formControlName="decimals" type="number" min="0">
+				<span error *ngIf="isControlHasError('decimals')">
+					{{getControl('decimals') | errorMessage}}
+				</span>
 			</app-form-field>
 		</div>
 		<div class="from-section">
@@ -67,7 +79,7 @@
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
 	<button mat-flat-button
 			class="create-button"
-			[disabled]="!issueTokenForm.valid"
+			[disabled]="!form.valid"
 			*ngIf="network$ | async as network"
 			(click)="submit(network)">
 		Issue
