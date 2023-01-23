@@ -3,6 +3,9 @@
 <form [formGroup]="form" class="content" *ngIf="project$ | async as project">
 	<app-form-field title="Identifier">
 		<input formControlName="identifier">
+		<span error *ngIf="isControlHasError('identifier')">
+			{{getControl('identifier') | errorMessage}}
+		</span>
 	</app-form-field>
 
 	<app-form-field class="caller" title="Caller">
