@@ -36,6 +36,11 @@ input {
 	padding: 4px 6px;
 }
 
+input.ng-touched.ng-dirty.ng-invalid {
+	border: solid 1px var(--static-red);
+	outline: none;
+}
+
 input:focus, input:active {
 	border: solid 1px var(--border-accent-color);
 	outline: none;

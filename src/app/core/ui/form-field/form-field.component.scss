@@ -18,5 +18,6 @@
 }
 
 .error {
-	color: var(--error-text-color)
+	color: var(--static-red);
+	font-weight: 500;
 }
