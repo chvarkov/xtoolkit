@@ -4,10 +4,13 @@
 		   placeholder="Address"
 		   [ngClass]="{invalid: isInvalidAddress(input.value)}"
 		   [value]="value"
-		   (change)="onChangeEvent($event)"
-		   (blur)="onBlur()"
-		   (focus)="onFocus()">
+		   (change)="onChangeEvent($event)">
 	<div class="icons">
+		<span class="material-icons action"
+			  matTooltip="Select from address book"
+			  (click)="selectFromAddressBook()">
+			content_paste_search
+		</span>
 		<ng-container *ngIf="input.value && !isInvalidAddress(input.value)">
 			<span class="material-icons action"
 				  matTooltip="Copy"

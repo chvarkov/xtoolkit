@@ -41,6 +41,7 @@ import { DecodeBase64Pipe } from './pipes/decode-base64.pipe';
 import { BytesToKbPipe } from './pipes/bytes-to-kb.pipe';
 import { ClipboardService } from './services/clipboard.service';
 import { ErrorMessagePipe } from './pipes/error-message.pipe';
+import { AddressBookBottomSheetComponent } from './ui/address-book-bottom-sheet/address-book-bottom-sheet.component';
 
 @NgModule({
 	declarations: [
@@ -70,7 +71,8 @@ import { ErrorMessagePipe } from './pipes/error-message.pipe';
 		ToastrComponent,
 		DecodeBase64Pipe,
 		BytesToKbPipe,
-  ErrorMessagePipe,
+		ErrorMessagePipe,
+		AddressBookBottomSheetComponent,
 	],
 	imports: [
 		BrowserAnimationsModule,
@@ -134,6 +136,7 @@ import { ErrorMessagePipe } from './pipes/error-message.pipe';
 		DecodeBase64Pipe,
 		BytesToKbPipe,
 		ErrorMessagePipe,
+		AddressBookBottomSheetComponent
 	],
 })
 export class CoreModule { }

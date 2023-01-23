@@ -28,6 +28,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AddressBookBottomSheetComponent } from './address-book-bottom-sheet/address-book-bottom-sheet.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 const MAT_MODULES = [
     MatInputModule,
@@ -62,6 +64,7 @@ const MAT_MODULES = [
     MatListModule,
     MatRippleModule,
 	MatAutocompleteModule,
+	MatBottomSheetModule,
 ];
 
 @NgModule({
