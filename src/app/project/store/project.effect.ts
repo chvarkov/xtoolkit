@@ -757,7 +757,7 @@ export class ProjectEffect {
 			)),
 		)));
 
-	addAddress$ = createEffect(() => this.actions$.pipe(
+	addProjectAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAddress),
 		exhaustMap(action => {
 			return this.dialog.open(AddProjectAddressDialogComponent, {
@@ -773,6 +773,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.addAddressError({err}))),
 		)),
 	));
+
+	addProjectAddressSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addAddressSuccess),
+		tap(() => this.toastrService.success('Address successful added to address book', 'Add address')),
+	), {dispatch: false});
+
+	addProjectAddressError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addAddressError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot add address')),
+	), {dispatch: false});
 
 	renameAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAddress),
