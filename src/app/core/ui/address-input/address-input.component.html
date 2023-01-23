@@ -2,23 +2,24 @@
 	<input #input class="input"
 		   autocomplete="nope"
 		   placeholder="Address"
+		   [ngClass]="{invalid: isInvalidAddress(input.value)}"
 		   [value]="value"
 		   (change)="onChangeEvent($event)"
 		   (blur)="onBlur()"
 		   (focus)="onFocus()">
 	<div class="icons">
-		<ng-container *ngIf="!isInvalidAddress(input.value)">
-				<span class="material-icons action"
-					  matTooltip="Copy"
-					  (click)="clipboard.copy(value, 'Address')">
-					content_copy
-				</span>
-				<span class="material-icons action"
-					  matTooltip="Explore"
-					  *ngIf="network$ | async as network"
-					  (click)="explore(network.explorerUrl)">
-					search
-				</span>
+		<ng-container *ngIf="input.value && !isInvalidAddress(input.value)">
+			<span class="material-icons action"
+				  matTooltip="Copy"
+				  (click)="clipboard.copy(value, 'Address')">
+				content_copy
+			</span>
+			<span class="material-icons action"
+				  matTooltip="Explore"
+				  *ngIf="network$ | async as network"
+				  (click)="explore(network.explorerUrl)">
+				search
+			</span>
 		</ng-container>
 		<span class="material-icons invalid-icon" *ngIf="isInvalidAddress(input.value)">cancel</span>
 	</div>

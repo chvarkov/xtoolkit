@@ -9,7 +9,6 @@ import { ProjectSelector } from '../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
 import { ClipboardService } from '../../services/clipboard.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import BigNumber from 'bignumber.js';
 
 @Component({
 	selector: 'app-address-input',
@@ -62,8 +61,8 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 	}
 
 	ngOnInit(): void {
+		this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
 		if (this.showAddressBook) {
-			this.network$ = this.store.select(NetworkSelector.networkByChainId(this.chainId));
 			this.addressBook$ = this.store.select(ProjectSelector.projectAddresses(this.type))
 				.pipe(map(list => this.options.concat(list)));
 		}
