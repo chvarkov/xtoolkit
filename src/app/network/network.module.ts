@@ -13,15 +13,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
 	declarations: [
 		NetworkNamePipe,
-  NetworkEditorDialogComponent,
+		NetworkEditorDialogComponent,
 	],
-    imports: [
-        CommonModule,
-        CoreModule,
-        StoreModule.forFeature(NETWORK_FEATURE, networkReducer),
-        EffectsModule.forFeature([NetworkEffect]),
-        ReactiveFormsModule,
-    ],
+	imports: [
+		CommonModule,
+		CoreModule,
+		StoreModule.forFeature(NETWORK_FEATURE, networkReducer),
+		EffectsModule.forFeature([NetworkEffect]),
+		ReactiveFormsModule,
+	],
 	exports: [
 		StoreModule,
 		EffectsModule,

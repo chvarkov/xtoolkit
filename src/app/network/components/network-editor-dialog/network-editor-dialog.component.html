@@ -4,40 +4,67 @@
 	<div class="section">
 		<app-form-field title="Network name">
 			<input class="field input-field" formControlName="name" placeholder="Network name">
+			<span error *ngIf="isControlHasError('name')">
+				{{getControl('name') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="Chain ID">
 			<input class="field input-field" formControlName="chainId" placeholder="Chain ID">
+			<span error *ngIf="isControlHasError('chainId')">
+				{{getControl('chainId') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="API url">
 			<input class="field input-field" formControlName="apiUrl" placeholder="API url">
+			<span error *ngIf="isControlHasError('apiUrl')">
+				{{getControl('apiUrl') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="Explorer url">
 			<input class="field input-field" formControlName="explorerUrl" placeholder="Explorer url">
+			<span error *ngIf="isControlHasError('explorerUrl')">
+				{{getControl('explorerUrl') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="EGLD label">
 			<input class="field input-field" formControlName="egldLabel" placeholder="EGLD label">
+			<span error *ngIf="isControlHasError('egldLabel')">
+				{{getControl('egldLabel') | errorMessage}}
+			</span>
 		</app-form-field>
 	</div>
 
 	<div class="section">
 		<app-form-field title="Gas per data byte">
 			<input class="field input-field" type="number" formControlName="gasPerDataByte" placeholder="Gas per data byte">
+			<span error *ngIf="isControlHasError('gasPerDataByte')">
+				{{getControl('gasPerDataByte') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="EGLD decimal places">
 			<input class="field input-field" formControlName="egldDenomination" placeholder="EGLD decimal places">
+			<span error *ngIf="isControlHasError('egldDenomination')">
+				{{getControl('egldDenomination') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="Wallet connect deep link">
 			<input class="field input-field" formControlName="walletConnectDeepLink" placeholder="Wallet connect deep link">
+			<span error *ngIf="isControlHasError('walletConnectDeepLink')">
+				{{getControl('walletConnectDeepLink') | errorMessage}}
+			</span>
 		</app-form-field>
 
 		<app-form-field title="Wallet connect deep link">
 			<input class="field input-field" formControlName="walletConnectBridgeAddress" placeholder="Wallet connect bridge address">
+			<span error *ngIf="isControlHasError('walletConnectBridgeAddress')">
+				{{getControl('walletConnectBridgeAddress') | errorMessage}}
+			</span>
 		</app-form-field>
 	</div>
 </form>
