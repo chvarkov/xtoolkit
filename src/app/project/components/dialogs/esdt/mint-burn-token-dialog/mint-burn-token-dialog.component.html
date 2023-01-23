@@ -1,18 +1,24 @@
 <app-modal-dialog-header [title]="title" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
-<form [formGroup]="mintTokenForm" class="content" *ngIf="project$ | async as project">
+<form [formGroup]="form" class="content" *ngIf="project$ | async as project">
 	<app-form-field title="Identifier">
 		<input formControlName="identifier">
+		<span error *ngIf="isControlHasError('identifier')">
+			{{getControl('identifier') | errorMessage}}
+		</span>
 	</app-form-field>
 
 	<app-form-field title="Supply">
 		<input formControlName="supply">
+		<span error *ngIf="isControlHasError('supply')">
+			{{getControl('supply') | errorMessage}}
+		</span>
 	</app-form-field>
 
 	<app-form-field class="caller" title="Caller">
 		<mat-select class="input-control"
 					panelClass="select-panel"
-					(selectionChange)="onChangeIssuerWallet($event.value)" >
+					(selectionChange)="onChangeIssuerWallet($event.value)">
 			<mat-option *ngFor="let wallet of project.wallets" [value]="wallet">{{wallet.name}}</mat-option>
 		</mat-select>
 	</app-form-field>
@@ -21,7 +27,7 @@
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
 	<button mat-flat-button
 			class="create-button"
-			[disabled]="!mintTokenForm.valid"
+			[disabled]="!wallet || form.invalid"
 			*ngIf="network$ | async as network"
 			(click)="submit(network)">
 		{{actionName}}

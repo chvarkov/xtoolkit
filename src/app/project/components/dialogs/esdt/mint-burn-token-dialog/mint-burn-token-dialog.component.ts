@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 
@@ -22,7 +22,7 @@ export class MintBurnTokenDialogComponent implements OnInit {
 
 	project$?: Observable<Project | undefined>;
 
-	mintTokenForm!: FormGroup;
+	form!: FormGroup;
 
 	get actionName(): string {
 		return this.data.isMint ? 'Mint' : 'Burn';
@@ -42,20 +42,30 @@ export class MintBurnTokenDialogComponent implements OnInit {
 			switchMap((project) => this.store.select(NetworkSelector.networkByChainId(project?.chainId || ''))),
 		);
 
-		this.mintTokenForm = this.fb.group({
+		this.form = this.fb.group({
 			identifier: {
 				value: this.data.identifier,
 				disabled: true,
 			},
-			supply: [0, Validators.required],
+			supply: [0, [Validators.required]],
 		});
 	}
 
 	ngOnInit(): void {
 	}
 
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
+	}
+
 	submit(network: INetworkEnvironment): void {
-		if (!this.mintTokenForm.valid) {
+		if (!this.form.valid) {
 			return;
 		}
 
@@ -68,7 +78,7 @@ export class MintBurnTokenDialogComponent implements OnInit {
 			network,
 			this.wallet,
 			{
-				...this.mintTokenForm.getRawValue(),
+				...this.form.getRawValue(),
 				mintedTokensOwner: this.wallet.address,
 			},
 		]);
