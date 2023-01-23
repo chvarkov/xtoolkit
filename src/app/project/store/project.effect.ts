@@ -350,7 +350,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.freezeToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
 			data: {projectId, identifier, isFreeze: true},
-			width: '500px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.freeze(projectId, network, wallet, options).pipe(
@@ -363,7 +363,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.unFreezeToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(FreezeUnFreezeTokenDialogComponent, {
 			data: {projectId, identifier, isFreeze: false},
-			width: '320px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.unFreeze(projectId, network, wallet, options).pipe(
@@ -375,8 +375,8 @@ export class ProjectEffect {
 	wipeToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.wipeToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(WipeTokenDialogComponent, {
-			data: {projectId, identifier, isFreeze: false},
-			width: '500px',
+			data: {projectId, identifier},
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.wipe(projectId, network, wallet, options).pipe(
@@ -389,7 +389,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.setTokenSpecialRole),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(SpecialRolesTokenDialogComponent, {
 			data: {projectId, identifier},
-			width: '500px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.setSpecialRoles(projectId, network, wallet, options).pipe(
@@ -402,7 +402,7 @@ export class ProjectEffect {
 		ofType(ProjectAction.transferTokenOwnership),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(TransferOwnershipDialogComponent, {
 			data: {projectId, identifier},
-			width: '500px',
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.transferOwnership(projectId, network, wallet, options).pipe(
@@ -757,10 +757,11 @@ export class ProjectEffect {
 			)),
 		)));
 
-	addAddress$ = createEffect(() => this.actions$.pipe(
+	addProjectAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.addAddress),
 		exhaustMap(action => {
 			return this.dialog.open(AddProjectAddressDialogComponent, {
+				width: '640px',
 				data: {
 					projectId: action.projectId,
 				},
@@ -772,6 +773,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.addAddressError({err}))),
 		)),
 	));
+
+	addProjectAddressSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addAddressSuccess),
+		tap(() => this.toastrService.success('Address successful added to address book', 'Add address')),
+	), {dispatch: false});
+
+	addProjectAddressError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.addAddressError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot add address')),
+	), {dispatch: false});
 
 	renameAddress$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.renameAddress),

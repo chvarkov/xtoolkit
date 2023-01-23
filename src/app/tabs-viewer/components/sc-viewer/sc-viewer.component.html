@@ -12,11 +12,9 @@
 
 			<ng-container right-side [ngSwitch]="tabs.selectedIndexChange.asObservable() | async">
 				<ng-container *ngSwitchCase="TABS.Endpoints">
-					<app-toolbar-icon-button appTooltip
-											 matTooltip="Expand all"
+					<app-toolbar-icon-button matTooltip="Expand all"
 											 (click)="expandAll()">expand_more</app-toolbar-icon-button>
-					<app-toolbar-icon-button appTooltip
-											 matTooltip="Hide all"
+					<app-toolbar-icon-button matTooltip="Hide all"
 											 (click)="hideAll()">expand_less</app-toolbar-icon-button>
 				</ng-container>
 				<ng-container *ngSwitchCase="TABS.Tokens">

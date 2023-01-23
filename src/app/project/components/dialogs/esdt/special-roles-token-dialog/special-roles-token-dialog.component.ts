@@ -2,13 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { Store } from '@ngrx/store';
 import { ProjectSelector } from '../../../../store/project.selector';
 import { switchMap } from 'rxjs/operators';
 import { NetworkSelector } from '../../../../../network/store/network.selector';
+import { addressValidator } from '../../../../../core/validators/address-validator';
 
 @Component({
 	selector: 'app-special-roles-token-dialog',
@@ -22,13 +23,7 @@ export class SpecialRolesTokenDialogComponent implements OnInit {
 
 	project$?: Observable<Project | undefined>;
 
-	address = '';
-
 	form!: FormGroup;
-
-	get disabled(): boolean {
-		return !this.address || (!this.form.value.ESDTRoleLocalBurn && !this.form.value.ESDTRoleLocalMint)
-	}
 
 	constructor(@Inject(MAT_DIALOG_DATA) private readonly data: {projectId: string, identifier: string},
 				readonly dialogRef: MatDialogRef<SpecialRolesTokenDialogComponent>,
@@ -45,6 +40,7 @@ export class SpecialRolesTokenDialogComponent implements OnInit {
 				value: this.data.identifier,
 				disabled: true,
 			},
+			address: ['', [Validators.required, addressValidator]],
 			ESDTRoleLocalBurn: [false],
 			ESDTRoleLocalMint: [false],
 		});
@@ -53,8 +49,18 @@ export class SpecialRolesTokenDialogComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
+	}
+
 	submit(network: INetworkEnvironment): void {
-		if (!this.wallet) {
+		if (!this.wallet || this.form.invalid) {
 			return;
 		}
 
@@ -62,15 +68,8 @@ export class SpecialRolesTokenDialogComponent implements OnInit {
 			this.data.projectId,
 			network,
 			this.wallet,
-			{
-				...this.form.getRawValue(),
-				address: this.address,
-			},
+			this.form.getRawValue(),
 		]);
-	}
-
-	onChangeAddress(address: string): void {
-		this.address = address;
 	}
 
 	onChangeSignerWallet(wallet: ProjectWallet): void {

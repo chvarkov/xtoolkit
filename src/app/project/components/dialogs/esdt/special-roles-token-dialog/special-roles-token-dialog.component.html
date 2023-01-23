@@ -3,6 +3,9 @@
 <form [formGroup]="form" class="content" *ngIf="project$ | async as project">
 	<app-form-field title="Identifier">
 		<input formControlName="identifier">
+		<span error *ngIf="isControlHasError('identifier')">
+			{{getControl('identifier') | errorMessage}}
+		</span>
 	</app-form-field>
 
 	<div class="roles">
@@ -16,12 +19,13 @@
 	</div>
 
 	<app-form-field title="Address">
-		<app-address-input [chainId]="project.chainId"
-						   [projectId]="project.id"
-						   [showAddressBook]="true"
-						   (changed)="onChangeAddress($event)"></app-address-input>
+		<app-address-input formControlName="address"
+						   [chainId]="project.chainId"
+						   [projectId]="project.id"></app-address-input>
+		<span error *ngIf="isControlHasError('address')">
+			{{getControl('address') | errorMessage}}
+		</span>
 	</app-form-field>
-
 
 	<app-form-field class="caller" title="Caller">
 		<mat-select class="input-control"
@@ -35,7 +39,7 @@
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>
 	<button mat-flat-button
 			class="create-button"
-			[disabled]="!wallet"
+			[disabled]="!wallet || form.invalid"
 			*ngIf="network$ | async as network"
 			(click)="submit(network)">
 		Set role

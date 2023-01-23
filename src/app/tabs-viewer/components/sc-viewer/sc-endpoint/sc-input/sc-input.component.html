@@ -18,7 +18,7 @@
 						(changed)="writeValue($event)"></app-enum-input>
 		<app-address-input *ngSwitchCase="isAddress()"
 						   [projectId]="projectId"
-						   [address]="value"
+                           [value]="value"
 						   class="address"
 						   [chainId]="chainId"
 						   (changed)="writeValue($event)"></app-address-input>

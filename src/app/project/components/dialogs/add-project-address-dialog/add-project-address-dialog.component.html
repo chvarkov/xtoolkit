@@ -1,12 +1,23 @@
 <app-modal-dialog-header title="Create address" [dialogRef]="dialogRef"></app-modal-dialog-header>
 
-<div content class="content">
-	<input class="field project-name" [(ngModel)]="name" placeholder="Address name">
+<div content class="content" [formGroup]="form">
+	<app-form-field class="name" title="Name">
+		<input class="field project-name" formControlName="name" placeholder="Address name">
+		<span error *ngIf="isControlHasError('name')">
+			{{getControl('name') | errorMessage}}
+		</span>
+	</app-form-field>
 
-	<app-address-input class="field" [showAddressBook]="false"
-					   [chainId]="(project$ | async)?.chainId || ''"
-					   (changed)="address = $event">
-	</app-address-input>
+	<app-form-field title="Address">
+		<app-address-input class="field"
+						   formControlName="address"
+						   [showAddressBook]="false"
+						   [chainId]="(project$ | async)?.chainId || ''">
+		</app-address-input>
+		<span error *ngIf="isControlHasError('address')">
+			{{getControl('address') | errorMessage}}
+		</span>
+	</app-form-field>
 </div>
 
 <div class="actions">
@@ -14,6 +25,6 @@
 	<button mat-flat-button
 			class="create-button"
 			*ngIf="network$ | async as network"
-			[disabled]="!name || !address"
+			[disabled]="form.invalid"
 			(click)="create(network)">Create</button>
 </div>

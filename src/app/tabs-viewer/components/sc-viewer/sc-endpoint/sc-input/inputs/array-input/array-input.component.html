@@ -1,13 +1,11 @@
 <div class="container" [formGroup]="form">
 	<app-toolbar [title]="name" titleSize="small">
 		<app-toolbar-icon-button right-side
-								 appTooltip
 								 matTooltip="Clear array"
 								 (click)="clear()">
 			delete
 		</app-toolbar-icon-button>
 		<app-toolbar-icon-button right-side
-								 appTooltip
 								 matTooltip="Add element"
 								 (click)="addElement()">
 			add
@@ -36,7 +34,6 @@
 			</div>
 			<div class="actions">
 				<div class="material-icons delete-icon"
-					 appTooltip
 					 matTooltip="Delete element"
 					 (click)="delete(i)">
 					close

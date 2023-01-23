@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ProjectWallet, Project } from '../../../../../core/data-provider/data-provider';
 import { Observable } from 'rxjs';
 import { INetworkEnvironment } from '../../../../../core/elrond/interfaces/network-environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ESDTInteractor } from '../../../../../core/elrond/services/esdt-intercator';
 import { Store } from '@ngrx/store';
@@ -51,6 +51,16 @@ export class PauseTokenDialogComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+	}
+
+	getControl(name: string): AbstractControl {
+		return this.form.get(name)!;
+	}
+
+	isControlHasError(name: string): boolean {
+		const control = this.getControl(name);
+
+		return control.invalid && (control.dirty || control.touched);
 	}
 
 	submit(network: INetworkEnvironment): void {
