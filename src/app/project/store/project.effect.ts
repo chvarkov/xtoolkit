@@ -1033,6 +1033,16 @@ export class ProjectEffect {
 		)),
 	));
 
+	connectMaiarWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.connectMaiarWalletSuccess),
+		tap(() => this.toastrService.success('Maiar wallet was successful connected', 'Maiar connect')),
+	), {dispatch: false});
+
+	connectMaiarWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.connectMaiarWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot connect Maiar wallet')),
+	), {dispatch: false});
+
 	logoutMaiarWallet$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.logoutMaiarWallet),
 		switchMap(() => this.maiarWalletService.logout().pipe(
@@ -1040,6 +1050,16 @@ export class ProjectEffect {
 			catchError(err => of(ProjectAction.logoutMaiarWalletError({err}))),
 		)),
 	));
+
+	logoutMaiarWalletSuccess$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.logoutMaiarWalletSuccess),
+		tap(() => this.toastrService.success('Maiar wallet was successful disconnected', 'Maiar wallet disconnect')),
+	), {dispatch: false});
+
+	logoutMaiarWalletError$ = createEffect(() => this.actions$.pipe(
+		ofType(ProjectAction.logoutMaiarWalletError),
+		tap(() => this.toastrService.error('Something went wrong, please refresh the page and try again', 'Cannot disconnect Maiar wallet')),
+	), {dispatch: false});
 
 	constructor(private readonly actions$: Actions,
 				private readonly store: Store,
