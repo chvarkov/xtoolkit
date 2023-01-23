@@ -181,6 +181,10 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.store.dispatch(ProjectAction.addSmartContract({projectId}));
 	}
 
+	issueToken(projectId: string): void {
+		this.store.dispatch(ProjectAction.issueToken({projectId}));
+	}
+
 	connectWalletViaMaiarApp(projectId: string): void {
 		this.store.dispatch(ProjectAction.connectMaiarWallet({projectId}));
 	}
