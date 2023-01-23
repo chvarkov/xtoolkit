@@ -375,8 +375,8 @@ export class ProjectEffect {
 	wipeToken$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.wipeToken),
 		exhaustMap(({projectId, identifier}) => this.dialog.open(WipeTokenDialogComponent, {
-			data: {projectId, identifier, isFreeze: false},
-			width: '500px',
+			data: {projectId, identifier},
+			width: '640px',
 		}).afterClosed()),
 		filter(v => !!v),
 		switchMap(([projectId, network, wallet, options]) => this.esdtService.wipe(projectId, network, wallet, options).pipe(
