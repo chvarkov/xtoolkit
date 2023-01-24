@@ -1,25 +1,47 @@
 <app-modal-dialog-header title="Upload ABI" [dialogRef]="dialogRef"></app-modal-dialog-header>
-<div class="content">
-	<button class="upload-button" (click)="fileUploader.click()">
-		{{fileName || 'Select ABI'}}
-	</button>
+<input #fileUploader
+	   hidden
+	   type="file"
+	   accept="application/json"
+	   (change)="onFileSelected($event)">
 
-	<input #fileUploader
-		   hidden
-		   type="file"
-		   accept="application/json"
-		   (change)="onFileSelected($event)">
+<div *ngIf="!fileName" class="placeholder" (click)="fileUploader.click()">
+	<div class="title">Click here to upload ABI JSON</div>
+</div>
+<div class="content" *ngIf="fileName">
+	<div class="abi-header">
+		<app-form-field title="ABI name">
+			<input class="abi-name"
+				   [(ngModel)]="smartContractName"
+				   placeholder="ABI name">
+		</app-form-field>
 
-	<ng-container *ngIf="fileName">
-		<input class="sc-name"
-			   [(ngModel)]="smartContractName"
-			   placeholder="Smart contract name">
+		<button mat-flat-button class="upload-button" (click)="fileUploader.click()">Upload another file</button>
+	</div>
 
-		<div class="parsed-result">
-			<div class="row">Types: {{types}}</div>
-			<div class="row">Endpoints: {{endpoints}}</div>
+	<div class="endpoints-container" *ngIf="sc">
+		<div class="endpoint" *ngFor="let endpoint of sc?.getAbi()?.getAllEndpoints() || []">
+			<div class="title">
+				{{endpoint.name}}
+				<div class="args">
+					(<ng-container *ngFor="let input of endpoint.input || []; let i = index">
+					<div class="arg-name">{{input.name}}</div>
+					<div class="space-after">:</div>
+					<div class="arg-type">{{input.type}}</div>
+					<div class="space-after" *ngIf="(endpoint?.input?.length || 0) - 1 !== i">, </div>
+				</ng-container>)
+				</div>
+				<div class="args-count" *ngIf="endpoint.input.length">
+					{{endpoint.input.length}} args
+				</div>
+			</div>
+			<div class="controls">
+				<span class="badge payable" *ngIf="endpoint.modifiers.isPayable()">Payable</span>
+				<span class="badge mutable" *ngIf="!endpoint.modifiers.isReadonly()">Mutable</span>
+				<span class="badge readonly" *ngIf="endpoint.modifiers.isReadonly()">Readonly</span>
+			</div>
 		</div>
-	</ng-container>
+	</div>
 </div>
 <div class="actions">
 	<button mat-flat-button class="cancel-button" (click)="dialogRef.close()">Cancel</button>

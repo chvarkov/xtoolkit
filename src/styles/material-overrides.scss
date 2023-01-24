@@ -77,3 +77,10 @@ mat-select, mat-autocomplete {
 	border: solid 1px var(--border-color);
 	box-shadow: 0 0 6px 2px var(--border-low-color);
 }
+
+.mat-bottom-sheet-container {
+	background: var(--primary-bg);
+	border: solid 1px var(--border-color);
+	border-bottom: none;
+	box-shadow: 0 0 6px 2px var(--border-low-color);
+}

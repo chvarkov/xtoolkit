@@ -228,7 +228,10 @@ export class ProjectEffect {
 
 	uploadAbi$ = createEffect(() => this.actions$.pipe(
 		ofType(ProjectAction.uploadAbi),
-		exhaustMap(({projectId}) => this.dialog.open(UploadAbiDialogComponent, {data: {projectId}}).afterClosed().pipe(
+		exhaustMap(({projectId}) => this.dialog.open(UploadAbiDialogComponent, {
+			width: '640px',
+			data: {projectId},
+		}).afterClosed().pipe(
 			filter(v => !!v),
 			map((data: IUploadedAbi) => ProjectAction.addAbi({
 				projectId,

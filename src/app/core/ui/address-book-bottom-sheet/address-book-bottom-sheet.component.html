@@ -1,0 +1,20 @@
+<div class="container" *ngIf="activeProject$ | async as activeProject">
+	<div class="header">
+		Address book
+	</div>
+
+	<div class="option" *ngFor="let addressInfo of addresses$ | async" (click)="select(addressInfo)">
+		<span class="icon material-icons" [ngStyle]="{color: addressInfo.type | componentColor}">{{addressInfo.type | componentIcon}}</span>
+		<div class="option-content">
+			<div class="title">
+				<div class="name" [ngStyle]="{color: addressInfo.type | componentColor}">{{addressInfo.name}}</div>
+				<div class="date">{{addressInfo.savedAt | date}}</div>
+			</div>
+
+			<app-address class="address"
+						 [address]="addressInfo.address"
+						 [chainId]="activeProject.chainId"></app-address>
+		</div>
+
+	</div>
+</div>

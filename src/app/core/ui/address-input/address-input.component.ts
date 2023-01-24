@@ -1,14 +1,16 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { INetworkEnvironment } from '../../elrond/interfaces/network-environment';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import { isValidAddress } from '../../validators/address-validator';
 import { ProjectAddress } from '../../data-provider/data-provider';
 import { ProjectSelector } from '../../../project/store/project.selector';
-import { map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { ClipboardService } from '../../services/clipboard.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AddressBookBottomSheetComponent } from '../address-book-bottom-sheet/address-book-bottom-sheet.component';
 
 @Component({
 	selector: 'app-address-input',
@@ -48,8 +50,6 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 
 	isDisabled = false;
 
-	isOptionsVisible = false;
-
 	network$?: Observable<INetworkEnvironment | undefined>;
 
 	addressBook$?: Observable<ProjectAddress[] | undefined>;
@@ -57,6 +57,7 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 	private prevValue?: string;
 
 	constructor(readonly clipboard: ClipboardService,
+				private readonly bottomSheet: MatBottomSheet,
 				private readonly store: Store) {
 	}
 
@@ -68,14 +69,6 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
-	onFocus(): void {
-		this.isOptionsVisible = true;
-	}
-
-	onBlur(): void {
-		setTimeout(() => this.isOptionsVisible = false, 200);
-	}
-
 	explore(url: string): void {
 		window.open(`${url}/accounts/${this.value}`, '_blank');
 	}
@@ -84,20 +77,12 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 		return !isValidAddress(address);
 	}
 
-	onChangeAddress(event: Event): void {
-		const value = (<HTMLInputElement>(event.target)).value;
-
-		this.setValue(value);
-	}
-
 	onChangeEvent(e: Event): void {
 		this.val = (<HTMLInputElement>e.target).value;
 
 		this.changed.emit(this.val);
 		this.onChange(this.val);
 		this.onTouch();
-
-		this.isOptionsVisible = false;
 	}
 
 	setValue(value: string): void {
@@ -121,5 +106,13 @@ export class AddressInputComponent implements OnInit, ControlValueAccessor {
 
 	setDisabledState(isDisabled: boolean) {
 		this.isDisabled = isDisabled;
+	}
+
+	selectFromAddressBook(): void {
+		this.bottomSheet.open(AddressBookBottomSheetComponent).afterDismissed()
+			.pipe(
+				take(1),
+				filter(v => !!v),
+			).subscribe((projectAddress) => this.value = projectAddress.address);
 	}
 }
