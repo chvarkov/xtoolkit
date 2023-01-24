@@ -68,7 +68,7 @@
 							</mat-icon>
 							<mat-menu #abiMenu="matMenu" classList="dropdown-list" xPosition="before">
 								<button mat-menu-item (click)="uploadWasm(project.id, abi.id)">
-									<mat-icon>{{abi.hasWasm ? 'add' : 'add'}}</mat-icon>
+									<mat-icon>upload_file</mat-icon>
 									<span>{{abi.hasWasm ? 'Update WASM' : 'Upload WASM'}}</span>
 								</button>
 								<button mat-menu-item (click)="renameAbi(project.id, abi.id, abi.name)">
