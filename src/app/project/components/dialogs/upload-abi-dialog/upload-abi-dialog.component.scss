@@ -7,16 +7,6 @@
 		margin-top: 10px;
 	}
 
-	.upload-button {
-		width: 100%;
-		display: flex;
-		padding: 8px;
-		color: var(--text-color);
-		border-radius: 4px;
-		background: var(--static-green);
-		border: solid 1px var(--static-green);
-	}
-
 	.parsed-result {
 		display: flex;
 		flex-direction: column;
@@ -26,6 +16,108 @@
 		.row {
 			padding: 2px 0;
 		}
+	}
+}
+
+.abi-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.upload-button {
+	padding: 8px;
+	color: var(--text-color);
+	border-radius: 4px;
+	background: none;
+	height: 54px;
+	border: solid 1px var(--border-low-color);
+
+	&:hover {
+		border: solid 1px var(--border-accent-color);
+	}
+}
+
+.endpoints-container {
+	margin-top: 6px;
+	padding: 6px 0;
+	border-top: solid 1px var(--border-low-color);
+	border-bottom: solid 1px var(--border-low-color);
+	min-height: 200px;
+	max-height: 360px;
+	overflow-y: auto;
+}
+
+.endpoint {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--text-color);
+	padding: 6px;
+	border-bottom: solid 1px var(--border-low-color);
+
+	.badge {
+		border-radius: 4px;
+		padding: 4px 6px;
+		margin-left: 6px;
+		height: 28px;
+	}
+
+	.payable {
+		background: var(--static-yellow);
+	}
+
+	.mutable {
+		background: var(--static-purpure);
+	}
+
+	.readonly {
+		background: var(--static-cyan);
+	}
+
+	.title {
+		display: flex;
+		font-size: 15px;
+		align-items: center;
+		overflow-x: hidden;
+		position: relative;
+		width: 100%;
+
+		.args-count {
+			right: 0;
+			top: 0;
+			bottom: 0;
+			position: absolute;
+			font-size: 0.88em;
+			background: var(--low-bg);
+			box-shadow: 0px -40px 26px 30px var(--low-bg);
+			margin-right: 3px;
+		}
+
+		.args {
+			color: var(--static-gray);
+			margin-left: 2px;
+			display: flex;
+			flex-direction: row;
+
+			.arg-name {
+				color: var(--arg-name-color);
+			}
+
+			.arg-type {
+				color: var(--arg-type-color);
+			}
+
+			.space-after {
+				margin-right: 6px;
+			}
+		}
+	}
+
+	.controls {
+		display: flex;
 	}
 }
 
@@ -52,4 +144,24 @@
 	}
 }
 
+.placeholder {
+	margin: 10px 0;
+	padding: 10px;
+	border-radius: 10px;
+	border: dashed 4px var(--border-low-color);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	height: 400px;
 
+	.title {
+		font-size: 20px;
+		color: var(--text-accent-color)
+	}
+
+	&:hover {
+		background-color: var(--low-bg);
+	}
+}
