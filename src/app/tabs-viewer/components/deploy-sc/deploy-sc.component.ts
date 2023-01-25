@@ -20,7 +20,7 @@ import { TxEstimator } from '../../../core/elrond/services/tx-estimator';
 import { NetworkSelector } from '../../../network/store/network.selector';
 import * as uuid from 'uuid';
 import { ActionHistoryAction } from '../../../action-history/store/action-history.action';
-import { Address, AddressValue, BigUIntValue } from '@multiversx/sdk-core/out';
+import { CodeMetadata, TokenPayment } from '@multiversx/sdk-core/out';
 
 @Component({
 	selector: 'app-deploy-sc',
@@ -75,13 +75,12 @@ export class DeployScComponent implements OnInit {
 			return;
 		}
 
-		console.log('form_value', this.form.value)
-
 		return this.sc.deploy({
-			codeMetadata: this.scMetadata || '',
-			code: Buffer.from(wasm, 'utf-8').toString('hex'),
+			codeMetadata: new CodeMetadata(true),
+			code: wasm,
 			initArguments: ScArgsBuilder.buildFromEndpointDefinition(constructor, this.form.value || {}),
 			chainID: project.chainId,
+			value: TokenPayment.egldFromAmount(0),
 			gasLimit: 0,
 		});
 	}

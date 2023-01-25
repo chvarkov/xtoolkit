@@ -2,7 +2,7 @@
 
 ## About project
 
-**XToolkit** - the tool for easy interaction with smart contacts and ESTD/NFT/SFT token management on MultiversX network (previously Elrond).
+**XToolkit** - the tool for easy interaction with smart contacts and ESDT/NFT/SFT token management on MultiversX network (previously Elrond).
 
 **DISCLAIMER:**
 
@@ -13,8 +13,8 @@
 ## Roadmap
 
 &#x2705; Interaction with smart contracts <br>
-&#x2705; ESTD token issuance <br>
-&#x2705; ESTD token management <br>
+&#x2705; ESDT token issuance <br>
+&#x2705; ESDT token management <br>
 &#x2705; Network management <br>
 &#x2705; Transaction history <br>
 &#x2705; Project management <br>
@@ -26,8 +26,8 @@
 &#x2705; MultiversX news widget <br>
 &#x23F3; Sign transactions via Maiar extension <br>
 &#x23F3; Sign transaction via ledger <br>
-&#x23F3; Meta ESTD issuance <br>
-&#x23F3; Meta ESTD management <br>
+&#x23F3; Meta ESDT issuance <br>
+&#x23F3; Meta ESDT management <br>
 &#x23F3; SFT issuance <br>
 &#x23F3; SFT management <br>
 &#x23F3; NFT issuance <br>

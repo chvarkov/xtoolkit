@@ -7,6 +7,8 @@ import { ProjectSelector } from '../../../../project/store/project.selector';
 import { map } from 'rxjs/operators';
 import { ITokenTransferOptions } from '../../../../core/elrond/services/wallet.manager';
 import { ESDTTransferPayloadBuilder, TokenIdentifierValue, TokenPayment } from '@multiversx/sdk-core/out';
+import { FormControl, Validators } from '@angular/forms';
+import { addressValidator } from '../../../../core/validators/address-validator';
 
 @Component({
 	selector: 'app-transfer-token-dialog',
@@ -22,7 +24,10 @@ export class TransferTokenDialogComponent implements OnInit {
 	amount: string = '0';
 	identifier: string = '';
 	sender?: ProjectWallet;
-	receiver: string = '';
+	receiver = new FormControl('', [
+		Validators.required,
+		addressValidator,
+	]);
 	txData: string = '';
 
 	get isValid(): boolean {
@@ -61,7 +66,7 @@ export class TransferTokenDialogComponent implements OnInit {
 		const data: ITokenTransferOptions = {
 			amount: this.amount,
 			sender: this.sender.address,
-			receiver: this.receiver,
+			receiver: this.receiver.value,
 			identifier: this.identifier,
 			gasLimit: this.gasLimit,
 			wallet: this.sender,
@@ -82,9 +87,10 @@ export class TransferTokenDialogComponent implements OnInit {
 		this.sender = sender;
 	}
 
-	onChangeReceiver(receiver: string): void {
-		this.receiver = receiver;
-	}
+	// onChangeReceiver(receiver: string): void {
+	// 	console.log('onChangeReceiver')
+	// 	this.receiver = receiver;
+	// }
 
 	onChangeAmount(e: Event): void {
 		this.amount = (e as unknown as any).target.value;
@@ -114,5 +120,9 @@ export class TransferTokenDialogComponent implements OnInit {
 
 	private calculateGasLimit(): void {
 		this.gasLimit = 50000 + (1500 * (this.txData?.length || 0));
+
+		if (this.identifier !== 'EGLD') {
+			this.gasLimit += 220_000
+		}
 	}
 }
