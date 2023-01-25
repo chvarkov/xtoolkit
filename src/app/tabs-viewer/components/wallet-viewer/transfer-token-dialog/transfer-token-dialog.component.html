@@ -20,7 +20,7 @@
 	<div class="section">
 		<app-form-field title="Receiver">
 			<app-address-input type="wallet"
-							   (changed)="onChangeReceiver($event)"
+							   [formControl]="receiver"
 							   [options]="(addressOptions$ | async) || []"
 							   [projectId]="data.projectId"
 							   [chainId]="data.chainId"

@@ -27,16 +27,21 @@ export class WalletManager {
 				  network: INetworkEnvironment,
 				  wallet: ProjectWallet,
 				  options: ITokenTransferOptions): Observable<string> {
-		const amount = DecimalPlacesHelper.toRaw(options.decimals, options.amount);
+		const transactionPayload = new TransactionPayload(options.data || '');
 
 		const tx = new Transaction({
-			data: new TransactionPayload(options.data || ''),
+			data: transactionPayload,
 			gasLimit: options.gasLimit,
 			sender: new Address(options.sender),
 			receiver: new Address(options.receiver),
-			value: amount.toString(),
+			value: 0,
 			chainID: network.chainId,
 		});
+
+		if (options.identifier === network.egldLabel) {
+			const amount = DecimalPlacesHelper.toRaw(options.decimals, options.amount);
+			tx.setValue(amount);
+		}
 
 		return this.txSender.send(projectId, wallet, tx);
 	}
