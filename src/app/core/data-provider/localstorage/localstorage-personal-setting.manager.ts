@@ -10,7 +10,7 @@ import {
 	Theme
 } from '../personal-settings.manager';
 import { forkJoin, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ProjectComponentType } from '../../types';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { DATA_PROVIDER, DataProvider, Project } from '../data-provider';
@@ -42,7 +42,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 			this.dataProvider.getActiveProjectId(),
 			this.getActiveProjectOpenedTabs(),
 		]).pipe(
-			map(([projectId, { tabs, selectedIndex }]) => {
+			switchMap(([projectId, { tabs, selectedIndex }]) => {
 				projectId = projectId || SELF_PROJECT_ID;
 
 				tabs = tabs || [];
@@ -50,7 +50,13 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				const openedElem = tabs.find(i => i.componentType === componentType && i.componentId === componentId);
 
 				if (openedElem) {
-					return { tabs, selectedIndex: openedElem.index };
+
+					if (openedElem.index >= 5) {
+						return this.pushTabAsFirst(openedElem.index);
+					}
+
+					this.set(this.getCurrentTabKey(projectId), openedElem.index);
+					return of({ tabs, selectedIndex: openedElem.index });
 				}
 
 				const updatedList: OpenedProjectTab[] = [
@@ -61,7 +67,7 @@ export class LocalstoragePersonalSettingManager implements PersonalSettingsManag
 				this.set(this.getOpenedTabsKey(projectId), updatedList);
 				this.set(this.getCurrentTabKey(projectId), 0);
 
-				return { tabs: updatedList, selectedIndex: 0 };
+				return of({ tabs: updatedList, selectedIndex: 0 });
 			}),
 		);
 	}
