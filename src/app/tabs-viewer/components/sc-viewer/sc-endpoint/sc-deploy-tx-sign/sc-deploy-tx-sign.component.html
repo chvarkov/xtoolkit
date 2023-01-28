@@ -1,0 +1,46 @@
+<div class="tx-sign-container">
+	<div class="input-field">
+		<app-form-field title="SC Name" class="call-input">
+			<input matInput (change)="onChangeTokenAmount($event)">
+		</app-form-field>
+	</div>
+	<ng-container *ngIf="endpoint.modifiers.isPayable()">
+		<div class="input-field">
+			<app-form-field title="Amount" class="call-input">
+				<input matInput class="amount-input"
+					   type="number"
+					   value="0"
+					   (change)="onChangeTokenAmount($event)">
+			</app-form-field>
+		</div>
+
+		<div class="input-field">
+			<app-token-identifier-input class="token-identifier-input call-input"
+										[chainId]="network?.chainId || ''"
+										[projectId]="projectId"
+										(changed)="onChangeTokenIdentifier($event)">
+			</app-token-identifier-input>
+		</div>
+	</ng-container>
+	<app-form-field title="Deployer" class="call-input caller">
+		<mat-select placeholder="No deployer" (selectionChange)="onSelectedWallet($event.value)" panelClass="select-panel">
+			<mat-option *ngFor="let wallet of wallets" [value]="wallet">{{wallet.name}}</mat-option>
+		</mat-select>
+	</app-form-field>
+	<div class="input-field">
+		<app-form-field title="fee" class="call-input">
+			<input class="input fee-input sc-argument-input"
+				   type="number"
+				   [value]="fee.toString()"
+				   placeholder="Fee"
+				   (change)="onChangeFee($event)">
+		</app-form-field>
+	</div>
+	<div class="actions">
+		<button disabled mat-raised-button class="action-button primary-action call-btn"
+				[disabled]="!wallet"
+				(click)="submit()">
+			Deploy
+		</button>
+	</div>
+</div>
