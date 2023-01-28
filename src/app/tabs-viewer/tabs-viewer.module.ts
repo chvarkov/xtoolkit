@@ -42,6 +42,7 @@ import { SecretsLockedStatusInfoPipe } from './components/settings-page/pipes/se
 import { PasswordStatusInfoPipe } from './components/settings-page/pipes/password-status-info.pipe';
 import { ReleaseInfoComponent } from './components/home-page/components/release-info/release-info.component';
 import { DeployScComponent } from './components/deploy-sc/deploy-sc.component';
+import { ScDeployTxSignComponent } from './components/sc-viewer/sc-endpoint/sc-deploy-tx-sign/sc-deploy-tx-sign.component';
 
 @NgModule({
 	declarations: [
@@ -83,6 +84,7 @@ import { DeployScComponent } from './components/deploy-sc/deploy-sc.component';
 		PasswordStatusInfoPipe,
 		ReleaseInfoComponent,
 		DeployScComponent,
+  ScDeployTxSignComponent,
 	],
 	imports: [
 		CommonModule,

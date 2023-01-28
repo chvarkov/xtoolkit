@@ -49,6 +49,10 @@ export class ScEndpointComponent implements OnInit {
 
 	payload$?: Observable<any>;
 
+	get isConstructor(): boolean {
+		return this.endpoint?.name === 'constructor';
+	}
+
 	constructor(private readonly fb: FormBuilder,
 				private readonly store: Store,
 				private readonly scQueryRunner: ScQueryRunner,

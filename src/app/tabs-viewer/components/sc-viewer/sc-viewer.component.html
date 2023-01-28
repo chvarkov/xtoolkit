@@ -37,6 +37,13 @@
 							No smart contract code, maybe network was reset or address is wrong.
 						</div>
 					</ng-container>
+					<app-sc-endpoint *ngIf="smartContract.getAbi().getConstructorDefinition() as constructor"
+									 [projectId]="abi.projectId"
+									 [chainId]="chainId"
+									 [endpoint]="constructor"
+									 [wallets]="(wallets$ | async) || []"
+									 [sc]="smartContract">
+					</app-sc-endpoint>
 					<app-sc-endpoint *ngFor="let endpoint of smartContract.getAbi().getAllEndpoints()"
 									 [projectId]="abi.projectId"
 									 [chainId]="chainId"

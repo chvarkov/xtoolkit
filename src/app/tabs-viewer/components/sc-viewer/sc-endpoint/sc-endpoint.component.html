@@ -18,9 +18,12 @@
 		</div>
 		<div class="controls">
 
-			<span class="badge payable" *ngIf="endpoint.modifiers.isPayable()">Payable</span>
-			<span class="badge mutable" *ngIf="!endpoint.modifiers.isReadonly()">Mutable</span>
-			<span class="badge readonly" *ngIf="endpoint.modifiers.isReadonly()">Readonly</span>
+			<ng-container *ngIf="!isConstructor">
+				<span class="badge payable" *ngIf="endpoint.modifiers.isPayable()">Payable</span>
+				<span class="badge mutable" *ngIf="!endpoint.modifiers.isReadonly()">Mutable</span>
+				<span class="badge readonly" *ngIf="endpoint.modifiers.isReadonly()">Readonly</span>
+			</ng-container>
+			<span class="badge mutable" *ngIf="isConstructor">Constructor</span>
 			<button class="material-icons" matTooltip="Hide" *ngIf="isShowing" (click)="hide($event)">expand_less</button>
 			<button class="material-icons" matTooltip="Expand" *ngIf="!isShowing" (click)="show($event)">expand_more</button>
 		</div>
@@ -36,14 +39,26 @@
 		</form>
 
 		<ng-container *ngIf="network$ | async as network">
-			<app-sc-endpoint-tx-sign *ngIf="!endpoint.modifiers.isReadonly()"
-									 [projectId]="projectId"
-									 [wallets]="wallets"
-									 [sc]="sc"
-									 [endpoint]="endpoint"
-									 [network]="network"
-									 [payload]="payload$ | async"
-									 (onSubmit)="submitTransaction(network, $event.wallet, $event.fee, $event.payment)"></app-sc-endpoint-tx-sign>
+			<ng-container *ngIf="!endpoint.modifiers.isReadonly()">
+				<app-sc-endpoint-tx-sign *ngIf="!isConstructor"
+										 [projectId]="projectId"
+										 [wallets]="wallets"
+										 [sc]="sc"
+										 [endpoint]="endpoint"
+										 [network]="network"
+										 [payload]="payload$ | async"
+										 (onSubmit)="submitTransaction(network, $event.wallet, $event.fee, $event.payment)">
+				</app-sc-endpoint-tx-sign>
+				<app-sc-deploy-tx-sign *ngIf="isConstructor"
+									   [projectId]="projectId"
+									   [wallets]="wallets"
+									   [sc]="sc"
+									   [endpoint]="endpoint"
+									   [network]="network"
+									   [payload]="payload$ | async"
+									   (onSubmit)="submitTransaction(network, $event.wallet, $event.fee, $event.payment)">
+				</app-sc-deploy-tx-sign>
+			</ng-container>
 			<app-sc-endpoint-query *ngIf="endpoint.modifiers.isReadonly()"
 								   [wallets]="wallets"
 								   (onSubmit)="sendQuery(network)"></app-sc-endpoint-query>

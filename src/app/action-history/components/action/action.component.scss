@@ -6,6 +6,7 @@
 	padding: 8px;
 	box-sizing: border-box;
 	cursor: pointer;
+	font-size: 14px;
 
 	.type {
 		font-weight: 600;
@@ -24,6 +25,10 @@
 	.primary-info {
 		justify-content: space-between;
 		align-items: center;
+	}
+
+	.status {
+		margin-top: -4px;
 	}
 }
 
