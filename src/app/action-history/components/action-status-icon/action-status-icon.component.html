@@ -1,4 +1,5 @@
 <mat-icon *ngIf="status"
+		  class="icon"
 		  [class.fa-spin]="status === ActionStatus.Pending"
 		  [ngClass]="status.toLowerCase()"
 		  [matTooltip]="status | titlecase">

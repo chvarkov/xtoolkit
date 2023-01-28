@@ -4,7 +4,7 @@
 			<app-action-type-icon [type]="data.type"></app-action-type-icon>
 			<div>{{data.title}}</div>
 		</div>
-		<app-action-status-badge [status]="data.status"></app-action-status-badge>
+		<app-action-status-badge class="status" [status]="data.status"></app-action-status-badge>
 	</div>
 	<div class="tech-details">
 		<app-tx-hash *ngIf="data.txHash"
