@@ -11,6 +11,7 @@
 	&:hover {
 		color: var(--text-accent-color);
 		border: solid 1px var(--border-accent-color);
+		box-shadow: 0 0 7px 3px var(--border-low-color);
 	}
 }
 

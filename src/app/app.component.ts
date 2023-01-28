@@ -1,17 +1,12 @@
-import {
-	Component,
-	OnDestroy,
-	OnInit,
-	ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NetworkAction } from './network/store/network.action';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Project, ProjectAbi, ProjectSmartContract, ProjectWallet } from './core/data-provider/data-provider';
 import { ProjectSelector } from './project/store/project.selector';
 import { OpenedProjectTab, SELF_PROJECT_ID, Theme } from './core/data-provider/personal-settings.manager';
 import { ProjectAction } from './project/store/project.action';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { TokenIssueAwaiter } from './project/services/token-issue.awaiter';
 import { LayoutSelector } from './layout/store/layout.selector';
 import { LayoutAction } from './layout/store/layout.action';
@@ -20,7 +15,6 @@ import { SecuritySelector } from './security/store/security.selector';
 import { MaiarWalletService } from './project/services/maiar-wallet.service';
 import { ProjectComponentType } from './core/types';
 import { FaucetService } from './core/services/faucet.service';
-import { TabsWidgetComponent } from './layout/components/tabs-widget/tabs-widget.component';
 
 @Component({
 	selector: 'app-root',
@@ -28,8 +22,6 @@ import { TabsWidgetComponent } from './layout/components/tabs-widget/tabs-widget
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-	@ViewChild(TabsWidgetComponent, {static: true}) tabsWidget?: TabsWidgetComponent;
-
 	activeProject$: Observable<Project | undefined>;
 
 	connectedMaiarWallet$: Observable<ProjectWallet | undefined>
@@ -45,8 +37,6 @@ export class AppComponent implements OnInit, OnDestroy {
 	currentTabIndex$: Observable<number | undefined>;
 
 	isVisibleLoadingScreen$: Observable<boolean>;
-
-	private readonly sub = new Subscription();
 
 	constructor(private readonly store: Store,
 				private readonly tokenIssueAwaiter: TokenIssueAwaiter,
@@ -75,15 +65,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 		this.store.dispatch(ProjectAction.loadTokenIssueWaitList());
 
-		this.sub.add(this.activeProject$.pipe(distinctUntilChanged()).subscribe((value) => {
-			if (this.tabsWidget) {
-				value
-					? this.tabsWidget.openByIndex(0)
-					: this.tabsWidget.openByIndex(this.tabsWidget.length - 1);
-			}
-
-		}));
-
 		setTimeout(() => {
 			this.store.dispatch(LayoutAction.toggleLoadingScreen({visible: false}));
 		}, 2600);
@@ -93,7 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.tokenIssueAwaiter.disable();
-		this.sub.unsubscribe();
 	}
 
 	moveTab(prevIndex: number, currentIndex: number): void {

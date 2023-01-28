@@ -15,8 +15,7 @@ import { ThemeSwitcher } from './services/theme.switcher';
 import { ThemeIconPipe } from './pipes/theme-icon.pipe';
 import { DonationDialogComponent } from './components/donation-dialog/donation-dialog.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { TabsWidgetComponent } from './components/tabs-widget/tabs-widget.component';
-import { WidgetTabComponent } from './components/tabs-widget/widget-tab/widget-tab.component';
+import { WidgetComponent } from './components/widget/widget.component';
 
 @NgModule({
 	declarations: [
@@ -27,8 +26,7 @@ import { WidgetTabComponent } from './components/tabs-widget/widget-tab/widget-t
 		HeaderToolbarComponent,
 		ThemeIconPipe,
 		DonationDialogComponent,
-		TabsWidgetComponent,
-		WidgetTabComponent,
+		WidgetComponent,
 	],
 	imports: [
 		CommonModule,
@@ -49,8 +47,7 @@ import { WidgetTabComponent } from './components/tabs-widget/widget-tab/widget-t
 		HeaderIconButtonComponent,
 		HeaderToolbarComponent,
 		ThemeIconPipe,
-		TabsWidgetComponent,
-		WidgetTabComponent,
+		WidgetComponent,
 	],
 })
 export class LayoutModule { }
