@@ -14,6 +14,8 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 
 	@Output() dx: EventEmitter<number> = new EventEmitter<number>();
 
+	prevClientX = 0;
+
 	isMoving = false;
 
 	constructor(private readonly renderer2: Renderer2) {
@@ -30,9 +32,10 @@ export class ResizeVerticalSplitterComponent implements OnInit {
 
 	@HostListener('document:mousemove', ['$event'])
 	onMouseMove(e: MouseEvent): void {
-		if (this.isMoving) {
+		if (this.isMoving && e.clientX !== this.prevClientX) {
 			if ((this.minX && this.maxX && this.maxX > this.minX) && (e.clientX >= this.minX) && ( e.clientX <= this.maxX)) {
 				this.dx.emit(e.movementX);
+				this.prevClientX = e.clientX;
 			}
 		}
 	}
