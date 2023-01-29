@@ -1,5 +1,7 @@
-<app-resize-vertical-splitter (dx)="resize.emit($event)"
-							  side="right"
-							  [minX]="minResizeMovingX"
-							  [maxX]="maxResizeMoving"></app-resize-vertical-splitter>
-<ng-content></ng-content>
+<div class="container">
+	<app-resize-vertical-splitter (dx)="resize.emit($event)"
+								  side="right"
+								  [minX]="minResizeMovingX"
+								  [maxX]="maxResizeMoving"></app-resize-vertical-splitter>
+	<ng-content></ng-content>
+</div>
