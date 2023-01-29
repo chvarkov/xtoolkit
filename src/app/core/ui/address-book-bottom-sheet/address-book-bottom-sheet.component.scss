@@ -11,16 +11,26 @@
 	font-weight: 500;
 }
 
+.list {
+	overflow-y: auto;
+	max-height: 50vh;
+}
+
 .option {
 	width: 100%;
-	padding: 8px;
+	padding: 6px;
 	display: flex;
 	flex-direction: row;
 	cursor: pointer;
-	border-bottom: solid 1px var(--border-low-color);
+	opacity: 0.94;
 
 	&:hover {
 		background: var(--low-bg);
+		opacity: 1;
+	}
+
+	&:not(:last-child) {
+		border-bottom: solid 1px var(--border-low-color);
 	}
 }
 
